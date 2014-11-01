@@ -1,7 +1,5 @@
 <?php
 /**
- * Routes.
- *
  * This file is part of MeYoutube.
  *
  * MeYoutube is free software: you can redistribute it and/or modify
@@ -21,10 +19,15 @@
  * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeYoutube\Config
+ * @package		MeYoutube\View\YoutubeVideos
  */
+?>
 
-//Videos routes
-Router::connect('/admin/videos/:action/*',	array('controller' => 'youtube_videos', 'plugin' => 'me_youtube', 'admin' => TRUE));
-Router::connect('/videos',					array('controller' => 'youtube_videos', 'action' => 'index', 'plugin' => 'me_youtube'));
-Router::connect('/video/*',					array('controller' => 'youtube_videos', 'action' => 'view', 'plugin' => 'me_youtube'));
+<div class="videos index">
+	<?php
+		foreach($videos as $video)
+			echo $this->element('view/video', compact('video'));
+	
+		echo $this->element('MeTools.paginator');
+	?>
+</div>

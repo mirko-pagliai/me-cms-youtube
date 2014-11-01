@@ -36,12 +36,6 @@ class YoutubeVideo extends MeCmsAppModel {
 	 * @var string
 	 */
 	public $displayField = 'title';
-	
-	/**
-	 * Order
-	 * @var array 
-	 */
-	public $order = array('created' => 'DESC');
 
 	/**
 	 * Validation rules
@@ -110,6 +104,33 @@ class YoutubeVideo extends MeCmsAppModel {
 			'foreignKey' => 'user_id'
 		)
 	);
+	
+	/**
+	 * "Active" find method. It finds for active records.
+	 * @param string $state Either "before" or "after"
+	 * @param array $query
+	 * @param array $results
+	 * @return mixed Query or results
+	 */
+	protected function _findActive($state, $query, $results = array()) {
+        if($state === 'before') {			
+			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
+			
+			//Only active items
+			$query['conditions'][$this->alias.'.active'] = TRUE;
+			//No spot videos
+			$query['conditions'][$this->alias.'.is_spot'] = FALSE;
+			//Only items published in the past
+			$query['conditions'][$this->alias.'.created <='] = date('Y-m-d H:i:s');
+			
+            return $query;
+        }
+		
+		if($query['limit'] === 1 && !empty($results[0]))
+			return $results[0];
+		
+        return $results;
+    }
 	
 	/**
 	 * Called after each successful save operation.

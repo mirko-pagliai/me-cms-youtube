@@ -155,4 +155,61 @@ class YoutubeVideosController extends MeCmsAppController {
 			
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	/**
+	 * List videos
+	 */
+	public function index() {
+		//Sets the initial cache name with the number of the page
+		$cache = sprintf('videos_index_page_%s', empty($this->request->named['page']) ? '1' : $this->request->named['page']);
+		
+		//Tries to get data from the cache
+		$videos = Cache::read($cache, 'videos');
+		$paging = Cache::read(sprintf('%s_paging', $cache), 'videos');
+		
+		//If the data are not available from the cache
+		if(empty($videos) || empty($paging)) {
+			$this->paginate = array(
+				'contain'	=> array('User.first_name', 'User.last_name'),
+				'fields'	=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
+				'findType'	=> 'active',
+				'limit'		=> $this->config['records_for_page']
+			);
+			
+            Cache::write($cache, $videos = $this->paginate(), 'videos');
+			Cache::write(sprintf('%s_paging', $cache), $this->request->params['paging'], 'videos');
+		}
+		//Else, sets the paging params
+		else
+			$this->request->params['paging'] = $paging;
+		
+		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Videos')), compact('videos')));
+	}
+
+	/**
+	 * View video
+	 * @param string $id Video ID
+	 * @throws NotFoundException
+	 */
+	public function view($id = NULL) {
+		//Tries to get data from the cache
+		$video = Cache::read($cache = sprintf('videos_view_%s', $id), 'videos');
+		
+		//If the data are not available from the cache
+		if(empty($video)) {
+			if(!$this->YoutubeVideo->exists($id))
+				throw new NotFoundException(__d('me_youtube', 'Invalid video'));
+
+			$video = $this->YoutubeVideo->find('active', array(
+				'conditions'	=> array('YoutubeVideo.id' => $id),
+				'contain'		=> array('User.first_name', 'User.last_name'),
+				'fields'		=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
+				'limit'			=> 1
+			));
+			
+            Cache::write($cache, $video, 'videos');
+		}
+		
+		$this->set(am(array('title_for_layout' => $video['YoutubeVideo']['title']), compact('video')));
+	}
 }
