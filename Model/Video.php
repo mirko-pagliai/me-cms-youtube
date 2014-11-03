@@ -147,9 +147,7 @@ class Video extends MeCmsAppModel {
 	public function afterFind($results, $primary = FALSE) {
 		foreach($results as $k => $v) {
 			//If the Youtube ID is available, adds the preview image url
-			if(!empty($v['youtube_id']))
-				$results[$k]['preview'] = sprintf('http://img.youtube.com/vi/%s/0.jpg', $v['youtube_id']);
-			elseif(!empty($v[$this->alias]['youtube_id']))
+			if(!empty($v[$this->alias]['youtube_id']))
 				$results[$k][$this->alias]['preview'] = sprintf('http://img.youtube.com/vi/%s/0.jpg', $v[$this->alias]['youtube_id']);
 		}
 		
