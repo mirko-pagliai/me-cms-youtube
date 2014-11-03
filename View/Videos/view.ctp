@@ -24,5 +24,5 @@
 ?>
 
 <?php
-	echo $this->Html->div('videos view', $this->element('view/video', compact('video')));
+	echo $this->Html->div('videos view', $this->element('MeYoutube.view'.DS.'video', compact('video')));
 ?>

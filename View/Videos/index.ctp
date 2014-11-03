@@ -26,7 +26,7 @@
 <div class="videos index">
 	<?php
 		foreach($videos as $video)
-			echo $this->element('view/video', compact('video'));
+			echo $this->element('MeYoutube.view'.DS.'video', compact('video'));
 	
 		echo $this->element('MeTools.paginator');
 	?>
