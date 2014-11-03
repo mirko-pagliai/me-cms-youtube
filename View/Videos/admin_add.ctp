@@ -25,7 +25,7 @@
 
 <?php $this->assign('sidebar', $this->MeYoutubeMenu->get('videos', 'nav')); ?>
 
-<div class="youtubeVideos form">
+<div class="videos form">
 	<?php echo $this->Html->h2(__d('me_youtube', 'Add video')); ?>
 	
 	<div class="well">
@@ -43,7 +43,7 @@
 	</div>
 	
 	<?php if(!empty($youtubeId)): ?>
-		<?php echo $this->Form->create('YoutubeVideo'); ?>
+		<?php echo $this->Form->create('Video'); ?>
 			<div class='float-form'>
 				<?php
 					//Only admins and managers can add posts on behalf of other users

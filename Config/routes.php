@@ -25,6 +25,6 @@
  */
 
 //Videos routes
-Router::connect('/admin/videos/:action/*',	array('controller' => 'youtube_videos', 'plugin' => 'me_youtube', 'admin' => TRUE));
-Router::connect('/videos',					array('controller' => 'youtube_videos', 'action' => 'index', 'plugin' => 'me_youtube'));
-Router::connect('/video/*',					array('controller' => 'youtube_videos', 'action' => 'view', 'plugin' => 'me_youtube'));
+Router::connect('/admin/videos/:action/*',	array('controller' => 'videos', 'plugin' => 'me_youtube', 'admin' => TRUE));
+Router::connect('/videos',					array('controller' => 'videos', 'action' => 'index', 'plugin' => 'me_youtube'));
+Router::connect('/video/*',					array('controller' => 'videos', 'action' => 'view', 'plugin' => 'me_youtube'));

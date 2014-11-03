@@ -42,8 +42,8 @@ class MeYoutubeMenuHelper extends MenuHelper {
 	 */
 	protected function _videos($type) {
 		$menu = array(
-			$this->link(__d('me_youtube', 'List videos'),	array('controller' => 'youtube_videos', 'action' => 'index', 'plugin' => 'me_youtube')),
-			$this->link(__d('me_youtube', 'Add video'),		array('controller' => 'youtube_videos', 'action' => 'add', 'plugin' => 'me_youtube'))
+			$this->link(__d('me_youtube', 'List videos'),	array('controller' => 'videos', 'action' => 'index', 'plugin' => 'me_youtube')),
+			$this->link(__d('me_youtube', 'Add video'),		array('controller' => 'videos', 'action' => 'add', 'plugin' => 'me_youtube'))
 		);
 		
 		if($type == 'dropdown')

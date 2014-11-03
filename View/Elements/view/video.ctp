@@ -26,15 +26,15 @@
 <div class="video-container clearfix">
 	<div class="content-header">
 		<?php
-			if(!empty($video['YoutubeVideo']['title']) && !empty($video['YoutubeVideo']['id']))
-				echo $this->Html->h3($this->Html->link($video['YoutubeVideo']['title'],
-					array('controller' => 'youtube_videos', 'action' => 'view', 'plugin' => 'me_youtube', $video['YoutubeVideo']['id']),
+			if(!empty($video['Video']['title']) && !empty($video['Video']['id']))
+				echo $this->Html->h3($this->Html->link($video['Video']['title'],
+					array('controller' => 'videos', 'action' => 'view', 'plugin' => 'me_youtube', $video['Video']['id']),
 					array('class' => 'content-title')
 				));
 			
-			if(!empty($video['YoutubeVideo']['subtitle']) && !empty($video['YoutubeVideo']['id']))
-				echo $this->Html->h4($this->Html->link($video['YoutubeVideo']['subtitle'],
-					array('controller' => 'youtube_videos', 'action' => 'view', 'plugin' => 'me_youtube', $video['YoutubeVideo']['id']),
+			if(!empty($video['Video']['subtitle']) && !empty($video['Video']['id']))
+				echo $this->Html->h4($this->Html->link($video['Video']['subtitle'],
+					array('controller' => 'ideos', 'action' => 'view', 'plugin' => 'me_youtube', $video['Video']['id']),
 					array('class' => 'content-subtitle')
 				));
 		?>
@@ -47,9 +47,9 @@
 						array('icon' => 'user')
 					);
 				
-				if(!empty($video['YoutubeVideo']['created']))
+				if(!empty($video['Video']['created']))
 					echo $this->Html->div('content-date',
-						__d('me_cms', 'Posted on %s', $this->Time->format($video['YoutubeVideo']['created'], $config['datetime']['long'])), 
+						__d('me_cms', 'Posted on %s', $this->Time->format($video['Video']['created'], $config['datetime']['long'])), 
 						array('icon' => 'clock-o')
 					);
 			?>
@@ -57,15 +57,15 @@
 	</div>
 	<div class="content-text">
 		<?php
-			if(!empty($video['YoutubeVideo']['youtube_id']))
+			if(!empty($video['Video']['youtube_id']))
 				echo $this->Html->div('embed-responsive embed-responsive-16by9 margin-20', $this->Html->iframe(array(
 					'class'				=> 'embed-responsive-item',
 					'allowfullscreen'	=> TRUE,
-					'src'				=> sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $video['YoutubeVideo']['youtube_id']),
+					'src'				=> sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $video['Video']['youtube_id']),
 				)));
 
-			if(!empty($video['YoutubeVideo']['description']))
-				echo $video['YoutubeVideo']['description'];
+			if(!empty($video['Video']['description']))
+				echo $video['Video']['description'];
 		?>
 	</div>
 </div>

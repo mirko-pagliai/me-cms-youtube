@@ -27,7 +27,7 @@
 
 <div class="youtubeVideos form">
 	<?php echo $this->Html->h2(__d('me_youtube', 'Edit video')); ?>
-	<?php echo $this->Form->create('YoutubeVideo'); ?>
+	<?php echo $this->Form->create('Video'); ?>
 		<div class='float-form'>
 			<?php
 				//Only admins and managers can add posts on behalf of other users
@@ -70,14 +70,14 @@
 					'class'				=> 'margin-15',
 					'allowfullscreen'	=> TRUE,
 					'height'			=> 315,
-					'src'				=> sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $this->request->data['YoutubeVideo']['youtube_id']),
+					'src'				=> sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $this->request->data['Video']['youtube_id']),
 					'width'				=> 560
 				));
 				echo $this->Form->input('youtube_id', array(
 					'label'		=> __d('me_youtube', '%s ID', 'YouTube'),
 					'readonly'	=> TRUE,
 					'type'		=> 'text',
-					'value'		=> $this->request->data['YoutubeVideo']['youtube_id']
+					'value'		=> $this->request->data['Video']['youtube_id']
 				));
 				echo $this->Form->input('title', array(
 					'label' => __d('me_cms', 'Title'),

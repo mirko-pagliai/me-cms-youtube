@@ -1,6 +1,6 @@
 <?php
 /**
- * YoutubeVideo.
+ * Video.
  *
  * This file is part of MeYoutube.
  *
@@ -28,14 +28,20 @@ App::uses('MeCmsAppModel', 'MeCms.Model');
 App::uses('CakeTime', 'Utility');
 
 /**
- * YoutubeVideo Model
+ * Video Model
  */
-class YoutubeVideo extends MeCmsAppModel {
+class Video extends MeCmsAppModel {
 	/**
 	 * Display field
 	 * @var string
 	 */
 	public $displayField = 'title';
+	
+	/**
+	 * Table
+	 * @var string 
+	 */
+	public $useTable = 'youtube_videos';
 
 	/**
 	 * Validation rules

@@ -25,7 +25,7 @@
 
 <?php $this->assign('sidebar', $this->MeYoutubeMenu->get('videos', 'nav')); ?>
 	
-<div class="youtubeVideos index">
+<div class="videos index">
 	<?php
 		echo $this->Html->h2(__d('me_youtube', 'Videos'));
 		echo $this->Html->button(__d('me_cms', 'Add new'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
@@ -42,10 +42,10 @@
 			<tr>
 				<td>
 					<?php
-						$title = $this->Html->link($video['YoutubeVideo']['title'], array('action' => 'edit', $id = $video['YoutubeVideo']['id']));
+						$title = $this->Html->link($video['Video']['title'], array('action' => 'edit', $id = $video['Video']['id']));
 						
 						//If the video is not active (it's a draft)
-						if(!$video['YoutubeVideo']['active'])
+						if(!$video['Video']['active'])
 							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), array('class' => 'text-warning')));
 						
 						echo $this->Html->strong($title);
@@ -61,7 +61,7 @@
 						if($this->Auth->isManager())
 							$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this?'));
 						
-						$actions[] = $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $video['YoutubeVideo']['youtube_id'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
+						$actions[] = $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $video['Video']['youtube_id'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
 						
 						echo $this->Html->ul($actions, array('class' => 'actions'));
 					?>
@@ -69,7 +69,7 @@
 				<td class="text-center"><?php echo $video['User']['username']; ?></td>
 				<td class="text-center">
 					<?php
-						switch($video['YoutubeVideo']['priority']) {
+						switch($video['Video']['priority']) {
 							case '1':
 								echo $this->Html->badge('1', array('class' => 'priority-verylow', 'tooltip' => __d('me_cms', 'Very low')));
 								break;
@@ -89,11 +89,11 @@
 					?>
 				</td>
 				<td class="min-width text-center">
-					<?php echo $this->Time->format($video['YoutubeVideo']['created'], $config['datetime']['short']); ?>
+					<?php echo $this->Time->format($video['Video']['created'], $config['datetime']['short']); ?>
 				</td>
 				<td class="min-width text-center">
 					<?php 
-						if($video['YoutubeVideo']['is_spot'])
+						if($video['Video']['is_spot'])
 							echo $this->Html->badge(NULL, array('class' => 'priority-normal', 'icon' => 'check', 'tooltip' => __d('me_youtube', 'This video is a spot')));
 					?>
 				</td>

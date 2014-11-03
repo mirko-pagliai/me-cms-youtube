@@ -1,6 +1,6 @@
 <?php
 /**
- * YoutubeVideosController.
+ * VideosController.
  *
  * This file is part of MeYoutube.
  *
@@ -27,9 +27,9 @@
 App::uses('MeCmsAppController', 'MeCms.Controller');
 
 /**
- * YoutubeVideos Controller
+ * Videos Controller
  */
-class YoutubeVideosController extends MeCmsAppController {
+class VideosController extends MeCmsAppController {
 	/**
 	 * Parses a YouTube video and returns the video ID
 	 * @param string $url Video url
@@ -93,8 +93,8 @@ class YoutubeVideosController extends MeCmsAppController {
 		}
 		
 		if($this->request->is('post')) {
-			$this->YoutubeVideo->create();
-			if($this->YoutubeVideo->save($this->request->data)) {
+			$this->Video->create();
+			if($this->Video->save($this->request->data)) {
 				$this->Session->flash(__d('me_youtube', 'The video has been created'));
 				$this->redirect(array('action' => 'index'));
 			}
@@ -103,7 +103,7 @@ class YoutubeVideosController extends MeCmsAppController {
 		}
 
 		$this->set(array(
-			'users'				=> $this->YoutubeVideo->User->find('list'),
+			'users'				=> $this->Video->User->find('list'),
 			'title_for_layout'	=> __d('me_youtube', 'Add video')
 		));
 	}
@@ -113,11 +113,11 @@ class YoutubeVideosController extends MeCmsAppController {
 	 * @param string $id Video ID
 	 */
 	public function admin_edit($id = NULL) {
-		if(!$this->YoutubeVideo->exists($id))
+		if(!$this->Video->exists($id))
 			throw new NotFoundException(__d('me_youtube', 'Invalid video'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
-			if($this->YoutubeVideo->save($this->request->data)) {
+			if($this->Video->save($this->request->data)) {
 				$this->Session->flash(__d('me_youtube', 'The video has been edited'));
 				$this->redirect(array('action' => 'index'));
 			}
@@ -125,13 +125,13 @@ class YoutubeVideosController extends MeCmsAppController {
 				$this->Session->flash(__d('me_youtube', 'The video could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->YoutubeVideo->find('first', array(
+			$this->request->data = $this->Video->find('first', array(
 				'conditions'	=> array('id' => $id),
 				'fields'		=> array('id', 'user_id', 'title', 'subtitle', 'youtube_id', 'description', 'priority', 'active', 'is_spot', 'created')
 			));
 
 		$this->set(array(
-			'users'				=> $this->YoutubeVideo->User->find('list'),
+			'users'				=> $this->Video->User->find('list'),
 			'title_for_layout'	=> __d('me_youtube', 'Edit video')
 		));
 	}
@@ -142,13 +142,13 @@ class YoutubeVideosController extends MeCmsAppController {
 	 * @throws NotFoundException
 	 */
 	public function admin_delete($id = NULL) {
-		$this->YoutubeVideo->id = $id;
-		if(!$this->YoutubeVideo->exists())
+		$this->Video->id = $id;
+		if(!$this->Video->exists())
 			throw new NotFoundException(__d('me_youtube', 'Invalid video'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
-		if($this->YoutubeVideo->delete())
+		if($this->Video->delete())
 			$this->Session->flash(__d('me_youtube', 'The video has been deleted'));
 		else
 			$this->Session->flash(__d('me_youtube', 'The video was not deleted'), 'error');
@@ -197,11 +197,11 @@ class YoutubeVideosController extends MeCmsAppController {
 		
 		//If the data are not available from the cache
 		if(empty($video)) {
-			if(!$this->YoutubeVideo->exists($id))
+			if(!$this->Video->exists($id))
 				throw new NotFoundException(__d('me_youtube', 'Invalid video'));
 
-			$video = $this->YoutubeVideo->find('active', array(
-				'conditions'	=> array('YoutubeVideo.id' => $id),
+			$video = $this->Video->find('active', array(
+				'conditions'	=> array('Video.id' => $id),
 				'contain'		=> array('User.first_name', 'User.last_name'),
 				'fields'		=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
 				'limit'			=> 1
@@ -210,6 +210,6 @@ class YoutubeVideosController extends MeCmsAppController {
             Cache::write($cache, $video, 'videos');
 		}
 		
-		$this->set(am(array('title_for_layout' => $video['YoutubeVideo']['title']), compact('video')));
+		$this->set(am(array('title_for_layout' => $video['Video']['title']), compact('video')));
 	}
 }
