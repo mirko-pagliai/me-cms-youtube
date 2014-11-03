@@ -139,6 +139,24 @@ class Video extends MeCmsAppModel {
     }
 	
 	/**
+	 * Called after each find operation. Can be used to modify any results returned by find().
+	 * @param mixed $results The results of the find operation
+	 * @param boolean $primary Whether this model is being queried directly
+	 * @return mixed Result of the find operation
+	 */
+	public function afterFind($results, $primary = FALSE) {
+		foreach($results as $k => $v) {
+			//If the Youtube ID is available, adds the preview image url
+			if(!empty($v['youtube_id']))
+				$results[$k]['preview'] = sprintf('http://img.youtube.com/vi/%s/0.jpg', $v['youtube_id']);
+			elseif(!empty($v[$this->alias]['youtube_id']))
+				$results[$k][$this->alias]['preview'] = sprintf('http://img.youtube.com/vi/%s/0.jpg', $v[$this->alias]['youtube_id']);
+		}
+		
+		return $results;
+	}
+	
+	/**
 	 * Called after each successful save operation.
 	 * @param boolean $created TRUE if this save created a new record
 	 * @param array $options Options passed from Model::save()
