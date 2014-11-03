@@ -32,9 +32,6 @@ App::uses('MenuHelper', 'MeCms.View/Helper');
  * It can be used to generate a menu for an action. It supports these types of menu: `ul`, `nav` and `dropdown`.
  */
 class MeYoutubeMenuHelper extends MenuHelper {
-	public function hello() {
-		debug('hello!');
-	}
 	/**
 	 * Internal function to generate the menu for "videos" actions.
 	 * @param string $type Type of menu
