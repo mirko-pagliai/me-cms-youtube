@@ -150,8 +150,6 @@ class Video extends MeCmsAppModel {
 	 * @param boolean $primary Whether this model is being queried directly
 	 * @return mixed Result of the find operation
 	 */
-			//No spot videos
-			$query['conditions'][$this->alias.'.is_spot'] = FALSE;
 	public function afterFind($results, $primary = FALSE) {
 		foreach($results as $k => $v) {
 			//If the Youtube ID is available, adds the preview image url
