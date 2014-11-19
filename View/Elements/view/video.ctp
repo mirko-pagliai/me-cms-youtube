@@ -57,12 +57,18 @@
 	</div>
 	<div class="content-text">
 		<?php
-			if(!empty($video['Video']['youtube_id']))
-				echo $this->Html->div('embed-responsive embed-responsive-16by9 margin-20', $this->Html->iframe(array(
-					'class'				=> 'embed-responsive-item',
-					'allowfullscreen'	=> TRUE,
-					'src'				=> sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $video['Video']['youtube_id']),
-				)));
+			if(!empty($video['Video']['youtube_id'])) {
+				//Sets the video source
+				$src = sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&showinfo=0', $video['Video']['youtube_id']);
+				
+				//Adds the autoplay
+				if(!empty($autoplay))
+					$src .= '&autoplay=1';
+				
+				echo $this->Html->div('embed-responsive embed-responsive-16by9 margin-20', 
+					$this->Html->iframe(array('class' => 'embed-responsive-item', 'allowfullscreen' => TRUE, 'src' => $src))
+				);
+			}
 
 			if(!empty($video['Video']['description']))
 				echo $video['Video']['description'];
