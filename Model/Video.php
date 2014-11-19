@@ -38,6 +38,12 @@ class Video extends MeCmsAppModel {
 	public $displayField = 'title';
 	
 	/**
+	 * Order
+	 * @var array 
+	 */
+	public $order = array('created' => 'DESC');
+	
+	/**
 	 * Table
 	 * @var string 
 	 */
