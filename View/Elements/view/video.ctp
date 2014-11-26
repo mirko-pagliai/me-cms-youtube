@@ -23,7 +23,7 @@
  */
 ?>
 
-<div class="video-container clearfix">
+<div class="video-container content-container clearfix">
 	<div class="content-header">
 		<?php
 			if(!empty($video['Video']['title']) && !empty($video['Video']['id']))
