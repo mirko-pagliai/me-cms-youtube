@@ -34,7 +34,7 @@
 			
 			if(!empty($video['Video']['subtitle']) && !empty($video['Video']['id']))
 				echo $this->Html->h4($this->Html->link($video['Video']['subtitle'],
-					array('controller' => 'ideos', 'action' => 'view', 'plugin' => 'me_youtube', $video['Video']['id']),
+					array('controller' => 'videos', 'action' => 'view', 'plugin' => 'me_youtube', $video['Video']['id']),
 					array('class' => 'content-subtitle')
 				));
 		?>
