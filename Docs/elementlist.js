@@ -1,0 +1,3 @@
+
+var ApiGen = ApiGen || {};
+ApiGen.elements = [["c","MeYoutubeMenuHelper"],["m","MeYoutubeMenuHelper::_videos()"],["c","Video"],["p","Video::$belongsTo"],["p","Video::$displayField"],["p","Video::$order"],["p","Video::$useTable"],["p","Video::$validate"],["m","Video::_findActive()"],["m","Video::afterFind()"],["m","Video::afterSave()"],["m","Video::beforeSave()"],["m","Video::isOwnedBy()"],["c","VideosController"],["m","VideosController::_parseUrl()"],["m","VideosController::admin_add()"],["m","VideosController::admin_delete()"],["m","VideosController::admin_edit()"],["m","VideosController::admin_index()"],["m","VideosController::index()"],["m","VideosController::request_latest()"],["m","VideosController::view()"]];
