@@ -157,6 +157,34 @@ class VideosController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Gets the latest videos.
+	 * This method works only with `requestAction()`.
+	 * @param int $limit Number of latest videos
+	 * @return array Latest videos
+	 * @throws ForbiddenException
+	 */
+	public function request_latest($limit = 1) {
+		//This method works only with "requestAction()"
+		if(empty($this->request->params['requested']))
+            throw new ForbiddenException();
+		
+		//Tries to get data from the cache
+		$videos = Cache::read($cache = sprintf('videos_request_latest_%d', $limit), 'videos');
+		
+		//If the data are not available from the cache
+        if(empty($videos)) {
+			$videos = $this->Video->find('active', array(
+				'fields'	=> array('id', 'youtube_id', 'title', 'description'),
+				'limit'	=> $limit
+			));
+			
+            Cache::write($cache, $videos, 'videos');
+		}
+		
+		return $videos;
+	}
+	
+	/**
 	 * List videos
 	 */
 	public function index() {
