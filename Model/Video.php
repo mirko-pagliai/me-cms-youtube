@@ -78,6 +78,10 @@ class Video extends MeCmsAppModel {
 			'message'	=> 'This value is already used',
 			'rule'		=> 'isUnique'
 		),
+		'category_id' => array(
+			'message'	=> 'You have to select an option',
+			'rule'		=> array('naturalNumber')
+		),
 		'description' => array(
 			'allowEmpty'	=> TRUE,
 			'message'		=> 'Must be at most %d chars',
@@ -114,6 +118,10 @@ class Video extends MeCmsAppModel {
 		'User' => array(
 			'className' => 'MeCms.User',
 			'foreignKey' => 'user_id'
+		),
+		'Category' => array(
+			'className' => 'MeYoutube.VideosCategory',
+			'foreignKey' => 'category_id'
 		)
 	);
 	
