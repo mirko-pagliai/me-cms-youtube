@@ -24,37 +24,42 @@
 ?>
 
 <div class="video-container content-container clearfix">
-	<div class="content-header">
-		<?php
-			if(!empty($video['Video']['title']) && !empty($video['Video']['id']))
-				echo $this->Html->h3($this->Html->link($video['Video']['title'],
-					array('controller' => 'videos', 'action' => 'view', 'plugin' => 'me_youtube', $video['Video']['id']),
-					array('class' => 'content-title')
-				));
-			
-			if(!empty($video['Video']['subtitle']) && !empty($video['Video']['id']))
-				echo $this->Html->h4($this->Html->link($video['Video']['subtitle'],
-					array('controller' => 'videos', 'action' => 'view', 'plugin' => 'me_youtube', $video['Video']['id']),
-					array('class' => 'content-subtitle')
-				));
-		?>
-		<div class="content-info">
-			<?php
-				if(!empty($video['User']['first_name']) && !empty($video['User']['last_name']))
-					echo $this->Html->div('content-author',
-						__d('me_cms', 'Posted by %s',
-						sprintf('%s %s', $video['User']['first_name'], $video['User']['last_name'])),
-						array('icon' => 'user')
-					);
-				
-				if(!empty($video['Video']['created']))
-					echo $this->Html->div('content-date',
-						__d('me_cms', 'Posted on %s', $this->Time->format($video['Video']['created'], $config['datetime']['long'])), 
-						array('icon' => 'clock-o')
-					);
-			?>
-		</div>
-	</div>
+	<?php
+		$content_header = NULL;
+
+		if(!empty($video['Video']['title']) && !empty($video['Video']['id']))
+			$content_header .= $this->Html->h3($this->Html->link($video['Video']['title'],
+				array('controller' => 'videos', 'action' => 'view', 'plugin' => 'me_youtube', $video['Video']['id'])),
+				array('class' => 'content-title')
+			);
+
+		if(!empty($video['Video']['subtitle']) && !empty($video['Video']['id']))
+			$content_header .= $this->Html->h4($this->Html->link($video['Video']['subtitle'],
+				array('controller' => 'videos', 'action' => 'view', 'plugin' => 'me_youtube', $video['Video']['id'])),
+				array('class' => 'content-subtitle')
+			);
+
+		$content_info = NULL;
+
+		if(!empty($video['User']['first_name']) && !empty($video['User']['last_name']))
+			$content_info .= $this->Html->div('content-author',
+				__d('me_cms', 'Posted by %s',
+				sprintf('%s %s', $video['User']['first_name'], $video['User']['last_name'])),
+				array('icon' => 'user')
+			);
+
+		if(!empty($video['Video']['created']))
+			$content_info .= $this->Html->div('content-date',
+				__d('me_cms', 'Posted on %s', $this->Time->format($video['Video']['created'], $config['datetime']['long'])), 
+				array('icon' => 'clock-o')
+			);
+
+		if(!empty($content_info))
+			$content_header .= $this->Html->div('content-info', $content_info);
+
+		if(!empty($content_header))
+			echo $this->Html->div('content-header', $content_header);
+	?>
 	<div class="content-text">
 		<?php
 			if(!empty($video['Video']['youtube_id'])) {
