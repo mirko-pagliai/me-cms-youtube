@@ -24,10 +24,15 @@
  * @package		MeYoutube\Config
  */
 
-//Videos routes
-Router::connect('/admin/videos/:action/*',	array('controller' => 'videos', 'plugin' => 'me_youtube', 'admin' => TRUE));
-Router::connect('/videos/*',					array('controller' => 'videos', 'action' => 'index', 'plugin' => 'me_youtube'));
-Router::connect('/video/*',					array('controller' => 'videos', 'action' => 'view', 'plugin' => 'me_youtube'));
+//Videos controller
+Router::connect('/videos/*',		array('controller' => 'videos', 'action' => 'index',	'plugin' => 'me_youtube'));
+Router::connect('/video/*',		array('controller' => 'videos', 'action' => 'view',		'plugin' => 'me_youtube'));
 
-Router::connect('/admin/videosCategories/:action/*',		array('controller' => 'videos_categories', 'plugin' => 'me_youtube', 'admin' => TRUE));
-Router::connect('/videosCategories',						array('controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'me_youtube'));
+//Videos categories controller
+Router::connect('/videosCategories',	 array('controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'me_youtube'));
+
+$controllers = '(videos_categories|videos)';
+
+//Each "admin" request is directed to the plugin
+Router::connect('/admin/:controller',			array('plugin' => 'me_youtube', 'admin' => TRUE), array('controller' => $controllers));
+Router::connect('/admin/:controller/:action/*',	array('plugin' => 'me_youtube', 'admin' => TRUE), array('controller' => $controllers));
