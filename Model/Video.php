@@ -115,13 +115,14 @@ class Video extends MeCmsAppModel {
 	 * @var array
 	 */
 	public $belongsTo = array(
+		'Category' => array(
+			'className' => 'MeYoutube.VideosCategory',
+			'foreignKey' => 'category_id',
+			'counterCache'	=> TRUE
+		),
 		'User' => array(
 			'className' => 'MeCms.User',
 			'foreignKey' => 'user_id'
-		),
-		'Category' => array(
-			'className' => 'MeYoutube.VideosCategory',
-			'foreignKey' => 'category_id'
 		)
 	);
 	
