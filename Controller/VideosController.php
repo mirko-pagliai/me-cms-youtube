@@ -198,10 +198,28 @@ class VideosController extends MeCmsAppController {
 	
 	/**
 	 * List videos
+	 * @param string $category Category slug, optional
 	 */
-	public function index() {
-		//Sets the initial cache name with the number of the page
-		$cache = sprintf('videos_index_page_%s', empty($this->request->named['page']) ? '1' : $this->request->named['page']);
+	public function index($category = NULL) {
+		//Sets the initial cache name
+		$cache = 'videos_index';
+		//Sets the initial conditions query
+		$conditions = array();
+		
+		//Checks if has been specified a category
+		if(!empty($category) || !empty($this->request->query['category'])) {
+			//The category can also be passed as query
+			$category = empty($category) ? $this->request->query['category'] : $category;
+			
+			//Adds the category to the conditions, if it has been specified
+			$conditions['Category.slug'] = $category;
+			
+			//Updates the cache name with the category name
+			$cache = sprintf('%s_%s', $cache, $category);
+		}
+		
+		//Updates the cache name with the number of the page
+		$cache = sprintf('%s_page_%s', $cache, empty($this->request->named['page']) ? '1' : $this->request->named['page']);
 		
 		//Tries to get data from the cache
 		$videos = Cache::read($cache, 'videos');
@@ -211,7 +229,7 @@ class VideosController extends MeCmsAppController {
 		if(empty($videos) || empty($paging)) {
 			$this->paginate = array(
 				'contain'		=> array('Category.slug', 'Category.title', 'User.first_name', 'User.last_name'),
-				'conditions'	=> array('is_spot' => FALSE),
+				'conditions'	=> am($conditions, array('is_spot' => FALSE)),
 				'fields'		=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
 				'findType'		=> 'active',
 				'limit'			=> $this->config['records_for_page']
@@ -224,7 +242,13 @@ class VideosController extends MeCmsAppController {
 		else
 			$this->request->params['paging'] = $paging;
 		
-		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Videos')), compact('videos')));
+		//Sets the category title as the title of the layout, if it's available
+		if(!empty($category) && !empty($videos[0]['Category']['title']))
+			$title_for_layout = $videos[0]['Category']['title'];
+		else
+			$title_for_layout = __d('me_youtube', 'Videos');
+		
+		$this->set(compact('title_for_layout', 'videos'));
 	}
 
 	/**
