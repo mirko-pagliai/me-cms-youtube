@@ -34,6 +34,7 @@
 		<tr>
 			<th><?php echo $this->Paginator->sort('title', __d('me_cms', 'Title')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('User.username', __d('me_cms', 'Author')); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('category_id', __d('me_cms', 'Category')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('priority', __d('me_cms', 'Priority')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('created', __d('me_cms', 'Date')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('is_spot', __d('me_youtube', 'Spot')); ?></th>
@@ -67,6 +68,7 @@
 					?>
 				</td>
 				<td class="text-center"><?php echo $video['User']['username']; ?></td>
+				<td class="text-center"><?php echo $video['Category']['title']; ?></td>
 				<td class="text-center">
 					<?php
 						switch($video['Video']['priority']) {

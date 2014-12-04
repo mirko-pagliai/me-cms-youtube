@@ -37,6 +37,7 @@ class MeYoutubeMenuHelper extends MenuHelper {
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 * @uses link()
+	 * @uses AuthHelper::isManager()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
 	 */
@@ -45,6 +46,13 @@ class MeYoutubeMenuHelper extends MenuHelper {
 			$this->link(__d('me_youtube', 'List videos'),	array('controller' => 'videos', 'action' => 'index', 'plugin' => 'me_youtube')),
 			$this->link(__d('me_youtube', 'Add video'),		array('controller' => 'videos', 'action' => 'add', 'plugin' => 'me_youtube'))
 		);
+		
+		//Only admins and managers can access these actions
+		if($this->Auth->isManager())
+			$menu = am($menu, array(
+				$this->link(__d('me_cms', 'List categories'),	array('controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'me_youtube')),
+				$this->link(__d('me_cms', 'Add category'),		array('controller' => 'videos_categories', 'action' => 'add', 'plugin' => 'me_youtube'))
+			));
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_youtube', 'Videos'), array('icon' => 'film')).PHP_EOL.$this->Dropdown->dropdown($menu);

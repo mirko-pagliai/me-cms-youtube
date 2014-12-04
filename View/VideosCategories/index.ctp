@@ -1,7 +1,5 @@
 <?php
 /**
- * Routes.
- *
  * This file is part of MeYoutube.
  *
  * MeYoutube is free software: you can redistribute it and/or modify
@@ -21,13 +19,18 @@
  * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeYoutube\Config
+ * @package		MeYoutube\View\VideosCategories
  */
+?>
 
-//Videos routes
-Router::connect('/admin/videos/:action/*',	array('controller' => 'videos', 'plugin' => 'me_youtube', 'admin' => TRUE));
-Router::connect('/videos',					array('controller' => 'videos', 'action' => 'index', 'plugin' => 'me_youtube'));
-Router::connect('/video/*',					array('controller' => 'videos', 'action' => 'view', 'plugin' => 'me_youtube'));
+<div class="videosCategories index">
+	<?php
+		echo $this->Html->h2(__d('me_youtube', 'Videos categories'));
+		
+		$list = array();
+		foreach($categories as $category)
+			$list[] = $this->Html->link($category['VideosCategory']['title'], array('controller' => 'videos', 'action' => 'index', $category['VideosCategory']['slug']));
 
-Router::connect('/admin/videosCategories/:action/*',		array('controller' => 'videos_categories', 'plugin' => 'me_youtube', 'admin' => TRUE));
-Router::connect('/videosCategories',						array('controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'me_youtube'));
+		echo $this->Html->ul($list, array('icon' => 'caret-right'));
+	?>
+</div>

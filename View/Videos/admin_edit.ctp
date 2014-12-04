@@ -35,6 +35,10 @@
 					echo $this->Form->input('user_id', array(
 						'label' => __d('me_cms', 'Author')
 					));
+				
+				echo $this->Form->input('category_id', array(
+					'label' => __d('me_cms', 'Category')
+				));
 				echo $this->Form->datetimepicker('created', array(
 					'label'	=> __d('me_cms', 'Date'),
 					'tip'	=> array(

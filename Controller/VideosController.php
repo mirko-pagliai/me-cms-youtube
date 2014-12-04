@@ -31,7 +31,7 @@ App::uses('MeCmsAppController', 'MeCms.Controller');
  */
 class VideosController extends MeCmsAppController {
 	/**
-	 * Parses a YouTube video and returns the video ID
+	 * Parses a (YouTube) video and returns the video ID
 	 * @param string $url Video url
 	 * @return mixed Video ID or FALSE
 	 */
@@ -39,7 +39,7 @@ class VideosController extends MeCmsAppController {
 		//Parses the url
 		$url = parse_url($url);
 		
-		//Checks if it's a Youtube address
+		//Checks if it's a YouTube address
 		if(empty($url['host']) || !preg_match('/youtube\.com$/', $url['host'])) {
 			$this->Session->flash(__d('me_youtube', 'This is not a %s video', 'YouTube'), 'error');
 			return FALSE;
@@ -68,11 +68,11 @@ class VideosController extends MeCmsAppController {
 	}
 
 	/**
-	 * List youtube videos
+	 * List videos
 	 */
 	public function admin_index() {
 		$this->paginate = array(
-			'contain'	=> 'User.username',
+			'contain'	=> array('Category.title', 'User.username'),
 			'fields'	=> array('id', 'youtube_id', 'title', 'priority', 'active', 'is_spot', 'created'),
 			'limit'		=> $this->config['records_for_page']
 		);
@@ -87,6 +87,15 @@ class VideosController extends MeCmsAppController {
 	 * Add video
 	 */
 	public function admin_add() {
+		//Gets the categories
+		$categories = $this->Video->Category->generateTreeList();
+		
+		//Checks for categories
+		if(empty($categories)) {
+			$this->Session->flash(__d('me_youtube', 'Before you can add a video, you have to create at least a category'), 'error');
+			$this->redirect(array('controller' => 'videos_categories', 'action' => 'index'));
+		}
+		
 		if(!empty($this->request->query['url'])) {
 			$youtubeId = $this->_parseUrl($this->request->query['url']);
 			$this->set(compact('youtubeId'));
@@ -103,6 +112,7 @@ class VideosController extends MeCmsAppController {
 		}
 
 		$this->set(array(
+			'categories'		=> $categories,
 			'users'				=> $this->Video->User->find('list'),
 			'title_for_layout'	=> __d('me_youtube', 'Add video')
 		));
@@ -127,10 +137,11 @@ class VideosController extends MeCmsAppController {
 		else
 			$this->request->data = $this->Video->find('first', array(
 				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'user_id', 'title', 'subtitle', 'youtube_id', 'description', 'priority', 'active', 'is_spot', 'created')
+				'fields'		=> array('id', 'user_id', 'title', 'subtitle', 'youtube_id', 'category_id', 'description', 'priority', 'active', 'is_spot', 'created')
 			));
 
 		$this->set(array(
+			'categories'		=> $this->Video->Category->generateTreeList(),
 			'users'				=> $this->Video->User->find('list'),
 			'title_for_layout'	=> __d('me_youtube', 'Edit video')
 		));
@@ -198,7 +209,7 @@ class VideosController extends MeCmsAppController {
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
 			$this->paginate = array(
-				'contain'	=> array('User.first_name', 'User.last_name'),
+				'contain'	=> array('Category.slug', 'Category.title', 'User.first_name', 'User.last_name'),
 				'fields'	=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
 				'findType'	=> 'active',
 				'limit'		=> $this->config['records_for_page']
@@ -230,7 +241,7 @@ class VideosController extends MeCmsAppController {
 
 			$video = $this->Video->find('active', array(
 				'conditions'	=> array('Video.id' => $id),
-				'contain'		=> array('User.first_name', 'User.last_name'),
+				'contain'		=> array('Category.slug', 'Category.title', 'User.first_name', 'User.last_name'),
 				'fields'		=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
 				'limit'			=> 1
 			));

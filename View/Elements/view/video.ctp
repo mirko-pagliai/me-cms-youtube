@@ -26,6 +26,12 @@
 <div class="video-container content-container clearfix">
 	<?php
 		$content_header = NULL;
+		
+		if(!empty($video['Category']['title']) && !empty($video['Category']['slug']))
+			$content_header .= $this->Html->h5($this->Html->link($video['Category']['title'],
+				array('controller' => 'videos', 'action' => 'index', 'plugin' => 'me_youtube', $video['Category']['slug'])),
+				array('class' => 'content-category')
+			);
 
 		if(!empty($video['Video']['title']) && !empty($video['Video']['id']))
 			$content_header .= $this->Html->h3($this->Html->link($video['Video']['title'],

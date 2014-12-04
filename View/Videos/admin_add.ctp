@@ -46,12 +46,17 @@
 		<?php echo $this->Form->create('Video'); ?>
 			<div class='float-form'>
 				<?php
-					//Only admins and managers can add posts on behalf of other users
+					//Only admins and managers can add videos on behalf of other users
 					if($this->Auth->isManager())
 						echo $this->Form->input('user_id', array(
 							'default'	=> $auth['id'],
 							'label'		=> __d('me_cms', 'Author')
 						));
+					
+					echo $this->Form->input('category_id', array(
+						'default'	=> count($categories) < 2 ? $categories[1] : NULL, //If there's only one category...
+						'label'		=> __d('me_cms', 'Category')
+					));
 					echo $this->Form->datetimepicker('created', array(
 						'label'	=> __d('me_cms', 'Date'),
 						'tip'	=> array(
