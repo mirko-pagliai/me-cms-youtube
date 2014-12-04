@@ -141,8 +141,6 @@ class Video extends MeCmsAppModel {
 			$query['conditions'][$this->alias.'.active'] = TRUE;
 			//Only items published in the past
 			$query['conditions'][$this->alias.'.created <='] = date('Y-m-d H:i:s');
-			//No spot videos
-			$query['conditions'][$this->alias.'.is_spot'] = FALSE;
 						
             return $query;
         }

@@ -185,8 +185,9 @@ class VideosController extends MeCmsAppController {
 		//If the data are not available from the cache
         if(empty($videos)) {
 			$videos = $this->Video->find('active', array(
-				'fields'	=> array('id', 'youtube_id', 'title', 'description'),
-				'limit'	=> $limit
+				'conditions'	=> array('is_spot' => FALSE),
+				'fields'		=> array('id', 'youtube_id', 'title', 'description'),
+				'limit'			=> $limit
 			));
 			
             Cache::write($cache, $videos, 'videos');
@@ -209,10 +210,11 @@ class VideosController extends MeCmsAppController {
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
 			$this->paginate = array(
-				'contain'	=> array('Category.slug', 'Category.title', 'User.first_name', 'User.last_name'),
-				'fields'	=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
-				'findType'	=> 'active',
-				'limit'		=> $this->config['records_for_page']
+				'contain'		=> array('Category.slug', 'Category.title', 'User.first_name', 'User.last_name'),
+				'conditions'	=> array('is_spot' => FALSE),
+				'fields'		=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
+				'findType'		=> 'active',
+				'limit'			=> $this->config['records_for_page']
 			);
 			
             Cache::write($cache, $videos = $this->paginate(), 'videos');
