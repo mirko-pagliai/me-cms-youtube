@@ -118,9 +118,9 @@ class VideosCategoriesController extends MeCmsAppController {
 		//Before deleting, it checks if the category has some videos
 		if(!$this->VideosCategory->field('video_count')) {
 			if($this->VideosCategory->delete())
-				$this->Session->flash(__d('me_youtube', 'The youtube videos category has been deleted'));
+				$this->Session->flash(__d('me_youtube', 'The videos category has been deleted'));
 			else
-				$this->Session->flash(__d('me_youtube', 'The youtube videos category was not deleted'), 'error');
+				$this->Session->flash(__d('me_youtube', 'The videos category was not deleted'), 'error');
 		}
 		else
 			$this->Session->flash(__d('me_youtube', 'Before you delete this category, you have to delete its videos or assign them to another category'), 'error');
