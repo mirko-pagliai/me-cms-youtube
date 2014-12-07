@@ -111,7 +111,7 @@ class VideosCategoriesController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->VideosCategory->id = $id;
 		if(!$this->VideosCategory->exists())
-			throw new NotFoundException(__d('me_youtube', 'Invalid youtube videos category'));
+			throw new NotFoundException(__d('me_youtube', 'Invalid videos category'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
