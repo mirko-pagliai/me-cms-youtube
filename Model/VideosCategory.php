@@ -24,12 +24,12 @@
  * @package		MeYoutube\Model
  */
 
-App::uses('MeCmsAppModel', 'MeCms.Model');
+App::uses('MeYoutubeAppModel', 'MeYoutube.Model');
 
 /**
  * VideosCategory Model
  */
-class VideosCategory extends MeCmsAppModel {
+class VideosCategory extends MeYoutubeAppModel {
 	/**
 	 * Behaviors
 	 * @var array 

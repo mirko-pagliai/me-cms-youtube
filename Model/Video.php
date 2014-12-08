@@ -24,13 +24,13 @@
  * @package		MeYoutube\Model
  */
 
-App::uses('MeCmsAppModel', 'MeCms.Model');
+App::uses('MeYoutubeAppModel', 'MeYoutube.Model');
 App::uses('CakeTime', 'Utility');
 
 /**
  * Video Model
  */
-class Video extends MeCmsAppModel {
+class Video extends MeYoutubeAppModel {
 	/**
 	 * Display field
 	 * @var string
