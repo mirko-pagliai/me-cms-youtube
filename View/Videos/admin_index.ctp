@@ -55,7 +55,7 @@
 						
 						//Only admins and managers can edit all videos
 						//Users can edit only their own videos
-						if($this->Auth->isManager() || $this->Auth->hasId($post['User']['id']))
+						if($this->Auth->isManager() || $this->Auth->hasId($video['User']['id']))
 							$actions[] = $this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id), array('icon' => 'pencil'));					
 									
 						//Only admins and managers can delete videos
