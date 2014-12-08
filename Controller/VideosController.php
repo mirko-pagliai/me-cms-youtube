@@ -148,7 +148,7 @@ class VideosController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->Video->exists($id))
-			throw new NotFoundException(__d('me_youtube', 'Invalid object'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->Video->save($this->request->data)) {
@@ -179,7 +179,7 @@ class VideosController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->Video->id = $id;
 		if(!$this->Video->exists())
-			throw new NotFoundException(__d('me_youtube', 'Invalid object'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
@@ -287,7 +287,7 @@ class VideosController extends MeCmsAppController {
 		//If the data are not available from the cache
 		if(empty($video)) {
 			if(!$this->Video->exists($id))
-				throw new NotFoundException(__d('me_youtube', 'Invalid object'));
+				throw new NotFoundException(__d('me_cms', 'Invalid object'));
 
 			$video = $this->Video->find('active', array(
 				'conditions'	=> array('Video.id' => $id),
