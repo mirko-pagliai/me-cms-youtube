@@ -23,7 +23,10 @@
  */
 ?>
 
-<?php $this->assign('sidebar', $this->MeYoutubeMenu->get('videos', 'nav')); ?>
+<?php
+	$this->assign('sidebar', $this->MeYoutubeMenu->get('videos', 'nav'));
+	$this->Library->datetimepicker();
+?>
 
 <div class="youtubeVideos form">
 	<?php echo $this->Html->h2(__d('me_youtube', 'Edit video')); ?>
@@ -44,7 +47,8 @@
 					'tip'	=> array(
 						sprintf('%s.', __d('me_cms', 'If blank, the current date and time will be used')),
 						sprintf('%s.', __d('me_cms', 'You can delay the publication by entering a future date'))
-					)
+					),
+					'value'	=> $this->Time->format($this->request->data['Video']['created'], '%Y-%m-%d %H:%M')
 				));
 				echo $this->Form->input('priority', array(
 					'default'	=> '3',
