@@ -36,7 +36,7 @@
 			<th><?php echo __d('me_cms', 'Parent'); ?></th>
 			<th class="min-width text-center"><?php echo __d('me_youtube', 'Videos'); ?></th>
 		</tr>
-		<?php foreach($videosCategories as $category): ?>
+		<?php foreach($categories as $category): ?>
 			<tr>
 				<td>
 					<?php

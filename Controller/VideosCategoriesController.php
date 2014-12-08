@@ -42,7 +42,7 @@ class VideosCategoriesController extends MeCmsAppController {
 	}
 	
 	/**
-	 * List videos categories
+	 * List categories
 	 */
 	public function admin_index() {
 		//Gets the categories
@@ -57,13 +57,13 @@ class VideosCategoriesController extends MeCmsAppController {
 		}, $this->VideosCategory->generateTreeList());
 		
 		$this->set(array(
-			'videosCategories'	=> $categories,
+			'categories'		=> $categories,
 			'title_for_layout'	=> __d('me_youtube', 'Videos categories'))
 		);
 	}
 
 	/**
-	 * Add videos category
+	 * Add category
 	 */
 	public function admin_add() {
 		if($this->request->is('post')) {
@@ -83,13 +83,13 @@ class VideosCategoriesController extends MeCmsAppController {
 	}
 
 	/**
-	 * Edit videos category
-	 * @param string $id Videos category id
+	 * Edit category
+	 * @param string $id Category id
 	 * @throws NotFoundException
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->VideosCategory->exists($id))
-			throw new NotFoundException(__d('me_youtube', 'Invalid videos category'));
+			throw new NotFoundException(__d('me_youtube', 'Invalid category'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->VideosCategory->save($this->request->data)) {
@@ -112,14 +112,14 @@ class VideosCategoriesController extends MeCmsAppController {
 	}
 
 	/**
-	 * Delete videos category
-	 * @param string $id Videos category id
+	 * Delete category
+	 * @param string $id Category id
 	 * @throws NotFoundException
 	 */
 	public function admin_delete($id = NULL) {
 		$this->VideosCategory->id = $id;
 		if(!$this->VideosCategory->exists())
-			throw new NotFoundException(__d('me_youtube', 'Invalid videos category'));
+			throw new NotFoundException(__d('me_youtube', 'Invalid category'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
@@ -137,7 +137,7 @@ class VideosCategoriesController extends MeCmsAppController {
 	}
 	
 	/**
-	 * List videos categories
+	 * List categories
 	 */
 	public function index() {		
 		//Tries to get data from the cache
