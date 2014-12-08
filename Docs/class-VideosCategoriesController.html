@@ -7,7 +7,7 @@
 	<title>Class VideosCategoriesController | MeYoutube</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?3927901189"></script>
+	<script type="text/javascript" src="elementlist.js?3132515807"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -134,13 +134,60 @@ MeCmsAppController
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-VideosCategoriesController.html#29-147" title="Go to source code">VideosCategoriesController.php</a><br>
+		<b>Located at</b> <a href="source-class-VideosCategoriesController.html#29-155" title="Go to source code">VideosCategoriesController.php</a><br>
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="isAuthorized" id="_isAuthorized">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAuthorized">#</a>
+		<code><a href="source-class-VideosCategoriesController.html#33-42" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd><code>array</code><br>$user The user to check the authorization of. If empty the user in the session
+will be used.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if $user is authorized, otherwise FALSE<br>
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeAuthComponenet::isManager()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="admin_index" id="_admin_index">
 
 		<td class="attributes"><code>
@@ -152,17 +199,17 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-VideosCategoriesController.html#33-55" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-VideosCategoriesController.html#44-63" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			
-<p>List videos categories</p>
+<p>List categories</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>List videos categories</p>
+<p>List categories</p>
 
 
 
@@ -185,17 +232,17 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-VideosCategoriesController.html#57-75" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-VideosCategoriesController.html#65-83" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			
-<p>Add videos category</p>
+<p>Add category</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>Add videos category</p>
+<p>Add category</p>
 
 
 
@@ -218,24 +265,24 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-VideosCategoriesController.html#77-104" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosCategoriesController.html#85-112" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
-<p>Edit videos category</p>
+<p>Edit category</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>Edit videos category</p>
+<p>Edit category</p>
 
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$id</var></dt>
-					<dd><code>string</code><br>$id Videos category id</dd>
+					<dd><code>string</code><br>$id Category id</dd>
 				</dl></div>
 
 
@@ -260,24 +307,24 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-VideosCategoriesController.html#106-129" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosCategoriesController.html#114-137" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
-<p>Delete videos category</p>
+<p>Delete category</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>Delete videos category</p>
+<p>Delete category</p>
 
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$id</var></dt>
-					<dd><code>string</code><br>$id Videos category id</dd>
+					<dd><code>string</code><br>$id Category id</dd>
 				</dl></div>
 
 
@@ -302,17 +349,17 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-VideosCategoriesController.html#131-146" title="Go to source code">index</a>( )</code>
+		<code><a href="source-class-VideosCategoriesController.html#139-154" title="Go to source code">index</a>( )</code>
 
 		<div class="description short">
 			
-<p>List videos categories</p>
+<p>List categories</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>List videos categories</p>
+<p>List categories</p>
 
 
 

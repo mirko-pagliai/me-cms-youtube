@@ -7,7 +7,7 @@
 	<title>Class VideosController | MeYoutube</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?3927901189"></script>
+	<script type="text/javascript" src="elementlist.js?3132515807"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -134,13 +134,63 @@ MeCmsAppController
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-VideosController.html#29-280" title="Go to source code">VideosController.php</a><br>
+		<b>Located at</b> <a href="source-class-VideosController.html#29-304" title="Go to source code">VideosController.php</a><br>
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="isAuthorized" id="_isAuthorized">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAuthorized">#</a>
+		<code><a href="source-class-VideosController.html#33-55" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd><code>array</code><br>$user The user to check the authorization of. If empty the user in the session
+will be used.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if $user is authorized, otherwise FALSE<br>
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeAuthComponenet::isAction()<br>
+						MeAuthComponenet::isManager()<br>
+						MeAuthComponenet::user()<br>
+						Video::isOwnedBy()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="_parseUrl" id="__parseUrl">
 
 		<td class="attributes"><code>
@@ -152,7 +202,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#__parseUrl">#</a>
-		<code><a href="source-class-VideosController.html#33-68" title="Go to source code">_parseUrl</a>( <span>string <var>$url</var></span> )</code>
+		<code><a href="source-class-VideosController.html#57-92" title="Go to source code">_parseUrl</a>( <span>string <var>$url</var></span> )</code>
 
 		<div class="description short">
 			
@@ -194,7 +244,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-VideosController.html#70-84" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-VideosController.html#94-108" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			
@@ -227,7 +277,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-VideosController.html#86-119" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-VideosController.html#110-143" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			
@@ -260,7 +310,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-VideosController.html#121-148" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#145-172" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -298,7 +348,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-VideosController.html#150-168" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#174-192" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -340,7 +390,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_request_latest">#</a>
-		<code><a href="source-class-VideosController.html#170-197" title="Go to source code">request_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-VideosController.html#194-221" title="Go to source code">request_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			
@@ -388,7 +438,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-VideosController.html#199-252" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#223-276" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -426,7 +476,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-VideosController.html#254-279" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#278-303" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
