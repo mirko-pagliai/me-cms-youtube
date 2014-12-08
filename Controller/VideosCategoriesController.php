@@ -89,7 +89,7 @@ class VideosCategoriesController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->VideosCategory->exists($id))
-			throw new NotFoundException(__d('me_youtube', 'Invalid category'));
+			throw new NotFoundException(__d('me_youtube', 'Invalid object'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->VideosCategory->save($this->request->data)) {
@@ -119,7 +119,7 @@ class VideosCategoriesController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->VideosCategory->id = $id;
 		if(!$this->VideosCategory->exists())
-			throw new NotFoundException(__d('me_youtube', 'Invalid category'));
+			throw new NotFoundException(__d('me_youtube', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
