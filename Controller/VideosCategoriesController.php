@@ -40,13 +40,10 @@ class VideosCategoriesController extends MeCmsAppController {
 			'fields'	=> array('id', 'slug', 'video_count')
 		));
 		
-		//Gets the tree list
-		$treeList = $this->VideosCategory->generateTreeList();
-		
 		//Changes the category titles, replacing them with the titles of the tree list
 		array_walk($categories, function(&$v, $k, $treeList) {
 			$v['VideosCategory']['title'] = $treeList[$v['VideosCategory']['id']];
-		}, $treeList);
+		}, $this->VideosCategory->generateTreeList());
 		
 		$this->set(array(
 			'videosCategories'	=> $categories,
