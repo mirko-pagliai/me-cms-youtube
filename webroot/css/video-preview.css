@@ -18,7 +18,6 @@
 
 /* Video preview, link, info wrapper */
 .video-preview a .info-wrapper {
-	background: rgba(0, 0, 0, .66);
     height: 100%;
     left: 0;
 	opacity: 0;
@@ -34,6 +33,7 @@
 /* Video preview, link on hover or active link, info wrapper */
 .video-preview a:hover .info-wrapper,
 .video-preview a.active .info-wrapper {
+	background: rgba(0, 0, 0, .66);
 	opacity: 1;
 }
 
