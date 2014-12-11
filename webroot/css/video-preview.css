@@ -16,8 +16,9 @@
     width: 100%;	
 }
 
-/* Video preview, link, info wrapper */
-.video-preview a .info-wrapper {
+/* Video preview, info wrapper */
+.video-preview .info-wrapper {
+	background: rgba(0, 0, 0, .66);
     height: 100%;
     left: 0;
 	opacity: 0;
@@ -33,12 +34,11 @@
 /* Video preview, link on hover or active link, info wrapper */
 .video-preview a:hover .info-wrapper,
 .video-preview a.active .info-wrapper {
-	background: rgba(0, 0, 0, .66);
 	opacity: 1;
 }
 
-/* Video preview, link, info text */
-.video-preview a .info-wrapper .info-text {
+/* Video preview, info wrapper, info text */
+.video-preview .info-wrapper .info-text {
     color: #fff;
     font-family: Roboto,sans-serif;
     font-size: .9em;
