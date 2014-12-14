@@ -39,13 +39,14 @@
 				'default'	=> empty($this->request->query['url']) ? NULL : $this->request->query['url'],
 				'label'		=> __d('me_youtube', 'Video url'),
 				'name'		=> 'url',
-				'onchange'	=> 'send_form(this)'
+				'onchange'	=> 'send_form(this)',
+				'size'		=> 100
 			));
-			echo $this->Form->end(__d('me_youtube', 'Select'), array('div' => false));
+			echo $this->Form->end(__d('me_youtube', 'Select'), array('div' => FALSE));
 		?>
 	</div>
 	
-	<?php if(!empty($youtubeId)): ?>
+	<?php if(!empty($this->request->data['Video']['youtube_id'])): ?>
 		<?php echo $this->Form->create('Video'); ?>
 			<div class='float-form'>
 				<?php
@@ -95,14 +96,13 @@
 						'class'				=> 'margin-15',
 						'allowfullscreen'	=> TRUE,
 						'height'			=> 315,
-						'src'				=> sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $youtubeId),
+						'src'				=> sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $this->request->data['Video']['youtube_id']),
 						'width'				=> 560
 					));
 					echo $this->Form->input('youtube_id', array(
 						'label'		=> __d('me_youtube', '%s ID', 'YouTube'),
 						'readonly'	=> TRUE,
-						'type'		=> 'text',
-						'value'		=> $youtubeId
+						'type'		=> 'text'
 					));
 					echo $this->Form->input('title', array(
 						'label' => __d('me_cms', 'Title'),
