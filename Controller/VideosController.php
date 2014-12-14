@@ -144,7 +144,7 @@ class VideosController extends MeCmsAppController {
 		}
 		
 		//If the address of a YouTube video has been specified
-		if(!empty($this->request->query['url'])) {
+		if(!empty($this->request->query['url']) && !$this->request->is('post')) {
 			//Gets the Youtube video ID
 			$this->request->data['Video']['youtube_id'] = $this->_parseUrl($this->request->query['url']);
 			//Gets the Youtube video information
