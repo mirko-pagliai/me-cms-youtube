@@ -95,7 +95,7 @@
 				));
 				echo $this->Form->input('description', array(
 					'label' => __d('me_cms', 'Description'),
-					'rows'	=> 2,
+					'rows'	=> 3,
 					'type'	=> 'textarea'
 				));
 			?>
