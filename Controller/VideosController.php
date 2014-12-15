@@ -25,7 +25,6 @@
  */
 
 App::uses('MeCmsAppController', 'MeCms.Controller');
-App::uses('CakeTime', 'Utility');
 
 /**
  * Videos Controller
@@ -54,63 +53,6 @@ class VideosController extends MeCmsAppController {
 		
 		return TRUE;
 	}
-	
-	/**
-	 * Gets information about a YouTube video
-	 * @param string $youtubeId YouTube video ID
-	 * @return mixed information, otherwise FALSE
-	 */
-	protected function _getInfo($youtubeId) {
-		$this->Xml = $this->Components->load('MeTools.Xml');
-		$info = $this->Xml->getAsArray(sprintf('https://gdata.youtube.com/feeds/api/videos/%s?v=2', $youtubeId));
-		
-		if(empty($info))
-			return FALSE;
-		
-		return array(
-			'title' => empty($info['title']) ? NULL : $info['title'],
-			'description' => empty($info['media:group']['media:description']['@']) ? NULL : $info['media:group']['media:description']['@'],
-			'created' => empty($info['published']) ? NULL : CakeTime::format($info['published'], '%Y-%m-%d %H:%M')
-		);
-	}
-
-
-	/**
-	 * Parses a (YouTube) video and returns the video ID
-	 * @param string $url Video url
-	 * @return mixed Video ID or FALSE
-	 */
-	protected function _parseUrl($url) {
-		//Parses the url
-		$url = parse_url($url);
-		
-		//Checks if it's a YouTube address
-		if(empty($url['host']) || !preg_match('/youtube\.com$/', $url['host'])) {
-			$this->Session->flash(__d('me_youtube', 'This is not a %s video', 'YouTube'), 'error');
-			return FALSE;
-		}
-
-		//Checks if it's a valid query address
-		if(empty($url['query'])) {
-			$this->Session->flash(__d('me_youtube', 'The video address is incorrect'), 'error');
-			return FALSE;
-		}
-
-		$query = array();
-
-		foreach(explode('&', $url['query']) as $string) {
-			$exploded = explode('=', $string);
-			$query[$exploded[0]] = $exploded[1];
-		}
-
-		//Checks if the video ID is present
-		if(empty($query['v'])) {
-			$this->Session->flash(__d('me_youtube', 'The video ID is not present'), 'error');
-			return FALSE;
-		}
-
-		return $query['v'];
-	}
 
 	/**
 	 * List videos
@@ -130,8 +72,8 @@ class VideosController extends MeCmsAppController {
 
 	/**
 	 * Add video
-	 * @uses _getInfo()
-	 * @uses _parseUrl()
+	 * @uses YoutubeComponent::getId()
+	 * @uses YoutubeComponent::getInfo()
 	 */
 	public function admin_add() {
 		//Gets the categories
@@ -144,11 +86,12 @@ class VideosController extends MeCmsAppController {
 		}
 		
 		//If the address of a YouTube video has been specified
-		if(!empty($this->request->query['url']) && !$this->request->is('post')) {
-			//Gets the Youtube video ID
-			$this->request->data['Video']['youtube_id'] = $this->_parseUrl($this->request->query['url']);
-			//Gets the Youtube video information
-			$this->request->data['Video'] = am($this->request->data['Video'], $this->_getInfo($this->request->data['Video']['youtube_id']));
+		if(!empty($this->request->query['url']) && $this->request->is('get')) {
+			//Loads the YouTube component
+			$this->Youtube = $this->Components->load('MeYoutube.Youtube');
+			//Gets the Youtube video ID and the video information
+			$youtube_id = $this->Youtube->getId($this->request->query['url']);
+			$this->request->data['Video'] = am(compact('youtube_id'), $this->Youtube->getInfo($youtube_id));
 		}
 		
 		if($this->request->is('post')) {
