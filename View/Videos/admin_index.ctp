@@ -33,7 +33,7 @@
 	<table class="table table-striped">
 		<tr>
 			<th><?php echo $this->Paginator->sort('title', __d('me_cms', 'Title')); ?></th>
-			<th class="text-center"><?php echo $this->Paginator->sort('User.username', __d('me_cms', 'Author')); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('User.first_name', __d('me_cms', 'Author')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('category_id', __d('me_cms', 'Category')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('priority', __d('me_cms', 'Priority')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('created', __d('me_cms', 'Date')); ?></th>
@@ -67,7 +67,7 @@
 						echo $this->Html->ul($actions, array('class' => 'actions'));
 					?>
 				</td>
-				<td class="text-center"><?php echo $video['User']['username']; ?></td>
+				<td class="text-center"><?php echo sprintf('%s %s', $video['User']['first_name'], $video['User']['last_name']); ?></td>
 				<td class="text-center"><?php echo $video['Category']['title']; ?></td>
 				<td class="text-center">
 					<?php
