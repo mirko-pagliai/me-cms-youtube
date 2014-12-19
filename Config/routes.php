@@ -31,8 +31,8 @@ Router::connect('/video/*',		array('controller' => 'videos', 'action' => 'view',
 //Videos categories controller
 Router::connect('/videosCategories',	 array('controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'me_youtube'));
 
-$controllers = '(videos_categories|videos)';
+//Each "admin" request will be directed to the plugin
+$controllers = array('videos_categories', 'videos');
 
-//Each "admin" request is directed to the plugin
-Router::connect('/admin/:controller',			array('plugin' => 'me_youtube', 'admin' => TRUE), array('controller' => $controllers));
+Router::connect('/admin/:controller',			array('plugin' => 'me_youtube', 'admin' => TRUE), array('controller' => $controllers = sprintf('(%s)', implode('|', $controllers))));
 Router::connect('/admin/:controller/:action/*',	array('plugin' => 'me_youtube', 'admin' => TRUE), array('controller' => $controllers));
