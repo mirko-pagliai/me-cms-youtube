@@ -34,7 +34,7 @@ class VideosController extends MeCmsAppController {
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
-	 * @uses MeAuthComponenet::isAction()
+	 * @uses isAction()
 	 * @uses MeAuthComponenet::isManager()
 	 * @uses MeAuthComponenet::user()
 	 * @uses Video::isOwnedBy()
@@ -42,13 +42,13 @@ class VideosController extends MeCmsAppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can edit all videos
 		//Users can edit only their own videos
-		if($this->Auth->isAction('edit') && !$this->Auth->isManager()) {
+		if($this->isAction('admin_edit') && !$this->Auth->isManager()) {
 			$id = (int) $this->request->params['pass'][0];
 			return $this->Video->isOwnedBy($id, $this->Auth->user('id'));
 		}
 		
 		//Only admins and managers can delete videos
-		if($this->Auth->isAction('delete'))
+		if($this->isAction('admin_delete'))
 			return $this->Auth->isManager();
 		
 		return TRUE;
@@ -166,10 +166,11 @@ class VideosController extends MeCmsAppController {
 	 * @param int $limit Number of latest videos
 	 * @return array Latest videos
 	 * @throws ForbiddenException
+	 * @uses isRequestAction()
 	 */
 	public function request_latest($limit = 1) {
 		//This method works only with "requestAction()"
-		if(empty($this->request->params['requested']))
+		if(!$this->isRequestAction())
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
