@@ -46,7 +46,6 @@
 /* Video preview, info wrapper, info text */
 .video-preview .info-wrapper .info-text {
     color: #fff;
-    font-family: Roboto,sans-serif;
     font-size: .9em;
 	padding: 0 10px;
 	position: relative;
