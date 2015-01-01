@@ -1,0 +1,35 @@
+#!/bin/bash
+# Ask for version
+echo "-- MeYoutube build script --"
+echo "Please, enter the version number: "
+read version
+version="meyoutube-$version"
+
+# Create build/MeYoutube
+rm -r -f build/MeYoutube
+mkdir -p build/MeYoutube
+
+# Copy in build/MeYoutube
+cp -a --parents Config/ Controller/ Locale/ita Model/ \
+View/ webroot/ COPYNG version build/MeYoutube
+
+# Enter build/MeYoutube
+cd build/MeYoutube
+
+# Remove .directory files
+find . -name ".directory" -type f -exec rm -rf {} \;
+
+# Remove old files
+find . -name "*.old.*" -type f -exec rm -rf {} \;
+
+# Delete some uncompressed files
+rm -f webroot/js/slugify.js
+
+# Go back to build/
+cd ../
+
+# Create the tar archive
+tar -czf $version.tar.gz MeYoutube/*
+echo "The file $version.tar.gz was created"
+
+exit 0
