@@ -4,7 +4,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2014-12-08 18:10+0100\n"
+"Project-Id-Version: PROJECT VERSION\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -56,62 +56,62 @@ msgstr ""
 msgid "Before you delete this category, you have to delete its videos or assign them to another category"
 msgstr ""
 
-#: Controller/VideosController.php:68
-msgid "This is not a %s video"
-msgstr ""
-
-#: Controller/VideosController.php:74
-msgid "The video address is incorrect"
-msgstr ""
-
-#: Controller/VideosController.php:87
-msgid "The video ID is not present"
-msgstr ""
-
-#: Controller/VideosController.php:106;273
+#: Controller/VideosController.php:69;243
 #: View/Helper/MeYoutubeMenuHelper.php:58
 #: View/Videos/admin_index.ctp:30
 #: View/VideosCategories/admin_index.ctp:37
 msgid "Videos"
 msgstr ""
 
-#: Controller/VideosController.php:119
+#: Controller/VideosController.php:84
 msgid "Before you can add a video, you have to create at least a category"
 msgstr ""
 
-#: Controller/VideosController.php:131
+#: Controller/VideosController.php:100
 msgid "The video has been created"
 msgstr ""
 
-#: Controller/VideosController.php:135
+#: Controller/VideosController.php:104
 msgid "The video could not be created. Please, try again"
 msgstr ""
 
-#: Controller/VideosController.php:141
+#: Controller/VideosController.php:110
 #: View/Helper/MeYoutubeMenuHelper.php:47
 #: View/Videos/admin_add.ctp:32;120
 msgid "Add video"
 msgstr ""
 
-#: Controller/VideosController.php:155
+#: Controller/VideosController.php:124
 msgid "The video has been edited"
 msgstr ""
 
-#: Controller/VideosController.php:159
+#: Controller/VideosController.php:128
 msgid "The video could not be edited. Please, try again"
 msgstr ""
 
-#: Controller/VideosController.php:170
+#: Controller/VideosController.php:139
 #: View/Videos/admin_edit.ctp:32;103
 msgid "Edit video"
 msgstr ""
 
-#: Controller/VideosController.php:187
+#: Controller/VideosController.php:156
 msgid "The video has been deleted"
 msgstr ""
 
-#: Controller/VideosController.php:189
+#: Controller/VideosController.php:158
 msgid "The video was not deleted"
+msgstr ""
+
+#: Controller/Component/YoutubeComponent.php:51
+msgid "This is not a %s video"
+msgstr ""
+
+#: Controller/Component/YoutubeComponent.php:57
+msgid "The video address is incorrect"
+msgstr ""
+
+#: Controller/Component/YoutubeComponent.php:70
+msgid "The video ID is not present"
 msgstr ""
 
 #: View/Helper/MeYoutubeMenuHelper.php:46
@@ -122,21 +122,21 @@ msgstr ""
 msgid "Video url"
 msgstr ""
 
-#: View/Videos/admin_add.ctp:44
+#: View/Videos/admin_add.ctp:45
 msgid "Select"
 msgstr ""
 
-#: View/Videos/admin_add.ctp:82
+#: View/Videos/admin_add.ctp:83
 #: View/Videos/admin_edit.ctp:65
 msgid "Is a spot"
 msgstr ""
 
-#: View/Videos/admin_add.ctp:83
+#: View/Videos/admin_add.ctp:84
 #: View/Videos/admin_edit.ctp:66
 msgid "Enable this option if this video is a spot"
 msgstr ""
 
-#: View/Videos/admin_add.ctp:102
+#: View/Videos/admin_add.ctp:103
 #: View/Videos/admin_edit.ctp:85
 msgid "%s ID"
 msgstr ""

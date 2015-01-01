@@ -1,10 +1,11 @@
-# LANGUAGE translation of MeYoutube
-# Copyright 2014 Mirko Pagliai <mirko.pagliai@gmail.com>
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
 #
+# Mirko Pagliai, 2015.
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2014-12-08 18:10+0100\n"
-"PO-Revision-Date: 2014-12-08 18:10+0100\n"
+"POT-Creation-Date: 2015-01-01 19:56+0100\n"
+"PO-Revision-Date: 2015-01-01 19:57+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,63 +61,63 @@ msgstr ""
 "Prima di cancellare questa categoria, devi cancellare i suoi video o "
 "assegnarli a un'altra categoria"
 
-#: Controller/VideosController.php:68
-msgid "This is not a %s video"
-msgstr "Questo non è un video di %s"
-
-#: Controller/VideosController.php:74
-msgid "The video address is incorrect"
-msgstr "L'indirizzo del video non è corretto"
-
-#: Controller/VideosController.php:87
-msgid "The video ID is not present"
-msgstr "L'ID del video non è presente"
-
-#: Controller/VideosController.php:106;273
+#: Controller/VideosController.php:69;243
 #: View/Helper/MeYoutubeMenuHelper.php:58
 #: View/Videos/admin_index.ctp:30
 #: View/VideosCategories/admin_index.ctp:37
 msgid "Videos"
 msgstr "Video"
 
-#: Controller/VideosController.php:119
+#: Controller/VideosController.php:84
 msgid "Before you can add a video, you have to create at least a category"
 msgstr "Prima di aggiungere un video, devi creare almeno una categoria"
 
-#: Controller/VideosController.php:131
+#: Controller/VideosController.php:100
 msgid "The video has been created"
 msgstr "Il video è stato creato"
 
-#: Controller/VideosController.php:135
+#: Controller/VideosController.php:104
 msgid "The video could not be created. Please, try again"
 msgstr "Il video non può essere creato. Prova ancora"
 
-#: Controller/VideosController.php:141
+#: Controller/VideosController.php:110
 #: View/Helper/MeYoutubeMenuHelper.php:47
 #: View/Videos/admin_add.ctp:32;120
 msgid "Add video"
 msgstr "Aggiungi video"
 
-#: Controller/VideosController.php:155
+#: Controller/VideosController.php:124
 msgid "The video has been edited"
 msgstr "Il video è stato modificato"
 
-#: Controller/VideosController.php:159
+#: Controller/VideosController.php:128
 msgid "The video could not be edited. Please, try again"
 msgstr "Il video non può essere modificato. Prova ancora"
 
-#: Controller/VideosController.php:170
+#: Controller/VideosController.php:139
 #: View/Videos/admin_edit.ctp:32;103
 msgid "Edit video"
 msgstr "Modifica video"
 
-#: Controller/VideosController.php:187
+#: Controller/VideosController.php:156
 msgid "The video has been deleted"
 msgstr "Il video è stato cancellato"
 
-#: Controller/VideosController.php:189
+#: Controller/VideosController.php:158
 msgid "The video was not deleted"
 msgstr "Il video non è stato cancellato"
+
+#: Controller/Component/YoutubeComponent.php:51
+msgid "This is not a %s video"
+msgstr "Questo non è un video di %s"
+
+#: Controller/Component/YoutubeComponent.php:57
+msgid "The video address is incorrect"
+msgstr "L'indirizzo del video non è corretto"
+
+#: Controller/Component/YoutubeComponent.php:70
+msgid "The video ID is not present"
+msgstr "L'ID del video non è presente"
 
 #: View/Helper/MeYoutubeMenuHelper.php:46
 msgid "List videos"
@@ -126,21 +127,21 @@ msgstr "Elenca video"
 msgid "Video url"
 msgstr "Url del video"
 
-#: View/Videos/admin_add.ctp:44
+#: View/Videos/admin_add.ctp:45
 msgid "Select"
 msgstr "Seleziona"
 
-#: View/Videos/admin_add.ctp:82
+#: View/Videos/admin_add.ctp:83
 #: View/Videos/admin_edit.ctp:65
 msgid "Is a spot"
 msgstr "È uno spot"
 
-#: View/Videos/admin_add.ctp:83
+#: View/Videos/admin_add.ctp:84
 #: View/Videos/admin_edit.ctp:66
 msgid "Enable this option if this video is a spot"
 msgstr "Abilita questa opzione se il video è uno spot"
 
-#: View/Videos/admin_add.ctp:102
+#: View/Videos/admin_add.ctp:103
 #: View/Videos/admin_edit.ctp:85
 msgid "%s ID"
 msgstr "%s ID"
