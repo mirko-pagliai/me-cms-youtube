@@ -7,7 +7,7 @@
 	<title>Class VideosController | MeYoutube</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?990750995"></script>
+	<script type="text/javascript" src="elementlist.js?915255663"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -23,8 +23,11 @@
 			<ul>
 				<li class="active main"><a href="package-MeYoutube.html">MeYoutube<span></span></a>
 						<ul>
-				<li class="active main"><a href="package-MeYoutube.Controller.html">Controller</a>
+				<li class="active main"><a href="package-MeYoutube.Controller.html">Controller<span></span></a>
+						<ul>
+				<li class="main"><a href="package-MeYoutube.Controller.Component.html">Component</a>
 						</li>
+							</ul></li>
 				<li class="main"><a href="package-MeYoutube.Model.html">Model</a>
 						</li>
 				<li class="main"><a href="package-MeYoutube.View.html">View<span></span></a>
@@ -128,13 +131,13 @@ MeCmsAppController
 		<b>Package:</b> <a href="package-MeYoutube.html">MeYoutube</a>\<a href="package-MeYoutube.Controller.html">Controller</a><br>
 
 				<b>Copyright:</b>
-				Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd<br>
+				Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd<br>
 				<b>License:</b>
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-VideosController.html#30-330" title="Go to source code">VideosController.php</a><br>
+		<b>Located at</b> <a href="source-class-VideosController.html#29-274" title="Go to source code">VideosController.php</a><br>
 	</div>
 
 
@@ -152,7 +155,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-VideosController.html#34-56" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#33-55" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -181,102 +184,10 @@ will be used.</dd>
 
 				<h4>Uses</h4>
 				<div class="list">
-						MeAuthComponenet::isAction()<br>
+						isAction()<br>
 						MeAuthComponenet::isManager()<br>
 						MeAuthComponenet::user()<br>
 						Video::isOwnedBy()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="_getInfo" id="__getInfo">
-
-		<td class="attributes"><code>
-			 protected 
-			mixed
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#__getInfo">#</a>
-		<code><a href="source-class-VideosController.html#58-75" title="Go to source code">_getInfo</a>( <span>string <var>$youtubeId</var></span> )</code>
-
-		<div class="description short">
-			
-<p>Gets information about a YouTube video</p>
-
-		</div>
-
-		<div class="description detailed hidden">
-			
-<p>Gets information about a YouTube video</p>
-
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$youtubeId</var></dt>
-					<dd><code>string</code><br>$youtubeId YouTube video ID</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					<code>mixed</code><br>information, otherwise FALSE<br>
-				</div>
-
-
-				<h4>Used by</h4>
-				<div class="list">
-						<code><code><a href="class-VideosController.html#_admin_add">VideosController::admin_add()</a></code></code> <br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="_parseUrl" id="__parseUrl">
-
-		<td class="attributes"><code>
-			 protected 
-			mixed
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#__parseUrl">#</a>
-		<code><a href="source-class-VideosController.html#78-113" title="Go to source code">_parseUrl</a>( <span>string <var>$url</var></span> )</code>
-
-		<div class="description short">
-			
-<p>Parses a (YouTube) video and returns the video ID</p>
-
-		</div>
-
-		<div class="description detailed hidden">
-			
-<p>Parses a (YouTube) video and returns the video ID</p>
-
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$url</var></dt>
-					<dd><code>string</code><br>$url Video url</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					<code>mixed</code><br>Video ID or FALSE<br>
-				</div>
-
-
-				<h4>Used by</h4>
-				<div class="list">
-						<code><code><a href="class-VideosController.html#_admin_add">VideosController::admin_add()</a></code></code> <br>
 				</div>
 
 
@@ -294,7 +205,7 @@ will be used.</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-VideosController.html#115-129" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-VideosController.html#57-71" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			
@@ -327,7 +238,7 @@ will be used.</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-VideosController.html#131-169" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-VideosController.html#73-112" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			
@@ -346,8 +257,8 @@ will be used.</dd>
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-VideosController.html#__getInfo">VideosController::_getInfo()</a></code></code> <br>
-						<code><code><a href="class-VideosController.html#__parseUrl">VideosController::_parseUrl()</a></code></code> <br>
+						<code><code><a href="class-YoutubeComponent.html#_getId">YoutubeComponent::getId()</a></code></code> <br>
+						<code><code><a href="class-YoutubeComponent.html#_getInfo">YoutubeComponent::getInfo()</a></code></code> <br>
 				</div>
 
 
@@ -365,7 +276,7 @@ will be used.</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-VideosController.html#171-198" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#114-141" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -403,7 +314,7 @@ will be used.</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-VideosController.html#200-218" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#143-161" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -445,7 +356,7 @@ will be used.</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_request_latest">#</a>
-		<code><a href="source-class-VideosController.html#220-247" title="Go to source code">request_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-VideosController.html#163-191" title="Go to source code">request_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			
@@ -477,6 +388,10 @@ will be used.</dd>
 					<code>ForbiddenException</code><br>
 				</div>
 
+				<h4>Uses</h4>
+				<div class="list">
+						isRequestAction()<br>
+				</div>
 
 
 		</div>
@@ -493,7 +408,7 @@ will be used.</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-VideosController.html#249-302" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#193-246" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -531,7 +446,7 @@ will be used.</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-VideosController.html#304-329" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#248-273" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
