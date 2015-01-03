@@ -45,7 +45,7 @@ class VideosCategoriesController extends MeCmsAppController {
 	 * List categories
 	 */
 	public function admin_index() {
-		//Gets the categories
+		//Gets categories
 		$categories = $this->VideosCategory->find('all', array(
 			'contain'	=> 'Parent.title',
 			'fields'	=> array('id', 'slug', 'video_count')
@@ -56,10 +56,7 @@ class VideosCategoriesController extends MeCmsAppController {
 			$v['VideosCategory']['title'] = $treeList[$v['VideosCategory']['id']];
 		}, $this->VideosCategory->generateTreeList());
 		
-		$this->set(array(
-			'categories'		=> $categories,
-			'title_for_layout'	=> __d('me_youtube', 'Videos categories'))
-		);
+		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Videos categories'))), compact('categories'));
 	}
 
 	/**

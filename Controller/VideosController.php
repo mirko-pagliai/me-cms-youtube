@@ -85,6 +85,9 @@ class VideosController extends MeCmsAppController {
 			$this->redirect(array('controller' => 'videos_categories', 'action' => 'index'));
 		}
 		
+		//Gets users
+		$users = $this->Video->User->find('list', array('fields' => array('id', 'full_name')));
+		
 		//If the address of a YouTube video has been specified
 		if(!empty($this->request->query['url']) && $this->request->is('get')) {
 			//Loads the YouTube component
@@ -104,11 +107,7 @@ class VideosController extends MeCmsAppController {
 				$this->Session->flash(__d('me_youtube', 'The video could not be created. Please, try again'), 'error');
 		}
 
-		$this->set(array(
-			'categories'		=> $categories,
-			'users'				=> $this->Video->User->find('list'),
-			'title_for_layout'	=> __d('me_youtube', 'Add video')
-		));
+		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Add video')), compact('categories', 'users')));
 	}
 
 	/**
@@ -118,7 +117,13 @@ class VideosController extends MeCmsAppController {
 	public function admin_edit($id = NULL) {
 		if(!$this->Video->exists($id))
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
+		
+		//Gets the categories
+		$categories = $this->Video->Category->generateTreeList();
+		
+		//Gets users
+		$users = $this->Video->User->find('list', array('fields' => array('id', 'full_name')));
+		
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->Video->save($this->request->data)) {
 				$this->Session->flash(__d('me_youtube', 'The video has been edited'));
@@ -133,11 +138,7 @@ class VideosController extends MeCmsAppController {
 				'fields'		=> array('id', 'user_id', 'title', 'subtitle', 'youtube_id', 'category_id', 'description', 'priority', 'active', 'is_spot', 'created')
 			));
 
-		$this->set(array(
-			'categories'		=> $this->Video->Category->generateTreeList(),
-			'users'				=> $this->Video->User->find('list'),
-			'title_for_layout'	=> __d('me_youtube', 'Edit video')
-		));
+		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Edit video')), compact('categories', 'users')));
 	}
 
 	/**
