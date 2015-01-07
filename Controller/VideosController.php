@@ -270,6 +270,9 @@ class VideosController extends MeCmsAppController {
             Cache::write($cache, $video, 'videos');
 		}
 		
-		$this->set(am(array('title_for_layout' => $video['Video']['title']), compact('video')));
+		$this->set(am(array(
+			'image_src'			=> $video['Video']['preview'],
+			'title_for_layout'	=> $video['Video']['title']
+		), compact('video')));
 	}
 }
