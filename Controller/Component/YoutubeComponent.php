@@ -35,7 +35,10 @@ class YoutubeComponent extends Component {
 	 * Components
 	 * @var array
 	 */
-	public $components = array('MeTools.Xml');
+	public $components = array(
+		'MeTools.Xml',
+		'Session'	=> array('className' => 'MeTools.MeSession')
+	);
 	
 	/**
 	 * Parses a video url and returns the video ID
