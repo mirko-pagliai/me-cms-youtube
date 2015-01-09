@@ -31,7 +31,7 @@
 <?php if(!empty($video)): ?>
 	<div class="widget sidebar-widget">
 		<?php 
-			echo $this->Html->h4(__d('me_cms', 'Latest video'));
+			echo $this->Html->h4(__d('me_youtube', 'Latest video'));
 			
 			//Sets the thumbnail
 			$thumb = $this->Html->thumb($video['Video']['preview'], array('side' => 263));
