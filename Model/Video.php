@@ -25,7 +25,6 @@
  */
 
 App::uses('MeYoutubeAppModel', 'MeYoutube.Model');
-App::uses('CakeTime', 'Utility');
 
 /**
  * Video Model
