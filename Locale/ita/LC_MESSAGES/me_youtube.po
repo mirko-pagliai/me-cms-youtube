@@ -4,17 +4,15 @@
 # Mirko Pagliai, 2015.
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-01-09 22:25+0100\n"
+"POT-Creation-Date: 2015-01-13 17:19+0100\n"
 "Last-Translator: Mirko Pagliai\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"PO-Revision-Date: 2015-01-09 22:41+0100\n"
+"PO-Revision-Date: 2015-01-13 17:24+0100\n"
 "Language-Team: Italian <>\n"
 "Language: it\n"
-"X-Generator: Lokalize 1.5\n"
 
 #: Controller/VideosCategoriesController.php:59;150
 #: View/VideosCategories/admin_index.ctp:30
@@ -64,7 +62,7 @@ msgstr ""
 "Prima di cancellare questa categoria, devi cancellare i suoi video o "
 "assegnarli a un'altra categoria"
 
-#: Controller/VideosController.php:69;244
+#: Controller/VideosController.php:69;264
 #: View/Helper/MeYoutubeMenuHelper.php:58
 #: View/Videos/admin_index.ctp:30
 #: View/VideosCategories/admin_index.ctp:37
@@ -110,19 +108,25 @@ msgstr "Il video è stato cancellato"
 msgid "The video was not deleted"
 msgstr "Il video non è stato cancellato"
 
-#: Controller/Component/YoutubeComponent.php:51
+#: Controller/VideosController.php:334
+#: View/Elements/widgets/search_videos.ctp:36
+#: View/Videos/search.ctp:28
+msgid "Search videos"
+msgstr "Cerca video"
+
+#: Controller/Component/YoutubeComponent.php:54
 msgid "This is not a %s video"
 msgstr "Questo non è un video di %s"
 
-#: Controller/Component/YoutubeComponent.php:57
+#: Controller/Component/YoutubeComponent.php:60
 msgid "The video address is incorrect"
 msgstr "L'indirizzo del video non è corretto"
 
-#: Controller/Component/YoutubeComponent.php:70
+#: Controller/Component/YoutubeComponent.php:73
 msgid "The video ID is not present"
 msgstr "L'ID del video non è presente"
 
-#: View/Elements/widgets/latest_videos.ctp:34
+#: View/Elements/widgets/latest_videos.ctp:41
 msgid "Latest video"
 msgstr "Ultimo video"
 
@@ -160,5 +164,9 @@ msgstr "Spot"
 #: View/Videos/admin_index.ctp:99
 msgid "This video is a spot"
 msgstr "Questo video è uno spot"
+
+#: View/Videos/rss/index.ctp:30;32
+msgid "Latest videos"
+msgstr "Ultimi video"
 
 
