@@ -275,4 +275,43 @@ class VideosController extends MeCmsAppController {
 			'title_for_layout'	=> $video['Video']['title']
 		), compact('video')));
 	}
+	
+	/**
+	 * Search videos
+	 */
+	public function search() {
+		$pattern = empty($this->request->query['p']) ? FALSE : trim($this->request->query['p']);
+		
+		if(!empty($pattern)) {
+			//Checks if the pattern is at least 4 characters long
+			if(strlen($pattern) >= 4) {
+				$this->paginate = array(
+					'conditions'	=> array(
+						'is_spot' => FALSE,
+						'OR' => array(
+							'title LIKE'		=> sprintf('%%%s%%', $pattern),
+							'subtitle LIKE'		=> sprintf('%%%s%%', $pattern),
+							'description LIKE'	=> sprintf('%%%s%%', $pattern)
+						)
+					),
+					'fields'		=> array('id', 'title', 'description', 'created'),
+					'findType'		=> 'active',
+					'limit'			=> 10
+				);
+
+				try {
+					$videos = $this->paginate();
+					$count = $this->request->params['paging']['Video']['count'];
+				}
+				catch(NotFoundException $e) {}
+
+				$this->set(compact('count', 'videos'));
+			}
+			else
+				$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'error');
+		}
+		
+		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Search videos')), compact('pattern')));
+		
+	}
 }
