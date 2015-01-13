@@ -332,6 +332,5 @@ class VideosController extends MeCmsAppController {
 		}
 		
 		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Search videos')), compact('pattern')));
-		
 	}
 }
