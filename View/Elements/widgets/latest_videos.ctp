@@ -1,5 +1,7 @@
 <?php
 /**
+ * Latest video widget.
+ * 
  * This file is part of MeYoutube.
  *
  * MeYoutube is free software: you can redistribute it and/or modify
