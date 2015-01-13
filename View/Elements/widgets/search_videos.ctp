@@ -25,17 +25,21 @@
  */
 ?>
 
-<?php if($this->request->params['controller'] != 'videos' || $this->request->params['action'] != 'search') : ?>
-	<div class="widget sidebar-widget">
-		<?php 
-			echo $this->Html->h4(__d('me_youtube', 'Search video'));
+<?php
+	//Return, if the current view is the video search
+	if($this->request->params['controller'] === 'videos' && $this->request->params['action'] === 'search')
+		return;
+?>
 
-			echo $this->Form->createInline(FALSE, array('type' => 'get', 'url' => array('controller' => 'videos', 'action' => 'search', 'plugin' => 'me_youtube')));
-			echo $this->Form->input('p', array(
-				'default'		=> empty($pattern) ? NULL : $pattern,
-				'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
-			));
-			echo $this->Form->end(NULL, array('class' => 'visible-lg-inline btn-primary', 'icon' => 'search'));
-		?>
-	</div>
-<?php endif; ?>
+<div class="widget sidebar-widget">
+	<?php 
+		echo $this->Html->h4(__d('me_youtube', 'Search video'));
+
+		echo $this->Form->createInline(FALSE, array('type' => 'get', 'url' => array('controller' => 'videos', 'action' => 'search', 'plugin' => 'me_youtube')));
+		echo $this->Form->input('p', array(
+			'default'		=> empty($pattern) ? NULL : $pattern,
+			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
+		));
+		echo $this->Form->end(NULL, array('class' => 'visible-lg-inline btn-primary', 'icon' => 'search'));
+	?>
+</div>
