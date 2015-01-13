@@ -33,7 +33,7 @@
 
 <div class="widget sidebar-widget">
 	<?php 
-		echo $this->Html->h4(__d('me_youtube', 'Search video'));
+		echo $this->Html->h4(__d('me_youtube', 'Search videos'));
 
 		echo $this->Form->createInline(FALSE, array('type' => 'get', 'url' => array('controller' => 'videos', 'action' => 'search', 'plugin' => 'me_youtube')));
 		echo $this->Form->input('p', array(
