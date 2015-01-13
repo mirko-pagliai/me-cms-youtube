@@ -25,6 +25,7 @@
  */
 
 //Videos controller
+Router::connect('/videos/rss',		array('controller' => 'videos', 'action' => 'index',	'plugin' => 'me_youtube', 'ext' => 'rss'));
 Router::connect('/videos/search/*',	array('controller' => 'videos', 'action' => 'search',	'plugin' => 'me_youtube'));
 Router::connect('/videos/*',			array('controller' => 'videos', 'action' => 'index',	'plugin' => 'me_youtube'));
 Router::connect('/video/*',			array('controller' => 'videos', 'action' => 'view',		'plugin' => 'me_youtube'));
@@ -37,3 +38,6 @@ $controllers = array('videos_categories', 'videos');
 
 Router::connect('/admin/:controller',			array('plugin' => 'me_youtube', 'admin' => TRUE), array('controller' => $controllers = sprintf('(%s)', implode('|', $controllers))));
 Router::connect('/admin/:controller/:action/*',	array('plugin' => 'me_youtube', 'admin' => TRUE), array('controller' => $controllers));
+
+//Enables the 'rss' extension
+Router::parseExtensions('rss');
