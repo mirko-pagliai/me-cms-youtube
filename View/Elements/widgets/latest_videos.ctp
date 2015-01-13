@@ -28,6 +28,11 @@
 <?php
 	//Gets the latest video
 	$video = $this->requestAction(array('controller' => 'videos', 'action' => 'request_latest', 'plugin' => 'me_youtube'));
+	
+	//Return, if the current view is that the last video
+	if($this->request->params['controller'] === 'videos' && $this->request->params['action'] === 'view' 
+		&& !empty($this->request->params['pass'][0]) && $this->request->params['pass'][0] === $video['Video']['id'])
+		return;
 ?>
 
 <?php if(!empty($video)): ?>
