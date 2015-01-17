@@ -55,22 +55,6 @@ class VideosController extends MeCmsAppController {
 	}
 
 	/**
-	 * List videos
-	 */
-	public function admin_index() {
-		$this->paginate = array(
-			'contain'	=> array('Category.title', 'User.first_name', 'User.last_name'),
-			'fields'	=> array('id', 'title', 'priority', 'active', 'is_spot', 'created'),
-			'limit'		=> $this->config['records_for_page']
-		);
-				
-		$this->set(array(
-			'videos'			=> $this->paginate(),
-			'title_for_layout'	=> __d('me_youtube', 'Videos')
-		));
-	}
-
-	/**
 	 * Add video
 	 * @uses YoutubeComponent::getId()
 	 * @uses YoutubeComponent::getInfo()
@@ -111,6 +95,26 @@ class VideosController extends MeCmsAppController {
 	}
 
 	/**
+	 * Delete video
+	 * @param string $id Video ID
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id = NULL) {
+		$this->Video->id = $id;
+		if(!$this->Video->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			
+		$this->request->onlyAllow('post', 'delete');
+		
+		if($this->Video->delete())
+			$this->Session->flash(__d('me_youtube', 'The video has been deleted'));
+		else
+			$this->Session->flash(__d('me_youtube', 'The video was not deleted'), 'error');
+			
+		$this->redirect(array('action' => 'index'));
+	}
+
+	/**
 	 * Edit video
 	 * @param string $id Video ID
 	 */
@@ -142,53 +146,19 @@ class VideosController extends MeCmsAppController {
 	}
 
 	/**
-	 * Delete video
-	 * @param string $id Video ID
-	 * @throws NotFoundException
+	 * List videos
 	 */
-	public function admin_delete($id = NULL) {
-		$this->Video->id = $id;
-		if(!$this->Video->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-		$this->request->onlyAllow('post', 'delete');
-		
-		if($this->Video->delete())
-			$this->Session->flash(__d('me_youtube', 'The video has been deleted'));
-		else
-			$this->Session->flash(__d('me_youtube', 'The video was not deleted'), 'error');
-			
-		$this->redirect(array('action' => 'index'));
-	}
-	
-	/**
-	 * Gets the latest videos.
-	 * This method works only with `requestAction()`.
-	 * @param int $limit Number of latest videos
-	 * @return array Latest videos
-	 * @throws ForbiddenException
-	 * @uses isRequestAction()
-	 */
-	public function request_latest($limit = 1) {
-		//This method works only with "requestAction()"
-		if(!$this->isRequestAction())
-            throw new ForbiddenException();
-		
-		//Tries to get data from the cache
-		$videos = Cache::read($cache = sprintf('videos_request_latest_%d', $limit), 'videos');
-		
-		//If the data are not available from the cache
-        if(empty($videos)) {
-			$videos = $this->Video->find('active', array(
-				'conditions'	=> array('is_spot' => FALSE),
-				'fields'		=> array('id', 'youtube_id', 'title', 'description'),
-				'limit'			=> $limit
-			));
-			
-            Cache::write($cache, $videos, 'videos');
-		}
-		
-		return $videos;
+	public function admin_index() {
+		$this->paginate = array(
+			'contain'	=> array('Category.title', 'User.first_name', 'User.last_name'),
+			'fields'	=> array('id', 'title', 'priority', 'active', 'is_spot', 'created'),
+			'limit'		=> $this->config['records_for_page']
+		);
+				
+		$this->set(array(
+			'videos'			=> $this->paginate(),
+			'title_for_layout'	=> __d('me_youtube', 'Videos')
+		));
 	}
 	
 	/**
@@ -265,36 +235,6 @@ class VideosController extends MeCmsAppController {
 		
 		$this->set(compact('title_for_layout', 'videos'));
 	}
-
-	/**
-	 * View video
-	 * @param string $id Video ID
-	 * @throws NotFoundException
-	 */
-	public function view($id = NULL) {
-		//Tries to get data from the cache
-		$video = Cache::read($cache = sprintf('videos_view_%s', $id), 'videos');
-		
-		//If the data are not available from the cache
-		if(empty($video)) {
-			if(!$this->Video->exists($id))
-				throw new NotFoundException(__d('me_cms', 'Invalid object'));
-
-			$video = $this->Video->find('active', array(
-				'conditions'	=> array('Video.id' => $id),
-				'contain'		=> array('Category.slug', 'Category.title', 'User.first_name', 'User.last_name'),
-				'fields'		=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
-				'limit'			=> 1
-			));
-			
-            Cache::write($cache, $video, 'videos');
-		}
-		
-		$this->set(am(array(
-			'image_src'			=> $video['Video']['preview'],
-			'title_for_layout'	=> $video['Video']['title']
-		), compact('video')));
-	}
 	
 	/**
 	 * Search videos
@@ -332,5 +272,65 @@ class VideosController extends MeCmsAppController {
 		}
 		
 		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Search videos')), compact('pattern')));
+	}
+
+	/**
+	 * View video
+	 * @param string $id Video ID
+	 * @throws NotFoundException
+	 */
+	public function view($id = NULL) {
+		//Tries to get data from the cache
+		$video = Cache::read($cache = sprintf('videos_view_%s', $id), 'videos');
+		
+		//If the data are not available from the cache
+		if(empty($video)) {
+			if(!$this->Video->exists($id))
+				throw new NotFoundException(__d('me_cms', 'Invalid object'));
+
+			$video = $this->Video->find('active', array(
+				'conditions'	=> array('Video.id' => $id),
+				'contain'		=> array('Category.slug', 'Category.title', 'User.first_name', 'User.last_name'),
+				'fields'		=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
+				'limit'			=> 1
+			));
+			
+            Cache::write($cache, $video, 'videos');
+		}
+		
+		$this->set(am(array(
+			'image_src'			=> $video['Video']['preview'],
+			'title_for_layout'	=> $video['Video']['title']
+		), compact('video')));
+	}
+	
+	/**
+	 * Gets the latest videos for widget.
+	 * This method works only with `requestAction()`.
+	 * @param int $limit Number of latest videos
+	 * @return array Latest videos
+	 * @throws ForbiddenException
+	 * @uses isRequestAction()
+	 */
+	public function widget_latest($limit = 1) {
+		//This method works only with "requestAction()"
+		if(!$this->isRequestAction())
+            throw new ForbiddenException();
+		
+		//Tries to get data from the cache
+		$videos = Cache::read($cache = sprintf('videos_widget_latest_%d', $limit), 'videos');
+		
+		//If the data are not available from the cache
+        if(empty($videos)) {
+			$videos = $this->Video->find('active', array(
+				'conditions'	=> array('is_spot' => FALSE),
+				'fields'		=> array('id', 'youtube_id', 'title', 'description'),
+				'limit'			=> $limit
+			));
+			
+            Cache::write($cache, $videos, 'videos');
+		}
+		
+		return $videos;
 	}
 }

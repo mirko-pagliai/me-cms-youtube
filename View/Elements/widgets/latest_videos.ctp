@@ -27,7 +27,7 @@
 	
 <?php
 	//Gets the latest video
-	$video = $this->requestAction(array('controller' => 'videos', 'action' => 'request_latest', 'plugin' => 'me_youtube'));
+	$video = $this->requestAction(array('controller' => 'videos', 'action' => 'widget_latest', 'plugin' => 'me_youtube'));
 	
 	//Return, if the current view is that the last video
 	if($this->request->params['controller'] === 'videos' && $this->request->params['action'] === 'view' 

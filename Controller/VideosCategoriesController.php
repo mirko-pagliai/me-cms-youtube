@@ -40,24 +40,6 @@ class VideosCategoriesController extends MeCmsAppController {
 		//Only admins and managers can access this controller
 		return $this->Auth->isManager();
 	}
-	
-	/**
-	 * List categories
-	 */
-	public function admin_index() {
-		//Gets categories
-		$categories = $this->VideosCategory->find('all', array(
-			'contain'	=> 'Parent.title',
-			'fields'	=> array('id', 'slug', 'video_count')
-		));
-		
-		//Changes the category titles, replacing them with the titles of the tree list
-		array_walk($categories, function(&$v, $k, $treeList) {
-			$v['VideosCategory']['title'] = $treeList[$v['VideosCategory']['id']];
-		}, $this->VideosCategory->generateTreeList());
-		
-		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Videos categories'))), compact('categories'));
-	}
 
 	/**
 	 * Add category
@@ -77,6 +59,31 @@ class VideosCategoriesController extends MeCmsAppController {
 			'parents'			=> $this->VideosCategory->generateTreeList(),
 			'title_for_layout'	=> __d('me_youtube', 'Add videos category')
 		));
+	}
+
+	/**
+	 * Delete category
+	 * @param string $id Category id
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id = NULL) {
+		$this->VideosCategory->id = $id;
+		if(!$this->VideosCategory->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			
+		$this->request->onlyAllow('post', 'delete');
+		
+		//Before deleting, it checks if the category has some videos
+		if(!$this->VideosCategory->field('video_count')) {
+			if($this->VideosCategory->delete())
+				$this->Session->flash(__d('me_youtube', 'The videos category has been deleted'));
+			else
+				$this->Session->flash(__d('me_youtube', 'The videos category was not deleted'), 'error');
+		}
+		else
+			$this->Session->flash(__d('me_youtube', 'Before you delete this category, you have to delete its videos or assign them to another category'), 'error');
+		
+		$this->redirect(array('action' => 'index'));
 	}
 
 	/**
@@ -107,30 +114,23 @@ class VideosCategoriesController extends MeCmsAppController {
 			'title_for_layout'	=> __d('me_youtube', 'Edit videos category')
 		));
 	}
-
+	
 	/**
-	 * Delete category
-	 * @param string $id Category id
-	 * @throws NotFoundException
+	 * List categories
 	 */
-	public function admin_delete($id = NULL) {
-		$this->VideosCategory->id = $id;
-		if(!$this->VideosCategory->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-		$this->request->onlyAllow('post', 'delete');
+	public function admin_index() {
+		//Gets categories
+		$categories = $this->VideosCategory->find('all', array(
+			'contain'	=> 'Parent.title',
+			'fields'	=> array('id', 'slug', 'video_count')
+		));
 		
-		//Before deleting, it checks if the category has some videos
-		if(!$this->VideosCategory->field('video_count')) {
-			if($this->VideosCategory->delete())
-				$this->Session->flash(__d('me_youtube', 'The videos category has been deleted'));
-			else
-				$this->Session->flash(__d('me_youtube', 'The videos category was not deleted'), 'error');
-		}
-		else
-			$this->Session->flash(__d('me_youtube', 'Before you delete this category, you have to delete its videos or assign them to another category'), 'error');
+		//Changes the category titles, replacing them with the titles of the tree list
+		array_walk($categories, function(&$v, $k, $treeList) {
+			$v['VideosCategory']['title'] = $treeList[$v['VideosCategory']['id']];
+		}, $this->VideosCategory->generateTreeList());
 		
-		$this->redirect(array('action' => 'index'));
+		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Videos categories'))), compact('categories'));
 	}
 	
 	/**
