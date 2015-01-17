@@ -25,7 +25,7 @@
  */
 
 //Videos controller
-Router::connect('/videos/rss',		array('controller' => 'videos', 'action' => 'rss',	'plugin' => 'me_youtube', 'ext' => 'rss'));
+Router::connect('/videos/rss',		array('controller' => 'videos', 'action' => 'rss',		'plugin' => 'me_youtube', 'ext' => 'rss'));
 Router::connect('/videos/search/*',	array('controller' => 'videos', 'action' => 'search',	'plugin' => 'me_youtube'));
 Router::connect('/videos/*',			array('controller' => 'videos', 'action' => 'index',	'plugin' => 'me_youtube'));
 Router::connect('/video/*',			array('controller' => 'videos', 'action' => 'view',		'plugin' => 'me_youtube'));
