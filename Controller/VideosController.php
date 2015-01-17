@@ -162,30 +162,37 @@ class VideosController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Lists videos as RSS.
+	 * @return array Videos
+	 * @throws ForbiddenException
+	 */
+	public function rss() {
+		//This method works only for RSS
+		if(!$this->RequestHandler->isRss())
+            throw new ForbiddenException();
+		
+		//Tries to get data from the cache
+		$videos = Cache::read($cache = 'videos_rss', 'videos');
+
+		//If the data are not available from the cache
+		if(empty($videos)) {
+			$videos = $this->Video->find('active', array(
+				'conditions'	=> array('is_spot' => FALSE),
+				'fields'		=> array('id', 'title', 'description', 'created'),
+				'limit'			=> 20
+			));
+
+			Cache::write($cache, $videos, 'videos');
+		}
+
+		return $this->set(compact('videos'));
+	}
+	
+	/**
 	 * List videos
 	 * @param string $category Category slug, optional
-	 * @return array List of latest videos (only when requested as rss)
 	 */
 	public function index($category = NULL) {
-		//If the videos were requested as rss
-		if($this->RequestHandler->isRss()) {
-			//Tries to get data from the cache
-			$videos = Cache::read($cache = 'videos_rss', 'videos');
-
-			//If the data are not available from the cache
-			if(empty($videos)) {
-				$videos = $this->Video->find('active', array(
-					'conditions'	=> array('is_spot' => FALSE),
-					'fields'		=> array('id', 'title', 'description', 'created'),
-					'limit'			=> 20
-				));
-
-				Cache::write($cache, $videos, 'videos');
-			}
-			
-			return $this->set(compact('videos'));
-		}
-		
 		//Sets the initial cache name
 		$cache = 'videos_index';
 		//Sets the initial conditions query
