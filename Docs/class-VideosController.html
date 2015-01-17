@@ -198,36 +198,6 @@ MeCmsAppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="admin_index" id="_admin_index">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-VideosController.html#57-71" title="Go to source code">admin_index</a>( )</code>
-
-		<div class="description short">
-			<p>List videos</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>List videos</p>
-
-
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="admin_add" id="_admin_add">
 
 		<td class="attributes"><code>
@@ -240,7 +210,7 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-VideosController.html#73-111" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-VideosController.html#57-95" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			<p>Add video</p>
@@ -263,41 +233,6 @@ MeCmsAppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="admin_edit" id="_admin_edit">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-VideosController.html#113-142" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
-
-		<div class="description short">
-			<p>Edit video</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Edit video</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$id</var></dt>
-					<dd>Video ID</dd>
-				</dl></div>
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="admin_delete" id="_admin_delete">
 
 		<td class="attributes"><code>
@@ -310,7 +245,7 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-VideosController.html#144-162" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#97-115" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Delete video</p>
@@ -337,50 +272,66 @@ MeCmsAppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="request_latest" id="_request_latest">
+	<tr data-order="admin_edit" id="_admin_edit">
 
 		<td class="attributes"><code>
 			 public 
 
-			array
+			
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_request_latest">#</a>
-		<code><a href="source-class-VideosController.html#164-192" title="Go to source code">request_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
+		<a class="anchor" href="#_admin_edit">#</a>
+		<code><a href="source-class-VideosController.html#117-146" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
-			<p>Gets the latest videos.
-This method works only with <code>requestAction()</code>.</p>
+			<p>Edit video</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Gets the latest videos.
-This method works only with <code>requestAction()</code>.</p>
+			<p>Edit video</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$limit</var></dt>
-					<dd>Number of latest videos</dd>
+					<dt><var>$id</var></dt>
+					<dd>Video ID</dd>
 				</dl></div>
 
-				<h4>Returns</h4>
-				<div class="list">
-					array<br>Latest videos
-				</div>
 
-				<h4>Throws</h4>
-				<div class="list">
-					ForbiddenException
-				</div>
 
-				<h4>Uses</h4>
-				<div class="list">
-						isRequestAction()<br>
-				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="admin_index" id="_admin_index">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_admin_index">#</a>
+		<code><a href="source-class-VideosController.html#148-162" title="Go to source code">admin_index</a>( )</code>
+
+		<div class="description short">
+			<p>List videos</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>List videos</p>
+
+
+
+
+
 
 
 		</div>
@@ -398,7 +349,7 @@ This method works only with <code>requestAction()</code>.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-VideosController.html#194-267" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#164-237" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>List videos</p>
@@ -425,6 +376,36 @@ This method works only with <code>requestAction()</code>.</p>
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="search" id="_search">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_search">#</a>
+		<code><a href="source-class-VideosController.html#239-275" title="Go to source code">search</a>( )</code>
+
+		<div class="description short">
+			<p>Search videos</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Search videos</p>
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="view" id="_view">
 
 		<td class="attributes"><code>
@@ -437,7 +418,7 @@ This method works only with <code>requestAction()</code>.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-VideosController.html#269-297" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#277-305" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>View video</p>
@@ -464,31 +445,50 @@ This method works only with <code>requestAction()</code>.</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="search" id="_search">
+	<tr data-order="widget_latest" id="_widget_latest">
 
 		<td class="attributes"><code>
 			 public 
 
-			
+			array
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_search">#</a>
-		<code><a href="source-class-VideosController.html#299-335" title="Go to source code">search</a>( )</code>
+		<a class="anchor" href="#_widget_latest">#</a>
+		<code><a href="source-class-VideosController.html#307-335" title="Go to source code">widget_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
-			<p>Search videos</p>
+			<p>Gets the latest videos for widget.
+This method works only with <code>requestAction()</code>.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Search videos</p>
+			<p>Gets the latest videos for widget.
+This method works only with <code>requestAction()</code>.</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$limit</var></dt>
+					<dd>Number of latest videos</dd>
+				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>Latest videos
+				</div>
 
+				<h4>Throws</h4>
+				<div class="list">
+					ForbiddenException
+				</div>
 
+				<h4>Uses</h4>
+				<div class="list">
+						isRequestAction()<br>
+				</div>
 
 
 		</div>
