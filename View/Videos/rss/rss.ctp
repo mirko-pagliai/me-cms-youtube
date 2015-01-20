@@ -35,10 +35,17 @@
 	));
 
 	foreach($videos as $video) {
+		//Sets post link
 		$link = array('controller' => 'videos', 'action' => 'view', $video['Video']['id'], 'plugin' => 'me_youtube');
+		
+		//Sets post text
 		$text = $this->Text->truncate(strip_tags($video['Video']['description']), $config['truncate_to'], array(
 			'ending' => '...', 'exact' => FALSE, 'html' => TRUE
 		));
+		
+		//Adds the preview image to the text
+		if(!empty($video['Video']['preview']))
+			$text = $this->Html->thumb($video['Video']['preview'], array('width' => 200)).$text;
 
 		echo $this->Rss->item(array(), array(
 			'description'	=> $text,

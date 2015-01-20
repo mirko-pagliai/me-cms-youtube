@@ -178,7 +178,7 @@ class VideosController extends MeCmsAppController {
 		if(empty($videos)) {
 			$videos = $this->Video->find('active', array(
 				'conditions'	=> array('is_spot' => FALSE),
-				'fields'		=> array('id', 'title', 'description', 'created'),
+				'fields'		=> array('id', 'youtube_id', 'title', 'description', 'created'),
 				'limit'			=> 20
 			));
 
