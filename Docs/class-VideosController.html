@@ -144,7 +144,7 @@ MeCmsAppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-VideosController.html#29-336" title="Go to source code">VideosController.php</a>
+			<b>Located at</b> <a href="source-class-VideosController.html#29-343" title="Go to source code">VideosController.php</a>
 		<br>
 	</div>
 
@@ -188,9 +188,9 @@ MeCmsAppController
 
 				<h4>Uses</h4>
 				<div class="list">
-						isAction()<br>
 						MeAuthComponenet::isManager()<br>
 						MeAuthComponenet::user()<br>
+						MeToolsAppController::isAction()<br>
 						Video::isOwnedBy()<br>
 				</div>
 
@@ -337,7 +337,7 @@ MeCmsAppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="index" id="_index">
+	<tr data-order="rss" id="_rss">
 
 		<td class="attributes"><code>
 			 public 
@@ -348,8 +348,46 @@ MeCmsAppController
 		</td>
 
 		<td class="name"><div>
+		<a class="anchor" href="#_rss">#</a>
+		<code><a href="source-class-VideosController.html#164-189" title="Go to source code">rss</a>( )</code>
+
+		<div class="description short">
+			<p>Lists videos as RSS.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Lists videos as RSS.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>Videos
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					ForbiddenException
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="index" id="_index">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-VideosController.html#164-237" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#191-244" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>List videos</p>
@@ -365,10 +403,6 @@ MeCmsAppController
 					<dd>Category slug, optional</dd>
 				</dl></div>
 
-				<h4>Returns</h4>
-				<div class="list">
-					array<br>List of latest videos (only when requested as rss)
-				</div>
 
 
 
@@ -388,7 +422,7 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_search">#</a>
-		<code><a href="source-class-VideosController.html#239-275" title="Go to source code">search</a>( )</code>
+		<code><a href="source-class-VideosController.html#246-282" title="Go to source code">search</a>( )</code>
 
 		<div class="description short">
 			<p>Search videos</p>
@@ -418,7 +452,7 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-VideosController.html#277-305" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#284-312" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>View video</p>
@@ -457,7 +491,7 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_widget_latest">#</a>
-		<code><a href="source-class-VideosController.html#307-335" title="Go to source code">widget_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-VideosController.html#314-342" title="Go to source code">widget_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			<p>Gets the latest videos for widget.
@@ -487,7 +521,7 @@ This method works only with <code>requestAction()</code>.</p>
 
 				<h4>Uses</h4>
 				<div class="list">
-						isRequestAction()<br>
+						MeToolsAppController::isRequestAction()<br>
 				</div>
 
 
