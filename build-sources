@@ -11,7 +11,7 @@ mkdir -p build/MeYoutube
 
 # Copy in build/MeYoutube
 cp -a --parents Config/ Controller/ Locale/ita Model/ \
-View/ webroot/ COPYNG version build/MeYoutube
+View/ webroot/ COPYNG README_it.md version build/MeYoutube
 
 # Enter build/MeYoutube
 cd build/MeYoutube
@@ -21,9 +21,6 @@ find . -name ".directory" -type f -exec rm -rf {} \;
 
 # Remove old files
 find . -name "*.old.*" -type f -exec rm -rf {} \;
-
-# Delete some uncompressed files
-rm -f webroot/js/slugify.js
 
 # Go back to build/
 cd ../
