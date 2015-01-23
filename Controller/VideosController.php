@@ -76,8 +76,10 @@ class VideosController extends MeCmsAppController {
 		if(!empty($this->request->query['url']) && $this->request->is('get')) {
 			//Loads the YouTube component
 			$this->Youtube = $this->Components->load('MeYoutube.Youtube');
-			//Gets the Youtube video ID and the video information
-			$youtube_id = $this->Youtube->getId($this->request->query['url']);
+			//Checks the Youtube video ID and the video information			
+			if(!$youtube_id = $this->Youtube->getId($this->request->query['url']))
+				$this->Session->flash(__d('me_youtube', 'This is not a %s video', 'YouTube'), 'error');
+			
 			$this->request->data['Video'] = am(compact('youtube_id'), $this->Youtube->getInfo($youtube_id));
 		}
 		

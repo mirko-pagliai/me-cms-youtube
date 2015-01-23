@@ -45,36 +45,27 @@ class YoutubeComponent extends Component {
 	 * @param string $url Video url
 	 * @return mixed Video ID or FALSE
 	 */
-	public function getId($url) {
+	public function getId($url) {		
 		//Parses the url
 		$url = parse_url($url);
 		
-		//Checks if it's a YouTube address
-		if(empty($url['host']) || !preg_match('/youtube\.com$/', $url['host'])) {
-			$this->Session->flash(__d('me_youtube', 'This is not a %s video', 'YouTube'), 'error');
+		if(empty($url['host']))
 			return FALSE;
+		
+		//`youtube.com/watch?v=XXX` addresses
+		if(preg_match('/youtube\.com$/', $url['host']) && !empty($url['query'])) {
+			parse_str($url['query'], $query);
+			
+			return empty($query['v']) ? FALSE : $query['v'];
 		}
-
-		//Checks if it's a valid query address
-		if(empty($url['query'])) {
-			$this->Session->flash(__d('me_youtube', 'The video address is incorrect'), 'error');
-			return FALSE;
+		//`youtu.be/XXX` addresses
+		elseif(preg_match('/youtu\.be$/', $url['host']) && !empty($url['path'])) {
+			preg_match('/^\/([^\/]+)/', $url['path'], $matches);
+			
+			return empty($matches[1]) ? FALSE : $matches[1];
 		}
-
-		$query = array();
-
-		foreach(explode('&', $url['query']) as $string) {
-			$exploded = explode('=', $string);
-			$query[$exploded[0]] = $exploded[1];
-		}
-
-		//Checks if the video ID is present
-		if(empty($query['v'])) {
-			$this->Session->flash(__d('me_youtube', 'The video ID is not present'), 'error');
-			return FALSE;
-		}
-
-		return $query['v'];
+		
+		return FALSE;
 	}
 	
 	/**
