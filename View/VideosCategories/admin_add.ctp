@@ -54,5 +54,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_youtube', 'Add videos category')); ?>
+	<?php echo $this->Form->end(__d('me_youtube', 'Add videos category'), array('class' => 'will-be-disabled')); ?>
 </div>

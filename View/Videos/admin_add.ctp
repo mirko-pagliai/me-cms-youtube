@@ -42,7 +42,10 @@
 				'onchange'	=> 'send_form(this)',
 				'size'		=> 100
 			));
-			echo $this->Form->end(__d('me_youtube', 'Select'), array('div' => FALSE));
+			echo $this->Form->end(__d('me_youtube', 'Select'), array(
+				'class'	=> 'will-be-disabled',
+				'div'	=> FALSE
+			));
 		?>
 	</div>
 	
@@ -117,6 +120,6 @@
 					));
 				?>
 			</fieldset>
-		<?php echo $this->Form->end(__d('me_youtube', 'Add video')); ?>
+		<?php echo $this->Form->end(__d('me_youtube', 'Add video'), array('class' => 'will-be-disabled')); ?>
 	<?php endif; ?>
 </div>

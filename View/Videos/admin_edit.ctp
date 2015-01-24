@@ -100,5 +100,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_youtube', 'Edit video')); ?>
+	<?php echo $this->Form->end(__d('me_youtube', 'Edit video'), array('class' => 'will-be-disabled')); ?>
 </div>
