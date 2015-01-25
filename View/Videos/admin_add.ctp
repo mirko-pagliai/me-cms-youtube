@@ -36,7 +36,7 @@
 			echo $this->Form->createInline(FALSE, array('type' => 'get'));
 			echo $this->Form->label('url', __d('me_youtube', 'Video url'));
 			echo $this->Form->input('url', array(
-				'default'	=> empty($this->request->query['url']) ? NULL : $this->request->query['url'],
+				'default'	=> empty($query['url']) ? NULL : $query['url'],
 				'label'		=> __d('me_youtube', 'Video url'),
 				'name'		=> 'url',
 				'onchange'	=> 'send_form(this)',

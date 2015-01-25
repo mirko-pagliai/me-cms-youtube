@@ -26,8 +26,6 @@
 ?>
 	
 <?php
-	$params = $this->request->params;
-	
 	//Returns on the first page of videos index
 	if($params['controller'] == 'videos' && $params['action'] == 'index' && $params['plugin'] == 'me_youtube'
 		&& !empty($params['paging']['Video']['page']) && $params['paging']['Video']['page'] == 1)

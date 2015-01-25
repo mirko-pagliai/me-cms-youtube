@@ -26,8 +26,6 @@
 ?>
 
 <?php
-	$params = $this->request->params;
-	
 	//Returns on videos search
 	if($params['controller'] == 'videos' && $params['action'] == 'search' && $params['plugin'] == 'me_youtube')
 		return;
