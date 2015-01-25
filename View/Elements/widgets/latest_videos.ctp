@@ -26,12 +26,19 @@
 ?>
 	
 <?php
+	$params = $this->request->params;
+	
+	//Returns on the first page of videos index
+	if($params['controller'] == 'videos' && $params['action'] == 'index' && $params['plugin'] == 'me_youtube'
+		&& !empty($params['paging']['Video']['page']) && $params['paging']['Video']['page'] == 1)
+		return;
+	
 	//Gets the latest video
 	$video = $this->requestAction(array('controller' => 'videos', 'action' => 'widget_latest', 'plugin' => 'me_youtube'));
 	
-	//Return, if the current view is that the last video
-	if($this->request->params['controller'] === 'videos' && $this->request->params['action'] === 'view' 
-		&& !empty($this->request->params['pass'][0]) && $this->request->params['pass'][0] === $video['Video']['id'])
+	//Returns on last video view
+	if($params['controller'] == 'videos' && $params['action'] == 'view' && $params['plugin'] == 'me_youtube'
+		&& !empty($params['pass'][0]) && $params['pass'][0] == $video['Video']['id'])
 		return;
 ?>
 
