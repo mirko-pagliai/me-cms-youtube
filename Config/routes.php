@@ -24,14 +24,14 @@
  * @package		MeYoutube\Config
  */
 
+//Videos categories controller
+Router::connect('/videos/categories', array('controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'me_youtube'));
+
 //Videos controller
 Router::connect('/videos/rss',		array('controller' => 'videos', 'action' => 'rss',		'plugin' => 'me_youtube', 'ext' => 'rss'));
 Router::connect('/videos/search/*',	array('controller' => 'videos', 'action' => 'search',	'plugin' => 'me_youtube'));
 Router::connect('/videos/*',			array('controller' => 'videos', 'action' => 'index',	'plugin' => 'me_youtube'));
 Router::connect('/video/*',			array('controller' => 'videos', 'action' => 'view',		'plugin' => 'me_youtube'));
-
-//Videos categories controller
-Router::connect('/videosCategories',	 array('controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'me_youtube'));
 
 //Each "admin" request will be directed to the plugin
 $controllers = array('videos_categories', 'videos');
