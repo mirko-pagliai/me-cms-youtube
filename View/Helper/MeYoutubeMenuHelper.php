@@ -29,7 +29,8 @@ App::uses('MenuHelper', 'MeCms.View/Helper');
 /**
  * MeYoutubeMenu Helper.
  * 
- * It can be used to generate a menu for an action. It supports these types of menu: `ul`, `nav` and `dropdown`.
+ * It can be used to generate a menu for an action.  
+ * It supports these types of menu: `ul`, `collapse` and `dropdown`.
  */
 class MeYoutubeMenuHelper extends MenuHelper {
 	/**
@@ -43,19 +44,27 @@ class MeYoutubeMenuHelper extends MenuHelper {
 	 */
 	protected function _videos($type) {
 		$menu = array(
-			$this->link(__d('me_youtube', 'List videos'),	array('controller' => 'videos', 'action' => 'index', 'plugin' => 'me_youtube')),
-			$this->link(__d('me_youtube', 'Add video'),		array('controller' => 'videos', 'action' => 'add', 'plugin' => 'me_youtube'))
+			$this->link(__d('me_youtube', 'List videos'),	array('controller' => 'videos', 'action' => 'index',	'plugin' => 'me_youtube')),
+			$this->link(__d('me_youtube', 'Add video'),		array('controller' => 'videos', 'action' => 'add',		'plugin' => 'me_youtube'))
 		);
 		
 		//Only admins and managers can access these actions
 		if($this->Auth->isManager())
 			$menu = am($menu, array(
 				$this->link(__d('me_cms', 'List categories'),	array('controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'me_youtube')),
-				$this->link(__d('me_cms', 'Add category'),		array('controller' => 'videos_categories', 'action' => 'add', 'plugin' => 'me_youtube'))
+				$this->link(__d('me_cms', 'Add category'),		array('controller' => 'videos_categories', 'action' => 'add',	'plugin' => 'me_youtube'))
 			));
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_youtube', 'Videos'), array('icon' => 'film')).PHP_EOL.$this->Dropdown->dropdown($menu);
+		elseif($type == 'collapse')
+			return $this->link(__d('me_youtube', 'Videos'), '#collapse-videos', array(
+				'aria-controls'	=> 'collapse-videos',
+				'aria-expanded'	=> 'false',
+				'class'			=> 'collapsed',
+				'data-toggle'	=> 'collapse',
+				'icon'			=> 'film'
+			)).PHP_EOL.$this->div('collapse', implode(PHP_EOL, $menu), array('id' => 'collapse-videos'));
 		
 		return $menu;
 	}
