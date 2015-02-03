@@ -35,8 +35,9 @@ Router::connect('/video/*',			array('controller' => 'videos', 'action' => 'view'
 
 //Each "admin" request will be directed to the plugin
 $controllers = array('videos_categories', 'videos');
+$controllers = sprintf('(%s)', implode('|', $controllers));
 
-Router::connect('/admin/:controller',			array('plugin' => 'me_youtube', 'admin' => TRUE), array('controller' => $controllers = sprintf('(%s)', implode('|', $controllers))));
+Router::connect('/admin/:controller',			array('plugin' => 'me_youtube', 'admin' => TRUE), array('controller' => $controllers));
 Router::connect('/admin/:controller/:action/*',	array('plugin' => 'me_youtube', 'admin' => TRUE), array('controller' => $controllers));
 
 //Enables the 'rss' extension
