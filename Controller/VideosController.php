@@ -226,7 +226,8 @@ class VideosController extends MeCmsAppController {
 				'conditions'	=> am($conditions, array('is_spot' => FALSE)),
 				'fields'		=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
 				'findType'		=> 'active',
-				'limit'			=> $this->config['records_for_page']
+				'limit'			=> $this->config['records_for_page'],
+				'order'			=> array('Video.created' => 'DESC')
 			);
 			
             Cache::write($cache, $videos = $this->paginate(), 'videos');
