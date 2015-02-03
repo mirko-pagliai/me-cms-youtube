@@ -40,7 +40,7 @@ class Video extends MeYoutubeAppModel {
 	 * Order
 	 * @var array 
 	 */
-	public $order = array('Video.created' => 'DESC');
+	public $order = array('created' => 'DESC');
 	
 	/**
 	 * Table

@@ -154,7 +154,8 @@ class VideosController extends MeCmsAppController {
 		$this->paginate = array(
 			'contain'	=> array('Category.title', 'User.first_name', 'User.last_name'),
 			'fields'	=> array('id', 'title', 'priority', 'active', 'is_spot', 'created'),
-			'limit'		=> $this->config['records_for_page']
+			'limit'		=> $this->config['records_for_page'],
+			'order'		=> array('Video.created' => 'DESC')
 		);
 				
 		$this->set(array(
