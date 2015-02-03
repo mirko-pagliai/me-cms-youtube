@@ -130,7 +130,7 @@ class VideosCategoriesController extends MeCmsAppController {
 			$v['VideosCategory']['title'] = $treeList[$v['VideosCategory']['id']];
 		}, $this->VideosCategory->generateTreeList());
 		
-		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Videos categories'))), compact('categories'));
+		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Videos categories')), compact('categories')));
 	}
 	
 	/**
