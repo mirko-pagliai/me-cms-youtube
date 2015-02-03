@@ -23,10 +23,7 @@
  */
 ?>
 
-<?php
-	$this->assign('sidebar', $this->MeYoutubeMenu->get('videos', 'nav'));
-	$this->Library->datetimepicker();
-?>
+<?php $this->Library->datetimepicker(); ?>
 
 <div class="videos form">
 	<?php echo $this->Html->h2(__d('me_youtube', 'Add video')); ?>

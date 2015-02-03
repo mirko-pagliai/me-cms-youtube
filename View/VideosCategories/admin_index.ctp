@@ -22,8 +22,6 @@
  * @package		MeYoutube\View\VideosCategories
  */
 ?>
-
-<?php $this->assign('sidebar', $this->MeYoutubeMenu->get('videos', 'nav')); ?>
 	
 <div class="videosCategories index">
 	<?php

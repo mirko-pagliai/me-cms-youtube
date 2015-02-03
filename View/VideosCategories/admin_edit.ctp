@@ -23,10 +23,7 @@
  */
 ?>
 
-<?php
-	$this->assign('sidebar', $this->MeYoutubeMenu->get('videos', 'nav'));
-	$this->Library->slugify();
-?>
+<?php $this->Library->slugify(); ?>
 
 <div class="videosCategories form">
 	<?php echo $this->Html->h2(__d('me_youtube', 'Edit videos category')); ?>
