@@ -46,7 +46,7 @@ class VideosCategory extends MeYoutubeAppModel {
 	 * Order
 	 * @var array 
 	 */
-	public $order = array('lft' => 'ASC');
+	public $order = array('VideosCategory.lft' => 'ASC');
 	
 	/**
 	 * Table
