@@ -139,9 +139,8 @@ class VideosController extends MeCmsAppController {
 				$this->Session->flash(__d('me_youtube', 'The video could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->Video->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'user_id', 'title', 'subtitle', 'youtube_id', 'category_id', 'description', 'priority', 'active', 'is_spot', 'created')
+			$this->request->data = $this->Video->findById($id, array(
+				'id', 'user_id', 'title', 'subtitle', 'youtube_id', 'category_id', 'description', 'priority', 'active', 'is_spot', 'created'
 			));
 
 		$this->set(am(array('title_for_layout' => __d('me_youtube', 'Edit video')), compact('categories', 'users')));
@@ -224,7 +223,7 @@ class VideosController extends MeCmsAppController {
 		if(empty($videos) || empty($paging)) {
 			$this->paginate = array(
 				'contain'		=> array('Category.slug', 'Category.title', 'User.first_name', 'User.last_name'),
-				'conditions'	=> am($conditions, array('is_spot' => FALSE)),
+				'conditions'	=> am(array('is_spot' => FALSE), $conditions),
 				'fields'		=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
 				'findType'		=> 'active',
 				'limit'			=> $this->config['records_for_page'],
@@ -333,11 +332,10 @@ class VideosController extends MeCmsAppController {
 		
 		//If the data are not available from the cache
         if(empty($videos)) {
-			$videos = $this->Video->find('active', array(
+			$videos = $this->Video->find('active', am(array(
 				'conditions'	=> array('is_spot' => FALSE),
-				'fields'		=> array('id', 'youtube_id', 'title', 'description'),
-				'limit'			=> $limit
-			));
+				'fields'		=> array('id', 'youtube_id', 'title', 'description')
+			), compact('limit')));
 			
             Cache::write($cache, $videos, 'videos');
 		}

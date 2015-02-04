@@ -104,10 +104,7 @@ class VideosCategoriesController extends MeCmsAppController {
 				$this->Session->flash(__d('me_youtube', 'The videos category could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->VideosCategory->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'parent_id', 'title', 'slug', 'description')
-			));
+			$this->request->data = $this->VideosCategory->findById($id, array('id', 'parent_id', 'title', 'slug', 'description'));
 
 		$this->set(array(
 			'categories'		=> $this->VideosCategory->generateTreeList(),
