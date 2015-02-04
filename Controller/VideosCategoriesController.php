@@ -81,7 +81,7 @@ class VideosCategoriesController extends MeCmsAppController {
 				$this->Session->flash(__d('me_youtube', 'The videos category was not deleted'), 'error');
 		}
 		else
-			$this->Session->flash(__d('me_youtube', 'Before you delete this category, you have to delete its videos or assign them to another category'), 'error');
+			$this->Session->flash(__d('me_youtube', 'Before you delete this category, you have to delete its videos or assign them to another category'), 'alert');
 		
 		$this->redirect(array('action' => 'index'));
 	}

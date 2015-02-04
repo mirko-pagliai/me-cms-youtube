@@ -65,7 +65,7 @@ class VideosController extends MeCmsAppController {
 		
 		//Checks for categories
 		if(empty($categories)) {
-			$this->Session->flash(__d('me_youtube', 'Before you can add a video, you have to create at least a category'), 'error');
+			$this->Session->flash(__d('me_youtube', 'Before you can add a video, you have to create at least a category'), 'alert');
 			$this->redirect(array('controller' => 'videos_categories', 'action' => 'index'));
 		}
 		
