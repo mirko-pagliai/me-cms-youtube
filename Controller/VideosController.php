@@ -124,7 +124,7 @@ class VideosController extends MeCmsAppController {
 		if(!$this->Video->exists($id))
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 		
-		//Gets the categories
+		//Gets categories
 		$categories = $this->Video->Category->generateTreeList();
 		
 		//Gets users
