@@ -247,35 +247,40 @@ class VideosController extends MeCmsAppController {
 	}
 	
 	/**
-	 * Search videos
+	 * Search videos.
+	 * @uses MeCmsAppController::_checkLastSearch()
 	 */
 	public function search() {
 		$pattern = empty($this->request->query['p']) ? FALSE : trim($this->request->query['p']);
 		
 		if(!empty($pattern)) {
 			//Checks if the pattern is at least 4 characters long
-			if(strlen($pattern) >= 4) {
-				$this->paginate = array(
-					'conditions'	=> array(
-						'is_spot' => FALSE,
-						'OR' => array(
-							'title LIKE'		=> sprintf('%%%s%%', $pattern),
-							'subtitle LIKE'		=> sprintf('%%%s%%', $pattern),
-							'description LIKE'	=> sprintf('%%%s%%', $pattern)
-						)
-					),
-					'fields'		=> array('id', 'title', 'description', 'created'),
-					'findType'		=> 'active',
-					'limit'			=> 10
-				);
+			if(strlen($pattern) >= 4) {//Checks if the latest search has been executed out of the minimum interval
+				if($this->_checkLastSearch()) {
+					$this->paginate = array(
+						'conditions'	=> array(
+							'is_spot' => FALSE,
+							'OR' => array(
+								'title LIKE'		=> sprintf('%%%s%%', $pattern),
+								'subtitle LIKE'		=> sprintf('%%%s%%', $pattern),
+								'description LIKE'	=> sprintf('%%%s%%', $pattern)
+							)
+						),
+						'fields'		=> array('id', 'title', 'description', 'created'),
+						'findType'		=> 'active',
+						'limit'			=> 10
+					);
 
-				try {
-					$videos = $this->paginate();
-					$count = $this->request->params['paging']['Video']['count'];
+					try {
+						$videos = $this->paginate();
+						$count = $this->request->params['paging']['Video']['count'];
+					}
+					catch(NotFoundException $e) {}
+
+					$this->set(compact('count', 'videos'));
 				}
-				catch(NotFoundException $e) {}
-
-				$this->set(compact('count', 'videos'));
+				else
+					$this->Session->flash(__d('me_cms', 'You have to wait %d seconds to perform a new search', $this->config['search_interval']), 'alert');
 			}
 			else
 				$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'error');
