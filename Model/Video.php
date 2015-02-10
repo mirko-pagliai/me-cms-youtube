@@ -53,6 +53,13 @@ class Video extends MeYoutubeAppModel {
 	 * @var array
 	 */
 	public $validate = array(
+		'id' => array(
+			'blankOnCreate' => array(
+				'message'	=> 'Can not be changed',
+				'on'		=> 'create',
+				'rule'		=> 'blank'
+			)
+		),
 		'user_id' => array(
 			'message'	=> 'You have to select an option',
 			'rule'		=> array('naturalNumber')

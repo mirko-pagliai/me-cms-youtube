@@ -61,8 +61,9 @@ class VideosCategory extends MeYoutubeAppModel {
 	public $validate = array(
 		'id' => array(
 			'blankOnCreate' => array(
-				'on'	=> 'create',
-				'rule'	=> 'blank'
+				'message'	=> 'Can not be changed',
+				'on'		=> 'create',
+				'rule'		=> 'blank'
 			)
 		),
 		'parent_id' => array(
