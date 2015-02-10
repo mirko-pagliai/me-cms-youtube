@@ -1,18 +1,23 @@
 # LANGUAGE translation of MeYoutube
 # Copyright 2014 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
-# Mirko Pagliai, 2015.
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-01-13 17:19+0100\n"
-"PO-Revision-Date: 2015-01-13 17:25+0100\n"
-"Last-Translator: Mirko Pagliai\n"
+"POT-Creation-Date: 2015-02-10 13:27+0100\n"
+"PO-Revision-Date: 2015-02-10 13:28+0100\n"
+"Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
+"Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language-Team: Italian <>\n"
 "Language: it\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: /home/mirko/Server/MeYoutube_Plugin/Model/Video.php:validation for field id
+#: /home/mirko/Server/MeYoutube_Plugin/Model/VideosCategory.php:validation for field id
+msgid "Can not be changed"
+msgstr "Non può essere modificato"
 
 #: /home/mirko/Server/MeYoutube_Plugin/Model/Video.php:validation for field user_id;validation for field category_id
 msgid "You have to select an option"
