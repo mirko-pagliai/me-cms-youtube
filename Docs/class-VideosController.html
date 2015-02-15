@@ -144,7 +144,7 @@ MeCmsAppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-VideosController.html#29-345" title="Go to source code">VideosController.php</a>
+			<b>Located at</b> <a href="source-class-VideosController.html#29-350" title="Go to source code">VideosController.php</a>
 		<br>
 	</div>
 
@@ -188,8 +188,8 @@ MeCmsAppController
 
 				<h4>Uses</h4>
 				<div class="list">
-						MeAuthComponenet::isManager()<br>
-						MeAuthComponenet::user()<br>
+						MeAuthComponent::isManager()<br>
+						MeAuthComponent::user()<br>
 						MeToolsAppController::isAction()<br>
 						Video::isOwnedBy()<br>
 				</div>
@@ -284,7 +284,7 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-VideosController.html#119-148" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#119-147" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Edit video</p>
@@ -319,7 +319,7 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-VideosController.html#150-164" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-VideosController.html#149-164" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			<p>List videos</p>
@@ -387,7 +387,7 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-VideosController.html#193-246" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#193-247" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>List videos</p>
@@ -422,19 +422,23 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_search">#</a>
-		<code><a href="source-class-VideosController.html#248-284" title="Go to source code">search</a>( )</code>
+		<code><a href="source-class-VideosController.html#249-290" title="Go to source code">search</a>( )</code>
 
 		<div class="description short">
-			<p>Search videos</p>
+			<p>Search videos.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Search videos</p>
+			<p>Search videos.</p>
 
 
 
 
 
+				<h4>Uses</h4>
+				<div class="list">
+						MeCmsAppController::_checkLastSearch()<br>
+				</div>
 
 
 		</div>
@@ -452,7 +456,7 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-VideosController.html#286-314" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-VideosController.html#292-320" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>View video</p>
@@ -491,7 +495,7 @@ MeCmsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_widget_latest">#</a>
-		<code><a href="source-class-VideosController.html#316-344" title="Go to source code">widget_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-VideosController.html#322-349" title="Go to source code">widget_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			<p>Gets the latest videos for widget.
