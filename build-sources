@@ -11,7 +11,7 @@ mkdir -p build/MeYoutube
 
 # Copy in build/MeYoutube
 cp -a --parents Config/ Controller/ Locale/ita Model/ \
-View/ webroot/ COPYNG README_it.md version build/MeYoutube
+View/ webroot/ CHANGELOG.md CHANGELOG_it.md COPYNG README_it.md version build/MeYoutube
 
 # Enter build/MeYoutube
 cd build/MeYoutube
