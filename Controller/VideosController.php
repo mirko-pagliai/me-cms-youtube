@@ -153,7 +153,7 @@ class VideosController extends MeCmsAppController {
 		$this->paginate = array(
 			'contain'	=> array('Category.title', 'User.first_name', 'User.last_name'),
 			'fields'	=> array('id', 'title', 'priority', 'active', 'is_spot', 'created'),
-			'limit'		=> $this->config['records_for_page'],
+			'limit'		=> $this->config['backend']['records'],
 			'order'		=> array('Video.created' => 'DESC')
 		);
 				
@@ -226,7 +226,7 @@ class VideosController extends MeCmsAppController {
 				'conditions'	=> am(array('is_spot' => FALSE), $conditions),
 				'fields'		=> array('id', 'user_id', 'youtube_id', 'title', 'subtitle', 'description', 'created'),
 				'findType'		=> 'active',
-				'limit'			=> $this->config['records_for_page'],
+				'limit'			=> $this->config['frontend']['records'],
 				'order'			=> array('Video.created' => 'DESC')
 			);
 			
@@ -280,7 +280,7 @@ class VideosController extends MeCmsAppController {
 					$this->set(compact('count', 'videos'));
 				}
 				else
-					$this->Session->flash(__d('me_cms', 'You have to wait %d seconds to perform a new search', $this->config['search_interval']), 'alert');
+					$this->Session->flash(__d('me_cms', 'You have to wait %d seconds to perform a new search', $this->config['security']['search_interval']), 'alert');
 			}
 			else
 				$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'error');

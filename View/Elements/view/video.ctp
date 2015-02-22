@@ -56,7 +56,7 @@
 
 		if(!empty($video['Video']['created']))
 			$content_info .= $this->Html->div('content-date',
-				__d('me_cms', 'Posted on %s', $this->Time->format($video['Video']['created'], $config['datetime']['long'])), 
+				__d('me_cms', 'Posted on %s', $this->Time->format($video['Video']['created'], $config['main']['datetime']['long'])), 
 				array('icon' => 'clock-o')
 			);
 

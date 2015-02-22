@@ -39,7 +39,7 @@
 		$link = array('controller' => 'videos', 'action' => 'view', $video['Video']['id'], 'plugin' => 'me_youtube');
 		
 		//Sets post text
-		$text = $this->Text->truncate(strip_tags($video['Video']['description']), $config['truncate_to'], array(
+		$text = $this->Text->truncate(strip_tags($video['Video']['description']), $config['frontend']['truncate_to'], array(
 			'ending' => '...', 'exact' => FALSE, 'html' => TRUE
 		));
 		

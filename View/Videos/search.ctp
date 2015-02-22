@@ -58,7 +58,7 @@
 			foreach($videos as $video) {
 				$title = $this->Html->link($video['Video']['title'], array('action' => 'view', $video['Video']['id']));
 				$list[] = $this->Html->div(NULL, 
-					sprintf('%s - %s', $title, $this->Time->format($video['Video']['created'], $config['datetime']['short'])).
+					sprintf('%s - %s', $title, $this->Time->format($video['Video']['created'], $config['main']['datetime']['short'])).
 					$this->Html->para('text-justify', $this->Text->truncate(strip_tags($video['Video']['description']), 350, array('exact' => FALSE, 'html' => TRUE)))
 				);
 			}

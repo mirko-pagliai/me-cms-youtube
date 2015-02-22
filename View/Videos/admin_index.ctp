@@ -89,7 +89,7 @@
 					?>
 				</td>
 				<td class="min-width text-center">
-					<?php echo $this->Time->format($video['Video']['created'], $config['datetime']['short']); ?>
+					<?php echo $this->Time->format($video['Video']['created'], $config['main']['datetime']['short']); ?>
 				</td>
 				<td class="min-width text-center">
 					<?php 
