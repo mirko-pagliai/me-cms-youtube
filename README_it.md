@@ -1,5 +1,5 @@
 ## Compatibilità
-L'ultima versione di MeYoutube è compatibile con [MeCms](http://github.com/mirko-pagliai/MeCms) 1.2.0.
+L'ultima versione di MeYoutube è compatibile con [MeCms](http://github.com/mirko-pagliai/MeCms) 1.2.1.
 
 ## RSS video
 Di default, MeCms fornisce soltanto gli articoli tramite RSS. Per fornire articoli e video, modificare il proprio layout così:
