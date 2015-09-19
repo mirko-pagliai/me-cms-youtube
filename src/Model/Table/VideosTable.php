@@ -65,6 +65,11 @@ class VideosTable extends AppTable {
 			$conditions[sprintf('%s.category_id', $this->alias())] = $query['category'];
 		}
 		
+		//"Is spot" field
+		if(!empty($query['spot'])) {
+			$conditions[sprintf('%s.is_spot', $this->alias())] = TRUE;
+		}
+		
 		return empty($conditions) ? [] : $conditions;
 	}
 	

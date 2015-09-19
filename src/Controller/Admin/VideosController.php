@@ -29,6 +29,42 @@ use MeCms\Controller\AppController;
  */
 class VideosController extends AppController {
 	/**
+	 * Called before the controller action. 
+	 * You can use this method to perform logic that needs to happen before each controller action.
+	 * @param \Cake\Event\Event $event An Event instance
+	 * @uses MeCms\Controller\AppController::beforeFilter()
+	 * @uses MeCms\Model\Table\VideosCategoriesTable::getList()
+	 * @uses MeCms\Model\Table\VideosCategoriesTable::getTreeList()
+	 * @uses MeCms\Model\Table\UsersTable::getActiveList()
+	 * @uses MeCms\Model\Table\UsersTable::getList()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function beforeFilter(\Cake\Event\Event $event) {
+		parent::beforeFilter($event);
+		
+		if($this->request->isAction('index')) {
+			$categories = $this->Videos->Categories->getList();
+			$users = $this->Videos->Users->getList();
+		}
+		elseif($this->request->isAction(['add', 'edit'])) {
+			$categories = $this->Videos->Categories->getTreeList();
+			$users = $this->Videos->Users->getActiveList();
+		}
+		
+		//Checks for categories
+		if(isset($categories) && empty($categories)) {
+			$this->Flash->alert(__d('me_cms', 'Before you can manage videos, you have to create at least a category'));
+			$this->redirect(['controller' => 'VideosCategories', 'action' => 'index']);
+		}
+		
+		if(!empty($categories))
+			$this->set(compact('categories'));
+		
+		if(!empty($users))
+			$this->set(compact('users'));
+	}
+	
+	/**
      * Lists videos
      */
     public function index() {
@@ -39,7 +75,7 @@ class VideosController extends AppController {
 					'Users'			=> ['fields' => ['first_name', 'last_name']]
 				])
 				->select(['id', 'title', 'priority', 'active', 'created', 'is_spot'])
-//				->where($this->Posts->fromFilter($this->request->query))
+				->where($this->Videos->fromFilter($this->request->query))
 				->order(['Videos.created' => 'DESC'])
 		));
     }
