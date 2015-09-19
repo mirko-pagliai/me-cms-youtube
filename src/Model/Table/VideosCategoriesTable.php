@@ -88,27 +88,9 @@ class VideosCategoriesTable extends AppTable {
     /**
      * Default validation rules
      * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator) {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create')
-            ->add('lft', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('lft')
-            ->add('rght', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('rght')
-            ->requirePresence('title', 'create')
-            ->notEmpty('title')
-            ->add('title', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ->requirePresence('slug', 'create')
-            ->notEmpty('slug')
-            ->add('slug', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ->allowEmpty('description')
-            ->add('video_count', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('video_count', 'create')
-            ->notEmpty('video_count');
-
-        return $validator;
+	 * @return \MeYoutube\Model\Validation\VideosCategoryValidator
+	 */
+    public function validationDefault(\Cake\Validation\Validator $validator) {
+		return new \MeYoutube\Model\Validation\VideosCategoryValidator;
     }
 }

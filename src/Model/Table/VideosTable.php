@@ -93,26 +93,9 @@ class VideosTable extends AppTable {
     /**
      * Default validation rules
      * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator) {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create')
-            ->requirePresence('title', 'create')
-            ->notEmpty('title')
-            ->allowEmpty('subtitle')
-            ->allowEmpty('description')
-            ->add('priority', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('priority', 'create')
-            ->notEmpty('priority')
-            ->add('active', 'valid', ['rule' => 'boolean'])
-            ->requirePresence('active', 'create')
-            ->notEmpty('active')
-            ->add('is_spot', 'valid', ['rule' => 'boolean'])
-            ->requirePresence('is_spot', 'create')
-            ->notEmpty('is_spot');
-
-        return $validator;
+	 * @return \MeYoutube\Model\Validation\VideoValidator
+	 */
+    public function validationDefault(\Cake\Validation\Validator $validator) {
+		return new \MeYoutube\Model\Validation\VideoValidator;
     }
 }
