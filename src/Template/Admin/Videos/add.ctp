@@ -22,11 +22,11 @@
  */
 ?>
 
-<?php $this->assign('title', __('Add video')); ?>
+<?php $this->assign('title', __d('me_cms', 'Add video')); ?>
 
 <div class="youtubeVideos form">
-	<?= $this->Html->h2(__('Add Video')) ?>
-    <?= $this->Form->create($youtubeVideo); ?>
+	<?= $this->Html->h2(__d('me_cms', 'Add Video')) ?>
+    <?= $this->Form->create($video); ?>
     <fieldset>
         <?php
             echo $this->Form->input('user_id', ['options' => $users]);
@@ -40,6 +40,6 @@
             echo $this->Form->input('is_spot');
         ?>
     </fieldset>
-    <?= $this->Form->submit(__('Add Video')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Add Video')) ?>
     <?= $this->Form->end() ?>
 </div>

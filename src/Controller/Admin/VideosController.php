@@ -84,23 +84,20 @@ class VideosController extends AppController {
      * Adds video
      */
     public function add() {
-        $youtubeVideo = $this->Videos->newEntity();
+        $video = $this->Videos->newEntity();
 		
         if($this->request->is('post')) {
-            $youtubeVideo = $this->Videos->patchEntity($youtubeVideo, $this->request->data);
+            $video = $this->Videos->patchEntity($video, $this->request->data);
 			
-            if($this->Videos->save($youtubeVideo)) {
-                $this->Flash->success(__('The video has been saved'));
+            if($this->Videos->save($video)) {
+                $this->Flash->success(__d('me_cms', 'The video has been saved'));
 				return $this->redirect(['action' => 'index']);
             } 
 			else
-                $this->Flash->error(__('The video could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The video could not be saved'));
         }
-        $users = $this->Videos->Users->find('list', ['limit' => 200]);
-        $youtubes = $this->Videos->Youtubes->find('list', ['limit' => 200]);
-        $categories = $this->Videos->Categories->find('list', ['limit' => 200]);
 
-        $this->set(compact('youtubeVideo', 'users', 'youtubes', 'categories'));
+        $this->set(compact('video'));
     }
 
     /**
@@ -109,25 +106,22 @@ class VideosController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
-        $youtubeVideo = $this->Videos->get($id, [
+        $video = $this->Videos->get($id, [
             'contain' => []
         ]);
 		
         if($this->request->is(['patch', 'post', 'put'])) {
-            $youtubeVideo = $this->Videos->patchEntity($youtubeVideo, $this->request->data);
+            $video = $this->Videos->patchEntity($video, $this->request->data);
 			
-            if($this->Videos->save($youtubeVideo)) {
-                $this->Flash->success(__('The video has been saved'));
+            if($this->Videos->save($video)) {
+                $this->Flash->success(__d('me_cms', 'The video has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else
-                $this->Flash->error(__('The video could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The video could not be saved'));
         }
-        $users = $this->Videos->Users->find('list', ['limit' => 200]);
-        $youtubes = $this->Videos->Youtubes->find('list', ['limit' => 200]);
-        $categories = $this->Videos->Categories->find('list', ['limit' => 200]);
 
-        $this->set(compact('youtubeVideo', 'users', 'youtubes', 'categories'));
+        $this->set(compact('video'));
     }
     /**
      * Deletes video
@@ -137,12 +131,12 @@ class VideosController extends AppController {
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);
 		
-        $youtubeVideo = $this->Videos->get($id);
+        $video = $this->Videos->get($id);
 		
-        if($this->Videos->delete($youtubeVideo))
-            $this->Flash->success(__('The video has been deleted'));
+        if($this->Videos->delete($video))
+            $this->Flash->success(__d('me_cms', 'The video has been deleted'));
         else
-            $this->Flash->error(__('The video could not be deleted'));
+            $this->Flash->error(__d('me_cms', 'The video could not be deleted'));
 			
         return $this->redirect(['action' => 'index']);
     }
