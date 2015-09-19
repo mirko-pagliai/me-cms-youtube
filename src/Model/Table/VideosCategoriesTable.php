@@ -33,6 +33,26 @@ use MeYoutube\Model\Entity\VideosCategory;
  */
 class VideosCategoriesTable extends Table {
     /**
+     * Returns a rules checker object that will be used for validating application integrity
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules) {
+        $rules->add($rules->existsIn(['parent_id'], 'Parents'));
+        return $rules;
+    }
+	
+	/**
+	 * Gets the categories tree list
+	 * @return array List
+	 */
+	public function getTreeList() {
+		return $this->find('treeList')
+			->cache('categories_tree_list', 'videos')
+			->toArray();
+	}
+	
+    /**
      * Initialize method
      * @param array $config The table configuration
      */
@@ -40,14 +60,18 @@ class VideosCategoriesTable extends Table {
         $this->table('youtube_videos_categories');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('Tree');
-        $this->belongsTo('ParentVideosCategories', [
+        $this->addBehavior('MeCms.Tree');
+        $this->belongsTo('Parents', [
             'className' => 'MeYoutube.VideosCategories',
             'foreignKey' => 'parent_id'
         ]);
-        $this->hasMany('ChildVideosCategories', [
+        $this->hasMany('Childs', [
             'className' => 'MeYoutube.VideosCategories',
             'foreignKey' => 'parent_id'
+        ]);
+        $this->hasMany('Videos', [
+            'className' => 'MeYoutube.Videos',
+            'foreignKey' => 'category_id'
         ]);
     }
 
@@ -76,15 +100,5 @@ class VideosCategoriesTable extends Table {
             ->notEmpty('video_count');
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating application integrity
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules) {
-        $rules->add($rules->existsIn(['parent_id'], 'ParentVideosCategories'));
-        return $rules;
     }
 }
