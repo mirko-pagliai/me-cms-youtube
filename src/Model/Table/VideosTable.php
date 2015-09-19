@@ -33,6 +33,17 @@ use MeYoutube\Model\Entity\Video;
  */
 class YoutubeVideosTable extends Table {
     /**
+     * Returns a rules checker object that will be used for validating application integrity
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules) {
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['category_id'], 'Categories'));
+        return $rules;
+    }
+	
+    /**
      * Initialize method
      * @param array $config The table configuration
      */
@@ -41,20 +52,14 @@ class YoutubeVideosTable extends Table {
         $this->displayField('title');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
-            'className' => 'MeYoutube.Users'
-        ]);
-        $this->belongsTo('Youtubes', [
-            'foreignKey' => 'youtube_id',
-            'joinType' => 'INNER',
-            'className' => 'MeYoutube.Youtubes'
-        ]);
+        $this->addBehavior('CounterCache', ['Categories' => ['video_count']]);
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
-            'joinType' => 'INNER',
-            'className' => 'MeYoutube.Categories'
+            'className' => 'MeYoutube.VideosCategories'
+        ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'className' => 'MeCms.Users'
         ]);
     }
 
@@ -82,17 +87,5 @@ class YoutubeVideosTable extends Table {
             ->notEmpty('is_spot');
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating application integrity
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules) {
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
-        $rules->add($rules->existsIn(['youtube_id'], 'Youtubes'));
-        $rules->add($rules->existsIn(['category_id'], 'Categories'));
-        return $rules;
     }
 }
