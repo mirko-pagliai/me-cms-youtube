@@ -25,8 +25,8 @@ namespace MeYoutube\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * YoutubeVideo entity
+ * VideosCategory entity
  */
-class YoutubeVideo extends Entity {
+class VideosCategory extends Entity {
 
 }

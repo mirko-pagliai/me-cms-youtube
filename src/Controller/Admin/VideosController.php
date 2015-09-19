@@ -4,10 +4,9 @@ namespace MeYoutube\Controller\Admin;
 use MeYoutube\Controller\AppController;
 
 /**
- * YoutubeVideos controller
- * @property \MeYoutube\Model\Table\YoutubeVideosTable $YoutubeVideos
+ * Videos controller
  */
-class YoutubeVideosController extends AppController {
+class VideosController extends AppController {
 	/**
      * Lists youtubeVideos
      */

@@ -26,28 +26,35 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use MeYoutube\Model\Entity\YoutubeVideosCategory;
+use MeYoutube\Model\Entity\Video;
 
 /**
- * YoutubeVideosCategories model
+ * Videos model
  */
-class YoutubeVideosCategoriesTable extends Table {
+class YoutubeVideosTable extends Table {
     /**
      * Initialize method
      * @param array $config The table configuration
      */
     public function initialize(array $config) {
-        $this->table('youtube_videos_categories');
+        $this->table('youtube_videos');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('Tree');
-        $this->belongsTo('ParentYoutubeVideosCategories', [
-            'className' => 'MeYoutube.YoutubeVideosCategories',
-            'foreignKey' => 'parent_id'
+        $this->addBehavior('Timestamp');
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER',
+            'className' => 'MeYoutube.Users'
         ]);
-        $this->hasMany('ChildYoutubeVideosCategories', [
-            'className' => 'MeYoutube.YoutubeVideosCategories',
-            'foreignKey' => 'parent_id'
+        $this->belongsTo('Youtubes', [
+            'foreignKey' => 'youtube_id',
+            'joinType' => 'INNER',
+            'className' => 'MeYoutube.Youtubes'
+        ]);
+        $this->belongsTo('Categories', [
+            'foreignKey' => 'category_id',
+            'joinType' => 'INNER',
+            'className' => 'MeYoutube.Categories'
         ]);
     }
 
@@ -60,20 +67,19 @@ class YoutubeVideosCategoriesTable extends Table {
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create')
-            ->add('lft', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('lft')
-            ->add('rght', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('rght')
             ->requirePresence('title', 'create')
             ->notEmpty('title')
-            ->add('title', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ->requirePresence('slug', 'create')
-            ->notEmpty('slug')
-            ->add('slug', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
+            ->allowEmpty('subtitle')
             ->allowEmpty('description')
-            ->add('video_count', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('video_count', 'create')
-            ->notEmpty('video_count');
+            ->add('priority', 'valid', ['rule' => 'numeric'])
+            ->requirePresence('priority', 'create')
+            ->notEmpty('priority')
+            ->add('active', 'valid', ['rule' => 'boolean'])
+            ->requirePresence('active', 'create')
+            ->notEmpty('active')
+            ->add('is_spot', 'valid', ['rule' => 'boolean'])
+            ->requirePresence('is_spot', 'create')
+            ->notEmpty('is_spot');
 
         return $validator;
     }
@@ -84,7 +90,9 @@ class YoutubeVideosCategoriesTable extends Table {
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules) {
-        $rules->add($rules->existsIn(['parent_id'], 'ParentYoutubeVideosCategories'));
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['youtube_id'], 'Youtubes'));
+        $rules->add($rules->existsIn(['category_id'], 'Categories'));
         return $rules;
     }
 }
