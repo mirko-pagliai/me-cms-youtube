@@ -31,7 +31,7 @@ use MeYoutube\Model\Entity\Video;
 /**
  * Videos model
  */
-class YoutubeVideosTable extends Table {
+class VideosTable extends Table {
     /**
      * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
