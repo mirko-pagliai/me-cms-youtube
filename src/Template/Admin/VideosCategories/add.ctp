@@ -22,22 +22,41 @@
  */
 ?>
 
-<?php $this->assign('title', __('Add videos category')); ?>
+<?php
+	$this->assign('title', __d('me_youtube', 'Add videos category'));
+	$this->Library->slugify();
+?>
 
-<div class="youtubeVideosCategories form">
-	<?= $this->Html->h2(__('Add Videos Category')) ?>
-    <?= $this->Form->create($youtubeVideosCategory); ?>
+<div class="videosCategories form">
+	<?= $this->Html->h2(__d('me_youtube', 'Add videos category')) ?>
+    <?= $this->Form->create($category); ?>
+	<div class='float-form'>
+		<?php
+			if(!empty($categories))
+				echo $this->Form->input('parent_id', [
+					'label'		=> __d('me_cms', 'Parent category'),
+					'options'	=> $categories,
+					'tip'		=> __d('me_cms', 'Leave blank to create a parent category')
+				]);
+		?>
+	</div>
     <fieldset>
         <?php
-            echo $this->Form->input('parent_id', ['options' => $parentYoutubeVideosCategories, 'empty' => true]);
-            echo $this->Form->input('lft');
-            echo $this->Form->input('rght');
-            echo $this->Form->input('title');
-            echo $this->Form->input('slug');
-            echo $this->Form->input('description');
-            echo $this->Form->input('video_count');
+			echo $this->Form->input('title', [
+				'id'	=> 'title',
+				'label'	=> __d('me_cms', 'Title')
+			]);
+			echo $this->Form->input('slug', [
+				'id'	=> 'slug',
+				'label'	=> __d('me_cms', 'Slug'),
+				'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
+			]);
+            echo $this->Form->input('description', [
+				'label'	=> __d('me_cms', 'Description'),
+				'rows'	=> 3
+			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__('Add Videos Category')) ?>
+    <?= $this->Form->submit(__d('me_youtube', 'Add videos category')) ?>
     <?= $this->Form->end() ?>
 </div>

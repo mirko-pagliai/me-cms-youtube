@@ -29,6 +29,23 @@ use MeCms\Controller\AppController;
  */
 class VideosCategoriesController extends AppController {
 	/**
+	 * Called before the controller action. 
+	 * You can use this method to perform logic that needs to happen before each controller action.
+	 * @param \Cake\Event\Event $event An Event instance
+	 * @uses MeCms\Controller\AppController::beforeFilter()
+	 * @uses MeYoutube\Model\Table\VideosCategoriesTable::getTreeList()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function beforeFilter(\Cake\Event\Event $event) {
+		parent::beforeFilter($event);
+		
+		if($this->request->isAction(['add', 'edit'])) {
+			//Gets and sets categories
+			$this->set('categories', $categories = $this->VideosCategories->getTreeList());
+		}
+	}
+	
+	/**
      * Lists videos categories
 	 * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
@@ -51,21 +68,20 @@ class VideosCategoriesController extends AppController {
      * Adds videos category
      */
     public function add() {
-        $videosCategory = $this->VideosCategories->newEntity();
+		$category = $this->VideosCategories->newEntity();
 		
         if($this->request->is('post')) {
-            $videosCategory = $this->VideosCategories->patchEntity($videosCategory, $this->request->data);
+            $category = $this->VideosCategories->patchEntity($category, $this->request->data);
 			
-            if($this->VideosCategories->save($videosCategory)) {
-                $this->Flash->success(__('The videos category has been saved'));
-				return $this->redirect(['action' => 'index']);
+            if($this->VideosCategories->save($category)) {
+                $this->Flash->success(__d('me_youtube', 'The videos category has been saved'));
+                return $this->redirect(['action' => 'index']);
             } 
 			else
-                $this->Flash->error(__('The videos category could not be saved'));
+                $this->Flash->error(__d('me_youtube', 'The videos category could not be saved'));
         }
-        $parentVideosCategories = $this->VideosCategories->ParentVideosCategories->find('list', ['limit' => 200]);
 
-        $this->set(compact('videosCategory', 'parentVideosCategories'));
+        $this->set(compact('category'));
     }
 
     /**
@@ -74,39 +90,42 @@ class VideosCategoriesController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
-        $videosCategory = $this->VideosCategories->get($id, [
-            'contain' => []
-        ]);
+		$category = $this->VideosCategories->get($id);
 		
         if($this->request->is(['patch', 'post', 'put'])) {
-            $videosCategory = $this->VideosCategories->patchEntity($videosCategory, $this->request->data);
+            $category = $this->VideosCategories->patchEntity($category, $this->request->data);
 			
-            if($this->VideosCategories->save($videosCategory)) {
-                $this->Flash->success(__('The videos category has been saved'));
+            if($this->VideosCategories->save($category)) {
+                $this->Flash->success(__d('me_youtube', 'The videos category has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else
-                $this->Flash->error(__('The videos category could not be saved'));
+                $this->Flash->error(__d('me_youtube', 'The videos category could not be saved'));
         }
-        $parentVideosCategories = $this->VideosCategories->ParentVideosCategories->find('list', ['limit' => 200]);
 
-        $this->set(compact('videosCategory', 'parentVideosCategories'));
+        $this->set(compact('category'));
     }
+	
     /**
-     * Deletes youtube videos category
+     * Deletes videos category
      * @param string $id Videos category ID
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);
 		
-        $videosCategory = $this->VideosCategories->get($id);
+        $category = $this->VideosCategories->get($id);
 		
-        if($this->VideosCategories->delete($videosCategory))
-            $this->Flash->success(__('The videos category has been deleted'));
-        else
-            $this->Flash->error(__('The videos category could not be deleted'));
-			
+		//Before deleting, it checks if the category has some videos
+		if(!$category->video_count) {
+			if($this->VideosCategories->delete($category))
+				$this->Flash->success(__d('me_youtube', 'The videos category has been deleted'));
+			else
+				$this->Flash->error(__d('me_youtube', 'The videos category could not be deleted'));
+		}
+		else
+			$this->Flash->alert(__d('me_youtube', 'Before you delete this category, you have to delete its videos or assign them to another category'));
+		
         return $this->redirect(['action' => 'index']);
     }
 }
