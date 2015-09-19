@@ -56,19 +56,16 @@ class VideosTable extends AppTable {
 		$conditions = parent::fromFilter($query);
 		
 		//"User" (author) field
-		if(!empty($query['user'])) {
+		if(!empty($query['user']))
 			$conditions[sprintf('%s.user_id', $this->alias())] = $query['user'];
-		}
 		
 		//"Category" field
-		if(!empty($query['category'])) {
+		if(!empty($query['category']))
 			$conditions[sprintf('%s.category_id', $this->alias())] = $query['category'];
-		}
 		
 		//"Is spot" field
-		if(!empty($query['spot'])) {
+		if(!empty($query['spot']))
 			$conditions[sprintf('%s.is_spot', $this->alias())] = TRUE;
-		}
 		
 		return empty($conditions) ? [] : $conditions;
 	}
