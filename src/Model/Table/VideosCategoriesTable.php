@@ -43,6 +43,16 @@ class VideosCategoriesTable extends Table {
     }
 	
 	/**
+	 * Gets the categories list
+	 * @return array List
+	 */
+	public function getList() {
+		return $this->find('list')
+			->cache('categories_list', 'videos')
+			->toArray();
+	}
+	
+	/**
 	 * Gets the categories tree list
 	 * @return array List
 	 */
