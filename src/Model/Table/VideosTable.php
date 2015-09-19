@@ -24,14 +24,14 @@ namespace MeYoutube\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use MeCms\Model\Table\AppTable;
 use MeYoutube\Model\Entity\Video;
 
 /**
  * Videos model
  */
-class VideosTable extends Table {
+class VideosTable extends AppTable {
     /**
      * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
@@ -42,6 +42,31 @@ class VideosTable extends Table {
         $rules->add($rules->existsIn(['category_id'], 'Categories'));
         return $rules;
     }
+	
+	/**
+	 * Gets conditions from a filter form
+	 * @param array $query Query (`$this->request->query`)
+	 * @return array Conditions
+	 * @uses MeCms\Model\Table\AppTable::fromFilter()
+	 */
+	public function fromFilter(array $query) {
+		if(empty($query))
+			return [];
+		
+		$conditions = parent::fromFilter($query);
+		
+		//"User" (author) field
+		if(!empty($query['user'])) {
+			$conditions[sprintf('%s.user_id', $this->alias())] = $query['user'];
+		}
+		
+		//"Category" field
+		if(!empty($query['category'])) {
+			$conditions[sprintf('%s.category_id', $this->alias())] = $query['category'];
+		}
+		
+		return empty($conditions) ? [] : $conditions;
+	}
 	
     /**
      * Initialize method

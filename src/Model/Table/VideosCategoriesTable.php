@@ -24,14 +24,14 @@ namespace MeYoutube\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use MeCms\Model\Table\AppTable;
 use MeYoutube\Model\Entity\VideosCategory;
 
 /**
  * VideosCategories model
  */
-class VideosCategoriesTable extends Table {
+class VideosCategoriesTable extends AppTable {
     /**
      * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
