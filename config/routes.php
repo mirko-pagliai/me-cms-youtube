@@ -24,7 +24,17 @@ use Cake\Routing\Router;
 
 Router::defaultRouteClass('InflectedRoute');
 
+Router::extensions('rss');
+
 Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
+	/**
+	 * Videos controller
+	 */
+	$routes->connect('/video/:id',
+		['controller' => 'Videos', 'action' => 'view'],
+		['_name' => 'video', 'id' => '\d+', 'pass' => ['id']]
+	);
+	
 	/**
 	 * Admin routes
 	 */

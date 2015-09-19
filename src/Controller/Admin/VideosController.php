@@ -32,10 +32,16 @@ class VideosController extends AppController {
      * Lists videos
      */
     public function index() {
-        $this->paginate = [
-            'contain' => ['Users', 'Youtubes', 'Categories']
-        ];
-        $this->set('youtubeVideos', $this->paginate($this->Videos));
+		$this->set('videos', $this->paginate(
+			$this->Videos->find()
+				->contain([
+					'Categories'	=> ['fields' => ['title']],
+					'Users'			=> ['fields' => ['first_name', 'last_name']]
+				])
+				->select(['id', 'title', 'priority', 'active', 'created', 'is_spot'])
+//				->where($this->Posts->fromFilter($this->request->query))
+				->order(['Videos.created' => 'DESC'])
+		));
     }
 
     /**

@@ -29,32 +29,75 @@
     <table class="table table-hover">
 		<thead>
 			<tr>
-				<th><?= $this->Paginator->sort('id') ?></th>
-				<th><?= $this->Paginator->sort('user_id') ?></th>
-				<th><?= $this->Paginator->sort('youtube_id') ?></th>
-				<th><?= $this->Paginator->sort('category_id') ?></th>
-				<th><?= $this->Paginator->sort('title') ?></th>
-				<th><?= $this->Paginator->sort('subtitle') ?></th>
-				<th><?= $this->Paginator->sort('priority') ?></th>
-				<th class="actions text-center"><?= __('Actions') ?></th>
+				<th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('category_id', __d('me_cms', 'Category')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('User.full_name', __d('me_cms', 'Author')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('is_spot', __d('me_youtube', 'Spot')) ?></th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($youtubeVideos as $youtubeVideo): ?>
+			<?php foreach($videos as $video): ?>
 				<tr>
-					<td><?= $this->Number->format($youtubeVideo->id) ?></td>
-							<td>
-						<?= $youtubeVideo->has('user') ? $this->Html->link($youtubeVideo->user->id, ['controller' => 'Users', 'action' => 'view', $youtubeVideo->user->id]) : '' ?>
+					<td>
+						<?php
+							$title = $this->Html->link($video->title, ['action' => 'edit', $video->id]);
+						
+							//If the video is not active (it's a draft)
+							if(!$video->active)
+								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'text-warning']));
+							
+							echo $this->Html->strong($title);
+														
+							$actions = [];
+							
+							//Only admins and managers can edit all videos. Users can edit only their own videos
+							if($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($video->user->id))
+								$actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $video->id], ['icon' => 'pencil']);					
+
+							//Only admins and managers can delete videos
+							if($this->Auth->isGroup(['admin', 'manager']))
+								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $video->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
+
+							//If the video is active (it's published)
+							if($video->active)
+								$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'video', $video->id], ['icon' => 'external-link', 'target' => '_blank']);
+
+							echo $this->Html->ul($actions, ['class' => 'actions']);
+						?>
 					</td>
-					<td><?= h($youtubeVideo->youtube_id) ?></td>
-					<td><?= $this->Number->format($youtubeVideo->category_id) ?></td>
-					<td><?= h($youtubeVideo->title) ?></td>
-					<td><?= h($youtubeVideo->subtitle) ?></td>
-					<td><?= $this->Number->format($youtubeVideo->priority) ?></td>
-					<td class="actions">
-						<?= $this->Html->button(NULL, ['action' => 'view', $youtubeVideo->id], ['icon' => 'eye', 'title' => __('View')]) ?>
-						<?= $this->Html->button(NULL, ['action' => 'edit', $youtubeVideo->id], ['icon' => 'pencil', 'title' => __('Edit')]) ?>
-						<?= $this->Form->postButton(NULL, ['action' => 'delete', $youtubeVideo->id], ['title' => __('Delete'), 'confirm' => __('Are you sure you want to delete # {0}?', $youtubeVideo->id), 'icon' => 'trash']) ?>
+					<td class="text-center"><?= $video->category->title ?></td>
+					<td class="text-center"><?= $video->user->full_name ?></td>
+					<td class="min-width text-center">
+						<?php
+							switch($video->priority) {
+								case '1':
+									echo $this->Html->badge('1', ['class' => 'priority-verylow', 'tooltip' => __d('me_cms', 'Very low')]);
+									break;
+								case '2':
+									echo $this->Html->badge('2', ['class' => 'priority-low', 'tooltip' => __d('me_cms', 'Low')]);
+									break;
+								case '4':	
+									echo $this->Html->badge('4', ['class' => 'priority-high', 'tooltip' => __d('me_cms', 'High')]);
+									break;
+								case '5':
+									echo $this->Html->badge('5', ['class' => 'priority-veryhigh', 'tooltip' => __d('me_cms', 'Very high')]);
+									break;
+								default:
+									echo $this->Html->badge('3', ['class' => 'priority-normal', 'tooltip' => __d('me_cms', 'Normal')]);
+									break;
+							}
+						?>
+					</td>
+					<td class="min-width text-center">
+						<?= $video->created->i18nFormat(config('main.datetime.long')) ?>
+					</td>
+					<td class="min-width text-center">
+						<?php
+							if($video->is_spot)
+								echo $this->Html->badge(NULL, ['class' => 'priority-normal', 'icon' => 'check', 'tooltip' => __d('me_youtube', 'This video is a spot')]);
+						?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
