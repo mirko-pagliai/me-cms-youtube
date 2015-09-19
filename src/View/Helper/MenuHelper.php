@@ -46,19 +46,15 @@ class MenuHelper extends BaseMenuHelper {
 	 */
 	public function _videos($type) {
 		$menu = [
-			$this->Html->link(__d('me_youtube', 'List videos'), '#'),
-			$this->Html->link(__d('me_youtube', 'Add video'), '#')
-//			$this->Html->link(__d('me_youtube', 'List videos'), ['controller' => 'videos', 'action' => 'index', 'plugin' => 'MeYoutube']),
-//			$this->Html->link(__d('me_youtube', 'Add video'), ['controller' => 'videos', 'action' => 'add', 'plugin' => 'MeYoutube'])
+			$this->Html->link(__d('me_youtube', 'List videos'), ['controller' => 'videos', 'action' => 'index', 'plugin' => 'MeYoutube']),
+			$this->Html->link(__d('me_youtube', 'Add video'), ['controller' => 'videos', 'action' => 'add', 'plugin' => 'MeYoutube'])
 		];
 		
 		//Only admins and managers can access this controller
 		if($this->Auth->isGroup(['admin', 'manager']))
 			array_push($menu,
-				$this->Html->link(__d('me_cms', 'List categories'), '#'),
-				$this->Html->link(__d('me_cms', 'Add category'), '#')
-//				$this->Html->link(__d('me_cms', 'List categories'), ['controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'MeYoutube']),
-//				$this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'videos_categories', 'action' => 'add', 'plugin' => 'MeYoutube'])
+				$this->Html->link(__d('me_cms', 'List categories'), ['controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'MeYoutube']),
+				$this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'videos_categories', 'action' => 'add', 'plugin' => 'MeYoutube'])
 			);
 		
 		return [$menu, __d('me_youtube', 'Videos'), ['icon' => 'film']];
