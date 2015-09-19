@@ -1,9 +1,0 @@
-accessLevels: [public, protected, private]
-destination: Docs
-download: false
-exclude: {*.old, *.old.*}
-source: {Controller, Model, View}
-main: MeYoutube
-php: false
-title: MeYoutube API
-todo: true
