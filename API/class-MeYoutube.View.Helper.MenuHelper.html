@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class MeYoutube\View\Helper\MenuHelper | MeYoutube API</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active main">
+					<a href="namespace-MeYoutube.html">
+						MeYoutube<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="namespace-MeYoutube.Controller.html">
+						Controller<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="namespace-MeYoutube.Controller.Admin.html">
+						Admin					</a>
+
+						</li>
+							</ul></li>
+				<li class="main">
+					<a href="namespace-MeYoutube.Model.html">
+						Model<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="namespace-MeYoutube.Model.Entity.html">
+						Entity					</a>
+
+						</li>
+				<li class="main">
+					<a href="namespace-MeYoutube.Model.Table.html">
+						Table					</a>
+
+						</li>
+				<li class="main">
+					<a href="namespace-MeYoutube.Model.Validation.html">
+						Validation					</a>
+
+						</li>
+							</ul></li>
+				<li class="main">
+					<a href="namespace-MeYoutube.Utility.html">
+						Utility					</a>
+
+						</li>
+				<li class="active main">
+					<a href="namespace-MeYoutube.View.html">
+						View<span></span>
+					</a>
+
+						<ul>
+				<li class="active main">
+					<a href="namespace-MeYoutube.View.Helper.html">
+						Helper					</a>
+
+						</li>
+							</ul></li></ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-MeYoutube.View.Helper.MenuHelper.html">MenuHelper</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-MeYoutube.View.Helper.html" title="Summary of MeYoutube\View\Helper"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+				<li>
+					<a href="annotation-group-todo.html" title="List of elements with todo annotation">
+						<span>Todo</span>
+					</a>
+				</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class MenuHelper</h1>
+
+
+	<div class="description">
+	<p>Menu Helper</p>
+
+<p>It contains methods to generate menus for this plugin.
+It supports these types of menu: <code>ul</code>, <code>collapse</code> and <code>dropdown</code>.</p>
+
+<p>To generate a menu, you have to use the <code>get()</code> method. For example:</p>
+
+<pre><span class="php-var">$this</span>-&gt;Menu-&gt;get(<span class="php-quote">'photos'</span>, <span class="php-quote">'dropdown'</span>)</pre>
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+MeCms\View\Helper\BaseMenuHelper
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>MeYoutube\View\Helper\MenuHelper</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.View.html">View</a>\<a href="namespace-MeYoutube.View.Helper.html">Helper</a><br>
+		
+
+			<b>Located at</b> <a href="source-class-MeYoutube.View.Helper.MenuHelper.html#28-62" title="Go to source code">Helper/MenuHelper.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="_videos" id="__videos">
+
+		<td class="attributes"><code>
+			 public 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__videos">#</a>
+		<code><a href="source-class-MeYoutube.View.Helper.MenuHelper.html#40-61" title="Go to source code">_videos</a>( <span>string <var>$type</var></span> )</code>
+
+		<div class="description short">
+			<p>Internal function to generate the menu for "videos" actions.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Internal function to generate the menu for "videos" actions.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>Array with menu, title and link options
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeCms\View\Helper\AuthHelper::isGroup()<br>
+						MeTools\View\Helper\HtmlHelper::link()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		MeYoutube API API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>

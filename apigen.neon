@@ -1,0 +1,9 @@
+accessLevels: [public, protected, private]
+destination: API
+download: false
+exclude: {*_old, *.old, *.old.*} 
+source: {src/Controller, src/Model, src/Template, src/Utility, src/View}
+main: MeYoutube
+php: false
+title: MeYoutube API
+todo: true

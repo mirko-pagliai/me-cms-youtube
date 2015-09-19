@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class MeYoutube\Model\Table\VideosTable | MeYoutube API</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active main">
+					<a href="namespace-MeYoutube.html">
+						MeYoutube<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="namespace-MeYoutube.Controller.html">
+						Controller<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="namespace-MeYoutube.Controller.Admin.html">
+						Admin					</a>
+
+						</li>
+							</ul></li>
+				<li class="active main">
+					<a href="namespace-MeYoutube.Model.html">
+						Model<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="namespace-MeYoutube.Model.Entity.html">
+						Entity					</a>
+
+						</li>
+				<li class="active main">
+					<a href="namespace-MeYoutube.Model.Table.html">
+						Table					</a>
+
+						</li>
+				<li class="main">
+					<a href="namespace-MeYoutube.Model.Validation.html">
+						Validation					</a>
+
+						</li>
+							</ul></li>
+				<li class="main">
+					<a href="namespace-MeYoutube.Utility.html">
+						Utility					</a>
+
+						</li>
+				<li class="main">
+					<a href="namespace-MeYoutube.View.html">
+						View<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="namespace-MeYoutube.View.Helper.html">
+						Helper					</a>
+
+						</li>
+							</ul></li></ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-MeYoutube.Model.Table.VideosCategoriesTable.html">VideosCategoriesTable</a></li>
+				<li class="active"><a href="class-MeYoutube.Model.Table.VideosTable.html">VideosTable</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-MeYoutube.Model.Table.html" title="Summary of MeYoutube\Model\Table"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+				<li>
+					<a href="annotation-group-todo.html" title="List of elements with todo annotation">
+						<span>Todo</span>
+					</a>
+				</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class VideosTable</h1>
+
+
+	<div class="description">
+	<p>Videos model</p>
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+MeCms\Model\Table\AppTable
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>MeYoutube\Model\Table\VideosTable</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.Model.html">Model</a>\<a href="namespace-MeYoutube.Model.Table.html">Table</a><br>
+		
+
+			<b>Located at</b> <a href="source-class-MeYoutube.Model.Table.VideosTable.html#33-152" title="Go to source code">Table/VideosTable.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="afterDelete" id="_afterDelete">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_afterDelete">#</a>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#37-50" title="Go to source code">afterDelete</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
+
+		<div class="description short">
+			<p>Called after an entity has been deleted</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called after an entity has been deleted</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$event</var></dt>
+					<dd>Event object</dd>
+					<dt><var>$entity</var></dt>
+					<dd>Entity object</dd>
+					<dt><var>$options</var></dt>
+					<dd>Options</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						Cake\Cache\Cache::clear()<br>
+						<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_setNextToBePublished">MeYoutube\Model\Table\VideosTable::setNextToBePublished()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="afterSave" id="_afterSave">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_afterSave">#</a>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#52-65" title="Go to source code">afterSave</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
+
+		<div class="description short">
+			<p>Called after an entity is saved.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called after an entity is saved.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$event</var></dt>
+					<dd>Event object</dd>
+					<dt><var>$entity</var></dt>
+					<dd>Entity object</dd>
+					<dt><var>$options</var></dt>
+					<dd>Options</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						Cake\Cache\Cache::clear()<br>
+						<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_setNextToBePublished">MeYoutube\Model\Table\VideosTable::setNextToBePublished()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="buildRules" id="_buildRules">
+
+		<td class="attributes"><code>
+			 public 
+
+			Cake\ORM\RulesChecker
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_buildRules">#</a>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#67-76" title="Go to source code">buildRules</a>( <span>Cake\ORM\RulesChecker <var>$rules</var></span> )</code>
+
+		<div class="description short">
+			<p>Returns a rules checker object that will be used for validating application integrity</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns a rules checker object that will be used for validating application integrity</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$rules</var></dt>
+					<dd>The rules object to be modified</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					Cake\ORM\RulesChecker
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="fromFilter" id="_fromFilter">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_fromFilter">#</a>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#78-103" title="Go to source code">fromFilter</a>( <span>array <var>$query</var></span> )</code>
+
+		<div class="description short">
+			<p>Gets conditions from a filter form</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets conditions from a filter form</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$query</var></dt>
+					<dd>Query (<code>$this-&gt;request-&gt;query</code>)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>Conditions
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeCms\Model\Table\AppTable::fromFilter()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="initialize" id="_initialize">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initialize">#</a>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#105-123" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
+
+		<div class="description short">
+			<p>Initialize method</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Initialize method</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$config</var></dt>
+					<dd>The table configuration</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setNextToBePublished" id="_setNextToBePublished">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setNextToBePublished">#</a>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#125-142" title="Go to source code">setNextToBePublished</a>( )</code>
+
+		<div class="description short">
+			<p>Sets in cache the timestamp of the next video to be published.
+This value can be used to check if the cache is valid</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets in cache the timestamp of the next video to be published.
+This value can be used to check if the cache is valid</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						Cake\I18n\Time::toUnixString()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_afterDelete">MeYoutube\Model\Table\VideosTable::afterDelete()</a></code><br>
+						<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_afterSave">MeYoutube\Model\Table\VideosTable::afterSave()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="validationDefault" id="_validationDefault">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-MeYoutube.Model.Validation.VideoValidator.html">MeYoutube\Model\Validation\VideoValidator</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_validationDefault">#</a>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#144-151" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
+
+		<div class="description short">
+			<p>Default validation rules</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Default validation rules</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$validator</var></dt>
+					<dd>Validator instance</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-MeYoutube.Model.Validation.VideoValidator.html">MeYoutube\Model\Validation\VideoValidator</a></code>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		MeYoutube API API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>
