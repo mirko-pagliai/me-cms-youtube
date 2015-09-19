@@ -25,6 +25,12 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 
 /**
+ * MeYoutube configuration
+ */
+//Loads the configuration from the application
+Configure::load('youtube');
+
+/**
  * Cache configuration
  */
 //Loads the cache configuration from the plugin
