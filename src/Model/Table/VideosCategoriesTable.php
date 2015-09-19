@@ -22,6 +22,7 @@
  */
 namespace MeYoutube\Model\Table;
 
+use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
@@ -32,6 +33,28 @@ use MeYoutube\Model\Entity\VideosCategory;
  * VideosCategories model
  */
 class VideosCategoriesTable extends AppTable {
+	/**
+	 * Called after an entity has been deleted
+	 * @param \Cake\Event\Event $event Event object
+	 * @param \Cake\ORM\Entity $entity Entity object
+	 * @param \ArrayObject $options Options
+	 * @uses Cake\Cache\Cache::clear()
+	 */
+	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
+		Cache::clear(FALSE, 'videos');		
+	}
+	
+	/**
+	 * Called after an entity is saved.
+	 * @param \Cake\Event\Event $event Event object
+	 * @param \Cake\ORM\Entity $entity Entity object
+	 * @param \ArrayObject $options Options
+	 * @uses Cake\Cache\Cache::clear()
+	 */
+	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
+		Cache::clear(FALSE, 'videos');
+	}
+	
     /**
      * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
@@ -40,6 +63,18 @@ class VideosCategoriesTable extends AppTable {
     public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['parent_id'], 'Parents'));
         return $rules;
+    }
+	
+	/**
+	 * "Active" find method
+	 * @param Query $query Query object
+	 * @param array $options Options
+	 * @return Query Query object
+	 */
+	public function findActive(Query $query, array $options) {
+        $query->where([sprintf('%s.video_count >', $this->alias()) => 0]);
+		
+        return $query;
     }
 	
 	/**

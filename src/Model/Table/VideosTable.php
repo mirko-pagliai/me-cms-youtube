@@ -22,6 +22,8 @@
  */
 namespace MeYoutube\Model\Table;
 
+use Cake\Cache\Cache;
+use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
@@ -32,6 +34,36 @@ use MeYoutube\Model\Entity\Video;
  * Videos model
  */
 class VideosTable extends AppTable {
+	/**
+	 * Called after an entity has been deleted
+	 * @param \Cake\Event\Event $event Event object
+	 * @param \Cake\ORM\Entity $entity Entity object
+	 * @param \ArrayObject $options Options
+	 * @uses Cake\Cache\Cache::clear()
+	 * @uses setNextToBePublished()
+	 */
+	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
+		Cache::clear(FALSE, 'videos');	
+		
+		//Sets the next video to be published
+		$this->setNextToBePublished();	
+	}
+	
+	/**
+	 * Called after an entity is saved.
+	 * @param \Cake\Event\Event $event Event object
+	 * @param \Cake\ORM\Entity $entity Entity object
+	 * @param \ArrayObject $options Options
+	 * @uses Cake\Cache\Cache::clear()
+	 * @uses setNextToBePublished()
+	 */
+	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
+		Cache::clear(FALSE, 'videos');
+		
+		//Sets the next video to be published
+		$this->setNextToBePublished();
+	}
+	
     /**
      * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
@@ -89,6 +121,25 @@ class VideosTable extends AppTable {
             'className' => 'MeCms.Users'
         ]);
     }
+	
+	/**
+	 * Sets in cache the timestamp of the next video to be published.
+	 * This value can be used to check if the cache is valid
+	 * @uses Cake\I18n\Time::toUnixString()
+	 */
+	public function setNextToBePublished() {
+		$video = $this->find()
+			->select('created')
+			->where([
+				sprintf('%s.active', $this->alias())	=> TRUE,
+				sprintf('%s.created >', $this->alias()) => new Time()
+			])
+			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
+			->first();
+		
+		if(!empty($video) && !empty($video->created))
+			Cache::write('nextToBePublished', $video->created->toUnixString(), 'videos');
+	}
 
     /**
      * Default validation rules
