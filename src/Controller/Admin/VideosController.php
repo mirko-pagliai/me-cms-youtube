@@ -23,6 +23,7 @@
 namespace MeYoutube\Controller\Admin;
 
 use MeCms\Controller\AppController;
+use MeYoutube\Utility\Youtube;
 
 /**
  * Videos controller
@@ -53,7 +54,7 @@ class VideosController extends AppController {
 		
 		//Checks for categories
 		if(isset($categories) && empty($categories)) {
-			$this->Flash->alert(__d('me_cms', 'Before you can manage videos, you have to create at least a category'));
+			$this->Flash->alert(__d('me_youtube', 'Before you can manage videos, you have to create at least a category'));
 			$this->redirect(['controller' => 'VideosCategories', 'action' => 'index']);
 		}
 		
@@ -82,19 +83,36 @@ class VideosController extends AppController {
 
     /**
      * Adds video
+	 * @uses MeYoutube\Utility\Youtube::getId()
+	 * @uses MeYoutube\Utility\Youtube::getInfo()
      */
     public function add() {
+		//If the address of a YouTube video has been specified
+		if($this->request->query('url') && $this->request->is('get')) {
+			//Checks for the Youtube video ID and the video information	
+			if(!$youtube_id = Youtube::getId($this->request->query('url')))
+				$this->Flash->error(__d('me_youtube', 'This is not a {0} video', 'YouTube'));
+				
+			$this->request->data = am(compact('youtube_id'),  Youtube::getInfo($youtube_id));
+		}
+		
         $video = $this->Videos->newEntity();
 		
         if($this->request->is('post')) {
+			//Only admins and managers can add posts on behalf of other users
+			if(!$this->Auth->isGroup(['admin', 'manager']))
+				$this->request->data('user_id', $this->Auth->user('id'));
+			
+			$this->request->data['created'] = new Time($this->request->data('created'));
+			
             $video = $this->Videos->patchEntity($video, $this->request->data);
 			
             if($this->Videos->save($video)) {
-                $this->Flash->success(__d('me_cms', 'The video has been saved'));
+                $this->Flash->success(__d('me_youtube', 'The video has been saved'));
 				return $this->redirect(['action' => 'index']);
             } 
 			else
-                $this->Flash->error(__d('me_cms', 'The video could not be saved'));
+                $this->Flash->error(__d('me_youtube', 'The video could not be saved'));
         }
 
         $this->set(compact('video'));
@@ -106,19 +124,23 @@ class VideosController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
-        $video = $this->Videos->get($id, [
-            'contain' => []
-        ]);
+        $video = $this->Videos->get($id);
 		
         if($this->request->is(['patch', 'post', 'put'])) {
+			//Only admins and managers can edit posts on behalf of other users
+			if(!$this->Auth->isGroup(['admin', 'manager']))
+				$this->request->data('user_id', $this->Auth->user('id'));
+			
+			$this->request->data['created'] = new Time($this->request->data('created'));
+			
             $video = $this->Videos->patchEntity($video, $this->request->data);
 			
             if($this->Videos->save($video)) {
-                $this->Flash->success(__d('me_cms', 'The video has been saved'));
+                $this->Flash->success(__d('me_youtube', 'The video has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else
-                $this->Flash->error(__d('me_cms', 'The video could not be saved'));
+                $this->Flash->error(__d('me_youtube', 'The video could not be saved'));
         }
 
         $this->set(compact('video'));
@@ -134,9 +156,9 @@ class VideosController extends AppController {
         $video = $this->Videos->get($id);
 		
         if($this->Videos->delete($video))
-            $this->Flash->success(__d('me_cms', 'The video has been deleted'));
+            $this->Flash->success(__d('me_youtube', 'The video has been deleted'));
         else
-            $this->Flash->error(__d('me_cms', 'The video could not be deleted'));
+            $this->Flash->error(__d('me_youtube', 'The video could not be deleted'));
 			
         return $this->redirect(['action' => 'index']);
     }

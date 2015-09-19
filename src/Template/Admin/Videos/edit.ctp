@@ -22,24 +22,70 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Edit video')); ?>
+<?php
+	$this->assign('title', __d('me_youtube', 'Edit video'));
+	$this->Library->datetimepicker();
+?>
 
-<div class="youtubeVideos form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit Video')) ?>
+<div class="videos form">
+	<?= $this->Html->h2(__d('me_youtube', 'Edit Video')) ?>
     <?= $this->Form->create($video); ?>
+	<div class='float-form'>
+		<?php
+			//Only admins and managers can add posts on behalf of other users
+			if($this->Auth->isGroup(['admin', 'manager']))
+				echo $this->Form->input('user_id', [
+					'empty'	=> FALSE,
+					'label' => __d('me_cms', 'Author')
+				]);
+
+			echo $this->Form->input('category_id', [
+					'empty'	=> FALSE,
+				'label' => __d('me_cms', 'Category')
+			]);
+			echo $this->Form->datetimepicker('created', [
+				'label'	=> __d('me_cms', 'Date'),
+				'tip'	=> [
+					__d('me_cms', 'If blank, the current date and time will be used'),
+					__d('me_cms', 'You can delay the publication by entering a future date')
+				],
+				'value'	=> $video->created->i18nFormat(FORMAT_FOR_MYSQL)
+			]);
+			echo $this->Form->input('priority', [
+				'label' => __d('me_cms', 'Priority')
+			]);
+			echo $this->Form->input('is_spot', [
+				'label'	=> sprintf('%s?', __d('me_youtube', 'Is a spot')),
+				'tip'	=> __d('me_youtube', 'Enable this option if this video is a spot')
+			]);
+			echo $this->Form->input('active', [
+				'label'	=> sprintf('%s?', __d('me_cms', 'Published')),
+				'tip'	=> __d('me_cms', 'Disable this option to save as a draft')
+			]);
+		?>
+	</div>
+	
     <fieldset>
         <?php
-            echo $this->Form->input('user_id', ['options' => $users]);
-            echo $this->Form->input('youtube_id');
-            echo $this->Form->input('category_id');
-            echo $this->Form->input('title');
-            echo $this->Form->input('subtitle');
-            echo $this->Form->input('description');
-            echo $this->Form->input('priority');
-            echo $this->Form->input('active');
-            echo $this->Form->input('is_spot');
+            echo $this->Html->iframe(sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $this->request->data('youtube_id')), [
+				'class'				=> 'margin-15',
+				'allowfullscreen'	=> TRUE,
+				'height'			=> 315,
+				'width'				=> 560
+			]);
+			echo $this->Form->input('youtube_id', [
+				'label'		=> __d('me_youtube', '{0} ID', 'YouTube'),
+				'readonly'	=> TRUE,
+				'type'		=> 'text'
+			]);
+			echo $this->Form->input('title', ['label' => __d('me_cms', 'Title')]);
+			echo $this->Form->input('subtitle', ['label' => __d('me_cms', 'Subtitle')]);
+			echo $this->Form->input('description', [
+				'label' => __d('me_cms', 'Description'),
+				'rows'	=> 8
+			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit Video')) ?>
+    <?= $this->Form->submit(__d('me_youtube', 'Edit Video')) ?>
     <?= $this->Form->end() ?>
 </div>
