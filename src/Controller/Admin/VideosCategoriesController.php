@@ -30,12 +30,21 @@ use MeCms\Controller\AppController;
 class VideosCategoriesController extends AppController {
 	/**
      * Lists videos categories
+	 * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
     public function index() {
-        $this->paginate = [
-            'contain' => ['ParentVideosCategories']
-        ];
-        $this->set('videosCategories', $this->paginate($this->VideosCategories));
+		$categories = $this->VideosCategories->find('all')
+			->contain(['Parents' => ['fields' => ['title']]])
+			->order(['VideosCategories.lft' => 'ASC'])
+			->select(['id', 'title', 'slug', 'video_count'])
+			->toArray();
+		
+		//Changes the category titles, replacing them with the titles of the tree list
+		array_walk($categories, function(&$category, $k, $treeList) {
+			$category->title = $treeList[$category->id];
+		}, $this->VideosCategories->getTreeList());
+		
+        $this->set(compact('categories'));
     }
 
     /**
@@ -61,7 +70,7 @@ class VideosCategoriesController extends AppController {
 
     /**
      * Edits youtube videos category
-     * @param string $id Videos Category ID
+     * @param string $id Videos category ID
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
@@ -85,7 +94,7 @@ class VideosCategoriesController extends AppController {
     }
     /**
      * Deletes youtube videos category
-     * @param string $id Videos Category ID
+     * @param string $id Videos category ID
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {

@@ -22,40 +22,41 @@
  */
 ?>
 
-<?php $this->assign('title', __('List videos categories')); ?>
+<?php $this->assign('title', __d('me_youtube', 'Videos categories')); ?>
 
-<div class="youtubeVideosCategories index">
-	<?= $this->Html->h2(__('List videos categories')) ?>
+<div class="videosCategories index">
+	<?= $this->Html->h2(__d('me_youtube', 'Videos categories')) ?>
+	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	
     <table class="table table-hover">
 		<thead>
 			<tr>
-				<th><?= $this->Paginator->sort('id') ?></th>
-				<th><?= $this->Paginator->sort('parent_id') ?></th>
-				<th><?= $this->Paginator->sort('lft') ?></th>
-				<th><?= $this->Paginator->sort('rght') ?></th>
-				<th><?= $this->Paginator->sort('title') ?></th>
-				<th><?= $this->Paginator->sort('slug') ?></th>
-				<th><?= $this->Paginator->sort('description') ?></th>
-				<th class="actions text-center"><?= __('Actions') ?></th>
+				<th><?= __d('me_cms', 'Title') ?></th>
+				<th class="text-center"><?= __d('me_cms', 'Parent') ?></th>
+				<th class="min-width text-center"><?= __d('me_youtube', 'Videos') ?></th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($youtubeVideosCategories as $youtubeVideosCategory): ?>
+			<?php foreach($categories as $category): ?>
 				<tr>
-					<td><?= $this->Number->format($youtubeVideosCategory->id) ?></td>
-							<td>
-						<?= $youtubeVideosCategory->has('parent_youtube_videos_category') ? $this->Html->link($youtubeVideosCategory->parent_youtube_videos_category->title, ['controller' => 'YoutubeVideosCategories', 'action' => 'view', $youtubeVideosCategory->parent_youtube_videos_category->id]) : '' ?>
+					<td>
+						<?php
+							$title = $this->Html->link($category->title, ['action' => 'edit', $category->id]);
+							echo $this->Html->strong($title);
+
+							$actions = [
+								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $category->id], ['icon' => 'pencil']),
+								$this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $category->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]),					
+							];
+							
+							if($category->video_count)
+								$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['controller' => 'posts', 'action' => 'index', $category->slug, 'prefix' => FALSE], ['icon' => 'external-link', 'target' => '_blank']);
+
+							echo $this->Html->ul($actions, ['class' => 'actions']);
+						?>
 					</td>
-					<td><?= $this->Number->format($youtubeVideosCategory->lft) ?></td>
-					<td><?= $this->Number->format($youtubeVideosCategory->rght) ?></td>
-					<td><?= h($youtubeVideosCategory->title) ?></td>
-					<td><?= h($youtubeVideosCategory->slug) ?></td>
-					<td><?= h($youtubeVideosCategory->description) ?></td>
-					<td class="actions">
-						<?= $this->Html->button(NULL, ['action' => 'view', $youtubeVideosCategory->id], ['icon' => 'eye', 'title' => __('View')]) ?>
-						<?= $this->Html->button(NULL, ['action' => 'edit', $youtubeVideosCategory->id], ['icon' => 'pencil', 'title' => __('Edit')]) ?>
-						<?= $this->Form->postButton(NULL, ['action' => 'delete', $youtubeVideosCategory->id], ['title' => __('Delete'), 'confirm' => __('Are you sure you want to delete # {0}?', $youtubeVideosCategory->id), 'icon' => 'trash']) ?>
-					</td>
+					<td class="text-center"><?= empty($category->parent->title) ? NULL : $category->parent->title ?></td>
+					<td class="text-center"><?= $category->video_count ?></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
