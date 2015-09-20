@@ -35,8 +35,12 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 	/**
 	 * Videos controller
 	 */
+	$routes->connect('/videos/category/:slug',
+		['controller' => 'Videos', 'action' => 'index'],
+		['_name' => 'videos_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	);
 	$routes->connect('/video/:id',
-		['controller' => 'Videos', 'action' => 'view'],
+		['controller' => 'videos', 'action' => 'view'],
 		['_name' => 'video', 'id' => '\d+', 'pass' => ['id']]
 	);
 	
