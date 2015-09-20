@@ -27,7 +27,24 @@ use Cake\Core\Configure;
 /**
  * MeYoutube configuration
  */
-//Loads the configuration from the application
+//Loads the configuration from the plugin
+Configure::load('MeYoutube.me_youtube');
+
+$config = Configure::read('MeYoutube');
+
+//Loads the configuration from the application, if exists
+if(is_readable(CONFIG.'me_youtube.php')) {
+	Configure::load('me_youtube', 'default', FALSE);
+	
+	$config = \Cake\Utility\Hash::mergeDiff(Configure::consume('MeYoutube'), $config);
+}
+
+Configure::write('MeCms.MeYoutube', $config);
+
+/**
+ * Youtube keys 
+ */
+//Loads the Youtube keys
 Configure::load('youtube');
 
 /**
