@@ -45,7 +45,7 @@ Configure::write('MeCms.MeYoutube', $config);
  * Youtube keys 
  */
 //Loads the Youtube keys
-Configure::load('youtube');
+Configure::load('youtube_keys');
 
 /**
  * Cache configuration
