@@ -28,7 +28,7 @@
 ?>
 
 <div class="videosCategories form">
-	<?= $this->Html->h2(__d('me_youtube', 'Edit videos Category')) ?>
+	<?= $this->Html->h2(__d('me_youtube', 'Edit videos category')) ?>
     <?= $this->Form->create($category); ?>
 	<div class='float-form'>
 		<?php
@@ -57,6 +57,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_youtube', 'Edit videos Category')) ?>
+    <?= $this->Form->submit(__d('me_youtube', 'Edit videos category')) ?>
     <?= $this->Form->end() ?>
 </div>

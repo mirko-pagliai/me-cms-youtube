@@ -28,7 +28,7 @@
 ?>
 
 <div class="videos form">
-	<?= $this->Html->h2(__d('me_youtube', 'Edit Video')) ?>
+	<?= $this->Html->h2(__d('me_youtube', 'Edit video')) ?>
     <?= $this->Form->create($video); ?>
 	<div class='float-form'>
 		<?php
@@ -86,6 +86,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_youtube', 'Edit Video')) ?>
+    <?= $this->Form->submit(__d('me_youtube', 'Edit video')) ?>
     <?= $this->Form->end() ?>
 </div>
