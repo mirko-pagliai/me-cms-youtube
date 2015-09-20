@@ -66,6 +66,28 @@ class VideosController extends AppController {
 	}
 	
 	/**
+	 * Check if the provided user is authorized for the request
+	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
+	 * @return bool TRUE if the user is authorized, otherwise FALSE
+	 * @uses MeCms\Controller\AppController::isAuthorized()
+	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeCms\Model\Table\AppTable::isOwnedBy()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function isAuthorized($user = NULL) {
+		//Only admins and managers can edit all videos.
+		//Users can edit only their own videos
+		if($this->request->isAction('edit') && !$this->Auth->isGroup(['admin', 'manager']))
+			return $this->Videos->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
+		
+		//Only admins and managers can delete videos
+		if($this->request->isAction('delete'))
+			return $this->Auth->isGroup(['admin', 'manager']);
+		
+		return TRUE;
+	}
+	
+	/**
      * Lists videos
      */
     public function index() {
