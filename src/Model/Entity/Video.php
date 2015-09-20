@@ -28,5 +28,17 @@ use Cake\ORM\Entity;
  * Video entity
  */
 class Video extends Entity {
-
+	/**
+	 * Virtual fields that should be exposed
+	 * @var array
+	 */
+    protected $_virtual = ['preview'];
+	
+	/**
+	 * Gets the preview (virtual field)
+	 * @return string Preview url
+	 */
+	protected function _getPreview() {
+		return sprintf('http://img.youtube.com/vi/%s/0.jpg', $this->_properties['youtube_id']);
+	}
 }
