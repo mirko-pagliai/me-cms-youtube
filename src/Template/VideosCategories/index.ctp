@@ -20,39 +20,18 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-use Cake\Routing\Router;
+?>
 
-Router::defaultRouteClass('InflectedRoute');
+<?php $this->assign('title', __d('me_youtube', 'Videos categories')); ?>
 
-Router::extensions('rss');
-
-Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
-	/**
-	 * VideosCategories controller
-	 */
-	 $routes->connect('/videos/categories', ['controller' => 'videos_categories', 'action' => 'index']);
-
-	/**
-	 * Videos controller
-	 */
-	$routes->connect('/video/:id',
-		['controller' => 'Videos', 'action' => 'view'],
-		['_name' => 'video', 'id' => '\d+', 'pass' => ['id']]
-	);
-	
-	/**
-	 * Admin routes
-	 */
-    $routes->prefix('admin', function ($routes) {
-		/**
-		 * Other admin routes
-		 */
-		$controllers = ['videos_categories', 'videos'];
-		$controllers = sprintf('(%s)', implode('|', $controllers));
+<div class="videosCategories index">
+	<?php
+		echo $this->Html->h2(__d('me_youtube', 'Videos categories'));	
 		
-		$routes->connect('/:controller', [], ['controller' => $controllers]);
-		$routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);
-    });
+		$list = array();
+		foreach($categories as $category)
+			$list[] = $this->Html->link($category->title, ['_name' => 'category', $category->slug]);
 
-    $routes->fallbacks();
-});
+		echo $this->Html->ul($list, ['icon' => 'caret-right']);
+	?>
+</div>
