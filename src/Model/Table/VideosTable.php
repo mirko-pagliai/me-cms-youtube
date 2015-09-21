@@ -76,6 +76,25 @@ class VideosTable extends AppTable {
     }
 	
 	/**
+	 * Checks if the cache is valid.
+	 * If the cache is not valid, it empties the cache.
+	 * @uses getNextToBePublished()
+	 * @uses setNextToBePublished()
+	 */
+	public function checkIfCacheIsValid() {
+		//Gets from cache the timestamp of the next record to be published
+		$next = $this->getNextToBePublished();
+		
+		//If the cache is not valid, it empties the cache
+		if($next && time() >= $next) {
+			Cache::clear(FALSE, 'videos');
+		
+			//Sets the next record to be published
+			$this->setNextToBePublished();
+		}
+	}
+	
+	/**
 	 * Gets conditions from a filter form
 	 * @param array $query Query (`$this->request->query`)
 	 * @return array Conditions
@@ -102,6 +121,16 @@ class VideosTable extends AppTable {
 		return empty($conditions) ? [] : $conditions;
 	}
 	
+	/**
+	 * Gets from cache the timestamp of the next record to be published.
+	 * This value can be used to check if the cache is valid
+	 * @return int Timestamp
+	 * @see checkIfCacheIsValid()
+	 */
+	public function getNextToBePublished() {
+		return Cache::read('next_to_be_published', 'videos');
+	}
+	
     /**
      * Initialize method
      * @param array $config The table configuration
@@ -123,22 +152,22 @@ class VideosTable extends AppTable {
     }
 	
 	/**
-	 * Sets in cache the timestamp of the next video to be published.
+	 * Sets to cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
+	 * @see getNextToBePublished()
 	 * @uses Cake\I18n\Time::toUnixString()
 	 */
 	public function setNextToBePublished() {
-		$video = $this->find()
+		$next = $this->find()
 			->select('created')
 			->where([
-				sprintf('%s.active', $this->alias())	=> TRUE,
+				sprintf('%s.active', $this->alias()) => TRUE,
 				sprintf('%s.created >', $this->alias()) => new Time()
 			])
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		if(!empty($video) && !empty($video->created))
-			Cache::write('nextToBePublished', $video->created->toUnixString(), 'videos');
+		Cache::write('next_to_be_published', $next->created ? $next->created->toUnixString() : FALSE, 'videos');
 	}
 
     /**
