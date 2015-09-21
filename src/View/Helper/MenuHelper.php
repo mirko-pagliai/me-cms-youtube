@@ -44,7 +44,7 @@ class MenuHelper extends BaseMenuHelper {
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	public function _videos($type) {
+	protected function _videos($type) {
 		$menu = [
 			$this->Html->link(__d('me_youtube', 'List videos'), ['controller' => 'videos', 'action' => 'index', 'plugin' => 'MeYoutube']),
 			$this->Html->link(__d('me_youtube', 'Add video'), ['controller' => 'videos', 'action' => 'add', 'plugin' => 'MeYoutube'])
