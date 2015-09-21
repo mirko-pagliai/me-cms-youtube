@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-09-21 15:57+0000\n"
+"POT-Creation-Date: 2015-09-21 16:04+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -86,11 +86,7 @@ msgstr ""
 msgid "Edit video"
 msgstr ""
 
-#: Template/Admin/Videos/index.ctp:68
-msgid "Spot?"
-msgstr ""
-
-#: Template/Admin/Videos/index.ctp:84
+#: Template/Admin/Videos/index.ctp:68;84
 msgid "Spot"
 msgstr ""
 
