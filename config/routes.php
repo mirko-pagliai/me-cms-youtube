@@ -35,14 +35,18 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 	/**
 	 * Videos controller
 	 */
-	$routes->connect('/videos/category/:slug',
-		['controller' => 'Videos', 'action' => 'index'],
-		['_name' => 'videos_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-	);
 	$routes->connect('/video/:id',
 		['controller' => 'videos', 'action' => 'view'],
 		['_name' => 'video', 'id' => '\d+', 'pass' => ['id']]
 	);
+	$routes->connect('/videos', ['controller' => 'Videos', 'action' => 'index'], ['_name' => 'videos']);
+	$routes->connect('/videos/:slug',
+		['controller' => 'Videos', 'action' => 'index'],
+		['_name' => 'videos_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	);
+	
+//Router::connect('/videos/rss',		array('controller' => 'videos', 'action' => 'rss',		'plugin' => 'me_youtube', 'ext' => 'rss'));
+//Router::connect('/videos/search/*',	array('controller' => 'videos', 'action' => 'search',	'plugin' => 'me_youtube'));
 	
 	/**
 	 * Admin routes

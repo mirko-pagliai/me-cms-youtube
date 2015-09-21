@@ -22,18 +22,74 @@
  */
 namespace MeYoutube\Controller;
 
+use Cake\Cache\Cache;
 use MeCms\Controller\AppController;
 
 /**
  * Videos controller
- * @property \MeYoutube\Model\Table\YoutubeVideosTable $YoutubeVideos
+ * @property \MeYoutube\Model\Table\VideosTable $Videos
  */
 class VideosController extends AppController {
 	/**
      * Lists videos
-     */
-    public function index() {
-        $this->set('youtubeVideos', $this->paginate($this->YoutubeVideos));
+	 * @param string $category Category slug (optional)
+	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
+	 */
+    public function index($category = NULL) {
+		//The category can be passed as query string, from a widget
+		if($this->request->query('q'))
+			$this->redirect([$this->request->query('q')]);
+		
+		//Checks if the cache is valid
+		$this->Videos->checkIfCacheIsValid();
+		
+		//Sets the initial cache name
+		$cache = 'index';
+		
+		//Sets the initial conditions
+		$conditions = ['is_spot' => FALSE];
+		
+		//Checks if has been specified a category
+		if(!empty($category)) {
+			//Adds the category to the conditions, if it has been specified
+			$conditions['Categories.slug'] = $category;
+			
+			//Updates the cache name, adding the category name
+			$cache = sprintf('%s_%s', $cache, md5($category));
+		}
+		
+		//Updates the cache name with the query limit and the number of the page
+		$cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
+		$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
+		
+		//Tries to get data from the cache
+		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'videos'));
+		
+		//If the data are not available from the cache
+		if(empty($videos) || empty($paging)) {
+			$videos = $this->paginate(
+				$this->Videos->find('active')
+					->contain([
+						'Categories'	=> ['fields' => ['title', 'slug']],
+						'Users'			=> ['fields' => ['first_name', 'last_name']]
+					])
+					->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+					->where($conditions)
+					->order([sprintf('%s.created', $this->name) => 'DESC'])
+			)->toArray();
+						
+			//Writes on cache
+			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'videos');
+		}
+		//Else, sets the paging parameter
+		else
+			$this->request->params['paging'] = $paging;
+				
+		//Sets the category title as title, if has been specified a category
+		if(!empty($category) && !empty($videos[0]->category->title))
+			$this->set('title', $videos[0]->category->title);
+		
+        $this->set(compact('videos'));
     }
 	
     /**
@@ -41,14 +97,14 @@ class VideosController extends AppController {
      * @param string $id Video ID
      * @throws \Cake\Network\Exception\NotFoundException
      */
-    public function view($id = NULL) {		
+    public function view($id = NULL) {
 		$video = $this->Videos->find('active')
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
 			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
-			->where(['Videos.id' => $id])
+			->where([sprintf('%s.id', $this->name) => $id])
 			->cache(sprintf('view_%s', md5($id)), 'videos')
 			->first();
 		
