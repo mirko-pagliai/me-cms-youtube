@@ -40,7 +40,7 @@ class VideosCell extends Cell {
 	public function __construct(\MeTools\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
 		parent::__construct($request, $response, $eventManager, $cellOptions);
 		
-		//Loads the Posts model
+		//Loads the Videos model
 		$this->loadModel('MeYoutube.Videos');
 	}
 	
@@ -69,6 +69,25 @@ class VideosCell extends Cell {
 		
 		$this->set(compact('categories'));
 	}
+	
+	/**
+	 * Latest widget
+	 * @param string $limit Limit
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+    public function latest($limit = NULL) {
+		//Returns on index, except for category
+		if($this->request->isAction('index', 'Videos') && !$this->request->param('slug'))
+			return;
+
+		$this->set('videos', $this->Videos->find('active')
+			->select(['id', 'youtube_id', 'title', 'description'])
+			->limit($limit = empty($limit) ? 1 : $limit)
+			->order(['created' => 'DESC'])
+			->cache(sprintf('widget_latest_%d', $limit), 'videos')
+			->toArray()
+		);
+    }
 	
 	/**
 	 * Search widget
