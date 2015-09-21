@@ -112,7 +112,29 @@ class VideosController extends AppController {
     }
 	
 	/**
-	 * Search posts
+	 * Lists videos as RSS
+	 * @throws \Cake\Network\Exception\ForbiddenException
+	 * @uses Cake\Controller\Component\RequestHandlerComponent:isRss()
+	 * @uses MeCms\Model\Table\VideosTable::checkIfCacheIsValid()
+	 */
+	public function rss() {
+		//This method works only for RSS
+		if(!$this->RequestHandler->isRss())
+            throw new \Cake\Network\Exception\ForbiddenException();
+		
+		//Checks if the cache is valid
+		$this->Videos->checkIfCacheIsValid();
+		
+		$this->set('videos', $this->Videos->find('active')
+			->select(['id', 'youtube_id', 'title', 'description', 'created'])
+			->where(['is_spot' => FALSE])
+			->limit(config('frontend.records_for_rss'))
+			->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+			->cache('rss', 'videos'));
+	}
+	
+	/**
+	 * Search videos
 	 * @uses MeCms\Controller\Component\SecurityComponent::checkLastSearch()
 	 * @uses MeCms\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
