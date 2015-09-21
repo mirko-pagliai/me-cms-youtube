@@ -30,7 +30,7 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 	/**
 	 * VideosCategories controller
 	 */
-	 $routes->connect('/videos/categories', ['controller' => 'videos_categories', 'action' => 'index']);
+	 $routes->connect('/videos/categories', ['controller' => 'VideosCategories', 'action' => 'index'], ['_name' => 'videos_categories']);
 
 	/**
 	 * Videos controller
