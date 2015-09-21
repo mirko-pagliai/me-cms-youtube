@@ -75,7 +75,7 @@ class VideosController extends AppController {
 					])
 					->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
 					->where($conditions)
-					->order([sprintf('%s.created', $this->name) => 'DESC'])
+					->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
 			)->toArray();
 						
 			//Writes on cache
@@ -104,7 +104,7 @@ class VideosController extends AppController {
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
 			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
-			->where([sprintf('%s.id', $this->name) => $id])
+			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), 'videos')
 			->first();
 		
