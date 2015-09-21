@@ -22,21 +22,6 @@
  */
 namespace MeYoutube\Controller;
 
-use MeYoutube\Controller\AppController;
+use MeCms\Controller\AppController as BaseController;
 
-/**
- * VideosCategories controller
- * @property \MeYoutube\Model\Table\VideosCategoriesTable $VideosCategories
- */
-class VideosCategoriesController extends AppController {
-	/**
-     * Lists videos categories
-     */
-    public function index() {
-		$this->set('categories', $this->VideosCategories->find('active')
-			->select(['title', 'slug'])
-			->order(['title' => 'ASC'])
-			->cache('categories_index', 'videos')
-			->all());
-    }
-}
+class AppController extends BaseController { }

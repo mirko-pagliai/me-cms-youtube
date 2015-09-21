@@ -23,7 +23,7 @@
 namespace MeYoutube\Controller;
 
 use Cake\Cache\Cache;
-use MeCms\Controller\AppController;
+use MeYoutube\Controller\AppController;
 
 /**
  * Videos controller
