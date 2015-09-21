@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class MeYoutube\Controller\VideosController | MeYoutube API</title>
+	<title>Class MeYoutube\View\Cell\VideosCell | MeYoutube API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -24,7 +24,7 @@
 					</a>
 
 						<ul>
-				<li class="active main">
+				<li class="main">
 					<a href="namespace-MeYoutube.Controller.html">
 						Controller<span></span>
 					</a>
@@ -63,13 +63,13 @@
 						Utility					</a>
 
 						</li>
-				<li class="main">
+				<li class="active main">
 					<a href="namespace-MeYoutube.View.html">
 						View<span></span>
 					</a>
 
 						<ul>
-				<li class="main">
+				<li class="active main">
 					<a href="namespace-MeYoutube.View.Cell.html">
 						Cell					</a>
 
@@ -94,9 +94,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeYoutube.Controller.AppController.html">AppController</a></li>
-				<li><a href="class-MeYoutube.Controller.VideosCategoriesController.html">VideosCategoriesController</a></li>
-				<li class="active"><a href="class-MeYoutube.Controller.VideosController.html">VideosController</a></li>
+				<li class="active"><a href="class-MeYoutube.View.Cell.VideosCell.html">VideosCell</a></li>
 			</ul>
 
 
@@ -123,7 +121,7 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="namespace-MeYoutube.Controller.html" title="Summary of MeYoutube\Controller"><span>Namespace</span></a>
+				<a href="namespace-MeYoutube.View.Cell.html" title="Summary of MeYoutube\View\Cell"><span>Namespace</span></a>
 			</li>
 			<li class="active">
 <span>Class</span>			</li>
@@ -140,29 +138,22 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class VideosController</h1>
+	<h1>Class VideosCell</h1>
 
 
 	<div class="description">
-	<p>Videos controller</p>
+	<p>Videos cell</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-MeCms\Controller\AppController
+Cake\View\Cell
 			
 			
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-MeYoutube.Controller.AppController.html"><span>MeYoutube\Controller\AppController</span></a>
-			
-			
-			
-		</dd>
-		<dd style="padding-left:60px">
-			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeYoutube\Controller\VideosController</span></b>			
+<b><span>MeYoutube\View\Cell\VideosCell</span></b>			
 			
 			
 		</dd>
@@ -178,10 +169,10 @@ MeCms\Controller\AppController
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.Controller.html">Controller</a><br>
+		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.View.html">View</a>\<a href="namespace-MeYoutube.View.Cell.html">Cell</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeYoutube.Controller.VideosController.html#28-190" title="Go to source code">VideosController.php</a>
+			<b>Located at</b> <a href="source-class-MeYoutube.View.Cell.VideosCell.html#28-96" title="Go to source code">Cell/VideosCell.php</a>
 		<br>
 	</div>
 
@@ -189,7 +180,7 @@ MeCms\Controller\AppController
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="index" id="_index">
+	<tr data-order="__construct" id="___construct">
 
 		<td class="attributes"><code>
 			 public 
@@ -200,35 +191,41 @@ MeCms\Controller\AppController
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-MeYoutube.Controller.VideosController.html#33-93" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-MeYoutube.View.Cell.VideosCell.html#32-45" title="Go to source code">__construct</a>( <span>MeTools\Network\Request <var>$request</var> = <span class="php-keyword1">NULL</span></span>, <span>Cake\Network\Response <var>$response</var> = <span class="php-keyword1">NULL</span></span>, <span>Cake\Event\EventManager <var>$eventManager</var> = <span class="php-keyword1">NULL</span></span>, <span>array <var>$cellOptions</var> = []</span> )</code>
 
 		<div class="description short">
-			<p>Lists videos</p>
+			<p>Constructor. It loads the model</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Lists videos</p>
+			<p>Constructor. It loads the model</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$category</var></dt>
-					<dd>Category slug (optional)</dd>
+					<dt><var>$request</var></dt>
+					<dd>The request to use in the cell</dd>
+					<dt><var>$response</var></dt>
+					<dd>The request to use in the cell</dd>
+					<dt><var>$eventManager</var></dt>
+					<dd>The eventManager to bind events to</dd>
+					<dt><var>$cellOptions</var></dt>
+					<dd>Cell options to apply</dd>
 				</dl></div>
 
 
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_checkIfCacheIsValid">MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()</a></code><br>
+						Cake\View\Cell::__construct()<br>
 				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="view" id="_view">
+	<tr data-order="categories" id="_categories">
 
 		<td class="attributes"><code>
 			 public 
@@ -239,67 +236,62 @@ MeCms\Controller\AppController
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-MeYoutube.Controller.VideosController.html#95-112" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<a class="anchor" href="#_categories">#</a>
+		<code><a href="source-class-MeYoutube.View.Cell.VideosCell.html#47-71" title="Go to source code">categories</a>( )</code>
 
 		<div class="description short">
-			<p>Views video</p>
+			<p>Categories widget</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Views video</p>
+			<p>Categories widget</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Network\Request::isCurrent()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="latest" id="_latest">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_latest">#</a>
+		<code><a href="source-class-MeYoutube.View.Cell.VideosCell.html#73-90" title="Go to source code">latest</a>( <span>string <var>$limit</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Latest widget</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Latest widget</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$id</var></dt>
-					<dd>Video ID</dd>
+					<dt><var>$limit</var></dt>
+					<dd>Limit</dd>
 				</dl></div>
 
 
-				<h4>Throws</h4>
-				<div class="list">
-					Cake\Network\Exception\NotFoundException
-				</div>
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="rss" id="_rss">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_rss">#</a>
-		<code><a href="source-class-MeYoutube.Controller.VideosController.html#114-134" title="Go to source code">rss</a>( )</code>
-
-		<div class="description short">
-			<p>Lists videos as RSS</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Lists videos as RSS</p>
-
-
-
-
-				<h4>Throws</h4>
-				<div class="list">
-					Cake\Network\Exception\ForbiddenException
-				</div>
 
 				<h4>Uses</h4>
 				<div class="list">
-						Cake\Controller\Component\RequestHandlerComponent:isRss()<br>
-						MeCms\Model\Table\VideosTable::checkIfCacheIsValid()<br>
+						MeTools\Network\Request::isAction()<br>
 				</div>
 
 
@@ -318,24 +310,19 @@ MeCms\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_search">#</a>
-		<code><a href="source-class-MeYoutube.Controller.VideosController.html#136-189" title="Go to source code">search</a>( )</code>
+		<code><a href="source-class-MeYoutube.View.Cell.VideosCell.html#92-95" title="Go to source code">search</a>( )</code>
 
 		<div class="description short">
-			<p>Search videos</p>
+			<p>Search widget</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Search videos</p>
+			<p>Search widget</p>
 
 
 
 
 
-				<h4>Uses</h4>
-				<div class="list">
-						MeCms\Controller\Component\SecurityComponent::checkLastSearch()<br>
-						MeCms\Model\Table\VideosTable::checkIfCacheIsValid()<br>
-				</div>
 
 
 		</div>
@@ -343,14 +330,6 @@ MeCms\Controller\AppController
 	</tr>
 	</table>
 
-	<table class="summary inherited">
-	<caption>Methods inherited from <a href="class-MeYoutube.Controller.AppController.html#methods">MeYoutube\Controller\AppController</a></caption>
-	<tr>
-		<td><code>
-			<a href="class-MeYoutube.Controller.AppController.html#_beforeRender">beforeRender()</a>
-		</code></td>
-	</tr>
-	</table>
 
 
 
@@ -365,28 +344,6 @@ MeCms\Controller\AppController
 
 
 
-	<table class="summary properties" id="magicProperties">
-	<caption>Magic properties summary</caption>
-	<tr data-order="Videos" id="m$Videos">
-		<td class="attributes"><code>
-			public  
-			<code><a href="class-MeYoutube.Model.Table.VideosTable.html">MeYoutube\Model\Table\VideosTable</a></code>
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-MeYoutube.Controller.VideosController.html#30" title="Go to source code"><var>$Videos</var></a>
-
-			<div class="description short">
-				
-			</div>
-
-			<div class="description detailed hidden">
-				
-
-			</div>
-		</td>
-	</tr>
-	</table>
 
 
 

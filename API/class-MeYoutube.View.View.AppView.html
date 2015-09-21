@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class MeYoutube\Model\Validation\VideosCategoryValidator | MeYoutube API</title>
+	<title>Class MeYoutube\View\View\AppView | MeYoutube API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -36,7 +36,7 @@
 
 						</li>
 							</ul></li>
-				<li class="active main">
+				<li class="main">
 					<a href="namespace-MeYoutube.Model.html">
 						Model<span></span>
 					</a>
@@ -52,7 +52,7 @@
 						Table					</a>
 
 						</li>
-				<li class="active main">
+				<li class="main">
 					<a href="namespace-MeYoutube.Model.Validation.html">
 						Validation					</a>
 
@@ -63,7 +63,7 @@
 						Utility					</a>
 
 						</li>
-				<li class="main">
+				<li class="active main">
 					<a href="namespace-MeYoutube.View.html">
 						View<span></span>
 					</a>
@@ -79,7 +79,7 @@
 						Helper					</a>
 
 						</li>
-				<li class="main">
+				<li class="active main">
 					<a href="namespace-MeYoutube.View.View.html">
 						View					</a>
 
@@ -94,8 +94,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li class="active"><a href="class-MeYoutube.Model.Validation.VideosCategoryValidator.html">VideosCategoryValidator</a></li>
-				<li><a href="class-MeYoutube.Model.Validation.VideoValidator.html">VideoValidator</a></li>
+				<li class="active"><a href="class-MeYoutube.View.View.AppView.html">AppView</a></li>
 			</ul>
 
 
@@ -122,7 +121,7 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="namespace-MeYoutube.Model.Validation.html" title="Summary of MeYoutube\Model\Validation"><span>Namespace</span></a>
+				<a href="namespace-MeYoutube.View.View.html" title="Summary of MeYoutube\View\View"><span>Namespace</span></a>
 			</li>
 			<li class="active">
 <span>Class</span>			</li>
@@ -139,19 +138,22 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class VideosCategoryValidator</h1>
+	<h1>Class AppView</h1>
 
 
+	<div class="description">
+	<p>Application view class</p>
+	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-MeCms\Model\Validation\AppValidator
+MeCms\View\View\AppView
 			
 			
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeYoutube\Model\Validation\VideosCategoryValidator</span></b>			
+<b><span>MeYoutube\View\View\AppView</span></b>			
 			
 			
 		</dd>
@@ -167,10 +169,10 @@ MeCms\Model\Validation\AppValidator
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.Model.html">Model</a>\<a href="namespace-MeYoutube.Model.Validation.html">Validation</a><br>
+		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.View.html">View</a>\<a href="namespace-MeYoutube.View.View.html">View</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeYoutube.Model.Validation.VideosCategoryValidator.html#27-45" title="Go to source code">Validation/VideosCategoryValidator.php</a>
+			<b>Located at</b> <a href="source-class-MeYoutube.View.View.AppView.html#27-48" title="Go to source code">View/AppView.php</a>
 		<br>
 	</div>
 
@@ -178,36 +180,54 @@ MeCms\Model\Validation\AppValidator
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="__construct" id="___construct">
+	<tr data-order="renderLayout" id="_renderLayout">
 
 		<td class="attributes"><code>
 			 public 
 
-			
+			mixed
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-MeYoutube.Model.Validation.VideosCategoryValidator.html#28-44" title="Go to source code">__construct</a>( )</code>
+		<a class="anchor" href="#_renderLayout">#</a>
+		<code><a href="source-class-MeYoutube.View.View.AppView.html#31-47" title="Go to source code">renderLayout</a>( <span>string <var>$content</var></span>, <span>string|null <var>$layout</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
-			<p>Construct.</p>
+			<p>Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Construct.</p>
-
-<p>Adds some validation rules.</p>
+			<p>Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$content</var></dt>
+					<dd>Content to render in a view, wrapped by the surrounding layout</dd>
+					<dt><var>$layout</var></dt>
+					<dd>Layout name</dd>
+				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>Rendered output, or false on error
+				</div>
 
+				<h4>Throws</h4>
+				<div class="list">
+					Cake\Core\Exception\Exception
+				</div>
 
+				<h4>See</h4>
+				<div class="list">
+						http://api.cakephp.org/3.0/source-class-Cake.View.View.html#477-513<br>
+				</div>
 				<h4>Uses</h4>
 				<div class="list">
-						MeCms\Model\Validation\AppValidator::__construct()<br>
+						MeCms\View\View\AppView::renderLayout()<br>
+						MeTools\View\Helper\HtmlHelper::meta()<br>
 				</div>
 
 
