@@ -110,4 +110,59 @@ class VideosController extends AppController {
 		
 		$this->set(am(['image_src' => $video->preview], compact('video')));
     }
+	
+	/**
+	 * Search posts
+	 * @uses MeCms\Controller\Component\SecurityComponent::checkLastSearch()
+	 * @uses MeCms\Model\Table\VideosTable::checkIfCacheIsValid()
+	 */
+	public function search() {
+		if($pattern = $this->request->query('p')) {
+			//Checks if the pattern is at least 4 characters long
+			if(strlen($pattern) >= 4) {
+				if($this->Security->checkLastSearch($pattern)) {
+					$this->paginate['limit'] = config('frontend.records_for_searches');
+					
+					//Checks if the cache is valid
+					$this->Videos->checkIfCacheIsValid();
+					
+					//Sets the initial cache name
+					$cache = sprintf('search_%s', md5($pattern));
+
+					//Updates the cache name with the query limit and the number of the page
+					$cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
+					$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
+
+					//Tries to get data from the cache
+					list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'videos'));
+
+					//If the data are not available from the cache
+					if(empty($videos) || empty($paging)) {
+						$videos = $this->paginate(
+							$this->Videos->find('active')
+								->select(['id', 'title', 'description', 'created'])
+								->where(['OR' => [
+									'title LIKE'		=> sprintf('%%%s%%', $pattern),
+									'subtitle LIKE'		=> sprintf('%%%s%%', $pattern),
+									'description LIKE'	=> sprintf('%%%s%%', $pattern)
+								]])
+								->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+						)->toArray();
+
+						//Writes on cache
+						Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'videos');
+					}
+					//Else, sets the paging parameter
+					else
+						$this->request->params['paging'] = $paging;
+
+					$this->set(compact('videos'));
+				}
+				else
+					$this->Flash->alert(__d('me_cms', 'You have to wait {0} seconds to perform a new search', config('security.search_interval')));
+			}
+			else
+				$this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
+		}
+	}
 }
