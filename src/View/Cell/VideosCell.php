@@ -22,12 +22,54 @@
  */
 namespace MeYoutube\View\Cell;
 
+use Cake\Cache\Cache;
 use Cake\View\Cell;
 
 /**
  * Videos cell
  */
 class VideosCell extends Cell {
+	/**
+	 * Constructor. It loads the model
+	 * @param \MeTools\Network\Request $request The request to use in the cell
+	 * @param \Cake\Network\Response $response The request to use in the cell
+	 * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
+	 * @param array $cellOptions Cell options to apply
+	 * @uses Cake\View\Cell::__construct()
+	 */
+	public function __construct(\MeTools\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
+		parent::__construct($request, $response, $eventManager, $cellOptions);
+		
+		//Loads the Posts model
+		$this->loadModel('MeYoutube.Videos');
+	}
+	
+	/**
+	 * Categories widget
+	 * @uses MeTools\Network\Request::isCurrent()
+	 */
+	public function categories() {
+		//Returns on categories index
+		if($this->request->isCurrent(['_name' => 'videos_categories']))
+			return;
+		
+		//Tries to get data from the cache
+		$categories = Cache::read($cache = 'widget_categories', 'videos');
+		
+		//If the data are not available from the cache
+        if(empty($categories)) {
+			foreach($this->Videos->Categories->find('active')
+					->select(['title', 'slug', 'video_count'])
+					->order(['title' => 'ASC'])
+					->toArray() as $k => $category)
+				$categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->video_count);
+			
+            Cache::write($cache, $categories, 'videos');
+		}
+		
+		$this->set(compact('categories'));
+	}
+	
 	/**
 	 * Search widget
 	 */
