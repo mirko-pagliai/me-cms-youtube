@@ -20,22 +20,29 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Controller;
+namespace MeYoutube\View\View;
 
-use MeCms\Controller\AppController as BaseController;
+use MeCms\View\View\AppView as BaseView;
 
-class AppController extends BaseController {
+/**
+ * Application view class
+ */
+class AppView extends BaseView {	
 	/**
-	 * Called after the controller action is run, but before the view is rendered.
-	 * You can use this method to perform logic or set view variables that are required on every request.
-	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeRender
-	 * @uses MeTools\Network\Request::isAdmin()
+	 * Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout
+	 * @param string $content Content to render in a view, wrapped by the surrounding layout
+	 * @param string|null $layout Layout name
+	 * @return mixed Rendered output, or false on error
+	 * @see http://api.cakephp.org/3.0/source-class-Cake.View.View.html#477-513
+     * @throws Cake\Core\Exception\Exception
+	 * @uses MeCms\View\View\AppView::renderLayout()
+	 * @uses MeTools\View\Helper\HtmlHelper::meta()
 	 */
-	public function beforeRender(\Cake\Event\Event $event) {
-		parent::beforeRender($event);
-		
-		//Uses a custom View class (`MeYoutube.AppView` or `MeCms.AdminView`)
-		$this->viewClass = !$this->request->isAdmin() ? 'MeYoutube.View/App' : 'MeCms.View/Admin';
+	public function renderLayout($content, $layout = NULL) {
+		//Automatically adds the meta tag for RSS videos
+		if(config('frontend.rss_meta'))
+			$this->Html->meta(__d('me_youtube', 'Latest videos'), '/videos/rss', ['type' => 'rss']);
+				
+		return parent::renderLayout($content, $layout);
 	}
 }
