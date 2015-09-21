@@ -26,6 +26,7 @@ use MeCms\Controller\AppController;
 
 /**
  * VideosCategories controller
+ * @property \MeYoutube\Model\Table\VideosCategoriesTable $VideosCategories
  */
 class VideosCategoriesController extends AppController {
 	/**

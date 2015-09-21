@@ -27,6 +27,7 @@ use MeYoutube\Utility\Youtube;
 
 /**
  * Videos controller
+ * @property \MeYoutube\Model\Table\VideosTable $Videos
  */
 class VideosController extends AppController {
 	/**
