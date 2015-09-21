@@ -65,7 +65,7 @@
 				]);
 				echo $this->Form->input('spot', [
 					'default'	=> $this->request->query('spot'),
-					'label'		=> __d('me_youtube', 'Spot?'),
+					'label'		=> sprintf('%s?', __d('me_youtube', 'Spot')),
 					'type'		=> 'checkbox'
 				]);
 				echo $this->Form->submit(NULL, ['icon' => 'search']);
