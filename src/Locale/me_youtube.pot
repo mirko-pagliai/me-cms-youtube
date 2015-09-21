@@ -1,0 +1,142 @@
+# LANGUAGE translation of MeYoutube
+# Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2015-09-21 15:57+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Controller/Admin/VideosCategoriesController.php:95;117
+msgid "The videos category has been saved"
+msgstr ""
+
+#: Controller/Admin/VideosCategoriesController.php:99;121
+msgid "The videos category could not be saved"
+msgstr ""
+
+#: Controller/Admin/VideosCategoriesController.php:140
+msgid "The videos category has been deleted"
+msgstr ""
+
+#: Controller/Admin/VideosCategoriesController.php:142
+msgid "The videos category could not be deleted"
+msgstr ""
+
+#: Controller/Admin/VideosCategoriesController.php:145
+msgid "Before you delete this category, you have to delete its videos or assign them to another category"
+msgstr ""
+
+#: Controller/Admin/VideosController.php:58
+msgid "Before you can manage videos, you have to create at least a category"
+msgstr ""
+
+#: Controller/Admin/VideosController.php:117
+msgid "This is not a {0} video"
+msgstr ""
+
+#: Controller/Admin/VideosController.php:134;162
+msgid "The video has been saved"
+msgstr ""
+
+#: Controller/Admin/VideosController.php:138;166
+msgid "The video could not be saved"
+msgstr ""
+
+#: Controller/Admin/VideosController.php:182
+msgid "The video has been deleted"
+msgstr ""
+
+#: Controller/Admin/VideosController.php:184
+msgid "The video could not be deleted"
+msgstr ""
+
+#: Template/Admin/Videos/add.ctp:26;31;108
+#: View/Helper/MenuHelper.php:50
+msgid "Add video"
+msgstr ""
+
+#: Template/Admin/Videos/add.ctp:36;39
+msgid "Video url"
+msgstr ""
+
+#: Template/Admin/Videos/add.ctp:76
+#: Template/Admin/Videos/edit.ctp:58
+msgid "Is a spot"
+msgstr ""
+
+#: Template/Admin/Videos/add.ctp:77
+#: Template/Admin/Videos/edit.ctp:59
+msgid "Enable this option if this video is a spot"
+msgstr ""
+
+#: Template/Admin/Videos/add.ctp:96
+#: Template/Admin/Videos/edit.ctp:77
+msgid "{0} ID"
+msgstr ""
+
+#: Template/Admin/Videos/edit.ctp:26;31;89
+msgid "Edit video"
+msgstr ""
+
+#: Template/Admin/Videos/index.ctp:68
+msgid "Spot?"
+msgstr ""
+
+#: Template/Admin/Videos/index.ctp:84
+msgid "Spot"
+msgstr ""
+
+#: Template/Admin/Videos/index.ctp:146
+msgid "This video is a spot"
+msgstr ""
+
+#: Template/Admin/VideosCategories/add.ctp:26;31;60
+msgid "Add videos category"
+msgstr ""
+
+#: Template/Admin/VideosCategories/edit.ctp:26;31;60
+msgid "Edit videos category"
+msgstr ""
+
+#: Template/Admin/VideosCategories/index.ctp:25;28
+#: Template/Cell/Videos/categories.ctp:34
+#: Template/VideosCategories/index.ctp:25;29
+msgid "Videos categories"
+msgstr ""
+
+#: Template/Admin/VideosCategories/index.ctp:36
+#: Template/Videos/index.ctp:25
+#: View/Helper/MenuHelper.php:60
+msgid "Videos"
+msgstr ""
+
+#: Template/Cell/Videos/latest.ctp:38
+msgid "Latest {0} videos"
+msgstr ""
+
+#: Template/Cell/Videos/latest.ctp:38
+msgid "Latest video"
+msgstr ""
+
+#: Template/Cell/Videos/search.ctp:33
+#: Template/Videos/search.ctp:25;29
+msgid "Search videos"
+msgstr ""
+
+#: Template/Videos/rss/rss.ctp:29;31
+#: View/View/AppView.php:44
+msgid "Latest videos"
+msgstr ""
+
+#: View/Helper/MenuHelper.php:49
+msgid "List videos"
+msgstr ""
+
