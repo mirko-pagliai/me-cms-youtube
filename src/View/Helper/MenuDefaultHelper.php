@@ -22,29 +22,29 @@
  */
 namespace MeYoutube\View\Helper;
 
+use Cake\View\Helper;
 use MeCms\View\Helper\AuthHelper;
-use MeCms\View\Helper\BaseMenuHelper;
 
 /**
- * Menu Helper
+ * MenuDefault Helper.
  * 
- * It contains methods to generate menus for this plugin.
- * It supports these types of menu: `ul`, `collapse` and `dropdown`.
- * 
- * To generate a menu, you have to use the `get()` method. For example:
- * <code>
- * $this->Menu->get('photos', 'dropdown')
- * </code>
+ * This helper contains methods that will be called automatically to generate the menu of the backend.
+ * You do not need to call these methods manually.
  */
-class MenuHelper extends BaseMenuHelper {
+class MenuDefaultHelper extends Helper {
 	/**
-	 * Internal function to generate the menu for "videos" actions.
-	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
+	 * Helpers
+	 * @var array
+	 */
+	public $helpers = ['MeCms.Auth', 'Html' => ['className' => 'MeTools.Html']];
+	
+	/**
+	 * Internal function to generate the menu for "videos" actions
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	protected function _videos($type) {
+	public function _videos() {
 		$menu = [
 			$this->Html->link(__d('me_youtube', 'List videos'), ['controller' => 'videos', 'action' => 'index', 'plugin' => 'MeYoutube']),
 			$this->Html->link(__d('me_youtube', 'Add video'), ['controller' => 'videos', 'action' => 'add', 'plugin' => 'MeYoutube'])
