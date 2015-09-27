@@ -47,11 +47,15 @@ class VideosCell extends Cell {
 	/**
 	 * Categories widget
 	 * @uses MeTools\Network\Request::isCurrent()
+	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
 	public function categories() {
 		//Returns on categories index
 		if($this->request->isCurrent(['_name' => 'videos_categories']))
 			return;
+		
+		//Checks if the cache is valid
+		$this->Videos->checkIfCacheIsValid();
 		
 		//Tries to get data from the cache
 		$categories = Cache::read($cache = 'widget_categories', 'videos');
@@ -74,11 +78,15 @@ class VideosCell extends Cell {
 	 * Latest widget
 	 * @param string $limit Limit
 	 * @uses MeTools\Network\Request::isAction()
+	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
     public function latest($limit = NULL) {
 		//Returns on index, except for category
 		if($this->request->isAction('index', 'Videos') && !$this->request->param('slug'))
 			return;
+		
+		//Checks if the cache is valid
+		$this->Videos->checkIfCacheIsValid();
 
 		$this->set('videos', $this->Videos->find('active')
 			->select(['id', 'youtube_id', 'title', 'description'])
