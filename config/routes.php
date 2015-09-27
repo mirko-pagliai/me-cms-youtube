@@ -26,6 +26,9 @@ Router::defaultRouteClass('InflectedRoute');
 
 Router::extensions('rss');
 
+/**
+ * MeYoutube routes
+ */
 Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 	/**
 	 * VideosCategories controller
