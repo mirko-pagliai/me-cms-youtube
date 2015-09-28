@@ -1,3 +1,8 @@
+# 2.x ramo
+## 2.0 ramo
+### 2.0.1-RC1
+* piccoli aggiustamenti per MeCms 2.0.1-RC1.
+
 # 1.x ramo
 ## 1.1 ramo
 ### 1.1.2

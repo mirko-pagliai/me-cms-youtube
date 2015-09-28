@@ -1,3 +1,8 @@
+# 2.x branch
+## 2.0 branch
+### 2.0.1-RC1
+* small fixes for MeCms 2.0.1-RC1.
+
 # 1.x branch
 ## 1.1 branch
 ### 1.1.2
