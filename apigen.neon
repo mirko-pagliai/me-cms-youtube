@@ -1,8 +1,8 @@
 accessLevels: [public, protected, private]
-destination: Docs
+destination: API
 download: false
-exclude: {*.old, *.old.*}
-source: {Controller, Model, View}
+exclude: {*_old, *.old, *.old.*} 
+source: {src/Controller, src/Model, src/Template, src/Utility, src/View}
 main: MeYoutube
 php: false
 title: MeYoutube API
