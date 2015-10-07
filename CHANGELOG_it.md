@@ -1,6 +1,7 @@
 # 2.x ramo
 ## 2.0 ramo
 ### 2.0.1-RC1
+* aggiunto il supporto per Shareaholic;
 * piccoli aggiustamenti per MeCms 2.0.1-RC1.
 
 # 1.x ramo

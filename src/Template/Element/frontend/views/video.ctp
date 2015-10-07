@@ -70,4 +70,9 @@
 				echo $video->description;
 		?>
 	</div>
+	<?php
+		if(!empty(config('MeYoutube.video.show.shareaholic')) && !empty(config('shareaholic.app_id')))
+			if($this->request->isAction('view') && !$this->request->isAjax())
+				echo $this->Html->shareaholic(config('shareaholic.app_id'));
+	?>
 </div>

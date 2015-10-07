@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.0 branch
 ### 2.0.1-RC1
+* added support for Shareaholic;
 * small fixes for MeCms 2.0.1-RC1.
 
 # 1.x branch
