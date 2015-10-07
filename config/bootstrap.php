@@ -39,7 +39,7 @@ if(is_readable(CONFIG.'me_youtube.php')) {
 	$config = \Cake\Utility\Hash::mergeDiff(Configure::consume('MeYoutube'), $config);
 }
 
-Configure::write('MeCms.MeYoutube', $config);
+Configure::write('MeCms.MeYoutube', \Cake\Utility\Hash::mergeDiff(Configure::read('MeCms'), $config));
 
 /**
  * Youtube keys 

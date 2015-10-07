@@ -25,7 +25,7 @@
 <div class="video-container content-container clearfix">
 	<div class="content-header">
 		<?php
-			if(config('MeYoutube.video.show.category') && !empty($video->category->title) && !empty($video->category->slug))
+			if(config('video.show.category') && !empty($video->category->title) && !empty($video->category->slug))
 				echo $this->Html->h5($this->Html->link($video->category->title, ['_name' => 'videos_category', $video->category->slug]), ['class' => 'content-category']);
 
 			echo $this->Html->h3($this->Html->link($video->title, ['_name' => 'video', $video->id]), ['class' => 'content-title']);
@@ -35,13 +35,13 @@
 		?>
 		<div class="content-info">
 			<?php
-				if(config('MeYoutube.video.show.author') && !empty($video->user->full_name))
+				if(config('video.show.author') && !empty($video->user->full_name))
 					echo $this->Html->div('content-author',
 						__d('me_cms', 'Posted by {0}', $video->user->full_name),
 						['icon' => 'user']
 					);
 
-				if(config('MeYoutube.video.show.created') && !empty($video->created))
+				if(config('video.show.created') && !empty($video->created))
 					echo $this->Html->div('content-date',
 						__d('me_cms', 'Posted on {0}', $video->created->i18nFormat(config('main.datetime.long'))),
 						['icon' => 'clock-o']
@@ -71,7 +71,7 @@
 		?>
 	</div>
 	<?php
-		if(!empty(config('MeYoutube.video.show.shareaholic')) && !empty(config('shareaholic.app_id')))
+		if(!empty(config('video.show.shareaholic')) && !empty(config('shareaholic.app_id')))
 			if($this->request->isAction('view') && !$this->request->isAjax())
 				echo $this->Html->shareaholic(config('shareaholic.app_id'));
 	?>
