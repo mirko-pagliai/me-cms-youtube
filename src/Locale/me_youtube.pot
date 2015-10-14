@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-09-21 16:04+0000\n"
+"POT-Creation-Date: 2015-10-14 12:29+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -59,7 +59,7 @@ msgid "The video could not be deleted"
 msgstr ""
 
 #: Template/Admin/Videos/add.ctp:26;31;108
-#: View/Helper/MenuHelper.php:50
+#: View/Helper/MenuDefaultHelper.php:50
 msgid "Add video"
 msgstr ""
 
@@ -86,6 +86,13 @@ msgstr ""
 msgid "Edit video"
 msgstr ""
 
+#: Template/Admin/Videos/index.ctp:26;31
+#: Template/Admin/VideosCategories/index.ctp:36
+#: Template/Videos/index.ctp:25
+#: View/Helper/MenuDefaultHelper.php:60
+msgid "Videos"
+msgstr ""
+
 #: Template/Admin/Videos/index.ctp:68;84
 msgid "Spot"
 msgstr ""
@@ -108,12 +115,6 @@ msgstr ""
 msgid "Videos categories"
 msgstr ""
 
-#: Template/Admin/VideosCategories/index.ctp:36
-#: Template/Videos/index.ctp:25
-#: View/Helper/MenuHelper.php:60
-msgid "Videos"
-msgstr ""
-
 #: Template/Cell/Videos/latest.ctp:38
 msgid "Latest {0} videos"
 msgstr ""
@@ -132,7 +133,7 @@ msgstr ""
 msgid "Latest videos"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:49
+#: View/Helper/MenuDefaultHelper.php:49
 msgid "List videos"
 msgstr ""
 

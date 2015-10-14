@@ -1,17 +1,19 @@
 # LANGUAGE translation of MeYoutube
 # Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
+# Mirko Pagliai <mirko.pagliai.it>, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-09-21 16:04+0000\n"
-"PO-Revision-Date: 2015-09-21 18:04+0100\n"
-"Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
+"POT-Creation-Date: 2015-10-14 12:29+0000\n"
+"PO-Revision-Date: 2015-10-14 14:30+0100\n"
+"Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
+"Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: it_IT\n"
+"Language: it\n"
 "X-Generator: Lokalize 2.0\n"
 
 #: Controller/Admin/VideosCategoriesController.php:95;117
@@ -63,7 +65,7 @@ msgid "The video could not be deleted"
 msgstr "Il video non può essere cancellato"
 
 #: Template/Admin/Videos/add.ctp:26;31;108
-#: View/Helper/MenuHelper.php:50
+#: View/Helper/MenuDefaultHelper.php:50
 msgid "Add video"
 msgstr "Aggiungi video"
 
@@ -90,6 +92,13 @@ msgstr "{0} ID"
 msgid "Edit video"
 msgstr "Modifica video"
 
+#: Template/Admin/Videos/index.ctp:26;31
+#: Template/Admin/VideosCategories/index.ctp:36
+#: Template/Videos/index.ctp:25
+#: View/Helper/MenuDefaultHelper.php:60
+msgid "Videos"
+msgstr "Video"
+
 #: Template/Admin/Videos/index.ctp:68;84
 msgid "Spot"
 msgstr "Spot"
@@ -112,12 +121,6 @@ msgstr "Modifica categoria video"
 msgid "Videos categories"
 msgstr "Categorie video"
 
-#: Template/Admin/VideosCategories/index.ctp:36
-#: Template/Videos/index.ctp:25
-#: View/Helper/MenuHelper.php:60
-msgid "Videos"
-msgstr "Video"
-
 #: Template/Cell/Videos/latest.ctp:38
 msgid "Latest {0} videos"
 msgstr "Ultimi {0} video"
@@ -136,7 +139,7 @@ msgstr "Cerca video"
 msgid "Latest videos"
 msgstr "Ultimi video"
 
-#: View/Helper/MenuHelper.php:49
+#: View/Helper/MenuDefaultHelper.php:49
 msgid "List videos"
 msgstr "Elenca video"
 
