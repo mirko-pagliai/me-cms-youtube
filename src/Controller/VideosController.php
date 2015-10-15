@@ -32,35 +32,14 @@ use MeYoutube\Controller\AppController;
 class VideosController extends AppController {
 	/**
      * Lists videos
-	 * @param string $category Category slug (optional)
 	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
-    public function index($category = NULL) {
-		//The category can be passed as query string, from a widget
-		if($this->request->query('q'))
-			$this->redirect([$this->request->query('q')]);
-		
+    public function index() {
 		//Checks if the cache is valid
 		$this->Videos->checkIfCacheIsValid();
 		
-		//Sets the initial cache name
-		$cache = 'index';
-		
-		//Sets the initial conditions
-		$conditions = ['is_spot' => FALSE];
-		
-		//Checks if has been specified a category
-		if(!empty($category)) {
-			//Adds the category to the conditions, if it has been specified
-			$conditions['Categories.slug'] = $category;
-			
-			//Updates the cache name, adding the category name
-			$cache = sprintf('%s_%s', $cache, md5($category));
-		}
-		
-		//Updates the cache name with the query limit and the number of the page
-		$cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
-		$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
+		//Sets the cache name
+		$cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
 		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'videos'));
@@ -74,7 +53,7 @@ class VideosController extends AppController {
 						'Users'			=> ['fields' => ['first_name', 'last_name']]
 					])
 					->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
-					->where($conditions)
+					->where(['is_spot' => FALSE])
 					->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
 			)->toArray();
 						

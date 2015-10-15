@@ -33,7 +33,11 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 	/**
 	 * VideosCategories controller
 	 */
-	 $routes->connect('/videos/categories', ['controller' => 'VideosCategories', 'action' => 'index'], ['_name' => 'videos_categories']);
+	$routes->connect('/videos/categories', ['controller' => 'VideosCategories', 'action' => 'index'], ['_name' => 'videos_categories']);
+	$routes->connect('/videos/category/:slug',
+		['controller' => 'VideosCategories', 'action' => 'view'],
+		['_name' => 'videos_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	);
 
 	/**
 	 * Videos controller
@@ -45,10 +49,6 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 	$routes->connect('/videos', ['controller' => 'Videos', 'action' => 'index'], ['_name' => 'videos']);
 	$routes->connect('/videos/rss', ['controller' => 'Videos', 'action' => 'rss', '_ext' => 'rss']);
 	$routes->connect('/videos/search', ['controller' => 'Videos', 'action' => 'search'], ['_name' => 'search_videos']);
-	$routes->connect('/videos/:slug',
-		['controller' => 'Videos', 'action' => 'index'],
-		['_name' => 'videos_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-	);
 	
 	/**
 	 * Admin routes
