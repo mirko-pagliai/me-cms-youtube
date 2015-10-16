@@ -23,6 +23,7 @@
 namespace MeYoutube\Controller;
 
 use Cake\Cache\Cache;
+use Cake\I18n\Time;
 use MeYoutube\Controller\AppController;
 
 /**
@@ -70,6 +71,53 @@ class VideosController extends AppController {
 		
         $this->set(compact('videos'));
     }
+	
+	/**
+	 * List videos by a date
+	 * @param int $year Year
+	 * @param int $month Month
+	 * @param int $day Day
+	 * @property \MeYoutube\Model\Table\VideosTable $Videos
+	 */
+	public function index_by_date($year, $month, $day) {
+		//Checks if the cache is valid
+		$this->Videos->checkIfCacheIsValid();
+		
+		//Sets the cache name
+		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+		
+		//Tries to get data from the cache
+		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'videos'));
+		
+		//If the data are not available from the cache
+		if(empty($videos) || empty($paging)) {		
+			$videos = $this->paginate(
+				$this->Videos->find('active')
+					->contain([
+						'Categories'	=> ['fields' => ['title', 'slug']],
+						'Users'			=> ['fields' => ['first_name', 'last_name']]
+					])
+					->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+					->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+					->where([
+						'is_spot' => FALSE,
+						sprintf('%s.created >=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
+						sprintf('%s.created <=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL)
+					])
+					->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+			)->toArray();
+						
+			//Writes on cache
+			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'videos');
+		}
+		//Else, sets the paging parameter
+		else
+			$this->request->params['paging'] = $paging;
+		
+        $this->set(compact('videos'));
+		
+		$this->render('Videos/index');
+	}
 	
     /**
      * Views video
