@@ -1,8 +1,11 @@
 # 2.x branch
 ## 2.0 branch
-### 2.0.1-RC1
+### 2.0.2-RC2
 * now you can list videos by date;
 * added support for Shareaholic;
+* small fixes for MeCms 2.1.0-RC2.
+
+### 2.0.1-RC1
 * small fixes for MeCms 2.0.1-RC1.
 
 # 1.x branch
