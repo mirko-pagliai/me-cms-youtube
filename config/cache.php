@@ -32,14 +32,6 @@ $options = [
 	'mask'		=> 0777
 ];
 
-return ['Cache' => [
-	/**
-	 * Default configuration
-	 */
-	//MeYoutube default configuration
-	'meyoutube'		=> $options,
-	//App default configuration
-	'default'	=> array_merge($options, ['path' => CACHE]),
-	
+return ['Cache' => [	
 	'videos'	=> array_merge($options, ['path' => ME_YOUTUBE_PATH.'videos'])
 ]];
