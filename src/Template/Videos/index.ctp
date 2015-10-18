@@ -25,10 +25,12 @@
 <?php $this->assign('title', __d('me_youtube', 'Videos')); ?>
 
 <div class="videos index">
-	<?php 
-		foreach($videos as $video)
-			echo $this->element('frontend'.DS.'views'.DS.'video', compact('video'));
-	
-		echo $this->element('MeTools.paginator');
+	<?php
+		if(!empty($videos)) {
+			foreach($videos as $video)
+				echo $this->element('frontend'.DS.'views'.DS.'video', compact('video'));
+
+			echo $this->element('MeTools.paginator');
+		}
 	?>
 </div>

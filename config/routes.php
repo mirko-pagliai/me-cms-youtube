@@ -33,7 +33,11 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 	/**
 	 * VideosCategories controller
 	 */
-	 $routes->connect('/videos/categories', ['controller' => 'VideosCategories', 'action' => 'index'], ['_name' => 'videos_categories']);
+	$routes->connect('/videos/categories', ['controller' => 'VideosCategories', 'action' => 'index'], ['_name' => 'videos_categories']);
+	$routes->connect('/videos/category/:slug',
+		['controller' => 'VideosCategories', 'action' => 'view'],
+		['_name' => 'videos_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	);
 
 	/**
 	 * Videos controller
@@ -45,9 +49,15 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 	$routes->connect('/videos', ['controller' => 'Videos', 'action' => 'index'], ['_name' => 'videos']);
 	$routes->connect('/videos/rss', ['controller' => 'Videos', 'action' => 'rss', '_ext' => 'rss']);
 	$routes->connect('/videos/search', ['controller' => 'Videos', 'action' => 'search'], ['_name' => 'search_videos']);
-	$routes->connect('/videos/:slug',
-		['controller' => 'Videos', 'action' => 'index'],
-		['_name' => 'videos_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	$routes->connect('/videos/:year/:month/:day',
+		['controller' => 'Videos', 'action' => 'index_by_date'],
+		[
+			'_name'	=> 'videos_by_date',
+			'year'	=> '[12][0-9]{3}',
+			'month'	=> '0[1-9]|1[012]',
+			'day'	=> '0[1-9]|[12][0-9]|3[01]',
+			'pass'	=> ['year', 'month', 'day']
+		]
 	);
 	
 	/**

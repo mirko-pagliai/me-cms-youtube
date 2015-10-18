@@ -1,5 +1,10 @@
 # 2.x ramo
 ## 2.0 ramo
+### 2.0.2-RC2
+* è possibile elencare i video per data;
+* aggiunto il supporto per Shareaholic;
+* piccoli aggiustamenti per MeCms 2.1.0-RC2.
+
 ### 2.0.1-RC1
 * piccoli aggiustamenti per MeCms 2.0.1-RC1.
 

@@ -23,12 +23,12 @@
 ?>
 
 <?php
-	$this->assign('title', __d('me_cms', 'Videos'));
+	$this->assign('title', __d('me_youtube', 'Videos'));
 	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
 
 <div class="videos index">
-	<?= $this->Html->h2(__d('me_cms', 'Videos')) ?>
+	<?= $this->Html->h2(__d('me_youtube', 'Videos')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
 	<?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
