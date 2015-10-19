@@ -22,7 +22,14 @@
  */
 ?>
 
-<?php $this->assign('title', $video->title); ?>
+<?php
+	$this->assign('title', $video->title);
+	
+	if(!empty($video->preview)) {
+		$this->Html->meta(['href' => $video->preview, 'rel' => 'image_src']);
+		$this->Html->meta(['content' => $video->preview, 'property' => 'og:image']);
+	}
+?>
 
 <div class="posts view">
 	<?= $this->element('frontend'.DS.'views'.DS.'video', compact('video')); ?>

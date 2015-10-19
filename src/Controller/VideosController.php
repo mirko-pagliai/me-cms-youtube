@@ -125,7 +125,7 @@ class VideosController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function view($id = NULL) {
-		$video = $this->Videos->find('active')
+		$this->set('video', $this->Videos->find('active')
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
@@ -133,9 +133,7 @@ class VideosController extends AppController {
 			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), 'videos')
-			->first();
-		
-		$this->set(am(['image_src' => $video->preview], compact('video')));
+			->first());
     }
 	
 	/**
