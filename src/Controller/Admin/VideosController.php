@@ -96,8 +96,8 @@ class VideosController extends AppController {
 		$this->set('videos', $this->paginate(
 			$this->Videos->find()
 				->contain([
-					'Categories'	=> ['fields' => ['title']],
-					'Users'			=> ['fields' => ['first_name', 'last_name']]
+					'Categories'	=> ['fields' => ['id', 'title']],
+					'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
 				])
 				->select(['id', 'title', 'priority', 'active', 'created', 'is_spot'])
 				->where($this->Videos->fromFilter($this->request->query))
