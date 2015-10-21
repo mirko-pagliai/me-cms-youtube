@@ -249,8 +249,8 @@
 </span><span id="96" class="l"><a href="#96"> 96: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'videos'</span>, <span class="php-var">$this</span>-&gt;paginate(
 </span><span id="97" class="l"><a href="#97"> 97: </a>            <span class="php-var">$this</span>-&gt;Videos-&gt;find()
 </span><span id="98" class="l"><a href="#98"> 98: </a>                -&gt;contain([
-</span><span id="99" class="l"><a href="#99"> 99: </a>                    <span class="php-quote">'Categories'</span>    =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'title'</span>]],
-</span><span id="100" class="l"><a href="#100">100: </a>                    <span class="php-quote">'Users'</span>         =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'first_name'</span>, <span class="php-quote">'last_name'</span>]]
+</span><span id="99" class="l"><a href="#99"> 99: </a>                    <span class="php-quote">'Categories'</span>    =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>]],
+</span><span id="100" class="l"><a href="#100">100: </a>                    <span class="php-quote">'Users'</span>         =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'id'</span>, <span class="php-quote">'first_name'</span>, <span class="php-quote">'last_name'</span>]]
 </span><span id="101" class="l"><a href="#101">101: </a>                ])
 </span><span id="102" class="l"><a href="#102">102: </a>                -&gt;select([<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>, <span class="php-quote">'priority'</span>, <span class="php-quote">'active'</span>, <span class="php-quote">'created'</span>, <span class="php-quote">'is_spot'</span>])
 </span><span id="103" class="l"><a href="#103">103: </a>                -&gt;where(<span class="php-var">$this</span>-&gt;Videos-&gt;fromFilter(<span class="php-var">$this</span>-&gt;request-&gt;query))
