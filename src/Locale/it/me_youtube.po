@@ -4,9 +4,8 @@
 # Mirko Pagliai <mirko.pagliai.it>, 2015.
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-10-14 12:29+0000\n"
-"PO-Revision-Date: 2015-10-14 14:30+0100\n"
+"POT-Creation-Date: 2015-10-30 18:58+0000\n"
+"PO-Revision-Date: 2015-10-30 20:00+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: it\n"
-"X-Generator: Lokalize 2.0\n"
 
 #: Controller/Admin/VideosCategoriesController.php:95;117
 msgid "The videos category has been saved"
@@ -40,27 +38,27 @@ msgstr ""
 "Prima di cancellare questa categoria, devi cancellare i suoi video o "
 "assegnarli a un'altra categoria"
 
-#: Controller/Admin/VideosController.php:58
+#: Controller/Admin/VideosController.php:59
 msgid "Before you can manage videos, you have to create at least a category"
 msgstr "Prima di gestire i video, devi creare almeno una categoria"
 
-#: Controller/Admin/VideosController.php:117
+#: Controller/Admin/VideosController.php:118
 msgid "This is not a {0} video"
 msgstr "Questo non è un video di {0}"
 
-#: Controller/Admin/VideosController.php:134;162
+#: Controller/Admin/VideosController.php:135;163
 msgid "The video has been saved"
 msgstr "Il video è stato salvato"
 
-#: Controller/Admin/VideosController.php:138;166
+#: Controller/Admin/VideosController.php:139;167
 msgid "The video could not be saved"
 msgstr "Il video non può essere salvato"
 
-#: Controller/Admin/VideosController.php:182
+#: Controller/Admin/VideosController.php:183
 msgid "The video has been deleted"
 msgstr "Il video è stato cancellato"
 
-#: Controller/Admin/VideosController.php:184
+#: Controller/Admin/VideosController.php:185
 msgid "The video could not be deleted"
 msgstr "Il video non può essere cancellato"
 
@@ -94,7 +92,7 @@ msgstr "Modifica video"
 
 #: Template/Admin/Videos/index.ctp:26;31
 #: Template/Admin/VideosCategories/index.ctp:36
-#: Template/Videos/index.ctp:25
+#: Template/Videos/index.ctp:47
 #: View/Helper/MenuDefaultHelper.php:60
 msgid "Videos"
 msgstr "Video"
@@ -103,7 +101,7 @@ msgstr "Video"
 msgid "Spot"
 msgstr "Spot"
 
-#: Template/Admin/Videos/index.ctp:146
+#: Template/Admin/Videos/index.ctp:150
 msgid "This video is a spot"
 msgstr "Questo video è uno spot"
 
@@ -133,6 +131,18 @@ msgstr "Ultimo video"
 #: Template/Videos/search.ctp:25;29
 msgid "Search videos"
 msgstr "Cerca video"
+
+#: Template/Videos/index.ctp:37
+msgid "Videos of today"
+msgstr "Video di oggi"
+
+#: Template/Videos/index.ctp:39
+msgid "Videos of yesterday"
+msgstr "Video di ieri"
+
+#: Template/Videos/index.ctp:41
+msgid "Videos of {0}"
+msgstr "Video del {0}"
 
 #: Template/Videos/rss/rss.ctp:29;31
 #: View/View/AppView.php:44
