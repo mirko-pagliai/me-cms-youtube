@@ -80,9 +80,7 @@ class VideosCategoriesController extends AppController {
 		else
 			$this->request->params['paging'] = $paging;
 		
-		$this->set(am([
-			'title' => empty($videos[0]->category->title) ? NULL : $videos[0]->category->title
-		], compact('videos')));
+		$this->set(compact('videos'));
 		
 		//Renders on a different view
 		$this->render('Videos/index');

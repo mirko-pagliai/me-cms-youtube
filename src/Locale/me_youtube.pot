@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-10-14 12:29+0000\n"
+"POT-Creation-Date: 2015-10-30 18:58+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -34,27 +34,27 @@ msgstr ""
 msgid "Before you delete this category, you have to delete its videos or assign them to another category"
 msgstr ""
 
-#: Controller/Admin/VideosController.php:58
+#: Controller/Admin/VideosController.php:59
 msgid "Before you can manage videos, you have to create at least a category"
 msgstr ""
 
-#: Controller/Admin/VideosController.php:117
+#: Controller/Admin/VideosController.php:118
 msgid "This is not a {0} video"
 msgstr ""
 
-#: Controller/Admin/VideosController.php:134;162
+#: Controller/Admin/VideosController.php:135;163
 msgid "The video has been saved"
 msgstr ""
 
-#: Controller/Admin/VideosController.php:138;166
+#: Controller/Admin/VideosController.php:139;167
 msgid "The video could not be saved"
 msgstr ""
 
-#: Controller/Admin/VideosController.php:182
+#: Controller/Admin/VideosController.php:183
 msgid "The video has been deleted"
 msgstr ""
 
-#: Controller/Admin/VideosController.php:184
+#: Controller/Admin/VideosController.php:185
 msgid "The video could not be deleted"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 
 #: Template/Admin/Videos/index.ctp:26;31
 #: Template/Admin/VideosCategories/index.ctp:36
-#: Template/Videos/index.ctp:25
+#: Template/Videos/index.ctp:47
 #: View/Helper/MenuDefaultHelper.php:60
 msgid "Videos"
 msgstr ""
@@ -97,7 +97,7 @@ msgstr ""
 msgid "Spot"
 msgstr ""
 
-#: Template/Admin/Videos/index.ctp:146
+#: Template/Admin/Videos/index.ctp:150
 msgid "This video is a spot"
 msgstr ""
 
@@ -126,6 +126,18 @@ msgstr ""
 #: Template/Cell/Videos/search.ctp:33
 #: Template/Videos/search.ctp:25;29
 msgid "Search videos"
+msgstr ""
+
+#: Template/Videos/index.ctp:37
+msgid "Videos of today"
+msgstr ""
+
+#: Template/Videos/index.ctp:39
+msgid "Videos of yesterday"
+msgstr ""
+
+#: Template/Videos/index.ctp:41
+msgid "Videos of {0}"
 msgstr ""
 
 #: Template/Videos/rss/rss.ctp:29;31

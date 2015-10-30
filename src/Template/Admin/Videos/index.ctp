@@ -114,8 +114,12 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td class="text-center"><?= $video->category->title ?></td>
-					<td class="text-center"><?= $video->user->full_name ?></td>
+					<td class="text-center">
+						<?= $this->Html->link($video->category->title, ['?' => ['category' => $video->category->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+					</td>
+					<td class="text-center">
+						<?= $this->Html->link($video->user->full_name, ['?' => ['user' => $video->user->id]], ['title' => __d('me_cms', 'View items that belong to this user')]) ?>
+					</td>
 					<td class="min-width text-center">
 						<?php
 							switch($video->priority) {

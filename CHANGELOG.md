@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.0 branch
+### 2.0.3-RC3
+* in the admin panel, some views have been linked together;
+* fixed the title of some actions.
+
 ### 2.0.2-RC2
 * now you can list videos by date;
 * added support for Shareaholic;

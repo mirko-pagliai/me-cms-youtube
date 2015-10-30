@@ -1,5 +1,9 @@
 # 2.x ramo
 ## 2.0 ramo
+### 2.0.3-RC3
+* nel pannello di amministrazione, alcune viste sono state collegate tra loro;
+* corretto il titolo di alcune azioni.
+
 ### 2.0.2-RC2
 * è possibile elencare i video per data;
 * aggiunto il supporto per Shareaholic;

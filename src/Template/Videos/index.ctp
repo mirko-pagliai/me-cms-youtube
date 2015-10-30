@@ -22,10 +22,36 @@
  */
 ?>
 	
-<?php $this->assign('title', __d('me_youtube', 'Videos')); ?>
+<?php
+	/**
+	 * This view can be used by many actions
+	 */
+	//VideosCategories `view`
+	if($this->request->isAction('view', 'VideosCategories') && !empty($videos[0]->category->title))
+		$title = $videos[0]->category->title;
+	//Videos `index_by_date`
+	elseif($this->request->isAction('index_by_date', 'Videos')) {
+		$date = (new \Cake\I18n\Time())->year($this->request->param('year'))->month($this->request->param('month'))->day($this->request->param('day'));
+		
+		if($date->isToday())
+			$title = __d('me_youtube', 'Videos of today');
+		elseif($date->isYesterday())
+			$title = __d('me_youtube', 'Videos of yesterday');
+		else
+			$title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat(config('main.date.long')));
+	}
+
+	if(!empty($title))
+		$this->assign('title', $title);
+	else
+		$this->assign('title', __d('me_youtube', 'Videos'));
+?>
 
 <div class="videos index">
 	<?php
+		if(!empty($title))
+			echo $this->Html->h2($title);
+		
 		if(!empty($videos)) {
 			foreach($videos as $video)
 				echo $this->element('frontend'.DS.'views'.DS.'video', compact('video'));
