@@ -39,27 +39,21 @@ class Youtube {
 	 * @param string $url Video url
 	 * @return mixed Video ID or FALSE
 	 */
-	public function getId($url) {		
-		//Parses the url
-		$url = parse_url($url);
-		
-		if(empty($url['host']))
-			return FALSE;
-		
-		//`youtube.com/watch?v=XXX` addresses
-		if(preg_match('/youtube\.com$/', $url['host']) && !empty($url['query'])) {
-			parse_str($url['query'], $query);
+	public function getId($url) {
+		if(preg_match('/youtube\.com/', $url)) {
+			$url = parse_url($url);
 			
-			return empty($query['v']) ? FALSE : $query['v'];
+			if(empty($url['query']))
+				return FALSE;
+			
+			parse_str($url['query'], $url);
+				
+			return empty($url['v']) ? FALSE : $url['v'];
 		}
-		//`youtu.be/XXX` addresses
-		elseif(preg_match('/youtu\.be$/', $url['host']) && !empty($url['path'])) {
-			preg_match('/^\/([^\/]+)/', $url['path'], $matches);
-			
+		elseif(preg_match('/youtu.be\/(.+)$/', $url, $matches))
 			return empty($matches[1]) ? FALSE : $matches[1];
-		}
-		
-		return FALSE;
+		else
+			return FALSE;
 	}
 	
 	/**
