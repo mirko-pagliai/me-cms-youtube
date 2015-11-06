@@ -187,7 +187,7 @@ class VideosTable extends AppTable {
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), 'posts');
+		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), 'videos');
 	}
 
     /**
