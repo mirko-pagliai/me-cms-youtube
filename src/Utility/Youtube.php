@@ -67,7 +67,7 @@ class Youtube {
 		$url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
 		$info = Xml::fromFile(sprintf($url, $id, Configure::read('Youtube.key')));
 				
-		if(empty($info['items'][0]) || empty($info['items'][0]['snippet'] || empty($info['items'][0]['contentDetails'])))
+		if(empty($info['items'][0]) || empty($info['items'][0]['snippet']) || empty($info['items'][0]['contentDetails']))
 			return FALSE;
 				
 		$info = am([
