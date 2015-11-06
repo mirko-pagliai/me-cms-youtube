@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-10-30 18:58+0000\n"
+"POT-Creation-Date: 2015-11-06 16:52+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -58,7 +58,7 @@ msgstr ""
 msgid "The video could not be deleted"
 msgstr ""
 
-#: Template/Admin/Videos/add.ctp:26;31;108
+#: Template/Admin/Videos/add.ctp:26;31;121
 #: View/Helper/MenuDefaultHelper.php:50
 msgid "Add video"
 msgstr ""
@@ -77,12 +77,28 @@ msgstr ""
 msgid "Enable this option if this video is a spot"
 msgstr ""
 
-#: Template/Admin/Videos/add.ctp:96
-#: Template/Admin/Videos/edit.ctp:77
+#: Template/Admin/Videos/add.ctp:90
+#: Template/Admin/Videos/edit.ctp:71
+msgid "Video"
+msgstr ""
+
+#: Template/Admin/Videos/add.ctp:99
+#: Template/Admin/Videos/edit.ctp:80
+msgid "Preview"
+msgstr ""
+
+#: Template/Admin/Videos/add.ctp:105
+#: Template/Admin/Videos/edit.ctp:86
 msgid "{0} ID"
 msgstr ""
 
-#: Template/Admin/Videos/edit.ctp:26;31;89
+#: Template/Admin/Videos/add.ctp:110
+#: Template/Admin/Videos/edit.ctp:91
+#: Template/Admin/Videos/index.ctp:82
+msgid "Duration"
+msgstr ""
+
+#: Template/Admin/Videos/edit.ctp:26;31;102
 msgid "Edit video"
 msgstr ""
 
@@ -93,11 +109,11 @@ msgstr ""
 msgid "Videos"
 msgstr ""
 
-#: Template/Admin/Videos/index.ctp:68;84
+#: Template/Admin/Videos/index.ctp:68;85
 msgid "Spot"
 msgstr ""
 
-#: Template/Admin/Videos/index.ctp:150
+#: Template/Admin/Videos/index.ctp:154
 msgid "This video is a spot"
 msgstr ""
 
