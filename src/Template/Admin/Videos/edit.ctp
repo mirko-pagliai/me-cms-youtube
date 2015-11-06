@@ -66,13 +66,22 @@
 	</div>
 	
     <fieldset>
-        <?php
-            echo $this->Html->iframe(sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $this->request->data('youtube_id')), [
-				'class'				=> 'margin-15',
-				'allowfullscreen'	=> TRUE,
-				'height'			=> 315,
-				'width'				=> 560
-			]);
+		<div class="row margin-20 text-center">
+			<div class="col-sm-6">
+				<h4><?= __d('me_youtube', 'Video') ?></h4>
+				<?= $this->Html->iframe(sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $this->request->data('youtube_id')), [
+					'class'				=> 'center-block',
+					'allowfullscreen'	=> TRUE,
+					'height'			=> 315,
+					'width'				=> 560
+				]) ?>
+			</div>
+			<div class="col-sm-6">
+				<h4><?= __d('me_youtube', 'Preview') ?></h4>
+				<?= $this->Thumb->img($video->preview, ['height' => 315, 'class' => 'center-block']) ?>
+			</div>
+		</div>
+        <?php            
 			echo $this->Form->input('youtube_id', [
 				'label'		=> __d('me_youtube', '{0} ID', 'YouTube'),
 				'readonly'	=> TRUE,

@@ -2,6 +2,7 @@
 ## 2.0 branch
 ### 2.0.4-RC4
 * spots are automatically played before video;
+* the video preview is shown when adding or editing a video;
 * the duration of the video is saved in the database;
 * the Youtube API are used now.
 

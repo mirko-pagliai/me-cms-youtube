@@ -64,13 +64,17 @@ class Youtube {
 	 */
 	public function getInfo($id) {
 		//See https://developers.google.com/youtube/v3/getting-started#partial
-		$url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description),contentDetails(duration))';
+		$url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
 		$info = Xml::fromFile(sprintf($url, $id, Configure::read('Youtube.key')));
 				
 		if(empty($info['items'][0]) || empty($info['items'][0]['snippet'] || empty($info['items'][0]['contentDetails'])))
 			return FALSE;
+				
+		$info = am([
+			'preview' => $info['items'][0]['snippet']['thumbnails']['high']['url']
+		], $info['items'][0]['snippet'], $info['items'][0]['contentDetails']);
 		
-		$info = am($info['items'][0]['snippet'], $info['items'][0]['contentDetails']);
+		unset($info['thumbnails']);
 				
 		preg_match('/PT(([0-9]+)M)?(([0-9]+)S)?/', $info['duration'], $matches);
 		
