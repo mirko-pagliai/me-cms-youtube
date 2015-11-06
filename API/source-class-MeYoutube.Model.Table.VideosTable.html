@@ -340,7 +340,7 @@
 </span><span id="187" class="l"><a href="#187">187: </a>            -&gt;order([<span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s.created'</span>, <span class="php-var">$this</span>-&gt;alias()) =&gt; <span class="php-quote">'ASC'</span>])
 </span><span id="188" class="l"><a href="#188">188: </a>            -&gt;first();
 </span><span id="189" class="l"><a href="#189">189: </a>        
-</span><span id="190" class="l"><a href="#190">190: </a>        Cache::write(<span class="php-quote">'next_to_be_published'</span>, <span class="php-keyword1">empty</span>(<span class="php-var">$next</span>-&gt;created) ? <span class="php-keyword1">FALSE</span> : <span class="php-var">$next</span>-&gt;created-&gt;toUnixString(), <span class="php-quote">'posts'</span>);
+</span><span id="190" class="l"><a href="#190">190: </a>        Cache::write(<span class="php-quote">'next_to_be_published'</span>, <span class="php-keyword1">empty</span>(<span class="php-var">$next</span>-&gt;created) ? <span class="php-keyword1">FALSE</span> : <span class="php-var">$next</span>-&gt;created-&gt;toUnixString(), <span class="php-quote">'videos'</span>);
 </span><span id="191" class="l"><a href="#191">191: </a>    }
 </span><span id="192" class="l"><a href="#192">192: </a>
 </span><span id="193" class="l"><a href="#193">193: </a>    <span class="php-comment">/**
