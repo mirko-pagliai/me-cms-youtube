@@ -63,14 +63,13 @@ class Youtube {
 	 * @uses MeTools\Utility\Xml::fromFile()
 	 */
 	public function getInfo($id) {
-		$info = Xml::fromFile(sprintf('https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet', $id, Configure::read('Youtube.key')));
-		
-		if(empty($info['items'][0]['snippet']['localized']))
-			return FALSE;
-		
-		return [
-			'title'			=> $info['items'][0]['snippet']['localized']['title'],
-			'description'	=> $info['items'][0]['snippet']['localized']['description']
-		];
+		//See https://developers.google.com/youtube/v3/getting-started#partial
+		$url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description),contentDetails(duration))';
+		$info = Xml::fromFile(sprintf($url, $id, Configure::read('Youtube.key')));
+				
+		if(!empty($info['items'][0]['snippet'] && !empty($info['items'][0]['contentDetails'])))
+			return am($info['items'][0]['snippet'], $info['items'][0]['contentDetails']);
+		else
+			return FALSE
 	}
 }
