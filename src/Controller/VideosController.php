@@ -122,10 +122,15 @@ class VideosController extends AppController {
     /**
      * Views video
      * @param string $id Video ID
+	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
+	 * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function view($id = NULL) {
-		$this->set('video', $this->Videos->find('active')
+		//Checks if the cache is valid
+		$this->Videos->checkIfCacheIsValid();
+		
+		$video = $this->Videos->find('active')
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
@@ -133,7 +138,15 @@ class VideosController extends AppController {
 			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), 'videos')
-			->first());
+			->first();
+		
+		//If requested, gets the ID of a spot and adds it to the video
+		if(config('video.show.spot')) {
+			$spot = $this->Videos->getRandomSpots();
+			$video->spot_id = $spot[0]->youtube_id;
+		}
+		
+		$this->set(compact('video'));
     }
 	
 	/**

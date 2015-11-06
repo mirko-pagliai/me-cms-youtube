@@ -39,44 +39,51 @@ class Youtube {
 	 * @param string $url Video url
 	 * @return mixed Video ID or FALSE
 	 */
-	public function getId($url) {		
-		//Parses the url
-		$url = parse_url($url);
-		
-		if(empty($url['host']))
-			return FALSE;
-		
-		//`youtube.com/watch?v=XXX` addresses
-		if(preg_match('/youtube\.com$/', $url['host']) && !empty($url['query'])) {
-			parse_str($url['query'], $query);
+	public function getId($url) {
+		if(preg_match('/youtube\.com/', $url)) {
+			$url = parse_url($url);
 			
-			return empty($query['v']) ? FALSE : $query['v'];
+			if(empty($url['query']))
+				return FALSE;
+			
+			parse_str($url['query'], $url);
+				
+			return empty($url['v']) ? FALSE : $url['v'];
 		}
-		//`youtu.be/XXX` addresses
-		elseif(preg_match('/youtu\.be$/', $url['host']) && !empty($url['path'])) {
-			preg_match('/^\/([^\/]+)/', $url['path'], $matches);
-			
+		elseif(preg_match('/youtu.be\/(.+)$/', $url, $matches))
 			return empty($matches[1]) ? FALSE : $matches[1];
-		}
-		
-		return FALSE;
+		else
+			return FALSE;
 	}
 	
 	/**
 	 * Gets information about a video
 	 * @param string $id Video ID
-	 * @return mixed information, otherwise FALSE
+	 * @return mixed Array of information, otherwise FALSE
 	 * @uses MeTools\Utility\Xml::fromFile()
 	 */
 	public function getInfo($id) {
-		$info = Xml::fromFile(sprintf('https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet', $id, Configure::read('Youtube.key')));
-		
-		if(empty($info['items'][0]['snippet']['localized']))
+		//See https://developers.google.com/youtube/v3/getting-started#partial
+		$url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
+		$info = Xml::fromFile(sprintf($url, $id, Configure::read('Youtube.key')));
+				
+		if(empty($info['items'][0]) || empty($info['items'][0]['snippet'] || empty($info['items'][0]['contentDetails'])))
 			return FALSE;
+				
+		$info = am([
+			'preview' => $info['items'][0]['snippet']['thumbnails']['high']['url']
+		], $info['items'][0]['snippet'], $info['items'][0]['contentDetails']);
 		
-		return [
-			'title'			=> $info['items'][0]['snippet']['localized']['title'],
-			'description'	=> $info['items'][0]['snippet']['localized']['description']
-		];
+		unset($info['thumbnails']);
+				
+		preg_match('/PT(([0-9]+)M)?(([0-9]+)S)?/', $info['duration'], $matches);
+		
+		$mins = empty($matches[2]) ? "00" : sprintf("%02d", $matches[2]);
+		$secs = empty($matches[4]) ? "00" : sprintf("%02d", $matches[4]);
+		
+		$info['seconds'] = (int)$mins*60+(int)$secs;
+		$info['duration'] = sprintf('%s:%s', $mins, $secs);
+
+		return $info;
 	}
 }

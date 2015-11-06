@@ -131,6 +131,26 @@ class VideosTable extends AppTable {
 		return Cache::read('next_to_be_published', 'videos');
 	}
 	
+	/**
+	 * Gets random spots
+	 * @param int $limit Limit
+	 * @return array Spots
+	 */
+	public function getRandomSpots($limit = 1) {
+		//Gets all spots
+		$spots = $this->find('active')
+			->select('youtube_id')
+			->where(['is_spot' => TRUE])
+			->cache('all_spots', 'videos')
+			->toArray();
+		
+		//Shuffles
+		shuffle($spots);
+		
+		//If the records are less than the limit, it returns all records
+		return array_slice($spots, 0, count($spots) < $limit ? count($spots) : $limit);
+	}
+	
     /**
      * Initialize method
      * @param array $config The table configuration
@@ -167,7 +187,7 @@ class VideosTable extends AppTable {
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), 'posts');
+		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), 'videos');
 	}
 
     /**

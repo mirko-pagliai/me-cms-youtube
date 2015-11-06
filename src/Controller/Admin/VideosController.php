@@ -99,7 +99,7 @@ class VideosController extends AppController {
 					'Categories'	=> ['fields' => ['id', 'title']],
 					'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
 				])
-				->select(['id', 'title', 'priority', 'active', 'created', 'is_spot'])
+				->select(['id', 'title', 'priority', 'active', 'is_spot', 'duration', 'seconds', 'created'])
 				->where($this->Videos->fromFilter($this->request->query))
 				->order(['Videos.created' => 'DESC'])
 		));
@@ -123,7 +123,7 @@ class VideosController extends AppController {
         $video = $this->Videos->newEntity();
 		
         if($this->request->is('post')) {
-			//Only admins and managers can add posts on behalf of other users
+			//Only admins and managers can add videos on behalf of other users
 			if(!$this->Auth->isGroup(['admin', 'manager']))
 				$this->request->data('user_id', $this->Auth->user('id'));
 			
@@ -151,7 +151,7 @@ class VideosController extends AppController {
         $video = $this->Videos->get($id);
 		
         if($this->request->is(['patch', 'post', 'put'])) {
-			//Only admins and managers can edit posts on behalf of other users
+			//Only admins and managers can edit videos on behalf of other users
 			if(!$this->Auth->isGroup(['admin', 'manager']))
 				$this->request->data('user_id', $this->Auth->user('id'));
 			

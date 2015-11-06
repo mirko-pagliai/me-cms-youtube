@@ -252,7 +252,7 @@
 </span><span id="99" class="l"><a href="#99"> 99: </a>                    <span class="php-quote">'Categories'</span>    =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>]],
 </span><span id="100" class="l"><a href="#100">100: </a>                    <span class="php-quote">'Users'</span>         =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'id'</span>, <span class="php-quote">'first_name'</span>, <span class="php-quote">'last_name'</span>]]
 </span><span id="101" class="l"><a href="#101">101: </a>                ])
-</span><span id="102" class="l"><a href="#102">102: </a>                -&gt;select([<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>, <span class="php-quote">'priority'</span>, <span class="php-quote">'active'</span>, <span class="php-quote">'created'</span>, <span class="php-quote">'is_spot'</span>])
+</span><span id="102" class="l"><a href="#102">102: </a>                -&gt;select([<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>, <span class="php-quote">'priority'</span>, <span class="php-quote">'active'</span>, <span class="php-quote">'is_spot'</span>, <span class="php-quote">'duration'</span>, <span class="php-quote">'seconds'</span>, <span class="php-quote">'created'</span>])
 </span><span id="103" class="l"><a href="#103">103: </a>                -&gt;where(<span class="php-var">$this</span>-&gt;Videos-&gt;fromFilter(<span class="php-var">$this</span>-&gt;request-&gt;query))
 </span><span id="104" class="l"><a href="#104">104: </a>                -&gt;order([<span class="php-quote">'Videos.created'</span> =&gt; <span class="php-quote">'DESC'</span>])
 </span><span id="105" class="l"><a href="#105">105: </a>        ));
@@ -276,7 +276,7 @@
 </span><span id="123" class="l"><a href="#123">123: </a>        <span class="php-var">$video</span> = <span class="php-var">$this</span>-&gt;Videos-&gt;newEntity();
 </span><span id="124" class="l"><a href="#124">124: </a>        
 </span><span id="125" class="l"><a href="#125">125: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;request-&gt;is(<span class="php-quote">'post'</span>)) {
-</span><span id="126" class="l"><a href="#126">126: </a>            <span class="php-comment">//Only admins and managers can add posts on behalf of other users</span>
+</span><span id="126" class="l"><a href="#126">126: </a>            <span class="php-comment">//Only admins and managers can add videos on behalf of other users</span>
 </span><span id="127" class="l"><a href="#127">127: </a>            <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;Auth-&gt;isGroup([<span class="php-quote">'admin'</span>, <span class="php-quote">'manager'</span>]))
 </span><span id="128" class="l"><a href="#128">128: </a>                <span class="php-var">$this</span>-&gt;request-&gt;data(<span class="php-quote">'user_id'</span>, <span class="php-var">$this</span>-&gt;Auth-&gt;user(<span class="php-quote">'id'</span>));
 </span><span id="129" class="l"><a href="#129">129: </a>            
@@ -304,7 +304,7 @@
 </span><span id="151" class="l"><a href="#151">151: </a>        <span class="php-var">$video</span> = <span class="php-var">$this</span>-&gt;Videos-&gt;get(<span class="php-var">$id</span>);
 </span><span id="152" class="l"><a href="#152">152: </a>        
 </span><span id="153" class="l"><a href="#153">153: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;request-&gt;is([<span class="php-quote">'patch'</span>, <span class="php-quote">'post'</span>, <span class="php-quote">'put'</span>])) {
-</span><span id="154" class="l"><a href="#154">154: </a>            <span class="php-comment">//Only admins and managers can edit posts on behalf of other users</span>
+</span><span id="154" class="l"><a href="#154">154: </a>            <span class="php-comment">//Only admins and managers can edit videos on behalf of other users</span>
 </span><span id="155" class="l"><a href="#155">155: </a>            <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;Auth-&gt;isGroup([<span class="php-quote">'admin'</span>, <span class="php-quote">'manager'</span>]))
 </span><span id="156" class="l"><a href="#156">156: </a>                <span class="php-var">$this</span>-&gt;request-&gt;data(<span class="php-quote">'user_id'</span>, <span class="php-var">$this</span>-&gt;Auth-&gt;user(<span class="php-quote">'id'</span>));
 </span><span id="157" class="l"><a href="#157">157: </a>            

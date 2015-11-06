@@ -4,8 +4,8 @@
 # Mirko Pagliai <mirko.pagliai.it>, 2015.
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-10-30 18:58+0000\n"
-"PO-Revision-Date: 2015-10-30 20:00+0100\n"
+"POT-Creation-Date: 2015-11-06 16:52+0000\n"
+"PO-Revision-Date: 2015-11-06 17:53+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr "Il video è stato cancellato"
 msgid "The video could not be deleted"
 msgstr "Il video non può essere cancellato"
 
-#: Template/Admin/Videos/add.ctp:26;31;108
+#: Template/Admin/Videos/add.ctp:26;31;121
 #: View/Helper/MenuDefaultHelper.php:50
 msgid "Add video"
 msgstr "Aggiungi video"
@@ -81,12 +81,28 @@ msgstr "È uno spot"
 msgid "Enable this option if this video is a spot"
 msgstr "Abilita questa opzione se il video è uno spot"
 
-#: Template/Admin/Videos/add.ctp:96
-#: Template/Admin/Videos/edit.ctp:77
+#: Template/Admin/Videos/add.ctp:90
+#: Template/Admin/Videos/edit.ctp:71
+msgid "Video"
+msgstr "Video"
+
+#: Template/Admin/Videos/add.ctp:99
+#: Template/Admin/Videos/edit.ctp:80
+msgid "Preview"
+msgstr "Anteprima"
+
+#: Template/Admin/Videos/add.ctp:105
+#: Template/Admin/Videos/edit.ctp:86
 msgid "{0} ID"
 msgstr "{0} ID"
 
-#: Template/Admin/Videos/edit.ctp:26;31;89
+#: Template/Admin/Videos/add.ctp:110
+#: Template/Admin/Videos/edit.ctp:91
+#: Template/Admin/Videos/index.ctp:82
+msgid "Duration"
+msgstr "Durata"
+
+#: Template/Admin/Videos/edit.ctp:26;31;102
 msgid "Edit video"
 msgstr "Modifica video"
 
@@ -97,11 +113,11 @@ msgstr "Modifica video"
 msgid "Videos"
 msgstr "Video"
 
-#: Template/Admin/Videos/index.ctp:68;84
+#: Template/Admin/Videos/index.ctp:68;85
 msgid "Spot"
 msgstr "Spot"
 
-#: Template/Admin/Videos/index.ctp:150
+#: Template/Admin/Videos/index.ctp:154
 msgid "This video is a spot"
 msgstr "Questo video è uno spot"
 

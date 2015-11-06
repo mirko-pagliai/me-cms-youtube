@@ -1,5 +1,11 @@
 # 2.x ramo
 ## 2.0 ramo
+### 2.0.4-RC4
+* gli spots vengono automaticamente riprodotti prima dei video;
+* l'anteprima del video viene mostrata quando si aggiunge o si modifica un video;
+* la durata dei video viene memorizzata nel database;
+* vengono utilizzare le API di Youtube.
+
 ### 2.0.3-RC3
 * nel pannello di amministrazione, alcune viste sono state collegate tra loro;
 * corretto il titolo di alcune azioni.

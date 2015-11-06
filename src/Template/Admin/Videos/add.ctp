@@ -50,7 +50,7 @@
 		<?= $this->Form->create($video); ?>
 		<div class='float-form'>
 			<?php
-				//Only admins and managers can add posts on behalf of other users
+				//Only admins and managers can add videos on behalf of other users
 				if($this->Auth->isGroup(['admin', 'manager']))
 					echo $this->Form->input('user_id', [
 						'default'	=> $auth['id'],
@@ -85,17 +85,30 @@
 		</div>
 	
 		<fieldset>
+			<div class="row margin-20 text-center">
+				<div class="col-sm-6">
+					<h4><?= __d('me_youtube', 'Video') ?></h4>
+					<?= $this->Html->iframe(sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $this->request->data('youtube_id')), [
+						'class'				=> 'center-block',
+						'allowfullscreen'	=> TRUE,
+						'height'			=> 315,
+						'width'				=> 560
+					]) ?>
+				</div>
+				<div class="col-sm-6">
+					<h4><?= __d('me_youtube', 'Preview') ?></h4>
+					<?= $this->Thumb->img($this->request->data('preview'), ['height' => 315, 'class' => 'center-block']) ?>
+				</div>
+			</div>
 			<?php
-				echo $this->Html->iframe(sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $this->request->data('youtube_id')), [
-					'class'				=> 'margin-15',
-					'allowfullscreen'	=> TRUE,
-					'height'			=> 315,
-					'width'				=> 560
-				]);
 				echo $this->Form->input('youtube_id', [
 					'label'		=> __d('me_youtube', '{0} ID', 'YouTube'),
 					'readonly'	=> TRUE,
 					'type'		=> 'text'
+				]);
+				echo $this->Form->input('duration', [
+					'label'		=> __d('me_youtube', 'Duration'),
+					'readonly'	=> TRUE
 				]);
 				echo $this->Form->input('title', ['label' => __d('me_cms', 'Title')]);
 				echo $this->Form->input('subtitle', ['label' => __d('me_cms', 'Subtitle')]);

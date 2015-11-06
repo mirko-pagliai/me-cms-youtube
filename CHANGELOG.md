@@ -1,5 +1,11 @@
 # 2.x branch
 ## 2.0 branch
+### 2.0.4-RC4
+* spots are automatically played before video;
+* the video preview is shown when adding or editing a video;
+* the duration of the video is saved in the database;
+* the Youtube API are used now.
+
 ### 2.0.3-RC3
 * in the admin panel, some views have been linked together;
 * fixed the title of some actions.
