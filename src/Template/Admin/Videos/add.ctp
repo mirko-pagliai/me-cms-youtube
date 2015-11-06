@@ -50,7 +50,7 @@
 		<?= $this->Form->create($video); ?>
 		<div class='float-form'>
 			<?php
-				//Only admins and managers can add posts on behalf of other users
+				//Only admins and managers can add videos on behalf of other users
 				if($this->Auth->isGroup(['admin', 'manager']))
 					echo $this->Form->input('user_id', [
 						'default'	=> $auth['id'],
