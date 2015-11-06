@@ -99,7 +99,7 @@ class VideosController extends AppController {
 					'Categories'	=> ['fields' => ['id', 'title']],
 					'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
 				])
-				->select(['id', 'title', 'priority', 'active', 'created', 'is_spot'])
+				->select(['id', 'title', 'priority', 'active', 'is_spot', 'duration', 'seconds', 'created'])
 				->where($this->Videos->fromFilter($this->request->query))
 				->order(['Videos.created' => 'DESC'])
 		));

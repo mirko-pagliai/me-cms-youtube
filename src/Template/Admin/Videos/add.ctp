@@ -97,6 +97,10 @@
 					'readonly'	=> TRUE,
 					'type'		=> 'text'
 				]);
+				echo $this->Form->input('duration', [
+					'label'		=> __d('me_youtube', 'Duration'),
+					'readonly'	=> TRUE
+				]);
 				echo $this->Form->input('title', ['label' => __d('me_cms', 'Title')]);
 				echo $this->Form->input('subtitle', ['label' => __d('me_cms', 'Subtitle')]);
 				echo $this->Form->input('description', [

@@ -2,6 +2,7 @@
 ## 2.0 ramo
 ### 2.0.4-RC4
 * gli spots vengono automaticamente riprodotti prima dei video;
+* la durata dei video viene memorizzata nel database;
 * vengono utilizzare le API di Youtube.
 
 ### 2.0.3-RC3

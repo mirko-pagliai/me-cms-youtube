@@ -59,7 +59,7 @@ class Youtube {
 	/**
 	 * Gets information about a video
 	 * @param string $id Video ID
-	 * @return mixed information, otherwise FALSE
+	 * @return mixed Array of information, otherwise FALSE
 	 * @uses MeTools\Utility\Xml::fromFile()
 	 */
 	public function getInfo($id) {
@@ -67,9 +67,19 @@ class Youtube {
 		$url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description),contentDetails(duration))';
 		$info = Xml::fromFile(sprintf($url, $id, Configure::read('Youtube.key')));
 				
-		if(!empty($info['items'][0]['snippet'] && !empty($info['items'][0]['contentDetails'])))
-			return am($info['items'][0]['snippet'], $info['items'][0]['contentDetails']);
-		else
+		if(empty($info['items'][0]) || empty($info['items'][0]['snippet'] || empty($info['items'][0]['contentDetails'])))
 			return FALSE;
+		
+		$info = am($info['items'][0]['snippet'], $info['items'][0]['contentDetails']);
+				
+		preg_match('/PT(([0-9]+)M)?(([0-9]+)S)?/', $info['duration'], $matches);
+		
+		$mins = empty($matches[2]) ? "00" : sprintf("%02d", $matches[2]);
+		$secs = empty($matches[4]) ? "00" : sprintf("%02d", $matches[4]);
+		
+		$info['seconds'] = (int)$mins*60+(int)$secs;
+		$info['duration'] = sprintf('%s:%s', $mins, $secs);
+
+		return $info;
 	}
 }
