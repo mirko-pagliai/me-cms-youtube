@@ -70,6 +70,6 @@ class Youtube {
 		if(!empty($info['items'][0]['snippet'] && !empty($info['items'][0]['contentDetails'])))
 			return am($info['items'][0]['snippet'], $info['items'][0]['contentDetails']);
 		else
-			return FALSE
+			return FALSE;
 	}
 }
