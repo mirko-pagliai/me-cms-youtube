@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.0 branch
+### 2.0.4-RC4
+* spots are automatically played before video;
+* the Youtube API are used now.
+
 ### 2.0.3-RC3
 * in the admin panel, some views have been linked together;
 * fixed the title of some actions.

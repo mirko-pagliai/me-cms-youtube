@@ -22,6 +22,8 @@
  */
 ?>
 
+<?= $this->Html->js('MeYoutube.video.min', ['block' => 'script_bottom']) ?>
+
 <div class="video-container content-container clearfix">
 	<div class="content-header">
 		<?php
@@ -50,25 +52,14 @@
 		</div>
 	</div>
 	<div class="content-text">
-		<?php
-			//Sets the video source
-			$src = sprintf('https://www.youtube.com/embed/%s?modestbranding=1&rel=0&color=white&theme=light', $video->youtube_id);
-
-			//Adds the autoplay
-			if(!empty($autoplay))
-				$src = sprintf('%s&autoplay=1', $src);
-
-			echo $this->Html->div('embed-responsive embed-responsive-16by9 margin-20', 
-				$this->Html->iframe($src, [
-					'class'				=> 'embed-responsive-item',
-					'allowfullscreen'	=> TRUE,
-					'type'				=> 'text/html'
-				])
-			);
-
-			if(!empty($video->description))
-				echo $video->description;
-		?>
+		<div class="embed-responsive embed-responsive-16by9 margin-20">
+			<?= $this->Html->div(NULL, '', [
+				'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
+				'data-id'		=> $video->youtube_id,
+				'data-spot'		=> empty($video->spot_id) ? NULL : $video->spot_id,
+				'id'			=> 'player'
+			]) ?>
+		</div>
 	</div>
 	<?php
 		if(config('video.show.shareaholic') && config('shareaholic.app_id'))
