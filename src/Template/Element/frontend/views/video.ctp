@@ -52,7 +52,8 @@
 		</div>
 	</div>
 	<div class="content-text">
-		<div class="embed-responsive embed-responsive-16by9 margin-20">
+		<div class="embed-responsive embed-responsive-16by9 margin-20 relative">
+			<div id="skip-to-video"><?= __d('me_youtube', 'Skip to the video') ?></div>
 			<?= $this->Html->div(NULL, '', [
 				'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
 				'data-id'		=> $video->youtube_id,

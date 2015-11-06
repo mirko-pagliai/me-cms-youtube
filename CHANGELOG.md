@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.0 branch
+### 2.0.5-RC5
+* added "Skip to the video" button;
+* fixed little bugs.
+
 ### 2.0.4-RC4
 * spots are automatically played before video;
 * the video preview is shown when adding or editing a video;

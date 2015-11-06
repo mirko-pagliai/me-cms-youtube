@@ -1,5 +1,9 @@
 # 2.x ramo
 ## 2.0 ramo
+### 2.0.5-RC5
+* aggiunto il bottone "Vai al video";
+* risolti piccoli bug.
+
 ### 2.0.4-RC4
 * gli spots vengono automaticamente riprodotti prima dei video;
 * l'anteprima del video viene mostrata quando si aggiunge o si modifica un video;

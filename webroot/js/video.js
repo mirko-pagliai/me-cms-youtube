@@ -13,6 +13,9 @@ if($('#player').data('spot') !== undefined) {
 else
 	var firstVideo = $('#player').data('id');
 
+//"Skip to the video" button
+var skipToVideo = $('#skip-to-video');
+
 //See https://developers.google.com/youtube/iframe_api_reference#Getting_Started
 //Loads the IFrame Player API code asynchronously
 var tag = document.createElement('script');
@@ -34,19 +37,42 @@ function onYouTubeIframeAPIReady() {
 			showinfo: 0
 		},
 		events: {
+			'onReady': onPlayerReady,
 			'onStateChange': onPlayerStateChange
 		}
 	});
+}
+
+//The API will call this function when the video player is ready.
+function onPlayerReady(event) {
+	//Shows the "Skip to the video" button
+	if(secondVideo !== undefined)
+		skipToVideo.show();
 }
 
 //The API calls this function when the player's state changes
 //See https://developers.google.com/youtube/iframe_api_reference#Events
 var done = false;
 function onPlayerStateChange(event) {
-	//When the video is finished, if appends the second video, if it exists
-	if(event.data == YT.PlayerState.ENDED && secondVideo !== undefined && !done) {
+	//When the video is finished, plays the second video
+	if(event.data == YT.PlayerState.ENDED)
+		playNextVideo();
+}
+
+//Function to play the second video
+function playNextVideo() {
+	//Appends and plays the second video, if it exists
+	if(secondVideo !== undefined && !done) {
 		done = true;
 		//See https://developers.google.com/youtube/iframe_api_reference#loadVideoById
 		player.loadVideoById(secondVideo, 0);
+
+		//Removes the "Skip to the video" button
+		skipToVideo.remove();
 	}
 }
+
+//On click on the "Skip to the video" butto, plays the second video
+skipToVideo.click(function() {
+	playNextVideo();
+});
