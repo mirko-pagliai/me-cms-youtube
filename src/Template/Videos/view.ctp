@@ -31,6 +31,6 @@
 	}
 ?>
 
-<div class="posts view">
+<div class="videos view">
 	<?= $this->element('frontend'.DS.'views'.DS.'video', compact('video')); ?>
 </div>
