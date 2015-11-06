@@ -65,7 +65,7 @@ class VideosCategoriesController extends AppController {
 	
 	/**
      * Lists videos categories
-	 * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
+	 * @uses MeCms\Model\Table\VideosCategoriesTable::getTreeList()
      */
     public function index() {
 		$categories = $this->VideosCategories->find('all')
