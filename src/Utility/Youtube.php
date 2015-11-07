@@ -65,7 +65,7 @@ class Youtube {
 	public static function getInfo($id) {
 		//See https://developers.google.com/youtube/v3/getting-started#partial
 		$url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
-		$info = Xml::fromFile(sprintf($url, $id, Configure::read('Youtube.key')));
+		$info = Xml::fromFile(sprintf($url, $id, config('Youtube.key')));
 				
 		if(empty($info['items'][0]) || empty($info['items'][0]['snippet']) || empty($info['items'][0]['contentDetails']))
 			return FALSE;
