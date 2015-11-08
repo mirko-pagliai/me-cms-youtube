@@ -33,43 +33,46 @@
 	
 	<?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
 		<fieldset>
-			<?php
-				echo $this->Form->legend(__d('me_cms', 'Filter'));
-				echo $this->Form->input('title', [
-					'default'		=> $this->request->query('title'),
-					'placeholder'	=> __d('me_cms', 'title'),
-					'size'			=> 16
-				]);
-				echo $this->Form->input('active', [
-					'default'	=> $this->request->query('active'),
-					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
-					'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')]
-				]);
-				echo $this->Form->input('user', [
-					'default'	=> $this->request->query('user'),
-					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all users'))
-				]);
-				echo $this->Form->input('category', [
-					'default'	=> $this->request->query('category'),
-					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all categories'))
-				]);
-				echo $this->Form->input('priority', [
-					'default'	=> $this->request->query('priority'),
-					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all priorities'))
-				]);
-				echo $this->Form->datepicker('created', [
-					'data-date-format'	=> 'YYYY-MM',
-					'default'			=> $this->request->query('created'),
-					'placeholder'		=> __d('me_cms', 'month'),
-					'size'				=> 5
-				]);
-				echo $this->Form->input('spot', [
-					'default'	=> $this->request->query('spot'),
-					'label'		=> sprintf('%s?', __d('me_youtube', 'Spot')),
-					'type'		=> 'checkbox'
-				]);
-				echo $this->Form->submit(NULL, ['icon' => 'search']);
-			?>
+			<legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
+			<div>
+				<?php
+					echo $this->Form->legend(__d('me_cms', 'Filter'));
+					echo $this->Form->input('title', [
+						'default'		=> $this->request->query('title'),
+						'placeholder'	=> __d('me_cms', 'title'),
+						'size'			=> 16
+					]);
+					echo $this->Form->input('active', [
+						'default'	=> $this->request->query('active'),
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
+						'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')]
+					]);
+					echo $this->Form->input('user', [
+						'default'	=> $this->request->query('user'),
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all users'))
+					]);
+					echo $this->Form->input('category', [
+						'default'	=> $this->request->query('category'),
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all categories'))
+					]);
+					echo $this->Form->input('priority', [
+						'default'	=> $this->request->query('priority'),
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all priorities'))
+					]);
+					echo $this->Form->datepicker('created', [
+						'data-date-format'	=> 'YYYY-MM',
+						'default'			=> $this->request->query('created'),
+						'placeholder'		=> __d('me_cms', 'month'),
+						'size'				=> 5
+					]);
+					echo $this->Form->input('spot', [
+						'default'	=> $this->request->query('spot'),
+						'label'		=> sprintf('%s?', __d('me_youtube', 'Spot')),
+						'type'		=> 'checkbox'
+					]);
+					echo $this->Form->submit(NULL, ['icon' => 'search']);
+				?>
+			</div>
 		</fieldset>
 	<?= $this->Form->end() ?>
 	
@@ -146,7 +149,11 @@
 						?>
 					</td>
 					<td class="min-width text-center">
-						<?= $video->created->i18nFormat(config('main.datetime.long')) ?>
+						<div class="hidden-xs"><?= $video->created->i18nFormat(config('main.datetime.long')) ?></div>
+						<div class="visible-xs">
+							<div><?= $video->created->i18nFormat(config('main.date.short')) ?></div>
+							<div><?= $video->created->i18nFormat(config('main.time.short')) ?></div>
+						</div>
 					</td>
 					<td class="min-width text-center">
 						<?php

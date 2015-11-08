@@ -1,4 +1,8 @@
 # 2.x ramo
+## 2.1 ramo
+### 2.1.1
+* piccoli aggiustamenti per MeCms 2.1.2.
+
 ## 2.0 ramo
 ### 2.0.5-RC5
 * aggiunto il bottone "Vai al video";
