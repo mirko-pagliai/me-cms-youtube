@@ -81,7 +81,7 @@
 				<th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('category_id', __d('me_cms', 'Category')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('User.full_name', __d('me_cms', 'Author')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('seconds', __d('me_youtube', 'Duration')) ?></th>
+				<th class="text-center hidden-xs"><?= $this->Paginator->sort('seconds', __d('me_youtube', 'Duration')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
 			</tr>
@@ -126,7 +126,7 @@
 					<td class="text-center">
 						<?= $this->Html->link($video->user->full_name, ['?' => ['user' => $video->user->id]], ['title' => __d('me_cms', 'View items that belong to this user')]) ?>
 					</td>
-					<td class="min-width text-center">
+					<td class="min-width text-center hidden-xs">
 						<?= empty($video->duration) ? '00:00' : $video->duration ?>
 					</td>
 					<td class="min-width text-center">
