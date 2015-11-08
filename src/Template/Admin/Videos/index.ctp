@@ -36,7 +36,6 @@
 			<legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
 			<div>
 				<?php
-					echo $this->Form->legend(__d('me_cms', 'Filter'));
 					echo $this->Form->input('title', [
 						'default'		=> $this->request->query('title'),
 						'placeholder'	=> __d('me_cms', 'title'),
