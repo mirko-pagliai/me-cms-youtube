@@ -85,7 +85,6 @@
 				<th class="text-center"><?= $this->Paginator->sort('seconds', __d('me_youtube', 'Duration')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('is_spot', __d('me_youtube', 'Spot')) ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -94,6 +93,10 @@
 					<td>
 						<?php
 							$title = $this->Html->link($video->title, ['action' => 'edit', $video->id]);
+							
+							//If the video is a spot
+							if($video->is_spot)
+								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'text-success']));
 						
 							//If the video is not active (it's a draft)
 							if(!$video->active)
@@ -154,12 +157,6 @@
 							<div><?= $video->created->i18nFormat(config('main.date.short')) ?></div>
 							<div><?= $video->created->i18nFormat(config('main.time.short')) ?></div>
 						</div>
-					</td>
-					<td class="min-width text-center">
-						<?php
-							if($video->is_spot)
-								echo $this->Html->badge(NULL, ['class' => 'priority-normal', 'icon' => 'check', 'tooltip' => __d('me_youtube', 'This video is a spot')]);
-						?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
