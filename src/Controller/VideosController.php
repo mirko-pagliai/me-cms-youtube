@@ -169,6 +169,8 @@ class VideosController extends AppController {
 			->limit(config('frontend.records_for_rss'))
 			->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
 			->cache('rss', 'videos'));
+		
+		$this->viewBuilder()->layout('frontend');
 	}
 	
 	/**
