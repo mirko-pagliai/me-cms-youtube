@@ -1,5 +1,15 @@
 # 2.x branch
+## 2.1 branch
+### 2.1.1
+* fixed a serious bug when trying to re-sort the results of paginated records;
+* small fixes for MeCms 2.1.2;
+* small improvements for display on mobile devices.
+
 ## 2.0 branch
+### 2.0.5-RC5
+* added "Skip to the video" button;
+* fixed little bugs.
+
 ### 2.0.4-RC4
 * spots are automatically played before video;
 * the video preview is shown when adding or editing a video;

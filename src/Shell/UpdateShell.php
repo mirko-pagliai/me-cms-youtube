@@ -50,9 +50,6 @@ class UpdateShell extends BaseShell {
 
 			$video->duration = $data['duration'];
 			$video->seconds = $data['seconds'];
-			
-			
-			$this->out([$video->id, $data['duration'], $data['seconds']]);
 
 			$this->Videos->query()->update()
 				->set(['duration' => $data['duration'], 'seconds' => $data['seconds']])

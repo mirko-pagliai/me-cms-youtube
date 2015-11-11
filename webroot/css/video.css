@@ -4,6 +4,9 @@
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  */
+/* -------------------------------- */
+/*			Video preview			*/
+/* -------------------------------- */
 /* Video preview */
 .video-preview {
     display: inline-block;
@@ -56,4 +59,26 @@
 	-webkit-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
+}
+
+/* -------------------------------- */
+/*	"Skip to the video" button		*/
+/* -------------------------------- */
+#skip-to-video {
+	background: rgba(255, 255, 255, .66);
+	box-shadow:  0 0 5px 0 rgba(255, 255, 255, .75);
+	border: 1px solid #000;
+	color: #000;
+	cursor: pointer;
+	display: none;
+	font-size: 18px;
+	left: 50%;
+	padding: 6px 10px;
+	position: absolute;
+	top: 7%;
+	z-index: 9999;
+	/* Horizontal align: middle */
+	-webkit-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	transform: translateX(-50%);
 }

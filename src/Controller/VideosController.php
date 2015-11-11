@@ -141,7 +141,7 @@ class VideosController extends AppController {
 			->first();
 		
 		//If requested, gets the ID of a spot and adds it to the video
-		if(config('video.show.spot')) {
+		if(config('video.spot')) {
 			$spot = $this->Videos->getRandomSpots();
 			$video->spot_id = $spot[0]->youtube_id;
 		}

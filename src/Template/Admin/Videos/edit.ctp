@@ -87,6 +87,7 @@
 				'readonly'	=> TRUE,
 				'type'		=> 'text'
 			]);
+			echo $this->Html->para(NULL, $this->Html->link(__d('me_youtube', 'Open on {0}', 'YouTube'), sprintf('http://youtu.be/%s', $video->youtube_id), ['icon' => 'external-link', 'target' => '_blank']));
 			echo $this->Form->input('duration', [
 				'label'		=> __d('me_youtube', 'Duration'),
 				'readonly'	=> TRUE

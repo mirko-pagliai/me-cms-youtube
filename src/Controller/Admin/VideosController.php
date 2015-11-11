@@ -93,6 +93,8 @@ class VideosController extends AppController {
      * Lists videos
      */
     public function index() {
+		$this->paginate['order'] = ['Videos.created' => 'DESC'];
+		
 		$this->set('videos', $this->paginate(
 			$this->Videos->find()
 				->contain([
@@ -101,7 +103,6 @@ class VideosController extends AppController {
 				])
 				->select(['id', 'title', 'priority', 'active', 'is_spot', 'duration', 'seconds', 'created'])
 				->where($this->Videos->fromFilter($this->request->query))
-				->order(['Videos.created' => 'DESC'])
 		));
     }
 

@@ -39,7 +39,7 @@ class Youtube {
 	 * @param string $url Video url
 	 * @return mixed Video ID or FALSE
 	 */
-	public function getId($url) {
+	public static function getId($url) {
 		if(preg_match('/youtube\.com/', $url)) {
 			$url = parse_url($url);
 			
@@ -62,12 +62,12 @@ class Youtube {
 	 * @return mixed Array of information, otherwise FALSE
 	 * @uses MeTools\Utility\Xml::fromFile()
 	 */
-	public function getInfo($id) {
+	public static function getInfo($id) {
 		//See https://developers.google.com/youtube/v3/getting-started#partial
 		$url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
-		$info = Xml::fromFile(sprintf($url, $id, Configure::read('Youtube.key')));
+		$info = Xml::fromFile(sprintf($url, $id, config('Youtube.key')));
 				
-		if(empty($info['items'][0]) || empty($info['items'][0]['snippet'] || empty($info['items'][0]['contentDetails'])))
+		if(empty($info['items'][0]) || empty($info['items'][0]['snippet']) || empty($info['items'][0]['contentDetails']))
 			return FALSE;
 				
 		$info = am([
