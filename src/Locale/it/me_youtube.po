@@ -4,8 +4,8 @@
 # Mirko Pagliai <mirko.pagliai.it>, 2015.
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-11-06 16:52+0000\n"
-"PO-Revision-Date: 2015-11-06 17:53+0100\n"
+"POT-Creation-Date: 2015-11-11 12:37+0000\n"
+"PO-Revision-Date: 2015-11-11 13:48+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -42,27 +42,27 @@ msgstr ""
 msgid "Before you can manage videos, you have to create at least a category"
 msgstr "Prima di gestire i video, devi creare almeno una categoria"
 
-#: Controller/Admin/VideosController.php:118
+#: Controller/Admin/VideosController.php:119
 msgid "This is not a {0} video"
 msgstr "Questo non è un video di {0}"
 
-#: Controller/Admin/VideosController.php:135;163
+#: Controller/Admin/VideosController.php:136;164
 msgid "The video has been saved"
 msgstr "Il video è stato salvato"
 
-#: Controller/Admin/VideosController.php:139;167
+#: Controller/Admin/VideosController.php:140;168
 msgid "The video could not be saved"
 msgstr "Il video non può essere salvato"
 
-#: Controller/Admin/VideosController.php:183
+#: Controller/Admin/VideosController.php:184
 msgid "The video has been deleted"
 msgstr "Il video è stato cancellato"
 
-#: Controller/Admin/VideosController.php:185
+#: Controller/Admin/VideosController.php:186
 msgid "The video could not be deleted"
 msgstr "Il video non può essere cancellato"
 
-#: Template/Admin/Videos/add.ctp:26;31;121
+#: Template/Admin/Videos/add.ctp:26;31;122
 #: View/Helper/MenuDefaultHelper.php:50
 msgid "Add video"
 msgstr "Aggiungi video"
@@ -96,13 +96,18 @@ msgstr "Anteprima"
 msgid "{0} ID"
 msgstr "{0} ID"
 
-#: Template/Admin/Videos/add.ctp:110
-#: Template/Admin/Videos/edit.ctp:91
-#: Template/Admin/Videos/index.ctp:82
+#: Template/Admin/Videos/add.ctp:109
+#: Template/Admin/Videos/edit.ctp:90
+msgid "Open on {0}"
+msgstr "Apri su {0}"
+
+#: Template/Admin/Videos/add.ctp:111
+#: Template/Admin/Videos/edit.ctp:92
+#: Template/Admin/Videos/index.ctp:84
 msgid "Duration"
 msgstr "Durata"
 
-#: Template/Admin/Videos/edit.ctp:26;31;102
+#: Template/Admin/Videos/edit.ctp:26;31;103
 msgid "Edit video"
 msgstr "Modifica video"
 
@@ -113,13 +118,9 @@ msgstr "Modifica video"
 msgid "Videos"
 msgstr "Video"
 
-#: Template/Admin/Videos/index.ctp:68;85
+#: Template/Admin/Videos/index.ctp:69;98
 msgid "Spot"
 msgstr "Spot"
-
-#: Template/Admin/Videos/index.ctp:154
-msgid "This video is a spot"
-msgstr "Questo video è uno spot"
 
 #: Template/Admin/VideosCategories/add.ctp:26;31;60
 msgid "Add videos category"
@@ -147,6 +148,10 @@ msgstr "Ultimo video"
 #: Template/Videos/search.ctp:25;29
 msgid "Search videos"
 msgstr "Cerca video"
+
+#: Template/Element/frontend/views/video.ctp:56
+msgid "Skip to the video"
+msgstr "Salta al video"
 
 #: Template/Videos/index.ctp:37
 msgid "Videos of today"
