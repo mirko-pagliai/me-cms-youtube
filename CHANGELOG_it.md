@@ -2,7 +2,8 @@
 ## 2.1 ramo
 ### 2.1.1
 * risolto un grave bug quando si cercare di ordinare i risultati di record impaginati;
-* piccoli aggiustamenti per MeCms 2.1.2.
+* piccoli aggiustamenti per MeCms 2.1.2;
+* piccoli miglioramenti per la visualizzazione su dispositivi mobili.
 
 ## 2.0 ramo
 ### 2.0.5-RC5
