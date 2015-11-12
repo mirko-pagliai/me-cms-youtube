@@ -91,19 +91,18 @@ class VideosController extends AppController {
 	
 	/**
      * Lists videos
+	 * @uses MeYoutube\Model\Table\VideosTable::queryFromFilter()
      */
     public function index() {
+		$query =$this->Videos->find()
+			->contain([
+				'Categories'	=> ['fields' => ['id', 'title']],
+				'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
+			])
+			->select(['id', 'title', 'priority', 'active', 'is_spot', 'duration', 'seconds', 'created']);
+				
 		$this->paginate['order'] = ['Videos.created' => 'DESC'];
-		
-		$this->set('videos', $this->paginate(
-			$this->Videos->find()
-				->contain([
-					'Categories'	=> ['fields' => ['id', 'title']],
-					'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
-				])
-				->select(['id', 'title', 'priority', 'active', 'is_spot', 'duration', 'seconds', 'created'])
-				->where($this->Videos->fromFilter($this->request->query))
-		));
+		$this->set('videos', $this->paginate($this->Videos->queryFromFilter($query, $this->request->query)));
     }
 
     /**

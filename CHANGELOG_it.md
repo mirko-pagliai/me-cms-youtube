@@ -1,5 +1,8 @@
 # 2.x ramo
 ## 2.1 ramo
+### 2.1.2
+* migliorate le query per i filtri.
+
 ### 2.1.1
 * risolto un grave bug quando si cercare di ordinare i risultati di record impaginati;
 * piccoli aggiustamenti per MeCms 2.1.2;

@@ -95,33 +95,6 @@ class VideosTable extends AppTable {
 	}
 	
 	/**
-	 * Gets conditions from a filter form
-	 * @param array $query Query (`$this->request->query`)
-	 * @return array Conditions
-	 * @uses MeCms\Model\Table\AppTable::fromFilter()
-	 */
-	public function fromFilter(array $query) {
-		if(empty($query))
-			return [];
-		
-		$conditions = parent::fromFilter($query);
-		
-		//"User" (author) field
-		if(!empty($query['user']))
-			$conditions[sprintf('%s.user_id', $this->alias())] = $query['user'];
-		
-		//"Category" field
-		if(!empty($query['category']))
-			$conditions[sprintf('%s.category_id', $this->alias())] = $query['category'];
-		
-		//"Is spot" field
-		if(!empty($query['spot']))
-			$conditions[sprintf('%s.is_spot', $this->alias())] = TRUE;
-		
-		return empty($conditions) ? [] : $conditions;
-	}
-	
-	/**
 	 * Gets from cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
 	 * @return int Timestamp
@@ -170,6 +143,23 @@ class VideosTable extends AppTable {
             'className' => 'MeCms.Users'
         ]);
     }
+	
+	/**
+	 * Build query from filter data
+	 * @param \Cake\ORM\Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return \Cake\ORM\Query $query Query object
+	 * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
+	 */
+	public function queryFromFilter($query, array $data = []) {
+		$query = parent::queryFromFilter($query, $data);
+		
+		//"Is spot?" field
+		if(!empty($data['spot']) && $data['spot'])
+			$query->where([sprintf('%s.is_spot', $this->alias()) => TRUE]);
+		
+		return $query;
+	}
 	
 	/**
 	 * Sets to cache the timestamp of the next record to be published.
