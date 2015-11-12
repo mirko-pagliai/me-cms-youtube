@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.2
-* improved queries for filters.
+* improved queries for filters;
+* fixed some bugs.
 
 ### 2.1.1
 * fixed a serious bug when trying to re-sort the results of paginated records;
