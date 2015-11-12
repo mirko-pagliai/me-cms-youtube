@@ -173,7 +173,7 @@ MeCms\Model\Table\AppTable
 		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.Model.html">Model</a>\<a href="namespace-MeYoutube.Model.Table.html">Table</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeYoutube.Model.Table.VideosTable.html#33-201" title="Go to source code">Table/VideosTable.php</a>
+			<b>Located at</b> <a href="source-class-MeYoutube.Model.Table.VideosTable.html#33-191" title="Go to source code">Table/VideosTable.php</a>
 		<br>
 	</div>
 
@@ -352,49 +352,6 @@ If the cache is not valid, it empties the cache.</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="fromFilter" id="_fromFilter">
-
-		<td class="attributes"><code>
-			 public 
-
-			array
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_fromFilter">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#97-122" title="Go to source code">fromFilter</a>( <span>array <var>$query</var></span> )</code>
-
-		<div class="description short">
-			<p>Gets conditions from a filter form</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Gets conditions from a filter form</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$query</var></dt>
-					<dd>Query (<code>$this-&gt;request-&gt;query</code>)</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					array<br>Conditions
-				</div>
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeCms\Model\Table\AppTable::fromFilter()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="getNextToBePublished" id="_getNextToBePublished">
 
 		<td class="attributes"><code>
@@ -407,7 +364,7 @@ If the cache is not valid, it empties the cache.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getNextToBePublished">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#124-132" title="Go to source code">getNextToBePublished</a>( )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#97-105" title="Go to source code">getNextToBePublished</a>( )</code>
 
 		<div class="description short">
 			<p>Gets from cache the timestamp of the next record to be published.
@@ -451,7 +408,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRandomSpots">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#134-152" title="Go to source code">getRandomSpots</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#107-125" title="Go to source code">getRandomSpots</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			<p>Gets random spots</p>
@@ -494,7 +451,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#154-172" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#127-145" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
 
 		<div class="description short">
 			<p>Initialize method</p>
@@ -517,6 +474,55 @@ This value can be used to check if the cache is valid</p>
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="queryFromFilter" id="_queryFromFilter">
+
+		<td class="attributes"><code>
+			 public 
+
+			Cake\ORM\Query
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_queryFromFilter">#</a>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#147-162" title="Go to source code">queryFromFilter</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$data</var> = []</span> )</code>
+
+		<div class="description short">
+			<p>Build query from filter data</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Build query from filter data</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$query</var></dt>
+					<dd>Query object</dd>
+					<dt><var>$data</var></dt>
+					<dd>Filter data ($this->request->query)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					Cake\ORM\Query<br>$query Query object
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						\MeCms\Model\Table\AppTable::queryFromFilter()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeYoutube.Controller.Admin.VideosController.html#_index">MeYoutube\Controller\Admin\VideosController::index()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="setNextToBePublished" id="_setNextToBePublished">
 
 		<td class="attributes"><code>
@@ -529,7 +535,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setNextToBePublished">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#174-191" title="Go to source code">setNextToBePublished</a>( )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#164-181" title="Go to source code">setNextToBePublished</a>( )</code>
 
 		<div class="description short">
 			<p>Sets to cache the timestamp of the next record to be published.
@@ -575,7 +581,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_validationDefault">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#193-200" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#183-190" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
 
 		<div class="description short">
 			<p>Default validation rules</p>
