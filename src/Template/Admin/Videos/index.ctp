@@ -65,9 +65,10 @@
 						'size'				=> 5
 					]);
 					echo $this->Form->input('spot', [
-						'default'	=> $this->request->query('spot'),
-						'label'		=> sprintf('%s?', __d('me_youtube', 'Spot')),
-						'type'		=> 'checkbox'
+						'default'		=> $this->request->query('spot'),
+						'hiddenField'	=> FALSE,
+						'label'			=> sprintf('%s?', __d('me_youtube', 'Spot')),
+						'type'			=> 'checkbox'
 					]);
 					echo $this->Form->submit(NULL, ['icon' => 'search']);
 				?>
