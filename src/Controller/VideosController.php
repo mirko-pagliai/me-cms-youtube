@@ -170,7 +170,7 @@ class VideosController extends AppController {
 			->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
 			->cache('rss', 'videos'));
 		
-		$this->viewBuilder()->layout('frontend');
+		$this->viewBuilder()->layout('MeCms.frontend');
 	}
 	
 	/**
