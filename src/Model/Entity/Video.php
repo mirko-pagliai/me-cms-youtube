@@ -25,9 +25,36 @@ namespace MeYoutube\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Video entity
+ * YoutubeVideo entity
+ * @property int $id
+ * @property int $user_id
+ * @property \MeYoutube\Model\Entity\User $user
+ * @property string $youtube_id
+ * @property \MeYoutube\Model\Entity\Youtube $youtube
+ * @property int $category_id
+ * @property \MeYoutube\Model\Entity\Category $category
+ * @property string $title
+ * @property string $subtitle
+ * @property string $description
+ * @property int $priority
+ * @property bool $active
+ * @property bool $is_spot
+ * @property string $duration
+ * @property int $seconds
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  */
 class Video extends Entity {
+    /**
+     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * @var array
+     */
+    protected $_accessible = [
+        '*' => TRUE,
+        'id' => FALSE,
+		'modified' => FALSE
+    ];
+	
 	/**
 	 * Virtual fields that should be exposed
 	 * @var array

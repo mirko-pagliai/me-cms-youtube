@@ -32,6 +32,8 @@ use MeYoutube\Model\Entity\Video;
 
 /**
  * Videos model
+ * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \Cake\ORM\Association\BelongsTo $Categories
  */
 class VideosTable extends AppTable {
 	/**
@@ -126,22 +128,28 @@ class VideosTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('youtube_videos');
         $this->displayField('title');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
-        $this->addBehavior('CounterCache', ['Categories' => ['video_count']]);
+		
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
+            'joinType' => 'INNER',
             'className' => 'MeYoutube.VideosCategories'
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
+            'joinType' => 'INNER',
             'className' => 'MeCms.Users'
         ]);
+		
+        $this->addBehavior('CounterCache', ['Categories' => ['video_count']]);
     }
 	
 	/**

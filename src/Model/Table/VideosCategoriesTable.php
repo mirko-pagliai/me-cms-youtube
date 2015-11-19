@@ -31,6 +31,8 @@ use MeYoutube\Model\Entity\VideosCategory;
 
 /**
  * VideosCategories model
+ * @property \Cake\ORM\Association\BelongsTo $Parents
+ * @property \Cake\ORM\Association\HasMany $Childs
  */
 class VideosCategoriesTable extends AppTable {
 	/**
@@ -99,13 +101,15 @@ class VideosCategoriesTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('youtube_videos_categories');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('MeCms.Tree');
+		
         $this->belongsTo('Parents', [
             'className' => 'MeYoutube.VideosCategories',
             'foreignKey' => 'parent_id'
@@ -114,10 +118,8 @@ class VideosCategoriesTable extends AppTable {
             'className' => 'MeYoutube.VideosCategories',
             'foreignKey' => 'parent_id'
         ]);
-        $this->hasMany('Videos', [
-            'className' => 'MeYoutube.Videos',
-            'foreignKey' => 'category_id'
-        ]);
+		
+        $this->addBehavior('MeCms.Tree');
     }
 
     /**
