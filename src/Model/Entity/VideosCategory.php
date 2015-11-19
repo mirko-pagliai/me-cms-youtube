@@ -37,7 +37,7 @@ use Cake\ORM\Entity;
  * @property int $video_count
  * @property \MeYoutube\Model\Entity\ChildYoutubeVideosCategory[] $child_youtube_videos_categories
  */
-class YoutubeVideosCategory extends Entity {
+class VideosCategory extends Entity {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
