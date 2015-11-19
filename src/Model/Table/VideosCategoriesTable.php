@@ -118,6 +118,10 @@ class VideosCategoriesTable extends AppTable {
             'className' => 'MeYoutube.VideosCategories',
             'foreignKey' => 'parent_id'
         ]);
+		 $this->hasMany('Videos', [
+            'className' => 'MeYoutube.Videos',
+            'foreignKey' => 'category_id'
+        ]);
 		
         $this->addBehavior('MeCms.Tree');
     }
