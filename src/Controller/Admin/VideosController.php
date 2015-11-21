@@ -104,7 +104,7 @@ class VideosController extends AppController {
 		$this->paginate['order'] = ['created' => 'DESC'];
 		$this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'Users.first_name', 'seconds', 'priority', 'created'];
 		
-		$this->set('videos', $this->paginate($this->Videos->queryFromFilter(Query $query, $this->request->query)));
+		$this->set('videos', $this->paginate($this->Videos->queryFromFilter($query, $this->request->query)));
     }
 
     /**
