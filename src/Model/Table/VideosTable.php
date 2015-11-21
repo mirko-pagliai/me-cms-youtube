@@ -37,15 +37,21 @@ use MeYoutube\Model\Entity\Video;
  */
 class VideosTable extends AppTable {
 	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'videos';
+	
+	/**
 	 * Called after an entity has been deleted
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterDelete()
 	 * @uses setNextToBePublished()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'videos');	
+		parent::afterDelete($event, $entity, $options);
 		
 		//Sets the next video to be published
 		$this->setNextToBePublished();	
@@ -56,11 +62,11 @@ class VideosTable extends AppTable {
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterSave()
 	 * @uses setNextToBePublished()
 	 */
 	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'videos');
+		parent::afterSave($event, $entity, $options);
 		
 		//Sets the next video to be published
 		$this->setNextToBePublished();
