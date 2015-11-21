@@ -107,22 +107,24 @@ class VideosTable extends AppTable {
 	 * This value can be used to check if the cache is valid
 	 * @return int Timestamp
 	 * @see checkIfCacheIsValid()
+	 * @uses $cache
 	 */
 	public function getNextToBePublished() {
-		return Cache::read('next_to_be_published', 'videos');
+		return Cache::read('next_to_be_published', $this->cache);
 	}
 	
 	/**
 	 * Gets random spots
 	 * @param int $limit Limit
 	 * @return array Spots
+	 * @uses $cache
 	 */
 	public function getRandomSpots($limit = 1) {
 		//Gets all spots
 		$spots = $this->find('active')
 			->select('youtube_id')
 			->where(['is_spot' => TRUE])
-			->cache('all_spots', 'videos')
+			->cache('all_spots', $this->cache)
 			->toArray();
 		
 		//Shuffles
@@ -180,6 +182,7 @@ class VideosTable extends AppTable {
 	 * This value can be used to check if the cache is valid
 	 * @see getNextToBePublished()
 	 * @uses Cake\I18n\Time::toUnixString()
+	 * @uses $cache
 	 */
 	public function setNextToBePublished() {
 		$next = $this->find()
@@ -191,7 +194,7 @@ class VideosTable extends AppTable {
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), 'videos');
+		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), $this->cache);
 	}
 
     /**

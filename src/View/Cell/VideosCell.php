@@ -58,7 +58,7 @@ class VideosCell extends Cell {
 		$this->Videos->checkIfCacheIsValid();
 		
 		//Tries to get data from the cache
-		$categories = Cache::read($cache = 'widget_categories', 'videos');
+		$categories = Cache::read($cache = 'widget_categories', $this->Videos->cache);
 		
 		//If the data are not available from the cache
         if(empty($categories)) {
@@ -68,7 +68,7 @@ class VideosCell extends Cell {
 					->toArray() as $k => $category)
 				$categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->video_count);
 			
-            Cache::write($cache, $categories, 'videos');
+            Cache::write($cache, $categories, $this->Videos->cache);
 		}
 		
 		$this->set(compact('categories'));
@@ -92,7 +92,7 @@ class VideosCell extends Cell {
 			->select(['id', 'youtube_id', 'title', 'description'])
 			->limit($limit = empty($limit) ? 1 : $limit)
 			->order(['created' => 'DESC'])
-			->cache(sprintf('widget_latest_%d', $limit), 'videos')
+			->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache)
 			->toArray()
 		);
     }

@@ -43,7 +43,7 @@ class VideosController extends AppController {
 		$cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
-		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'videos'));
+		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
 		
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
@@ -59,7 +59,7 @@ class VideosController extends AppController {
 			)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'videos');
+			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
 		}
 		//Else, sets the paging parameter
 		else
@@ -87,7 +87,7 @@ class VideosController extends AppController {
 		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
-		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'videos'));
+		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
 		
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {		
@@ -108,7 +108,7 @@ class VideosController extends AppController {
 			)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'videos');
+			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
 		}
 		//Else, sets the paging parameter
 		else
@@ -137,7 +137,7 @@ class VideosController extends AppController {
 			])
 			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
-			->cache(sprintf('view_%s', md5($id)), 'videos')
+			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
 			->first();
 		
 		//If requested, gets the ID of a spot and adds it to the video
@@ -168,7 +168,7 @@ class VideosController extends AppController {
 			->where(['is_spot' => FALSE])
 			->limit(config('frontend.records_for_rss'))
 			->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-			->cache('rss', 'videos'));
+			->cache('rss', $this->Videos->cache));
 		
 		$this->viewBuilder()->layout('MeCms.frontend');
 	}
@@ -196,7 +196,7 @@ class VideosController extends AppController {
 					$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
 
 					//Tries to get data from the cache
-					list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'videos'));
+					list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
 
 					//If the data are not available from the cache
 					if(empty($videos) || empty($paging)) {
@@ -212,7 +212,7 @@ class VideosController extends AppController {
 						)->toArray();
 
 						//Writes on cache
-						Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'videos');
+						Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
 					}
 					//Else, sets the paging parameter
 					else

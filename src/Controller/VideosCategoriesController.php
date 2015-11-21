@@ -37,7 +37,7 @@ class VideosCategoriesController extends AppController {
 		$this->set('categories', $this->VideosCategories->find('active')
 			->select(['title', 'slug'])
 			->order(['title' => 'ASC'])
-			->cache('categories_index', 'videos')
+			->cache('categories_index', $this->VideosCategories->cache)
 			->all());
     }
 	
@@ -58,7 +58,7 @@ class VideosCategoriesController extends AppController {
 		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
-		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'videos'));
+		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->VideosCategories->cache));
 		
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
@@ -74,7 +74,7 @@ class VideosCategoriesController extends AppController {
 			)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'videos');
+			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->VideosCategories->cache);
 		}
 		//Else, sets the paging parameter
 		else
