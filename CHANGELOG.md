@@ -3,7 +3,8 @@
 ### 2.1.2
 * fixed bug for sorting some tables;
 * improved queries for filters;
-* fixed some bugs.
+* fixed some bugs;
+* small fixes for MeCms 2.1.3.
 
 ### 2.1.1
 * fixed a serious bug when trying to re-sort the results of paginated records;
