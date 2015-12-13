@@ -32,18 +32,26 @@ use MeYoutube\Model\Entity\Video;
 
 /**
  * Videos model
+ * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \Cake\ORM\Association\BelongsTo $Categories
  */
 class VideosTable extends AppTable {
+	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'videos';
+	
 	/**
 	 * Called after an entity has been deleted
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterDelete()
 	 * @uses setNextToBePublished()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'videos');	
+		parent::afterDelete($event, $entity, $options);
 		
 		//Sets the next video to be published
 		$this->setNextToBePublished();	
@@ -54,11 +62,11 @@ class VideosTable extends AppTable {
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterSave()
 	 * @uses setNextToBePublished()
 	 */
 	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'videos');
+		parent::afterSave($event, $entity, $options);
 		
 		//Sets the next video to be published
 		$this->setNextToBePublished();
@@ -95,53 +103,28 @@ class VideosTable extends AppTable {
 	}
 	
 	/**
-	 * Gets conditions from a filter form
-	 * @param array $query Query (`$this->request->query`)
-	 * @return array Conditions
-	 * @uses MeCms\Model\Table\AppTable::fromFilter()
-	 */
-	public function fromFilter(array $query) {
-		if(empty($query))
-			return [];
-		
-		$conditions = parent::fromFilter($query);
-		
-		//"User" (author) field
-		if(!empty($query['user']))
-			$conditions[sprintf('%s.user_id', $this->alias())] = $query['user'];
-		
-		//"Category" field
-		if(!empty($query['category']))
-			$conditions[sprintf('%s.category_id', $this->alias())] = $query['category'];
-		
-		//"Is spot" field
-		if(!empty($query['spot']))
-			$conditions[sprintf('%s.is_spot', $this->alias())] = TRUE;
-		
-		return empty($conditions) ? [] : $conditions;
-	}
-	
-	/**
 	 * Gets from cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
 	 * @return int Timestamp
 	 * @see checkIfCacheIsValid()
+	 * @uses $cache
 	 */
 	public function getNextToBePublished() {
-		return Cache::read('next_to_be_published', 'videos');
+		return Cache::read('next_to_be_published', $this->cache);
 	}
 	
 	/**
 	 * Gets random spots
 	 * @param int $limit Limit
 	 * @return array Spots
+	 * @uses $cache
 	 */
 	public function getRandomSpots($limit = 1) {
 		//Gets all spots
 		$spots = $this->find('active')
 			->select('youtube_id')
 			->where(['is_spot' => TRUE])
-			->cache('all_spots', 'videos')
+			->cache('all_spots', $this->cache)
 			->toArray();
 		
 		//Shuffles
@@ -153,29 +136,53 @@ class VideosTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('youtube_videos');
         $this->displayField('title');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
-        $this->addBehavior('CounterCache', ['Categories' => ['video_count']]);
+		
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
+            'joinType' => 'INNER',
             'className' => 'MeYoutube.VideosCategories'
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
+            'joinType' => 'INNER',
             'className' => 'MeCms.Users'
         ]);
+		
+        $this->addBehavior('CounterCache', ['Categories' => ['video_count']]);
     }
+	
+	/**
+	 * Build query from filter data
+	 * @param Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return Query $query Query object
+	 * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
+	 */
+	public function queryFromFilter(Query $query, array $data = []) {
+		$query = parent::queryFromFilter($query, $data);
+		
+		//"Is spot?" field
+		if(!empty($data['spot']) && $data['spot'])
+			$query->where([sprintf('%s.is_spot', $this->alias()) => TRUE]);
+		
+		return $query;
+	}
 	
 	/**
 	 * Sets to cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
 	 * @see getNextToBePublished()
 	 * @uses Cake\I18n\Time::toUnixString()
+	 * @uses $cache
 	 */
 	public function setNextToBePublished() {
 		$next = $this->find()
@@ -187,7 +194,7 @@ class VideosTable extends AppTable {
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), 'videos');
+		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), $this->cache);
 	}
 
     /**

@@ -25,8 +25,26 @@ namespace MeYoutube\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * VideosCategory entity
+ * YoutubeVideosCategory entity
+ * @property int $id
+ * @property int $parent_id
+ * @property \MeYoutube\Model\Entity\ParentYoutubeVideosCategory $parent_youtube_videos_category
+ * @property int $lft
+ * @property int $rght
+ * @property string $title
+ * @property string $slug
+ * @property string $description
+ * @property int $video_count
+ * @property \MeYoutube\Model\Entity\ChildYoutubeVideosCategory[] $child_youtube_videos_categories
  */
 class VideosCategory extends Entity {
-
+    /**
+     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * @var array
+     */
+    protected $_accessible = [
+        '*' => TRUE,
+        'id' => FALSE,
+		'video_count' => FALSE
+    ];
 }

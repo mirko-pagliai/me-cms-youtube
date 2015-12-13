@@ -65,9 +65,10 @@
 						'size'				=> 5
 					]);
 					echo $this->Form->input('spot', [
-						'default'	=> $this->request->query('spot'),
-						'label'		=> sprintf('%s?', __d('me_youtube', 'Spot')),
-						'type'		=> 'checkbox'
+						'default'		=> $this->request->query('spot'),
+						'hiddenField'	=> FALSE,
+						'label'			=> sprintf('%s?', __d('me_youtube', 'Spot')),
+						'type'			=> 'checkbox'
 					]);
 					echo $this->Form->submit(NULL, ['icon' => 'search']);
 				?>
@@ -79,8 +80,8 @@
 		<thead>
 			<tr>
 				<th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('category_id', __d('me_cms', 'Category')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('User.full_name', __d('me_cms', 'Author')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('Categories.title', __d('me_cms', 'Category')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('Users.first_name', __d('me_cms', 'Author')) ?></th>
 				<th class="text-center hidden-xs"><?= $this->Paginator->sort('seconds', __d('me_youtube', 'Duration')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>

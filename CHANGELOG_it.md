@@ -1,5 +1,11 @@
 # 2.x ramo
 ## 2.1 ramo
+### 2.1.2
+* sistemato bug nell'ordinamento di alcune tabelle;
+* migliorate le query per i filtri;
+* sistemati alcuni bug;
+* piccoli aggiustamenti per MeCms 2.1.3.
+
 ### 2.1.1
 * risolto un grave bug quando si cercare di ordinare i risultati di record impaginati;
 * piccoli aggiustamenti per MeCms 2.1.2;

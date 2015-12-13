@@ -71,7 +71,6 @@ class VideosController extends AppController {
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeCms\Model\Table\AppTable::isOwnedBy()
 	 * @uses MeTools\Network\Request::isAction()
@@ -91,19 +90,20 @@ class VideosController extends AppController {
 	
 	/**
      * Lists videos
+	 * @uses MeYoutube\Model\Table\VideosTable::queryFromFilter()
      */
     public function index() {
-		$this->paginate['order'] = ['Videos.created' => 'DESC'];
+		$query =$this->Videos->find()
+			->contain([
+				'Categories'	=> ['fields' => ['id', 'title']],
+				'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
+			])
+			->select(['id', 'title', 'priority', 'active', 'is_spot', 'duration', 'seconds', 'created']);
 		
-		$this->set('videos', $this->paginate(
-			$this->Videos->find()
-				->contain([
-					'Categories'	=> ['fields' => ['id', 'title']],
-					'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
-				])
-				->select(['id', 'title', 'priority', 'active', 'is_spot', 'duration', 'seconds', 'created'])
-				->where($this->Videos->fromFilter($this->request->query))
-		));
+		$this->paginate['order'] = ['Videos.created' => 'DESC'];
+		$this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'Users.first_name', 'seconds', 'priority', 'Videos.created'];
+		
+		$this->set('videos', $this->paginate($this->Videos->queryFromFilter($query, $this->request->query)));
     }
 
     /**

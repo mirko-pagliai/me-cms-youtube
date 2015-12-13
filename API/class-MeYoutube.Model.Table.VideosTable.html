@@ -173,7 +173,7 @@ MeCms\Model\Table\AppTable
 		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.Model.html">Model</a>\<a href="namespace-MeYoutube.Model.Table.html">Table</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeYoutube.Model.Table.VideosTable.html#33-201" title="Go to source code">Table/VideosTable.php</a>
+			<b>Located at</b> <a href="source-class-MeYoutube.Model.Table.VideosTable.html#33-208" title="Go to source code">Table/VideosTable.php</a>
 		<br>
 	</div>
 
@@ -193,7 +193,7 @@ MeCms\Model\Table\AppTable
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterDelete">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#37-50" title="Go to source code">afterDelete</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#45-58" title="Go to source code">afterDelete</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after an entity has been deleted</p>
@@ -217,7 +217,7 @@ MeCms\Model\Table\AppTable
 
 				<h4>Uses</h4>
 				<div class="list">
-						Cake\Cache\Cache::clear()<br>
+						MeCms\Model\Table\AppTable::afterDelete()<br>
 						<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_setNextToBePublished">MeYoutube\Model\Table\VideosTable::setNextToBePublished()</a></code><br>
 				</div>
 
@@ -237,7 +237,7 @@ MeCms\Model\Table\AppTable
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterSave">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#52-65" title="Go to source code">afterSave</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#60-73" title="Go to source code">afterSave</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after an entity is saved.</p>
@@ -261,7 +261,7 @@ MeCms\Model\Table\AppTable
 
 				<h4>Uses</h4>
 				<div class="list">
-						Cake\Cache\Cache::clear()<br>
+						MeCms\Model\Table\AppTable::afterSave()<br>
 						<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_setNextToBePublished">MeYoutube\Model\Table\VideosTable::setNextToBePublished()</a></code><br>
 				</div>
 
@@ -281,7 +281,7 @@ MeCms\Model\Table\AppTable
 
 		<td class="name"><div>
 		<a class="anchor" href="#_buildRules">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#67-76" title="Go to source code">buildRules</a>( <span>Cake\ORM\RulesChecker <var>$rules</var></span> )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#75-84" title="Go to source code">buildRules</a>( <span>Cake\ORM\RulesChecker <var>$rules</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns a rules checker object that will be used for validating application integrity</p>
@@ -320,7 +320,7 @@ MeCms\Model\Table\AppTable
 
 		<td class="name"><div>
 		<a class="anchor" href="#_checkIfCacheIsValid">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#78-95" title="Go to source code">checkIfCacheIsValid</a>( )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#86-103" title="Go to source code">checkIfCacheIsValid</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the cache is valid.
@@ -352,49 +352,6 @@ If the cache is not valid, it empties the cache.</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="fromFilter" id="_fromFilter">
-
-		<td class="attributes"><code>
-			 public 
-
-			array
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_fromFilter">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#97-122" title="Go to source code">fromFilter</a>( <span>array <var>$query</var></span> )</code>
-
-		<div class="description short">
-			<p>Gets conditions from a filter form</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Gets conditions from a filter form</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$query</var></dt>
-					<dd>Query (<code>$this-&gt;request-&gt;query</code>)</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					array<br>Conditions
-				</div>
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeCms\Model\Table\AppTable::fromFilter()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="getNextToBePublished" id="_getNextToBePublished">
 
 		<td class="attributes"><code>
@@ -407,7 +364,7 @@ If the cache is not valid, it empties the cache.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getNextToBePublished">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#124-132" title="Go to source code">getNextToBePublished</a>( )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#105-114" title="Go to source code">getNextToBePublished</a>( )</code>
 
 		<div class="description short">
 			<p>Gets from cache the timestamp of the next record to be published.
@@ -430,6 +387,10 @@ This value can be used to check if the cache is valid</p>
 				<div class="list">
 						<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_checkIfCacheIsValid">MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()</a></code><br>
 				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<br>
+				</div>
 				<h4>Used by</h4>
 				<div class="list">
 						<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_checkIfCacheIsValid">MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()</a></code><br>
@@ -451,7 +412,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRandomSpots">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#134-152" title="Go to source code">getRandomSpots</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#116-135" title="Go to source code">getRandomSpots</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			<p>Gets random spots</p>
@@ -473,6 +434,10 @@ This value can be used to check if the cache is valid</p>
 				</div>
 
 
+				<h4>Uses</h4>
+				<div class="list">
+						<br>
+				</div>
 				<h4>Used by</h4>
 				<div class="list">
 						<code><a href="class-MeYoutube.Controller.VideosController.html#_view">MeYoutube\Controller\VideosController::view()</a></code><br>
@@ -494,7 +459,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#154-172" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#137-161" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
 
 		<div class="description short">
 			<p>Initialize method</p>
@@ -507,11 +472,60 @@ This value can be used to check if the cache is valid</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$config</var></dt>
-					<dd>The table configuration</dd>
+					<dd>The configuration for the table</dd>
 				</dl></div>
 
 
 
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="queryFromFilter" id="_queryFromFilter">
+
+		<td class="attributes"><code>
+			 public 
+
+			Cake\ORM\Query
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_queryFromFilter">#</a>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#163-178" title="Go to source code">queryFromFilter</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$data</var> = []</span> )</code>
+
+		<div class="description short">
+			<p>Build query from filter data</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Build query from filter data</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$query</var></dt>
+					<dd>Query object</dd>
+					<dt><var>$data</var></dt>
+					<dd>Filter data ($this->request->query)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					Cake\ORM\Query<br>$query Query object
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						\MeCms\Model\Table\AppTable::queryFromFilter()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeYoutube.Controller.Admin.VideosController.html#_index">MeYoutube\Controller\Admin\VideosController::index()</a></code><br>
+				</div>
 
 
 		</div>
@@ -529,7 +543,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setNextToBePublished">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#174-191" title="Go to source code">setNextToBePublished</a>( )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#180-198" title="Go to source code">setNextToBePublished</a>( )</code>
 
 		<div class="description short">
 			<p>Sets to cache the timestamp of the next record to be published.
@@ -551,6 +565,7 @@ This value can be used to check if the cache is valid</p>
 				<h4>Uses</h4>
 				<div class="list">
 						Cake\I18n\Time::toUnixString()<br>
+						<br>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
@@ -575,7 +590,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_validationDefault">#</a>
-		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#193-200" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
+		<code><a href="source-class-MeYoutube.Model.Table.VideosTable.html#200-207" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
 
 		<div class="description short">
 			<p>Default validation rules</p>
@@ -615,9 +630,84 @@ This value can be used to check if the cache is valid</p>
 
 
 
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="cache" id="$cache">
+		<td class="attributes"><code>
+			public  
+			string|array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeYoutube.Model.Table.VideosTable.html#39-43" title="Go to source code"><var>$cache</var></a>
+
+			<div class="description short">
+				<p>Name of the configuration to use for this table</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Name of the configuration to use for this table</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_getNextToBePublished">MeYoutube\Model\Table\VideosTable::getNextToBePublished()</a></code><br>
+							<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_getRandomSpots">MeYoutube\Model\Table\VideosTable::getRandomSpots()</a></code><br>
+							<code><a href="class-MeYoutube.Model.Table.VideosTable.html#_setNextToBePublished">MeYoutube\Model\Table\VideosTable::setNextToBePublished()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$cache" class="anchor">#</a>
+				<code><span class="php-quote">'videos'</span></code>
+			</div>
+		</td>
+	</tr>
+	</table>
 
 
 
+	<table class="summary properties" id="magicProperties">
+	<caption>Magic properties summary</caption>
+	<tr data-order="Users" id="m$Users">
+		<td class="attributes"><code>
+			public  
+			Cake\ORM\Association\BelongsTo
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeYoutube.Model.Table.VideosTable.html#35" title="Go to source code"><var>$Users</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="Categories" id="m$Categories">
+		<td class="attributes"><code>
+			public  
+			Cake\ORM\Association\BelongsTo
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeYoutube.Model.Table.VideosTable.html#36" title="Go to source code"><var>$Categories</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	</table>
 
 
 

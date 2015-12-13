@@ -22,7 +22,6 @@
  */
 namespace MeYoutube\Model\Table;
 
-use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
@@ -31,29 +30,15 @@ use MeYoutube\Model\Entity\VideosCategory;
 
 /**
  * VideosCategories model
+ * @property \Cake\ORM\Association\BelongsTo $Parents
+ * @property \Cake\ORM\Association\HasMany $Childs
  */
 class VideosCategoriesTable extends AppTable {
 	/**
-	 * Called after an entity has been deleted
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * Name of the configuration to use for this table
+	 * @var string|array
 	 */
-	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'videos');		
-	}
-	
-	/**
-	 * Called after an entity is saved.
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
-	 */
-	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'videos');
-	}
+	public $cache = 'videos';
 	
     /**
      * Returns a rules checker object that will be used for validating application integrity
@@ -80,32 +65,36 @@ class VideosCategoriesTable extends AppTable {
 	/**
 	 * Gets the categories list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getList() {
 		return $this->find('list')
-			->cache('categories_list', 'videos')
+			->cache('categories_list', $this->cache)
 			->toArray();
 	}
 	
 	/**
 	 * Gets the categories tree list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getTreeList() {
 		return $this->find('treeList')
-			->cache('categories_tree_list', 'videos')
+			->cache('categories_tree_list', $this->cache)
 			->toArray();
 	}
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('youtube_videos_categories');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('MeCms.Tree');
+		
         $this->belongsTo('Parents', [
             'className' => 'MeYoutube.VideosCategories',
             'foreignKey' => 'parent_id'
@@ -114,10 +103,12 @@ class VideosCategoriesTable extends AppTable {
             'className' => 'MeYoutube.VideosCategories',
             'foreignKey' => 'parent_id'
         ]);
-        $this->hasMany('Videos', [
+		 $this->hasMany('Videos', [
             'className' => 'MeYoutube.Videos',
             'foreignKey' => 'category_id'
         ]);
+		
+        $this->addBehavior('MeCms.Tree');
     }
 
     /**
