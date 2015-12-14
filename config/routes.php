@@ -61,6 +61,15 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 	);
 	
 	/**
+	 * This allows backward compatibility for URLs like:
+	 * /videos/page:3
+	 * /videos/page:3/sort:Video.created/direction:desc
+	 * These URLs will become:
+	 * /videos?page=3
+	 */
+	$routes->connect('/videos/page::page/*', ['controller' => 'Videos', 'action' => 'index_compatibility'], ['page' => '\d+', 'pass' => ['page']]);
+	
+	/**
 	 * Admin routes
 	 */
     $routes->prefix('admin', function ($routes) {

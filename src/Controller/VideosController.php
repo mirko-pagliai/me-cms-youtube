@@ -119,6 +119,18 @@ class VideosController extends AppController {
 		$this->render('Videos/index');
 	}
 	
+	/**
+	 * This allows backward compatibility for URLs like:
+	 * <pre>/videos/page:3</pre>
+	 * <pre>/videos/page:3/sort:Video.created/direction:desc</pre>
+	 * These URLs will become:
+	 * <pre>/videos?page=3</pre>
+	 * @param int $page Page number
+	 */
+	public function index_compatibility($page) {
+		return $this->redirect(['_name' => 'videos', '?' => ['page' => $page]], 301);
+	}
+	
     /**
      * Views video
      * @param string $id Video ID

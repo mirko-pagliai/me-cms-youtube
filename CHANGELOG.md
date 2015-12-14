@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.3
+* added backward compatibility for old URLs.
+
 ### 2.1.2
 * fixed bug for sorting some tables;
 * improved queries for filters;
