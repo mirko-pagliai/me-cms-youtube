@@ -22,21 +22,30 @@
  */
 ?>
 
-<?php
-	//Returns on index, except for category
-	if($this->request->isAction('index', 'Videos') && !$this->request->param('slug'))
-		return;
-	
-	//Returns on the last record view
-	if(count($videos) < 2 && $this->request->isAction('view', 'Videos') && $this->request->param('id') && $videos[0]->id && $this->request->param('id') === $videos[0]->id)
-		return;
-?>
-
-<?php if(count($videos)): ?>
-	<div class="widget sidebar-widget">
-		<?= $this->Html->h4(count($videos) > 1 ? __d('me_youtube', 'Latest {0} videos', count($videos)) : __d('me_youtube', 'Latest video')) ?>
-		<?php foreach($videos as $video): ?>
-			<?= $this->element('MeYoutube.frontend/views/video_preview', am(['truncate' => ['title' => FALSE, 'description' => FALSE]], compact('video'))) ?>
-		<?php endforeach; ?>
-	</div>
-<?php endif; ?>
+<div class="content-preview">
+	<a href="<?= \Cake\Routing\Router::url(['_name' => 'video', $video->id]) ?>">
+		<div>
+			<div>
+				<div class="content-title">
+					<?php
+						if(isset($truncate['title']) && !$truncate['title'])
+							echo $video->title;
+						else
+							echo $this->Text->truncate($video->title, empty($truncate['title']) ? 40 : $truncate['title'], ['exact' => FALSE]);
+					?>
+				</div>
+				<?php if(!empty($video->description)): ?>
+					<div class="content-text">
+						<?php
+							if(isset($truncate['description']) && !$truncate['description'])
+								echo strip_tags($video->description);
+							else
+								echo $this->Text->truncate(strip_tags($video->description), empty($truncate['description']) ? 80 : $truncate['description'], ['exact' => FALSE]);
+						?>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+		<?= $this->Thumb->image($video->preview, ['side' => 205]) ?>
+	</a>
+</div>
