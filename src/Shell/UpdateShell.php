@@ -40,12 +40,15 @@ class UpdateShell extends BaseShell {
 	public function to2v0v4vRC4() {
 		$this->loadModel('MeYoutube.Videos');
 		
-		$videos = $this->Videos->find('all')->select(['id', 'youtube_id', 'duration', 'seconds']);
+		$videos = $this->Videos->find('all')
+			->select(['id', 'youtube_id', 'duration', 'seconds'])
+			->where(['OR' => [
+				'duration' => '00:00',
+				'duration' => '',
+				'seconds' => 0
+			]]);
 		
 		foreach($videos as $video) {
-			if(!empty($video->duration) && $video->duration != '00:00' && !empty($video->seconds))
-				continue;
-						
 			$data = \MeYoutube\Utility\Youtube::getInfo($video->youtube_id);
 
 			$video->duration = $data['duration'];
