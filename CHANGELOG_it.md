@@ -1,5 +1,8 @@
 # 2.x ramo
 ## 2.1 ramo
+### 2.1.3
+* aggiunta retro-compatibilità per i vecchi url.
+
 ### 2.1.2
 * sistemato bug nell'ordinamento di alcune tabelle;
 * migliorate le query per i filtri;

@@ -181,7 +181,7 @@ MeCms\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.Controller.html">Controller</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeYoutube.Controller.VideosController.html#29-230" title="Go to source code">VideosController.php</a>
+			<b>Located at</b> <a href="source-class-MeYoutube.Controller.VideosController.html#29-242" title="Go to source code">VideosController.php</a>
 		<br>
 	</div>
 
@@ -262,6 +262,57 @@ MeCms\Controller\AppController
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="index_compatibility" id="_index_compatibility">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_index_compatibility">#</a>
+		<code><a href="source-class-MeYoutube.Controller.VideosController.html#122-132" title="Go to source code">index_compatibility</a>( <span>integer <var>$page</var></span> )</code>
+
+		<div class="description short">
+			<p>This allows backward compatibility for URLs like:</p>
+
+<pre>/videos/page:<span class="php-num">3</span></pre>
+
+<pre>/videos/page:<span class="php-num">3</span>/<span class="php-keyword2">sort</span>:Video.created/direction:desc</pre>
+
+<p>These URLs will become:</p>
+
+<pre>/videos?page=<span class="php-num">3</span></pre>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>This allows backward compatibility for URLs like:</p>
+
+<pre>/videos/page:<span class="php-num">3</span></pre>
+
+<pre>/videos/page:<span class="php-num">3</span>/<span class="php-keyword2">sort</span>:Video.created/direction:desc</pre>
+
+<p>These URLs will become:</p>
+
+<pre>/videos?page=<span class="php-num">3</span></pre>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$page</var></dt>
+					<dd>Page number</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="view" id="_view">
 
 		<td class="attributes"><code>
@@ -274,7 +325,7 @@ MeCms\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-MeYoutube.Controller.VideosController.html#122-150" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeYoutube.Controller.VideosController.html#134-162" title="Go to source code">view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Views video</p>
@@ -318,7 +369,7 @@ MeCms\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_rss">#</a>
-		<code><a href="source-class-MeYoutube.Controller.VideosController.html#152-174" title="Go to source code">rss</a>( )</code>
+		<code><a href="source-class-MeYoutube.Controller.VideosController.html#164-186" title="Go to source code">rss</a>( )</code>
 
 		<div class="description short">
 			<p>Lists videos as RSS</p>
@@ -357,7 +408,7 @@ MeCms\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_search">#</a>
-		<code><a href="source-class-MeYoutube.Controller.VideosController.html#176-229" title="Go to source code">search</a>( )</code>
+		<code><a href="source-class-MeYoutube.Controller.VideosController.html#188-241" title="Go to source code">search</a>( )</code>
 
 		<div class="description short">
 			<p>Search videos</p>

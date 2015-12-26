@@ -20,44 +20,32 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Shell;
+?>
 
-use MeTools\Shell\Base\BaseShell;
-
-/**
- * Applies updates
- */
-class UpdateShell extends BaseShell {
-	/**
-	 * Rewrites the header for the shell
-	 */
-	protected function _welcome() { }
-	
-	/**
-	 * Updates to 2.0.4-RC4 version
-	 * @uses MeYoutube\Utility\Youtube::getInfo()
-	 */
-	public function to2v0v4vRC4() {
-		$this->loadModel('MeYoutube.Videos');
-		
-		$videos = $this->Videos->find('all')
-			->select(['id', 'youtube_id', 'duration', 'seconds'])
-			->where(['OR' => [
-				'duration' => '00:00',
-				'duration' => '',
-				'seconds' => 0
-			]]);
-		
-		foreach($videos as $video) {
-			$data = \MeYoutube\Utility\Youtube::getInfo($video->youtube_id);
-
-			$video->duration = $data['duration'];
-			$video->seconds = $data['seconds'];
-
-			$this->Videos->query()->update()
-				->set(['duration' => $data['duration'], 'seconds' => $data['seconds']])
-				->where(['id' => $video->id])
-				->execute();
-		}
-	}
-}
+<div class="content-preview">
+	<a href="<?= \Cake\Routing\Router::url(['_name' => 'video', $video->id]) ?>">
+		<div>
+			<div>
+				<div class="content-title">
+					<?php
+						if(isset($truncate['title']) && !$truncate['title'])
+							echo $video->title;
+						else
+							echo $this->Text->truncate($video->title, empty($truncate['title']) ? 40 : $truncate['title'], ['exact' => FALSE]);
+					?>
+				</div>
+				<?php if(!empty($video->description)): ?>
+					<div class="content-text">
+						<?php
+							if(isset($truncate['description']) && !$truncate['description'])
+								echo strip_tags($video->description);
+							else
+								echo $this->Text->truncate(strip_tags($video->description), empty($truncate['description']) ? 80 : $truncate['description'], ['exact' => FALSE]);
+						?>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+		<?= $this->Thumb->image($video->preview, ['side' => 205]) ?>
+	</a>
+</div>

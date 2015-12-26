@@ -34,28 +34,9 @@
 
 <?php if(count($videos)): ?>
 	<div class="widget sidebar-widget">
-		<?php
-			echo $this->Html->h4(count($videos) > 1 ? __d('me_youtube', 'Latest {0} videos', count($videos)) : __d('me_youtube', 'Latest video'));
-			
-			foreach($videos as $video) {
-				
-				//Sets the thumbnail
-				$thumb = $this->Thumb->img($video->preview, ['side' => 263]);
-
-				//Sets the information about the video
-				$info = $this->Html->strong($video->title);
-				
-				//Adds the description to the information about the video, if exists
-				if($video->description)
-					$info .= $this->Html->div(NULL, h($video->description));
-				
-				$info = $this->Html->div('info-wrapper', $this->Html->div('info-text', $info));
-				
-				echo $this->Html->div('video-preview', $this->Html->link($thumb.$info,
-					['_name' => 'video', $video->id],
-					['title' => $video->title]
-				));
-			}
-		?>
+		<?= $this->Html->h4(count($videos) > 1 ? __d('me_youtube', 'Latest {0} videos', count($videos)) : __d('me_youtube', 'Latest video')) ?>
+		<?php foreach($videos as $video): ?>
+			<?= $this->element('MeYoutube.frontend/views/video_preview', am(['truncate' => ['title' => FALSE, 'description' => FALSE]], compact('video'))) ?>
+		<?php endforeach; ?>
 	</div>
 <?php endif; ?>
