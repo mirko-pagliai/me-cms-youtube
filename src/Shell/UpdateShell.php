@@ -22,12 +22,12 @@
  */
 namespace MeYoutube\Shell;
 
-use MeTools\Shell\Base\BaseShell;
+use MeTools\Console\Shell;
 
 /**
  * Applies updates
  */
-class UpdateShell extends BaseShell {
+class UpdateShell extends Shell {
 	/**
 	 * Rewrites the header for the shell
 	 */
