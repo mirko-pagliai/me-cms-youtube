@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.4
+* added the Install shell.
+
 ### 2.1.3
 * added backward compatibility for old URLs.
 

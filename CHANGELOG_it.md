@@ -1,5 +1,8 @@
 # 2.x ramo
 ## 2.1 ramo
+### 2.1.4
+** aggiunta la shell per l'installazione.
+
 ### 2.1.3
 * aggiunta retro-compatibilità per i vecchi url.
 
