@@ -26,7 +26,7 @@ use Cake\Core\Configure;
 use MeTools\Utility\Xml;
 
 /**
- * An utility to get information about YouTube videos
+ * An utility to get information about YouTube videos.
  * 
  * You can use this utility by adding:
  * <code>
