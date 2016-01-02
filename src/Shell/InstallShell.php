@@ -37,7 +37,10 @@ class InstallShell extends BaseInstallShell {
 		parent::__construct();
 		
 		//Configuration files to be copied
-		$this->config = ['MeYoutube.me_youtube'];
+		$this->config = [
+			'MeYoutube.me_youtube',
+			'MeYoutube.youtube_keys'
+		];
 	}
 	
 	/**
