@@ -1,6 +1,6 @@
 <?php
 return ['MeYoutube' => [
-	//Videos
+	//Youtube videos
 	'video' => [
 		//Displays the video author
 		'author' => TRUE,
