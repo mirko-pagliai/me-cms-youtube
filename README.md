@@ -1,6 +1,6 @@
 # MeYoutube, plugin for MeCms plugin
 
-This plugin allows you to manage Youtube videos on the platform MeCms.
+This plugin allows you to manage Youtube videos on the MeCms platform.
 
 To install:
 
