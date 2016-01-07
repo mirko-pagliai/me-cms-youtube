@@ -1,6 +1,6 @@
 # MeYoutube, plugin for MeCms plugin
 
-This plugin allows you to manage Youtube videos on the MeCms platform.
+This plugin allows you to manage Youtube videos on the [//github.com/mirko-pagliai/cakephp-for-mecms](MeCms platform).
 
 To install:
 
