@@ -22,7 +22,7 @@
  */
 ?>
 
-<?= $this->Html->js('MeYoutube.video.min', ['block' => 'script_bottom']) ?>
+<?= $this->Asset->js('MeYoutube.video.min', ['block' => 'script_bottom']) ?>
 
 <div class="video-container content-container clearfix">
 	<div class="content-header">
