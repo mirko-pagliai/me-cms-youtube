@@ -76,11 +76,11 @@ class VideosCell extends Cell {
 	
 	/**
 	 * Latest widget
-	 * @param string $limit Limit
+	 * @param int $limit Limit
 	 * @uses MeTools\Network\Request::isAction()
 	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
-    public function latest($limit = NULL) {
+    public function latest($limit = 1) {
 		//Returns on index, except for category
 		if($this->request->isAction('index', 'Videos') && !$this->request->param('slug'))
 			return;
@@ -90,7 +90,7 @@ class VideosCell extends Cell {
 
 		$this->set('videos', $this->Videos->find('active')
 			->select(['id', 'youtube_id', 'title', 'description'])
-			->limit($limit = empty($limit) ? 1 : $limit)
+			->limit($limit)
 			->order(['created' => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache)
 			->toArray()
