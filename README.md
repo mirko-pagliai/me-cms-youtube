@@ -7,4 +7,6 @@ To install:
     $ composer require --prefer-dist mirko-pagliai/me-youtube
     $ bin/cake me_youtube.install all -v
 
-Then you need to get an [API key for Youtube](https://developers.google.com/youtube/registering_an_application) and edit `APP/config/youtube_keys.php`.
+Then you need to get an [API key for Youtube](//developers.google.com/youtube/registering_an_application) and edit `APP/config/youtube_keys.php`.
+
+For widgets provided by this plugin, see [here](//github.com/mirko-pagliai/me-youtube/wiki/Widgets).

@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.4
+* added "random videos" widget;
 * added the Install shell.
 
 ### 2.1.3

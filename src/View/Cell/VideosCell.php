@@ -98,6 +98,38 @@ class VideosCell extends Cell {
     }
 	
 	/**
+	 * Random widget
+	 * @param int $limit Limit
+	 * @uses MeTools\Network\Request::isController()
+	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
+	 */
+	public function random($limit = 1) {
+		//Returns on the same controllers
+		if($this->request->isController(['Videos', 'VideosCategories']))
+			return;
+		
+		//Checks if the cache is valid
+		$this->Videos->checkIfCacheIsValid();
+		
+		//Returns, if there are no records available
+		if(Cache::read($cache = 'no_videos', $this->Videos->cache))
+			return;
+
+		//Gets videos
+		$videos = $this->Videos->find('active')
+			->select(['id', 'youtube_id', 'title', 'description'])
+			->limit($limit)
+			->order('rand()')
+			->toArray();
+		
+		//Writes on cache, if there are no records available
+		if(empty($videos))
+			Cache::write($cache, TRUE, $this->Videos->cache);
+		
+		$this->set(compact('videos'));
+	}
+	
+	/**
 	 * Search widget
 	 */
 	public function search() { }
