@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class MeYoutube\View\View\AppView | MeYoutube API</title>
+	<title>Class MeYoutube\Shell\InstallShell | MeYoutube API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -58,7 +58,7 @@
 
 						</li>
 							</ul></li>
-				<li class="main">
+				<li class="active main">
 					<a href="namespace-MeYoutube.Shell.html">
 						Shell					</a>
 
@@ -68,7 +68,7 @@
 						Utility					</a>
 
 						</li>
-				<li class="active main">
+				<li class="main">
 					<a href="namespace-MeYoutube.View.html">
 						View<span></span>
 					</a>
@@ -84,7 +84,7 @@
 						Helper					</a>
 
 						</li>
-				<li class="active main">
+				<li class="main">
 					<a href="namespace-MeYoutube.View.View.html">
 						View					</a>
 
@@ -99,7 +99,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li class="active"><a href="class-MeYoutube.View.View.AppView.html">AppView</a></li>
+				<li class="active"><a href="class-MeYoutube.Shell.InstallShell.html">InstallShell</a></li>
+				<li><a href="class-MeYoutube.Shell.UpdateShell.html">UpdateShell</a></li>
 			</ul>
 
 
@@ -126,7 +127,7 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="namespace-MeYoutube.View.View.html" title="Summary of MeYoutube\View\View"><span>Namespace</span></a>
+				<a href="namespace-MeYoutube.Shell.html" title="Summary of MeYoutube\Shell"><span>Namespace</span></a>
 			</li>
 			<li class="active">
 <span>Class</span>			</li>
@@ -143,22 +144,22 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class AppView</h1>
+	<h1>Class InstallShell</h1>
 
 
 	<div class="description">
-	<p>Application view class</p>
+	<p>Executes some tasks to make the system ready to work</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-MeCms\View\View\AppView
+MeTools\Shell\InstallShell
 			
 			
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeYoutube\View\View\AppView</span></b>			
+<b><span>MeYoutube\Shell\InstallShell</span></b>			
 			
 			
 		</dd>
@@ -174,10 +175,10 @@ MeCms\View\View\AppView
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.View.html">View</a>\<a href="namespace-MeYoutube.View.View.html">View</a><br>
+		<b>Namespace:</b> <a href="namespace-MeYoutube.html">MeYoutube</a>\<a href="namespace-MeYoutube.Shell.html">Shell</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeYoutube.View.View.AppView.html#27-48" title="Go to source code">View/View/AppView.php</a>
+			<b>Located at</b> <a href="source-class-MeYoutube.Shell.InstallShell.html#27-81" title="Go to source code">Shell/InstallShell.php</a>
 		<br>
 	</div>
 
@@ -185,54 +186,107 @@ MeCms\View\View\AppView
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="renderLayout" id="_renderLayout">
+	<tr data-order="__construct" id="___construct">
 
 		<td class="attributes"><code>
 			 public 
 
-			mixed
+			
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_renderLayout">#</a>
-		<code><a href="source-class-MeYoutube.View.View.AppView.html#31-47" title="Go to source code">renderLayout</a>( <span>string <var>$content</var></span>, <span>string|null <var>$layout</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-MeYoutube.Shell.InstallShell.html#31-44" title="Go to source code">__construct</a>( )</code>
 
 		<div class="description short">
-			<p>Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout</p>
+			<p>Construct</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout</p>
+			<p>Construct</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$content</var></dt>
-					<dd>Content to render in a view, wrapped by the surrounding layout</dd>
-					<dt><var>$layout</var></dt>
-					<dd>Layout name</dd>
-				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Shell\InstallShell::__construct()<br>
+						$config<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="all" id="_all">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_all">#</a>
+		<code><a href="source-class-MeYoutube.Shell.InstallShell.html#46-60" title="Go to source code">all</a>( )</code>
+
+		<div class="description short">
+			<p>Executes all available tasks</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Executes all available tasks</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Shell\InstallShell::copyConfig()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getOptionParser" id="_getOptionParser">
+
+		<td class="attributes"><code>
+			 public 
+
+			ConsoleOptionParser
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getOptionParser">#</a>
+		<code><a href="source-class-MeYoutube.Shell.InstallShell.html#62-80" title="Go to source code">getOptionParser</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the option parser instance and configures it.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the option parser instance and configures it.</p>
+
+
 
 				<h4>Returns</h4>
 				<div class="list">
-					mixed<br>Rendered output, or false on error
+					ConsoleOptionParser
 				</div>
 
-				<h4>Throws</h4>
-				<div class="list">
-					Cake\Core\Exception\Exception
-				</div>
 
-				<h4>See</h4>
-				<div class="list">
-						http://api.cakephp.org/3.1/source-class-Cake.View.View.html#477-513<br>
-				</div>
 				<h4>Uses</h4>
 				<div class="list">
-						MeCms\View\View\AppView::renderLayout()<br>
-						MeTools\View\Helper\HtmlHelper::meta()<br>
+						MeTools\Shell\InstallShell::getOptionParser()<br>
 				</div>
 
 

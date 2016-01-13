@@ -16,7 +16,7 @@
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -76,11 +76,11 @@ class VideosCell extends Cell {
 	
 	/**
 	 * Latest widget
-	 * @param string $limit Limit
+	 * @param int $limit Limit
 	 * @uses MeTools\Network\Request::isAction()
 	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
-    public function latest($limit = NULL) {
+    public function latest($limit = 1) {
 		//Returns on index, except for category
 		if($this->request->isAction('index', 'Videos') && !$this->request->param('slug'))
 			return;
@@ -90,12 +90,44 @@ class VideosCell extends Cell {
 
 		$this->set('videos', $this->Videos->find('active')
 			->select(['id', 'youtube_id', 'title', 'description'])
-			->limit($limit = empty($limit) ? 1 : $limit)
+			->limit($limit)
 			->order(['created' => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache)
 			->toArray()
 		);
     }
+	
+	/**
+	 * Random widget
+	 * @param int $limit Limit
+	 * @uses MeTools\Network\Request::isController()
+	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
+	 */
+	public function random($limit = 1) {
+		//Returns on the same controllers
+		if($this->request->isController(['Videos', 'VideosCategories']))
+			return;
+		
+		//Checks if the cache is valid
+		$this->Videos->checkIfCacheIsValid();
+		
+		//Returns, if there are no records available
+		if(Cache::read($cache = 'no_videos', $this->Videos->cache))
+			return;
+
+		//Gets videos
+		$videos = $this->Videos->find('active')
+			->select(['id', 'youtube_id', 'title', 'description'])
+			->limit($limit)
+			->order('rand()')
+			->toArray();
+		
+		//Writes on cache, if there are no records available
+		if(empty($videos))
+			Cache::write($cache, TRUE, $this->Videos->cache);
+		
+		$this->set(compact('videos'));
+	}
 	
 	/**
 	 * Search widget

@@ -1,9 +1,7 @@
 <?php
 /**
- * Before using the Youtube plugin, you have to get the API key:
+ * Before using the plugin, you have to get the API key:
  * https://developers.google.com/youtube/registering_an_application
- * 
- * When you have keys, set them below and RENAME THIS FILE in "youtube.php".
  */
 
 return ['Youtube' => [

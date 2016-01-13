@@ -20,26 +20,19 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Model\Validation;
+?>
 
-use MeCms\Model\Validation\AppValidator;
+<?php
+	//Returns on the same controllers
+	if($this->request->isController(['Videos', 'VideosCategories']))
+		return;
+?>
 
-class VideosCategoryValidator extends AppValidator {
-	/**
-	 * Construct.
-	 * 
-	 * Adds some validation rules.
-	 * @uses MeCms\Model\Validation\AppValidator::__construct()
-	 */
-    public function __construct() {
-        parent::__construct();
-		
-		//Title
-		$this->requirePresence('title', 'create');
-		
-		//Slug
-        $this->requirePresence('slug', 'create');
-		
-        return $this;
-	}
-}
+<?php if(!empty($videos)): ?>
+	<div class="widget sidebar-widget">
+		<?= $this->Html->h4(count($videos) > 1 ? __d('me_youtube', 'Random {0} videos', count($videos)) : __d('me_youtube', 'Random video')) ?>
+		<?php foreach($videos as $video): ?>
+			<?= $this->element('MeYoutube.frontend/views/video_preview', am(['truncate' => ['title' => FALSE, 'description' => FALSE]], compact('video'))) ?>
+		<?php endforeach; ?>
+	</div>
+<?php endif; ?>
