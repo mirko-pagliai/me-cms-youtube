@@ -1,11 +1,10 @@
 # LANGUAGE translation of MeYoutube
 # Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
-# Mirko Pagliai <mirko.pagliai.it>, 2015.
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-11-11 12:37+0000\n"
-"PO-Revision-Date: 2015-11-11 13:48+0100\n"
+"POT-Creation-Date: 2016-01-11 19:13+0000\n"
+"PO-Revision-Date: 2016-01-13 16:56+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +102,7 @@ msgstr "Apri su {0}"
 
 #: Template/Admin/Videos/add.ctp:111
 #: Template/Admin/Videos/edit.ctp:92
-#: Template/Admin/Videos/index.ctp:84
+#: Template/Admin/Videos/index.ctp:85
 msgid "Duration"
 msgstr "Durata"
 
@@ -118,7 +117,7 @@ msgstr "Modifica video"
 msgid "Videos"
 msgstr "Video"
 
-#: Template/Admin/Videos/index.ctp:69;98
+#: Template/Admin/Videos/index.ctp:70;99
 msgid "Spot"
 msgstr "Spot"
 
@@ -136,13 +135,21 @@ msgstr "Modifica categoria video"
 msgid "Videos categories"
 msgstr "Categorie video"
 
-#: Template/Cell/Videos/latest.ctp:38
+#: Template/Cell/Videos/latest.ctp:37
 msgid "Latest {0} videos"
 msgstr "Ultimi {0} video"
 
-#: Template/Cell/Videos/latest.ctp:38
+#: Template/Cell/Videos/latest.ctp:37
 msgid "Latest video"
 msgstr "Ultimo video"
+
+#: Template/Cell/Videos/random.ctp:33
+msgid "Random {0} videos"
+msgstr "{0} video casuali"
+
+#: Template/Cell/Videos/random.ctp:33
+msgid "Random video"
+msgstr "Video casuale"
 
 #: Template/Cell/Videos/search.ctp:33
 #: Template/Videos/search.ctp:25;29
