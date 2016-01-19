@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.5
+* an exception is now properly thrown when a record is not found.
+
 ### 2.1.4
 * added "random videos" widget;
 * added the Install shell.

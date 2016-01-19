@@ -23,6 +23,7 @@
 namespace MeYoutube\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use MeYoutube\Controller\AppController;
 
 /**
@@ -62,16 +63,19 @@ class VideosCategoriesController extends AppController {
 		
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
-			$videos = $this->paginate(
-				$this->VideosCategories->Videos->find('active')
-					->contain([
-						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Users'			=> ['fields' => ['first_name', 'last_name']]
-					])
-					->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
-					->where(['Categories.slug' => $category, 'is_spot' => FALSE])
-					->order([sprintf('%s.created', $this->VideosCategories->Videos->alias()) => 'DESC'])
-			)->toArray();
+			$query = $this->VideosCategories->Videos->find('active')
+				->contain([
+					'Categories'	=> ['fields' => ['title', 'slug']],
+					'Users'			=> ['fields' => ['first_name', 'last_name']]
+				])
+				->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+				->where(['Categories.slug' => $category, 'is_spot' => FALSE])
+				->order([sprintf('%s.created', $this->VideosCategories->Videos->alias()) => 'DESC']);
+					
+			if($query->isEmpty())
+				throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
+					
+			$videos = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->VideosCategories->cache);
