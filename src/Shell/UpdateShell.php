@@ -27,12 +27,7 @@ use MeTools\Console\Shell;
 /**
  * Applies updates
  */
-class UpdateShell extends Shell {
-	/**
-	 * Rewrites the header for the shell
-	 */
-	protected function _welcome() { }
-	
+class UpdateShell extends Shell {	
 	/**
 	 * Updates to 2.0.4-RC4 version
 	 * @uses MeYoutube\Utility\Youtube::getInfo()
