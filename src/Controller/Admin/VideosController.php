@@ -146,7 +146,6 @@ class VideosController extends AppController {
     /**
      * Edits video
      * @param string $id Video ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
         $video = $this->Videos->get($id);
@@ -173,7 +172,6 @@ class VideosController extends AppController {
     /**
      * Deletes video
      * @param string $id Video ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

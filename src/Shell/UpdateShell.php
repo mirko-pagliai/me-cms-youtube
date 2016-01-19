@@ -27,12 +27,7 @@ use MeTools\Console\Shell;
 /**
  * Applies updates
  */
-class UpdateShell extends Shell {
-	/**
-	 * Rewrites the header for the shell
-	 */
-	protected function _welcome() { }
-	
+class UpdateShell extends Shell {	
 	/**
 	 * Updates to 2.0.4-RC4 version
 	 * @uses MeYoutube\Utility\Youtube::getInfo()
@@ -59,5 +54,18 @@ class UpdateShell extends Shell {
 				->where(['id' => $video->id])
 				->execute();
 		}
+	}
+	
+	/**
+	 * Gets the option parser instance and configures it.
+	 * @return ConsoleOptionParser
+	 * @uses MeTools\Shell\InstallShell::getOptionParser()
+	 */
+	public function getOptionParser() {
+		$parser = parent::getOptionParser();
+		
+		return $parser->addSubcommands([
+			'to2v0v4vRC4' => ['help' => __d('me_cms', 'Updates to {0} version', '2.0.4-RC4')]
+		]);
 	}
 }

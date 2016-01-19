@@ -105,7 +105,6 @@ class VideosCategoriesController extends AppController {
     /**
      * Edits youtube videos category
      * @param string $id Videos category ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
 		$category = $this->VideosCategories->get($id);
@@ -127,7 +126,6 @@ class VideosCategoriesController extends AppController {
     /**
      * Deletes videos category
      * @param string $id Videos category ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);
