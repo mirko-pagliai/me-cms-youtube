@@ -22,6 +22,7 @@
  */
 namespace MeYoutube\Utility;
 
+use MeCms\Utility\Youtube as BaseYoutube;
 use MeTools\Utility\Xml;
 
 /**
@@ -32,29 +33,7 @@ use MeTools\Utility\Xml;
  * use MeYoutube\Utility\Youtube;
  * </code>
  */
-class Youtube {
-	/**
-	 * Parses a video url and returns the video ID
-	 * @param string $url Video url
-	 * @return mixed Video ID or FALSE
-	 */
-	public static function getId($url) {
-		if(preg_match('/youtube\.com/', $url)) {
-			$url = parse_url($url);
-			
-			if(empty($url['query']))
-				return FALSE;
-			
-			parse_str($url['query'], $url);
-				
-			return empty($url['v']) ? FALSE : $url['v'];
-		}
-		elseif(preg_match('/youtu.be\/(.+)$/', $url, $matches))
-			return empty($matches[1]) ? FALSE : $matches[1];
-		else
-			return FALSE;
-	}
-	
+class Youtube extends BaseYoutube {	
 	/**
 	 * Gets information about a video
 	 * @param string $id Video ID
