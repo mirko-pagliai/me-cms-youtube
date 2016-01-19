@@ -22,7 +22,6 @@
  */
 namespace MeYoutube\Utility;
 
-use Cake\Core\Configure;
 use MeTools\Utility\Xml;
 
 /**
