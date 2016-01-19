@@ -55,4 +55,17 @@ class UpdateShell extends Shell {
 				->execute();
 		}
 	}
+	
+	/**
+	 * Gets the option parser instance and configures it.
+	 * @return ConsoleOptionParser
+	 * @uses MeTools\Shell\InstallShell::getOptionParser()
+	 */
+	public function getOptionParser() {
+		$parser = parent::getOptionParser();
+		
+		return $parser->addSubcommands([
+			'to2v0v4vRC4' => ['help' => __d('me_cms', 'Updates to {0} version', '2.0.4-RC4')]
+		]);
+	}
 }
