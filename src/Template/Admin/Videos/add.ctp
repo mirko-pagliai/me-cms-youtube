@@ -20,6 +20,8 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+use MeYoutube\Utility\Youtube;
 ?>
 
 <?php
@@ -88,16 +90,11 @@
 			<div class="row margin-20 text-center">
 				<div class="col-sm-6">
 					<h4><?= __d('me_youtube', 'Video') ?></h4>
-					<?= $this->Html->iframe(sprintf('http://www.youtube-nocookie.com/embed/%s?rel=0&amp;showinfo=0', $this->request->data('youtube_id')), [
-						'class'				=> 'center-block',
-						'allowfullscreen'	=> TRUE,
-						'height'			=> 315,
-						'width'				=> 560
-					]) ?>
+					<?= $this->Html->youtube($this->request->data('youtube_id'), ['class' => 'center-block', 'height' => 315, 'width' => 560]) ?>
 				</div>
 				<div class="col-sm-6">
 					<h4><?= __d('me_youtube', 'Preview') ?></h4>
-					<?= $this->Thumb->img(MeYoutube\Utility\Youtube::getPreview($this->request->data('youtube_id')), ['height' => 315, 'class' => 'center-block']) ?>
+					<?= $this->Thumb->img(Youtube::getPreview($this->request->data('youtube_id')), ['height' => 315, 'class' => 'center-block']) ?>
 				</div>
 			</div>
 			<?php
@@ -106,7 +103,7 @@
 					'readonly'	=> TRUE,
 					'type'		=> 'text'
 				]);
-				echo $this->Html->para(NULL, $this->Html->link(__d('me_youtube', 'Open on {0}', 'YouTube'), sprintf('http://youtu.be/%s', $this->request->data('youtube_id')), ['icon' => 'external-link', 'target' => '_blank']));
+				echo $this->Html->para(NULL, $this->Html->link(__d('me_youtube', 'Open on {0}', 'YouTube'), Youtube::getUrl($this->request->data('youtube_id')), ['icon' => 'external-link', 'target' => '_blank']));
 				echo $this->Form->input('duration', [
 					'label'		=> __d('me_youtube', 'Duration'),
 					'readonly'	=> TRUE
