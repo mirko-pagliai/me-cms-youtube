@@ -97,7 +97,7 @@
 				</div>
 				<div class="col-sm-6">
 					<h4><?= __d('me_youtube', 'Preview') ?></h4>
-					<?= $this->Thumb->img($this->request->data('preview'), ['height' => 315, 'class' => 'center-block']) ?>
+					<?= $this->Thumb->img(MeYoutube\Utility\Youtube::getPreview($this->request->data('youtube_id')), ['height' => 315, 'class' => 'center-block']) ?>
 				</div>
 			</div>
 			<?php
