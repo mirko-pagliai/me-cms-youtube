@@ -59,6 +59,20 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 			'pass'	=> ['year', 'month', 'day']
 		]
 	);
+	$routes->connect('/videos/today', [
+		'controller'	=> 'Videos', 
+		'action'		=> 'index_by_date',
+		'year'			=> date('Y'),
+		'month'			=> date('m'),
+		'day'			=> date('d'),
+	], ['_name' => 'videos_today', 'pass' => ['year', 'month', 'day']]);
+	$routes->connect('/videos/yesterday', [
+		'controller'	=> 'Videos', 
+		'action'		=> 'index_by_date',
+		'year'			=> (new Time('1 days ago'))->i18nFormat('YYYY'),
+		'month'			=> (new Time('1 days ago'))->i18nFormat('MM'),
+		'day'			=> (new Time('1 days ago'))->i18nFormat('dd'),
+	], ['_name' => 'videos_yesterday', 'pass' => ['year', 'month', 'day']]);
 	
 	/**
 	 * This allows backward compatibility for URLs like:

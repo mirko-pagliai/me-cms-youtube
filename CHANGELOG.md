@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.5
+* added routes for "videos of today" and "videos of yesterday";
 * an exception is now properly thrown when a record is not found.
 
 ### 2.1.4
