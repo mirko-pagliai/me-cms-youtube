@@ -47,7 +47,7 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 		['_name' => 'video', 'id' => '\d+', 'pass' => ['id']]
 	);
 	$routes->connect('/videos', ['controller' => 'Videos', 'action' => 'index'], ['_name' => 'videos']);
-	$routes->connect('/videos/rss', ['controller' => 'Videos', 'action' => 'rss', '_ext' => 'rss']);
+	$routes->connect('/videos/rss', ['controller' => 'Videos', 'action' => 'rss', '_ext' => 'rss'], ['_name' => 'videos_rss']);
 	$routes->connect('/videos/search', ['controller' => 'Videos', 'action' => 'search'], ['_name' => 'search_videos']);
 	$routes->connect('/videos/:year/:month/:day',
 		['controller' => 'Videos', 'action' => 'index_by_date'],
