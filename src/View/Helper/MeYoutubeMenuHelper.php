@@ -31,7 +31,7 @@ use MeCms\View\Helper\AuthHelper;
  * This helper contains methods that will be called automatically to generate the menu of the backend.
  * You do not need to call these methods manually.
  */
-class MenuDefaultHelper extends Helper {
+class MeYoutubeMenuHelper extends Helper {
 	/**
 	 * Helpers
 	 * @var array
