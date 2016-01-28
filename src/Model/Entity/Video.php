@@ -63,12 +63,9 @@ class Video extends Entity {
 	
 	/**
 	 * Gets the preview (virtual field)
-	 * @return string|NULL Preview url
+	 * @return string Preview url
 	 */
 	protected function _getPreview() {
-		if(empty($this->_properties['youtube_id']))
-			return;
-		
-		return sprintf('http://img.youtube.com/vi/%s/0.jpg', $this->_properties['youtube_id']);
+		return \MeYoutube\Utility\Youtube::getPreview($this->_properties['youtube_id']);
 	}
 }
