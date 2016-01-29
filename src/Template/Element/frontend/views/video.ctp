@@ -22,8 +22,6 @@
  */
 ?>
 
-<?= $this->Asset->js('MeYoutube.video.min', ['block' => 'script_bottom']) ?>
-
 <div class="video-container content-container clearfix">
 	<div class="content-header">
 		<?php
@@ -52,15 +50,23 @@
 		</div>
 	</div>
 	<div class="content-text">
-		<div class="embed-responsive embed-responsive-16by9 margin-20 relative">
-			<div id="skip-to-video"><?= __d('me_youtube', 'Skip to the video') ?></div>
-			<?= $this->Html->div(NULL, '', [
-				'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
-				'data-id'		=> $video->youtube_id,
-				'data-spot'		=> empty($video->spot_id) ? NULL : $video->spot_id,
-				'id'			=> 'player'
-			]) ?>
-		</div>
+		<?php if($this->request->isAction('view', 'Videos')): ?>
+			<?= $this->Asset->js('MeYoutube.video.min', ['block' => 'script_bottom']) ?>
+			<div class="embed-responsive embed-responsive-16by9 margin-20 relative">
+				<div id="skip-to-video"><?= __d('me_youtube', 'Skip to the video') ?></div>
+				<?= $this->Html->div(NULL, '', [
+					'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
+					'data-id'		=> $video->youtube_id,
+					'data-spot'		=> empty($video->spot_id) ? NULL : $video->spot_id,
+					'id'			=> 'player'
+				]) ?>
+			</div>
+		<?php else: ?>
+			<a class="video-fake" href="<?= \Cake\Routing\Router::url(['_name' => 'video', $video->id]) ?>">
+				<?= $this->Html->img($video->preview) ?>
+				<?= $this->Html->icon('youtube-play') ?>
+			</a>
+		<?php endif; ?>
 	</div>
 	<?php
 		if(config('video.shareaholic') && config('shareaholic.app_id'))
