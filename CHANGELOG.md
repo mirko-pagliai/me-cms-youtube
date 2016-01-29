@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.5
+* you can disable the "Skip to the video" button or set the number of seconds before it appears;
 * added the "video fake" functionality;
 * added routes for "videos of today" and "videos of yesterday";
 * an exception is now properly thrown when a record is not found.

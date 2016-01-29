@@ -8,6 +8,10 @@ return ['MeYoutube' => [
 		'category' => TRUE,
 		//Displays the video created datetime
 		'created' => TRUE,
+		//Displays the "Skip to the video" button
+		'skip_button' => TRUE,
+		//Seconds before showing the "Skip to the video" button. Use `0` to show it immediately
+		'skip_seconds' => 3,
 		//Plays a spot automatically before each video
 		'spot' => TRUE,
 		//Displays the Shareaholic social buttons

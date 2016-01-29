@@ -51,15 +51,22 @@
 	</div>
 	<div class="content-text">
 		<?php if($this->request->isAction('view', 'Videos')): ?>
-			<?= $this->Asset->js('MeYoutube.video.min', ['block' => 'script_bottom']) ?>
+			<?= $this->Asset->js('MeYoutube.video', ['block' => 'script_bottom']) ?>
 			<div class="embed-responsive embed-responsive-16by9 margin-20 relative">
-				<div id="skip-to-video"><?= __d('me_youtube', 'Skip to the video') ?></div>
-				<?= $this->Html->div(NULL, '', [
-					'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
-					'data-id'		=> $video->youtube_id,
-					'data-spot'		=> empty($video->spot_id) ? NULL : $video->spot_id,
-					'id'			=> 'player'
-				]) ?>
+				<?php
+					if(config('video.skip_button'))
+						echo $this->Html->div(NULL, __d('me_youtube', 'Skip to the video'), [
+							'data-secs'	=> config('video.skip_seconds'),
+							'id'		=> 'skip-to-video'
+						]);
+					
+					echo $this->Html->div(NULL, '', [
+						'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
+						'data-id'		=> $video->youtube_id,
+						'data-spot'		=> empty($video->spot_id) ? NULL : $video->spot_id,
+						'id'			=> 'player'
+					]);
+				?>
 			</div>
 		<?php else: ?>
 			<a class="video-fake" href="<?= \Cake\Routing\Router::url(['_name' => 'video', $video->id]) ?>">
