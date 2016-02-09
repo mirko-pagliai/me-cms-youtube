@@ -118,7 +118,7 @@ class VideosController extends AppController {
 			if(!$youtube_id = Youtube::getId($this->request->query('url')))
 				$this->Flash->error(__d('me_youtube', 'This is not a {0} video', 'YouTube'));
 				
-			$this->request->data = am(compact('youtube_id'),  Youtube::getInfo($youtube_id));
+			$this->request->data = am(compact('youtube_id'), Youtube::getInfo($youtube_id));
 		}
 		
         $video = $this->Videos->newEntity();

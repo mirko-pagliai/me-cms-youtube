@@ -46,8 +46,10 @@ function onYouTubeIframeAPIReady() {
 //The API will call this function when the video player is ready.
 function onPlayerReady(event) {
 	//Shows the "Skip to the video" button
-	if(secondVideo !== undefined)
-		skipToVideo.show();
+	if(secondVideo !== undefined && skipToVideo.length)
+		setTimeout(function() {
+			skipToVideo.fadeIn('fast');
+		}, skipToVideo.data('secs')*1000);
 }
 
 //The API calls this function when the player's state changes

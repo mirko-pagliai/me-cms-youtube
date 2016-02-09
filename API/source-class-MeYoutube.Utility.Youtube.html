@@ -115,7 +115,7 @@
 				<li><a href="class-MeYoutube.Shell.UpdateShell.html">MeYoutube\Shell\UpdateShell</a></li>
 				<li><a href="class-MeYoutube.Utility.Youtube.html">MeYoutube\Utility\Youtube</a></li>
 				<li><a href="class-MeYoutube.View.Cell.VideosCell.html">MeYoutube\View\Cell\VideosCell</a></li>
-				<li><a href="class-MeYoutube.View.Helper.MenuDefaultHelper.html">MeYoutube\View\Helper\MenuDefaultHelper</a></li>
+				<li><a href="class-MeYoutube.View.Helper.MeYoutubeMenuHelper.html">MeYoutube\View\Helper\MeYoutubeMenuHelper</a></li>
 				<li><a href="class-MeYoutube.View.View.AppView.html">MeYoutube\View\View\AppView</a></li>
 			</ul>
 
@@ -182,7 +182,7 @@
 </span></span><span id="22" class="l"><a href="#22">22: </a><span class="php-comment"> */</span>
 </span><span id="23" class="l"><a href="#23">23: </a><span class="php-keyword1">namespace</span> MeYoutube\Utility;
 </span><span id="24" class="l"><a href="#24">24: </a>
-</span><span id="25" class="l"><a href="#25">25: </a><span class="php-keyword1">use</span> Cake\Core\Configure;
+</span><span id="25" class="l"><a href="#25">25: </a><span class="php-keyword1">use</span> MeCms\Utility\Youtube <span class="php-keyword1">as</span> BaseYoutube;
 </span><span id="26" class="l"><a href="#26">26: </a><span class="php-keyword1">use</span> MeTools\Utility\Xml;
 </span><span id="27" class="l"><a href="#27">27: </a>
 </span><span id="28" class="l"><a href="#28">28: </a><span class="php-comment">/**
@@ -193,60 +193,38 @@
 </span></span><span id="33" class="l"><a href="#33">33: </a><span class="php-comment"> * use MeYoutube\Utility\Youtube;
 </span></span><span id="34" class="l"><a href="#34">34: </a><span class="php-comment"> * &lt;/code&gt;
 </span></span><span id="35" class="l"><a href="#35">35: </a><span class="php-comment"> */</span>
-</span><span id="36" class="l"><a href="#36">36: </a><span class="php-keyword1">class</span> Youtube {
+</span><span id="36" class="l"><a href="#36">36: </a><span class="php-keyword1">class</span> Youtube <span class="php-keyword1">extends</span> BaseYoutube { 
 </span><span id="37" class="l"><a href="#37">37: </a>    <span class="php-comment">/**
-</span></span><span id="38" class="l"><a href="#38">38: </a><span class="php-comment">     * Parses a video url and returns the video ID
-</span></span><span id="39" class="l"><a href="#39">39: </a><span class="php-comment">     * @param string $url Video url
-</span></span><span id="40" class="l"><a href="#40">40: </a><span class="php-comment">     * @return mixed Video ID or FALSE
-</span></span><span id="41" class="l"><a href="#41">41: </a><span class="php-comment">     */</span>
-</span><span id="42" class="l"><a href="#42">42: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> getId(<span class="php-var">$url</span>) {
-</span><span id="43" class="l"><a href="#43">43: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">preg_match</span>(<span class="php-quote">'/youtube\.com/'</span>, <span class="php-var">$url</span>)) {
-</span><span id="44" class="l"><a href="#44">44: </a>            <span class="php-var">$url</span> = <span class="php-keyword2">parse_url</span>(<span class="php-var">$url</span>);
-</span><span id="45" class="l"><a href="#45">45: </a>            
-</span><span id="46" class="l"><a href="#46">46: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$url</span>[<span class="php-quote">'query'</span>]))
-</span><span id="47" class="l"><a href="#47">47: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="48" class="l"><a href="#48">48: </a>            
-</span><span id="49" class="l"><a href="#49">49: </a>            <span class="php-keyword2">parse_str</span>(<span class="php-var">$url</span>[<span class="php-quote">'query'</span>], <span class="php-var">$url</span>);
+</span></span><span id="38" class="l"><a href="#38">38: </a><span class="php-comment">     * Gets information about a video
+</span></span><span id="39" class="l"><a href="#39">39: </a><span class="php-comment">     * @param string $id Video ID
+</span></span><span id="40" class="l"><a href="#40">40: </a><span class="php-comment">     * @return mixed Array of information, otherwise FALSE
+</span></span><span id="41" class="l"><a href="#41">41: </a><span class="php-comment">     * @uses MeTools\Utility\Xml::fromFile()
+</span></span><span id="42" class="l"><a href="#42">42: </a><span class="php-comment">     */</span>
+</span><span id="43" class="l"><a href="#43">43: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> getInfo(<span class="php-var">$id</span>) {
+</span><span id="44" class="l"><a href="#44">44: </a>        <span class="php-comment">//See https://developers.google.com/youtube/v3/getting-started#partial</span>
+</span><span id="45" class="l"><a href="#45">45: </a>        <span class="php-var">$url</span> = <span class="php-quote">'https://www.googleapis.com/youtube/v3/videos?id=%s&amp;key=%s&amp;part=snippet,contentDetails&amp;fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))'</span>;
+</span><span id="46" class="l"><a href="#46">46: </a>        <span class="php-var">$info</span> = Xml::fromFile(<span class="php-keyword2">sprintf</span>(<span class="php-var">$url</span>, <span class="php-var">$id</span>, config(<span class="php-quote">'Youtube.key'</span>)));
+</span><span id="47" class="l"><a href="#47">47: </a>                
+</span><span id="48" class="l"><a href="#48">48: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>]) || <span class="php-keyword1">empty</span>(<span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>][<span class="php-quote">'snippet'</span>]) || <span class="php-keyword1">empty</span>(<span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>][<span class="php-quote">'contentDetails'</span>]))
+</span><span id="49" class="l"><a href="#49">49: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
 </span><span id="50" class="l"><a href="#50">50: </a>                
-</span><span id="51" class="l"><a href="#51">51: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">empty</span>(<span class="php-var">$url</span>[<span class="php-quote">'v'</span>]) ? <span class="php-keyword1">FALSE</span> : <span class="php-var">$url</span>[<span class="php-quote">'v'</span>];
-</span><span id="52" class="l"><a href="#52">52: </a>        }
-</span><span id="53" class="l"><a href="#53">53: </a>        <span class="php-keyword1">elseif</span>(<span class="php-keyword2">preg_match</span>(<span class="php-quote">'/youtu.be\/(.+)$/'</span>, <span class="php-var">$url</span>, <span class="php-var">$matches</span>))
-</span><span id="54" class="l"><a href="#54">54: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">empty</span>(<span class="php-var">$matches</span>[<span class="php-num">1</span>]) ? <span class="php-keyword1">FALSE</span> : <span class="php-var">$matches</span>[<span class="php-num">1</span>];
-</span><span id="55" class="l"><a href="#55">55: </a>        <span class="php-keyword1">else</span>
-</span><span id="56" class="l"><a href="#56">56: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="57" class="l"><a href="#57">57: </a>    }
-</span><span id="58" class="l"><a href="#58">58: </a>    
-</span><span id="59" class="l"><a href="#59">59: </a>    <span class="php-comment">/**
-</span></span><span id="60" class="l"><a href="#60">60: </a><span class="php-comment">     * Gets information about a video
-</span></span><span id="61" class="l"><a href="#61">61: </a><span class="php-comment">     * @param string $id Video ID
-</span></span><span id="62" class="l"><a href="#62">62: </a><span class="php-comment">     * @return mixed Array of information, otherwise FALSE
-</span></span><span id="63" class="l"><a href="#63">63: </a><span class="php-comment">     * @uses MeTools\Utility\Xml::fromFile()
-</span></span><span id="64" class="l"><a href="#64">64: </a><span class="php-comment">     */</span>
-</span><span id="65" class="l"><a href="#65">65: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> getInfo(<span class="php-var">$id</span>) {
-</span><span id="66" class="l"><a href="#66">66: </a>        <span class="php-comment">//See https://developers.google.com/youtube/v3/getting-started#partial</span>
-</span><span id="67" class="l"><a href="#67">67: </a>        <span class="php-var">$url</span> = <span class="php-quote">'https://www.googleapis.com/youtube/v3/videos?id=%s&amp;key=%s&amp;part=snippet,contentDetails&amp;fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))'</span>;
-</span><span id="68" class="l"><a href="#68">68: </a>        <span class="php-var">$info</span> = Xml::fromFile(<span class="php-keyword2">sprintf</span>(<span class="php-var">$url</span>, <span class="php-var">$id</span>, config(<span class="php-quote">'Youtube.key'</span>)));
-</span><span id="69" class="l"><a href="#69">69: </a>                
-</span><span id="70" class="l"><a href="#70">70: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>]) || <span class="php-keyword1">empty</span>(<span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>][<span class="php-quote">'snippet'</span>]) || <span class="php-keyword1">empty</span>(<span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>][<span class="php-quote">'contentDetails'</span>]))
-</span><span id="71" class="l"><a href="#71">71: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="72" class="l"><a href="#72">72: </a>                
-</span><span id="73" class="l"><a href="#73">73: </a>        <span class="php-var">$info</span> = am([
-</span><span id="74" class="l"><a href="#74">74: </a>            <span class="php-quote">'preview'</span> =&gt; <span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>][<span class="php-quote">'snippet'</span>][<span class="php-quote">'thumbnails'</span>][<span class="php-quote">'high'</span>][<span class="php-quote">'url'</span>]
-</span><span id="75" class="l"><a href="#75">75: </a>        ], <span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>][<span class="php-quote">'snippet'</span>], <span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>][<span class="php-quote">'contentDetails'</span>]);
-</span><span id="76" class="l"><a href="#76">76: </a>        
-</span><span id="77" class="l"><a href="#77">77: </a>        <span class="php-keyword1">unset</span>(<span class="php-var">$info</span>[<span class="php-quote">'thumbnails'</span>]);
-</span><span id="78" class="l"><a href="#78">78: </a>                
-</span><span id="79" class="l"><a href="#79">79: </a>        <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/PT(([0-9]+)M)?(([0-9]+)S)?/'</span>, <span class="php-var">$info</span>[<span class="php-quote">'duration'</span>], <span class="php-var">$matches</span>);
-</span><span id="80" class="l"><a href="#80">80: </a>        
-</span><span id="81" class="l"><a href="#81">81: </a>        <span class="php-var">$mins</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$matches</span>[<span class="php-num">2</span>]) ? <span class="php-quote">&quot;00&quot;</span> : <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;%02d&quot;</span>, <span class="php-var">$matches</span>[<span class="php-num">2</span>]);
-</span><span id="82" class="l"><a href="#82">82: </a>        <span class="php-var">$secs</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$matches</span>[<span class="php-num">4</span>]) ? <span class="php-quote">&quot;00&quot;</span> : <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;%02d&quot;</span>, <span class="php-var">$matches</span>[<span class="php-num">4</span>]);
-</span><span id="83" class="l"><a href="#83">83: </a>        
-</span><span id="84" class="l"><a href="#84">84: </a>        <span class="php-var">$info</span>[<span class="php-quote">'seconds'</span>] = (int)<span class="php-var">$mins</span>*<span class="php-num">60</span>+(int)<span class="php-var">$secs</span>;
-</span><span id="85" class="l"><a href="#85">85: </a>        <span class="php-var">$info</span>[<span class="php-quote">'duration'</span>] = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s:%s'</span>, <span class="php-var">$mins</span>, <span class="php-var">$secs</span>);
-</span><span id="86" class="l"><a href="#86">86: </a>
-</span><span id="87" class="l"><a href="#87">87: </a>        <span class="php-keyword1">return</span> <span class="php-var">$info</span>;
-</span><span id="88" class="l"><a href="#88">88: </a>    }
-</span><span id="89" class="l"><a href="#89">89: </a>}</span></code></pre>
+</span><span id="51" class="l"><a href="#51">51: </a>        <span class="php-var">$info</span> = am([
+</span><span id="52" class="l"><a href="#52">52: </a>            <span class="php-quote">'preview'</span> =&gt; <span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>][<span class="php-quote">'snippet'</span>][<span class="php-quote">'thumbnails'</span>][<span class="php-quote">'high'</span>][<span class="php-quote">'url'</span>]
+</span><span id="53" class="l"><a href="#53">53: </a>        ], <span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>][<span class="php-quote">'snippet'</span>], <span class="php-var">$info</span>[<span class="php-quote">'items'</span>][<span class="php-num">0</span>][<span class="php-quote">'contentDetails'</span>]);
+</span><span id="54" class="l"><a href="#54">54: </a>        
+</span><span id="55" class="l"><a href="#55">55: </a>        <span class="php-keyword1">unset</span>(<span class="php-var">$info</span>[<span class="php-quote">'thumbnails'</span>]);
+</span><span id="56" class="l"><a href="#56">56: </a>                
+</span><span id="57" class="l"><a href="#57">57: </a>        <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/PT(([0-9]+)M)?(([0-9]+)S)?/'</span>, <span class="php-var">$info</span>[<span class="php-quote">'duration'</span>], <span class="php-var">$matches</span>);
+</span><span id="58" class="l"><a href="#58">58: </a>        
+</span><span id="59" class="l"><a href="#59">59: </a>        <span class="php-var">$mins</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$matches</span>[<span class="php-num">2</span>]) ? <span class="php-quote">&quot;00&quot;</span> : <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;%02d&quot;</span>, <span class="php-var">$matches</span>[<span class="php-num">2</span>]);
+</span><span id="60" class="l"><a href="#60">60: </a>        <span class="php-var">$secs</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$matches</span>[<span class="php-num">4</span>]) ? <span class="php-quote">&quot;00&quot;</span> : <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;%02d&quot;</span>, <span class="php-var">$matches</span>[<span class="php-num">4</span>]);
+</span><span id="61" class="l"><a href="#61">61: </a>        
+</span><span id="62" class="l"><a href="#62">62: </a>        <span class="php-var">$info</span>[<span class="php-quote">'seconds'</span>] = (int)<span class="php-var">$mins</span>*<span class="php-num">60</span>+(int)<span class="php-var">$secs</span>;
+</span><span id="63" class="l"><a href="#63">63: </a>        <span class="php-var">$info</span>[<span class="php-quote">'duration'</span>] = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s:%s'</span>, <span class="php-var">$mins</span>, <span class="php-var">$secs</span>);
+</span><span id="64" class="l"><a href="#64">64: </a>
+</span><span id="65" class="l"><a href="#65">65: </a>        <span class="php-keyword1">return</span> <span class="php-var">$info</span>;
+</span><span id="66" class="l"><a href="#66">66: </a>    }
+</span><span id="67" class="l"><a href="#67">67: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeYoutube API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -254,6 +232,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?2d1adbec232291418c48e450bbb972793fbc6c69"></script>
+<script src="elementlist.js?9bc4d671185b88a05ca19653e4c9f4f94270088e"></script>
 </body>
 </html>
