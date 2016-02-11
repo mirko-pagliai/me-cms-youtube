@@ -136,5 +136,7 @@ class VideosCell extends Cell {
 	/**
 	 * Search widget
 	 */
-	public function search() { }
+	public function search() {
+		//For this widget, control of the action takes place in the view
+	}
 }
