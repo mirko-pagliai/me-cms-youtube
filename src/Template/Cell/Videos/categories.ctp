@@ -23,23 +23,19 @@
 ?>
 
 <?php
-	//Returns on categories index
-	if($this->request->isCurrent(['_name' => 'videos_categories']))
+	if(empty($categories) || count($categories) < 2)
 		return;
+	
+	//Extends the widget common view
+	$this->extend('MeCms./Common/widget');
+	$this->assign('title', __d('me_youtube', 'Videos categories'));
+	
+	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'videos_category', 'category']]);
+	echo $this->Form->input('q', [
+		'empty'		=> __d('me_cms', 'Select a category'),
+		'label'		=> FALSE,
+		'onchange'	=> 'send_form(this)',
+		'options'	=> $categories
+	]);
+	echo $this->Form->end();
 ?>
-
-<?php if(!empty($categories) && count($categories) > 1): ?>
-	<div class="widget sidebar-widget">
-		<?php 
-			echo $this->Html->h4(__d('me_youtube', 'Videos categories'));
-			echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'videos']]);
-			echo $this->Form->input('q', [
-				'empty'		=> __d('me_cms', 'Select a category'),
-				'label'		=> FALSE,
-				'onchange'	=> 'send_form(this)',
-				'options'	=> $categories
-			]);
-			echo $this->Form->end();
-		?>
-	</div>
-<?php endif; ?>
