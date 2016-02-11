@@ -62,11 +62,15 @@ class VideosCell extends Cell {
 		
 		//If the data are not available from the cache
         if(empty($categories)) {
-			foreach($this->Videos->Categories->find('active')
-					->select(['title', 'slug', 'video_count'])
-					->order(['title' => 'ASC'])
-					->toArray() as $k => $category)
+			$categories = $this->Videos->Categories->find('active')
+				->select(['title', 'slug', 'video_count'])
+				->order(['title' => 'ASC'])
+				->toArray();
+			
+			foreach($categories as $k => $category) {
 				$categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->video_count);
+				unset($categories[$k]);
+			}
 			
             Cache::write($cache, $categories, $this->Videos->cache);
 		}
@@ -132,5 +136,7 @@ class VideosCell extends Cell {
 	/**
 	 * Search widget
 	 */
-	public function search() { }
+	public function search() {
+		//For this widget, control of the action takes place in the view
+	}
 }

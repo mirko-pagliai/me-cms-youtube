@@ -23,20 +23,13 @@
 ?>
 
 <?php
-	//Returns on index, except for category
-	if($this->request->isAction('index', 'Videos') && !$this->request->param('slug'))
+	if(empty($videos))
 		return;
 	
-	//Returns on the last record view
-	if(count($videos) < 2 && $this->request->isAction('view', 'Videos') && $this->request->param('id') && $videos[0]->id && $this->request->param('id') === $videos[0]->id)
-		return;
+	//Extends the widget common view
+	$this->extend('MeCms./Common/widget');
+	$this->assign('title', count($videos) > 1 ? __d('me_youtube', 'Latest {0} videos', count($videos)) : __d('me_youtube', 'Latest video'));
+	
+	foreach($videos as $video)
+		echo $this->element('MeYoutube.frontend/views/video_preview', am(['truncate' => ['title' => FALSE, 'description' => FALSE]], compact('video')));
 ?>
-
-<?php if(count($videos)): ?>
-	<div class="widget sidebar-widget">
-		<?= $this->Html->h4(count($videos) > 1 ? __d('me_youtube', 'Latest {0} videos', count($videos)) : __d('me_youtube', 'Latest video')) ?>
-		<?php foreach($videos as $video): ?>
-			<?= $this->element('MeYoutube.frontend/views/video_preview', am(['truncate' => ['title' => FALSE, 'description' => FALSE]], compact('video'))) ?>
-		<?php endforeach; ?>
-	</div>
-<?php endif; ?>
