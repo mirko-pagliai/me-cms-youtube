@@ -2,6 +2,7 @@
 ## 2.1 branch
 ### 2.1.7
 * fixed bug in "videos categories" widget;
+* at the end of a video, related videos are not shown;
 * widgets now use a common view. Rewritten the code of all widgets.
 
 ### 2.1.6

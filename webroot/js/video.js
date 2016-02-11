@@ -32,8 +32,10 @@ function onYouTubeIframeAPIReady() {
 		height: '390',
 		width: '640',
 		videoId: firstVideo,
+		//For "playerVars", see https://developers.google.com/youtube/player_parameters?playerVersion=HTML5#Parameters
 		playerVars: {
 			autoplay: $('#player').data('autoplay'),
+			rel: 0,
 			showinfo: 0
 		},
 		events: {
