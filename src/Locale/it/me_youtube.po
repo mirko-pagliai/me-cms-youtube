@@ -46,7 +46,7 @@ msgid "This is not a {0} video"
 msgstr "Questo non è un video di {0}"
 
 #: /home/mirko/Server/MeYoutube_Plugin/src/Controller/Admin/VideosController.php:122
-msgid "Unable to retrieve video information. Probably the video is private"
+msgid "Unable to retrieve video informations. Probably the video is private"
 msgstr ""
 "Impossibile recuperare le informazioni del video. Probabilmente il video è "
 "privato"
