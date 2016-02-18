@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.8
+* it checks whether the information of a video are present. This avoids post a private video.
+
 ### 2.1.7
 * fixed bug in "videos categories" widget;
 * at the end of a video, related videos are not shown;

@@ -117,8 +117,11 @@ class VideosController extends AppController {
 			//Checks for the Youtube video ID and the video information	
 			if(!$youtube_id = Youtube::getId($this->request->query('url')))
 				$this->Flash->error(__d('me_youtube', 'This is not a {0} video', 'YouTube'));
-				
-			$this->request->data = am(compact('youtube_id'), Youtube::getInfo($youtube_id));
+			//Checks if the informations are accesible
+			elseif(!$youtube_info = Youtube::getInfo($youtube_id))
+				$this->Flash->error(__d('me_youtube', 'Unable to retrieve video information. Probably the video is private'));
+			else
+				$this->request->data = am(compact('youtube_id'), Youtube::getInfo($youtube_id));
 		}
 		
         $video = $this->Videos->newEntity();
