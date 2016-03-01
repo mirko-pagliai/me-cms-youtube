@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.9
+* updated for MeCms.
+
 ### 2.1.8
 * it checks whether the information of a video are present. This avoids post a private video;
 * updated to CakePHP 3.2.
