@@ -22,7 +22,7 @@
  */
 namespace MeYoutube\Controller;
 
-use Cake\Cache\Cache;
+use MeTools\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use MeYoutube\Controller\AppController;
 
