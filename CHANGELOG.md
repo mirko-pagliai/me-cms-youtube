@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.11
+* fixed a lot of little bugs and codes.
+
 ### 2.1.10
 * updated for MeCms.
 

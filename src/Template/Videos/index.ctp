@@ -24,14 +24,13 @@
 	
 <?php
 	/**
-	 * This view can be used by many actions
+	 * This template can be used by many actions
 	 */
-	//VideosCategories `view`
-	if($this->request->isAction('view', 'VideosCategories') && !empty($videos[0]->category->title))
-		$title = $videos[0]->category->title;
-	//Videos `index_by_date`
-	elseif($this->request->isAction('index_by_date', 'Videos')) {
-		$date = (new \Cake\I18n\Time())->year($this->request->param('year'))->month($this->request->param('month'))->day($this->request->param('day'));
+    if($this->request->isAction('index_by_date', 'Videos')) {
+		$date = (new \Cake\I18n\Time());
+        $date->year($this->request->param('year'));
+        $date->month($this->request->param('month'));
+        $date->day($this->request->param('day'));
 		
 		if($date->isToday())
 			$title = __d('me_youtube', 'Videos of today');
@@ -40,11 +39,12 @@
 		else
 			$title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat(config('main.date.long')));
 	}
+	elseif($this->request->isAction('view', 'VideosCategories') && !empty($videos[0]->category->title))
+		$title = $videos[0]->category->title;
+    else
+        $title = __d('me_youtube', 'Videos');
 
-	if(!empty($title))
-		$this->assign('title', $title);
-	else
-		$this->assign('title', __d('me_youtube', 'Videos'));
+	$this->assign('title', $title);
 ?>
 
 <div class="videos index">
