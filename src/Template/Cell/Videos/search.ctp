@@ -24,7 +24,7 @@
 
 <?php
 	//Returns on search
-	if($this->request->isCurrent(['_name' => 'search_videos']))
+	if($this->request->isHere(['_name' => 'search_videos']))
 		return;
 		
 	//Extends the widget common view

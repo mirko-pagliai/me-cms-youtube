@@ -190,7 +190,9 @@ class VideosController extends AppController {
 	 * @uses MeCms\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
 	public function search() {
-		if($pattern = $this->request->query('p')) {
+        $pattern = $this->request->query('p');
+        
+		if($pattern) {
 			//Checks if the pattern is at least 4 characters long
 			if(strlen($pattern) >= 4) {
 				if($this->Security->checkLastSearch($pattern)) {
@@ -237,5 +239,7 @@ class VideosController extends AppController {
 			else
 				$this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
 		}
+        
+        $this->set(compact('pattern'));
 	}
 }

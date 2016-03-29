@@ -20,6 +20,8 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+use Cake\Routing\Router;
 ?>
 
 <div class="video-container content-container clearfix">
@@ -69,7 +71,7 @@
 				?>
 			</div>
 		<?php else: ?>
-			<a class="video-fake" href="<?= \Cake\Routing\Router::url(['_name' => 'video', $video->id]) ?>">
+			<a class="video-fake" href="<?= Router::url(['_name' => 'video', $video->id]) ?>">
 				<?= $this->Html->img($video->preview) ?>
 				<?= $this->Html->icon('youtube-play') ?>
 			</a>

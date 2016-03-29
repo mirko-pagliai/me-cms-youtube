@@ -28,10 +28,10 @@
 	<?php
 		echo $this->Html->h2(__d('me_youtube', 'Videos categories'));	
 		
-		$list = array();
-		foreach($categories as $category)
-			$list[] = $this->Html->link($category->title, ['_name' => 'videos_category', $category->slug]);
+        $categories = array_map(function($category) {
+            return $this->Html->link($category->title, ['_name' => 'videos_category', $category->slug]);
+        }, $categories->toArray());
 
-		echo $this->Html->ul($list, ['icon' => 'caret-right']);
+		echo $this->Html->ul($categories, ['icon' => 'caret-right']);
 	?>
 </div>

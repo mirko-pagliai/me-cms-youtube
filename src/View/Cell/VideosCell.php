@@ -46,12 +46,12 @@ class VideosCell extends Cell {
 	
 	/**
 	 * Categories widget
-	 * @uses MeTools\Network\Request::isCurrent()
+	 * @uses MeTools\Network\Request::isHere()
 	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
 	public function categories() {
 		//Returns on categories index
-		if($this->request->isCurrent(['_name' => 'videos_categories']))
+		if($this->request->isHere(['_name' => 'videos_categories']))
 			return;
 		
 		//Checks if the cache is valid

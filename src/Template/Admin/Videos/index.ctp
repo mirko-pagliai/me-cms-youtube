@@ -91,18 +91,15 @@
 			<?php foreach($videos as $video): ?>
 				<tr>
 					<td>
+                        <strong><?= $this->Html->link($video->title, ['action' => 'edit', $video->id]) ?></strong>
 						<?php
-							$title = $this->Html->link($video->title, ['action' => 'edit', $video->id]);
-							
 							//If the video is a spot
 							if($video->is_spot)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'text-success']));
-						
-							//If the video is not active (it's a draft)
-							if(!$video->active)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'text-warning']));
-							
-							echo $this->Html->strong($title);
+                                echo $this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'record-label record-label-primary']);
+                            
+                            //If the video is not active (it's a draft)
+                            if(!$video->active)
+                                echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
 														
 							$actions = [];
 							
