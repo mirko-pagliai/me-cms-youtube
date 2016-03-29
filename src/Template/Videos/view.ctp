@@ -32,5 +32,5 @@
 ?>
 
 <div class="videos view">
-	<?= $this->element('frontend'.DS.'views'.DS.'video', compact('video')); ?>
+	<?= $this->element('frontend/views/video', compact('video')); ?>
 </div>
