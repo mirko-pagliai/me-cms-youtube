@@ -23,23 +23,19 @@
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Utility\Hash;
 
 /**
- * MeYoutube configuration
+ * Loads the MeYoutube configuration
  */
-//Loads the configuration from the plugin
 Configure::load('MeYoutube.me_youtube');
 
-$config = Configure::read('MeYoutube');
+//Merges with the configuration from application, if exists
+if(is_readable(CONFIG.'me_youtube.php'))
+	Configure::load('me_youtube');
 
-//Loads the configuration from the application, if exists
-if(is_readable(CONFIG.'me_youtube.php')) {
-	Configure::load('me_youtube', 'default', FALSE);
-	
-	$config = \Cake\Utility\Hash::mergeDiff(Configure::consume('MeYoutube'), $config);
-}
-
-Configure::write('MeCms', \Cake\Utility\Hash::mergeDiff(Configure::read('MeCms'), $config));
+//Merges with the MeCms configuration
+Configure::write('MeCms', Hash::merge(config('MeCms'), Configure::consume('MeYoutube')));
 
 /**
  * Youtube keys 
