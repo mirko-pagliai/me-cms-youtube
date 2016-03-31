@@ -21,13 +21,14 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-define('ME_YOUTUBE_PATH', CACHE.'me_youtube'.DS);
+if(!defined('ME_YOUTUBE_CACHE'))
+    define('ME_YOUTUBE_CACHE', CACHE.'me_youtube'.DS);
 
 //Default options (with File engine)
 $options = [
     'className' => 'File',
 	'duration'	=> '+999 days',
-	'path'		=> ME_YOUTUBE_PATH,
+	'path'		=> ME_YOUTUBE_CACHE,
 	'prefix'	=> '',
 	'mask'		=> 0777
 ];
