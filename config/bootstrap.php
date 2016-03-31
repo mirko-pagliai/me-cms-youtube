@@ -23,6 +23,7 @@
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Network\Exception\InternalErrorException;
 use Cake\Utility\Hash;
 
 /**
@@ -37,11 +38,8 @@ if(is_readable(CONFIG.'me_youtube.php'))
 //Merges with the MeCms configuration
 Configure::write('MeCms', Hash::merge(config('MeCms'), Configure::consume('MeYoutube')));
 
-/**
- * Youtube keys 
- */
-//Loads the Youtube keys
-Configure::load('youtube_keys');
+if(!config('Youtube.key') || config('Youtube.key') === 'your-key-here')
+    throw new InternalErrorException('YouTube API key is missing');
 
 /**
  * Loads the cache configuration

@@ -1,5 +1,6 @@
 # 2.x branch
 ## 2.2 branch
+* the API key has moved to `me_youtube.php`. Removed `youtube_keys.php`;
 * the code for loading the configuration files has been optimized.
 
 ## 2.1 branch
