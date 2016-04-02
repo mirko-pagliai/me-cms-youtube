@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-03-29 15:43+0200\n"
-"PO-Revision-Date: 2016-03-29 16:27+0100\n"
+"POT-Creation-Date: 2016-04-02 17:47+0200\n"
+"PO-Revision-Date: 2016-04-02 17:48+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -93,8 +93,8 @@ msgstr "Video"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:96
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:77
-msgid "Preview"
-msgstr "Anteprima"
+msgid "Thumbnail preview"
+msgstr "Anteprima miniatura"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:102
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:83

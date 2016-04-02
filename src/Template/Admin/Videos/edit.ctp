@@ -74,7 +74,7 @@ use MeYoutube\Utility\Youtube;
 				<?= $this->Html->youtube($video->youtube_id, ['class' => 'center-block', 'height' => 315, 'width' => 560]) ?>
 			</div>
 			<div class="col-sm-6">
-				<h4><?= __d('me_youtube', 'Preview') ?></h4>
+				<h4><?= __d('me_youtube', 'Thumbnail preview') ?></h4>
 				<?= $this->Thumb->image(Youtube::getPreview($video->youtube_id), ['height' => 315, 'class' => 'center-block']) ?>
 			</div>
 		</div>

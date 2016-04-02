@@ -23,45 +23,38 @@
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Network\Exception\InternalErrorException;
+use Cake\Utility\Hash;
 
 /**
- * MeYoutube configuration
+ * Loads the MeYoutube configuration
  */
-//Loads the configuration from the plugin
 Configure::load('MeYoutube.me_youtube');
 
-$config = Configure::read('MeYoutube');
+//Merges with the configuration from application, if exists
+if(is_readable(CONFIG.'me_youtube.php'))
+	Configure::load('me_youtube');
 
-//Loads the configuration from the application, if exists
-if(is_readable(CONFIG.'me_youtube.php')) {
-	Configure::load('me_youtube', 'default', FALSE);
-	
-	$config = \Cake\Utility\Hash::mergeDiff(Configure::consume('MeYoutube'), $config);
-}
+//Merges with the MeCms configuration
+Configure::write('MeCms', Hash::merge(config('MeCms'), Configure::consume('MeYoutube')));
 
-Configure::write('MeCms', \Cake\Utility\Hash::mergeDiff(Configure::read('MeCms'), $config));
-
-/**
- * Youtube keys 
- */
-//Loads the Youtube keys
-Configure::load('youtube_keys');
+if(!config('Youtube.key') || config('Youtube.key') === 'your-key-here')
+    throw new InternalErrorException('YouTube API key is missing');
 
 /**
- * Cache configuration
+ * Loads the cache configuration
  */
-//Loads the cache configuration from the plugin
 Configure::load('MeYoutube.cache');
 
-//Loads the cache from the application, if exists
+//Merges with the configuration from application, if exists
 if(is_readable(CONFIG.'cache.php'))
-	Configure::load('cache', 'default', FALSE);
-
+	Configure::load('cache');
+    
 //Adds all cache configurations
 foreach(Configure::consume('Cache') as $key => $config) {
-	//Drops the default cache
-	if($key === 'default')
-		Cache::drop('default');
+	//Drops cache configurations that already exist
+	if(Cache::config($key))
+		Cache::drop($key);
 	
 	Cache::config($key, $config);
 }
