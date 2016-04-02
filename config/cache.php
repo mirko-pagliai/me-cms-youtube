@@ -34,5 +34,5 @@ $options = [
 ];
 
 return ['Cache' => [	
-	'videos'	=> array_merge($options, ['path' => ME_YOUTUBE_PATH.'videos'])
+	'videos'	=> array_merge($options, ['path' => ME_YOUTUBE_CACHE.'videos'])
 ]];
