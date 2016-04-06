@@ -24,14 +24,14 @@
 
 <?php
 	//Returns on search
-	if($this->request->isHere(['_name' => 'search_videos']))
+	if($this->request->isHere(['_name' => 'videos_search']))
 		return;
 		
 	//Extends the widget common view
 	$this->extend('MeCms./Common/widget');
 	$this->assign('title', __d('me_youtube', 'Search videos'));
 
-	echo $this->Form->createInline(FALSE, ['type' => 'get', 'url' => ['_name' => 'search_videos']]);
+	echo $this->Form->createInline(FALSE, ['type' => 'get', 'url' => ['_name' => 'videos_search']]);
 	echo $this->Form->input('p', ['placeholder' => sprintf('%s...', __d('me_cms', 'Search'))]);
 	echo $this->Form->submit(NULL, ['class' => 'btn-primary visible-lg-inline', 'icon' => 'search']);
 	echo $this->Form->end();

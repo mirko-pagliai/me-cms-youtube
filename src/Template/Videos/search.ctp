@@ -28,7 +28,7 @@
 	<?php
 		echo $this->Html->h2(__d('me_youtube', 'Search videos'));
 		
-		echo $this->Form->create(NULL, ['type' => 'get', 'url' => ['_name' => 'search_videos']]);
+		echo $this->Form->create(NULL, ['type' => 'get', 'url' => ['_name' => 'videos_search']]);
 		echo $this->Form->input('p', [
 			'default'		=> $this->request->query('p'),
 			'label'			=> FALSE,

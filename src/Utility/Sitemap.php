@@ -51,7 +51,7 @@ class Sitemap extends SitemapBuilder {
         $url = [
             self::url(['_name' => 'videos']),
             self::url(['_name' => 'videos_categories']),
-            self::url(['_name' => 'search_videos']),
+            self::url(['_name' => 'videos_search']),
         ];
         
         foreach($categories as $category) {
