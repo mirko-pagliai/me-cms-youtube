@@ -48,11 +48,11 @@ class Sitemap extends SitemapBuilder {
         }
         
         //Adds videos index, categories index and videos search
-        $url[] = [
+        $url = am($url, [
             self::url(['_name' => 'videos']),
             self::url(['_name' => 'videos_categories']),
             self::url(['_name' => 'search_videos']),
-        ];
+        ]);
         
         foreach($categories as $category) {
             //Adds the category
