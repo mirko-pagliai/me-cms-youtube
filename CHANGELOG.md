@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.2 branch
 ### 2.2.1
-* added the class to generate sitemap.
+* added functions to generate the site sitemap.
 
 ### 2.2.0
 * the API key has moved to `me_youtube.php`. Removed `youtube_keys.php`;
