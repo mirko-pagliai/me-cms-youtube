@@ -186,7 +186,7 @@ class VideosController extends AppController {
 	
 	/**
 	 * Search videos
-	 * @uses MeCms\Controller\Component\SecurityComponent::checkLastSearch()
+	 * @uses MeCms\Controller\AppController::_checkLastSearch()
 	 * @uses MeCms\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
 	public function search() {
@@ -195,7 +195,7 @@ class VideosController extends AppController {
 		if($pattern) {
 			//Checks if the pattern is at least 4 characters long
 			if(strlen($pattern) >= 4) {
-				if($this->Security->checkLastSearch($pattern)) {
+				if($this->_checkLastSearch($pattern)) {
 					$this->paginate['limit'] = config('frontend.records_for_searches');
 					
 					//Checks if the cache is valid
