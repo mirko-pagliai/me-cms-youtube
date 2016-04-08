@@ -33,9 +33,9 @@ class Youtube extends BaseYoutube {
 	 * Gets information about a video
 	 * @param string $id Video ID
 	 * @return array|bool Array of information or FALSE
+     * @see https://developers.google.com/youtube/v3/getting-started#partial
 	 */
 	public static function getInfo($id) {
-		//See https://developers.google.com/youtube/v3/getting-started#partial
 		$url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
 		$url = sprintf($url, $id, config('Youtube.key'));
         
