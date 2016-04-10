@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.2 branch
+### 2.2.2
+* rewrote the code to generate the backend menus.
+
 ### 2.2.1
 * added functions to generate the site sitemap.
 
