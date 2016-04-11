@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.2 branch
 ### 2.2.2
+* now videos categories have "created" and "modified" fields;
 * rewrote the code to generate the backend menus.
 
 ### 2.2.1

@@ -22,12 +22,33 @@
  */
 namespace MeYoutube\Shell;
 
-use MeTools\Console\Shell;
+use MeCms\Shell\BaseUpdateShell;
 
 /**
  * Applies updates
  */
-class UpdateShell extends Shell {	
+class UpdateShell extends BaseUpdateShell {
+	/**
+	 * Updates to 2.6.0 version
+	 * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+	 */
+	public function to2v6v0() {
+		$this->loadModel('MeYoutube.VideosCategories');
+        
+        //Adds "created" field to the videos categories table and sets the default value
+        if(!$this->_checkColumn('created', $this->VideosCategories->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL AFTER `video_count`;', $this->VideosCategories->table()));
+            $this->VideosCategories->query()->update()->set(['created' => $this->now])->execute();
+        }
+        
+        //Adds "modified" field to the videos categories table and sets the default value
+        if(!$this->_checkColumn('modified', $this->VideosCategories->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME NULL AFTER `created`;', $this->VideosCategories->table()));
+            $this->VideosCategories->query()->update()->set(['modified' => $this->now])->execute();
+        }
+    }
+    
 	/**
 	 * Updates to 2.0.4-RC4 version
 	 * @uses MeYoutube\Utility\Youtube::getInfo()
@@ -59,13 +80,13 @@ class UpdateShell extends Shell {
 	/**
 	 * Gets the option parser instance and configures it.
 	 * @return ConsoleOptionParser
-	 * @uses MeTools\Shell\InstallShell::getOptionParser()
 	 */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
-			'to2v0v4vRC4' => ['help' => __d('me_cms', 'Updates to {0} version', '2.0.4-RC4')]
+            'to2v6v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.6.0')],
+			'to2v0v4vRC4' => ['help' => __d('me_cms', 'Updates to {0} version', '2.0.4-RC4')],
 		]);
 	}
 }
