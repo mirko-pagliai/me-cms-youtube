@@ -37,33 +37,42 @@ class Sitemap extends SitemapBuilder {
     /**
      * Method that returns videos urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::url()
+     * @uses MeCms\Utility\SitemapBuilder::parse()
      */
     public static function videos() {
-        $categories = TableRegistry::get('MeYoutube.VideosCategories')->find('active')
+        $table = TableRegistry::get('MeYoutube.VideosCategories');
+        
+        $categories = $table->find('active')
             ->select(['id', 'slug'])
             ->contain(['Videos' => function($q) {
-                return $q->select(['id', 'category_id']);
+                return $q
+                    ->select(['id', 'category_id', 'modified'])
+                    ->order(['Videos.modified' => 'DESC']);
             }]);
         
         if($categories->isEmpty()) {
             return [];
         }
         
+        $latest = $table->Videos->find()
+            ->select(['modified'])
+            ->order(['Videos.modified' => 'DESC'])
+            ->firstOrFail();
+        
         //Adds videos index, categories index and videos search
         $url = [
-            self::url(['_name' => 'videos']),
-            self::url(['_name' => 'videos_categories']),
-            self::url(['_name' => 'videos_search']),
+            self::parse(['_name' => 'videos'], ['lastmod' => $latest->modified]),
+            self::parse(['_name' => 'videos_categories']),
+            self::parse(['_name' => 'videos_search'], ['priority' => '0.2']),
         ];
         
         foreach($categories as $category) {
             //Adds the category
-            $url[] = self::url(['_name' => 'videos_category', $category->slug]);
+            $url[] = self::parse(['_name' => 'videos_category', $category->slug], ['lastmod' => $category->videos[0]->modified]);
             
             //Adds the videos
             $url = am($url, array_map(function($video) {
-                return self::url(['_name' => 'video', $video->id]);
+                return self::parse(['_name' => 'video', $video->id], ['lastmod' => $video->modified]);
             }, $category->videos));
         }
             
