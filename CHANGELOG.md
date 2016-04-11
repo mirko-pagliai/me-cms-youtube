@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.3 branch
 ### 2.3.0
-* now the sitemap handles `lastmod` and `priority` values;
+* now the sitemap uses the cache and handles `lastmod` and `priority` values;
 * now videos categories have "created" and "modified" fields;
 * rewrote the code to generate the backend menus.
 

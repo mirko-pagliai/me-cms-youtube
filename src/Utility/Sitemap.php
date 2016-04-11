@@ -25,6 +25,7 @@ namespace MeYoutube\Utility;
 
 use Cake\ORM\TableRegistry;
 use MeCms\Utility\SitemapBuilder;
+use MeTools\Cache\Cache;
 
 /**
  * This class contains methods called by the `SitemapBuilder`.
@@ -41,6 +42,12 @@ class Sitemap extends SitemapBuilder {
      */
     public static function videos() {
         $table = TableRegistry::get('MeYoutube.VideosCategories');
+        
+        $url = Cache::read('sitemap', $table->cache);
+        
+        if($url) {
+            return $url;
+        }
         
         $categories = $table->find('active')
             ->select(['id', 'slug'])
@@ -75,6 +82,8 @@ class Sitemap extends SitemapBuilder {
                 return self::parse(['_name' => 'video', $video->id], ['lastmod' => $video->modified]);
             }, $category->videos));
         }
+        
+        Cache::write('sitemap', $url, $table->cache);
             
         return $url;
     }
