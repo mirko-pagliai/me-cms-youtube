@@ -19,19 +19,19 @@
  * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         MeCms\View\Helper\MenuBuilderHelper
  */
 namespace MeYoutube\View\Helper;
 
 use Cake\View\Helper;
-use MeCms\View\Helper\AuthHelper;
 
 /**
- * MenuDefault Helper.
+ * Menu Helper.
  * 
  * This helper contains methods that will be called automatically to generate the menu of the backend.
  * You do not need to call these methods manually.
  */
-class MeYoutubeMenuHelper extends Helper {
+class MenuHelper extends Helper {
 	/**
 	 * Helpers
 	 * @var array
@@ -44,18 +44,17 @@ class MeYoutubeMenuHelper extends Helper {
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	public function _videos() {
+	public function videos() {
 		$menu = [
 			$this->Html->link(__d('me_youtube', 'List videos'), ['controller' => 'videos', 'action' => 'index', 'plugin' => 'MeYoutube']),
 			$this->Html->link(__d('me_youtube', 'Add video'), ['controller' => 'videos', 'action' => 'add', 'plugin' => 'MeYoutube'])
 		];
 		
 		//Only admins and managers can access this controller
-		if($this->Auth->isGroup(['admin', 'manager']))
-			array_push($menu,
-				$this->Html->link(__d('me_cms', 'List categories'), ['controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'MeYoutube']),
-				$this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'videos_categories', 'action' => 'add', 'plugin' => 'MeYoutube'])
-			);
+		if($this->Auth->isGroup(['admin', 'manager'])) {
+			$menu[] = $this->Html->link(__d('me_cms', 'List categories'), ['controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'MeYoutube']);
+			$menu[] = $this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'videos_categories', 'action' => 'add', 'plugin' => 'MeYoutube']);
+        }
 		
 		return [$menu, __d('me_youtube', 'Videos'), ['icon' => 'film']];
 	}

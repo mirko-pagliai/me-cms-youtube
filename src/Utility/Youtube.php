@@ -22,31 +22,29 @@
  */
 namespace MeYoutube\Utility;
 
+use Cake\Network\Http\Client;
 use MeCms\Utility\Youtube as BaseYoutube;
-use MeTools\Utility\Xml;
 
 /**
- * An utility to get information about YouTube videos.
- * 
- * You can use this utility by adding:
- * <code>
- * use MeYoutube\Utility\Youtube;
- * </code>
+ * An utility to get information about YouTube videos
  */
 class Youtube extends BaseYoutube {	
 	/**
 	 * Gets information about a video
 	 * @param string $id Video ID
-	 * @return mixed Array of information, otherwise FALSE
-	 * @uses MeTools\Utility\Xml::fromFile()
+	 * @return array|bool Array of information or FALSE
+     * @see https://developers.google.com/youtube/v3/getting-started#partial
 	 */
 	public static function getInfo($id) {
-		//See https://developers.google.com/youtube/v3/getting-started#partial
 		$url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
-		$info = Xml::fromFile(sprintf($url, $id, config('Youtube.key')));
-				
-		if(empty($info['items'][0]) || empty($info['items'][0]['snippet']) || empty($info['items'][0]['contentDetails']))
+		$url = sprintf($url, $id, config('Youtube.key'));
+        
+        $response = (new Client())->get($url);
+        $info = json_decode($response->body(), TRUE);
+        
+		if(empty($info['items'][0]['snippet']) || empty($info['items'][0]['contentDetails'])) {
 			return FALSE;
+        }
 				
 		$info = am([
 			'preview' => $info['items'][0]['snippet']['thumbnails']['high']['url']
@@ -59,7 +57,7 @@ class Youtube extends BaseYoutube {
 		$mins = empty($matches[2]) ? "00" : sprintf("%02d", $matches[2]);
 		$secs = empty($matches[4]) ? "00" : sprintf("%02d", $matches[4]);
 		
-		$info['seconds'] = (int)$mins*60+(int)$secs;
+		$info['seconds'] = (int)$mins * 60 + (int) $secs;
 		$info['duration'] = sprintf('%s:%s', $mins, $secs);
 
 		return $info;

@@ -35,6 +35,8 @@ use Cake\ORM\Entity;
  * @property string $slug
  * @property string $description
  * @property int $video_count
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  * @property \MeYoutube\Model\Entity\ChildYoutubeVideosCategory[] $child_youtube_videos_categories
  */
 class VideosCategory extends Entity {
@@ -45,6 +47,7 @@ class VideosCategory extends Entity {
     protected $_accessible = [
         '*' => TRUE,
         'id' => FALSE,
-		'video_count' => FALSE
+		'video_count' => FALSE,
+		'modified' => FALSE,
     ];
 }

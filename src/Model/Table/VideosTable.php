@@ -157,6 +157,7 @@ class VideosTable extends AppTable {
             'className' => 'MeCms.Users'
         ]);
 		
+        $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Categories' => ['video_count']]);
     }
 	
