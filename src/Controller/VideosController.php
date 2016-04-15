@@ -146,7 +146,7 @@ class VideosController extends AppController {
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
-			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'created'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
 			->firstOrFail();
