@@ -22,6 +22,23 @@
  */
 ?>
 
+<?php $this->append('userbar'); ?>
+<?php if(!$video->active || $video->created->isFuture()): ?>
+    <li>
+        <?php if(!$video->active): ?>
+            <?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?>
+        <?php endif; ?>
+
+        <?php if($video->created->isFuture()): ?>
+            <?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?>
+        <?php endif; ?>
+    </li>
+<?php endif; ?>
+
+<li><?= $this->Html->link(__d('me_youtube', 'Edit video'), ['action' => 'edit', $video->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
+<li><?= $this->Form->postLink(__d('me_youtube', 'Delete video'), ['action' => 'delete', $video->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']) ?></li>
+<?php $this->end(); ?>
+
 <?php
 	$this->assign('title', $video->title);
 	

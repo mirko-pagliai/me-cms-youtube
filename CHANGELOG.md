@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.3 branch
+### 2.3.1
+* added userbar for frontend. It allows to edit an delete videos.
+
 ### 2.3.0
 * now the sitemap uses the cache and handles `lastmod` and `priority` values;
 * now videos categories have "created" and "modified" fields;
