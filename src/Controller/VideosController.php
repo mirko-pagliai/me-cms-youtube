@@ -185,7 +185,7 @@ class VideosController extends AppController {
 	}
 	
 	/**
-	 * Search videos
+	 * Searches videos
 	 * @uses MeCms\Controller\AppController::_checkLastSearch()
 	 * @uses MeCms\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
