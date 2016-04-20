@@ -44,7 +44,7 @@
 	
 	//Set some tags
 	$this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-    $this->Html->meta(['content' => $video->created->toUnixString(), 'property' => 'og:updated_time']);
+    $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
 	
 	if(!empty($video->preview)) {
 		$this->Html->meta(['href' => $video->preview, 'rel' => 'image_src']);
