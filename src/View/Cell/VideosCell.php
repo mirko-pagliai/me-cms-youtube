@@ -47,15 +47,11 @@ class VideosCell extends Cell {
 	/**
 	 * Categories widget
 	 * @uses MeTools\Network\Request::isHere()
-	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
 	public function categories() {
 		//Returns on categories index
 		if($this->request->isHere(['_name' => 'videos_categories']))
 			return;
-		
-		//Checks if the cache is valid
-		$this->Videos->checkIfCacheIsValid();
 		
 		//Tries to get data from the cache
 		$categories = Cache::read($cache = 'widget_categories', $this->Videos->cache);
@@ -82,15 +78,11 @@ class VideosCell extends Cell {
 	 * Latest widget
 	 * @param int $limit Limit
 	 * @uses MeTools\Network\Request::isAction()
-	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
     public function latest($limit = 1) {
 		//Returns on index, except for category
 		if($this->request->isAction('index', 'Videos') && !$this->request->param('slug'))
 			return;
-		
-		//Checks if the cache is valid
-		$this->Videos->checkIfCacheIsValid();
 
 		$this->set('videos', $this->Videos->find('active')
 			->select(['id', 'youtube_id', 'title', 'description'])
@@ -105,15 +97,11 @@ class VideosCell extends Cell {
 	 * Random widget
 	 * @param int $limit Limit
 	 * @uses MeTools\Network\Request::isController()
-	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
 	public function random($limit = 1) {
 		//Returns on the same controllers
 		if($this->request->isController(['Videos', 'VideosCategories']))
 			return;
-		
-		//Checks if the cache is valid
-		$this->Videos->checkIfCacheIsValid();
 		
 		//Returns, if there are no records available
 		if(Cache::read($cache = 'no_videos', $this->Videos->cache))

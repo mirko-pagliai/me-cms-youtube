@@ -45,15 +45,11 @@ class VideosCategoriesController extends AppController {
 	/**
 	 * Lists videos for a category
 	 * @param string $category Category slug
-	 * @uses MeCms\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
 	public function view($category = NULL) {
 		//The category can be passed as query string, from a widget
 		if($this->request->query('q'))
 			return $this->redirect([$this->request->query('q')]);
-		
-		//Checks if the cache is valid
-		$this->VideosCategories->Videos->checkIfCacheIsValid();
 		
 		//Sets the cache name
 		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
