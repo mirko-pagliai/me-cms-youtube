@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.3 branch
 ### 2.3.3
-* improved the code to check the cache validity. Removed `checkIfCacheIsValid()` and `getNextToBePublished()` methods.
+* improved the code to check the cache validity. Removed `checkIfCacheIsValid()` and `getNextToBePublished()` methods;
+* updated Facebook's tags.
 
 ### 2.3.2
 * logged users can view future videos and drafts;
