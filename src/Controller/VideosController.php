@@ -32,13 +32,42 @@ use MeYoutube\Controller\AppController;
  */
 class VideosController extends AppController {
 	/**
+	 * Called before the controller action. 
+	 * You can use this method to perform logic that needs to happen before each controller action.
+	 * @param \Cake\Event\Event $event An Event instance
+	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
+	 * @uses MeCms\Controller\AppController::beforeFilter()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function beforeFilter(\Cake\Event\Event $event) {
+        parent::beforeFilter($event);
+        
+        //View videos. It checks created datetime and status. Logged users can view future objects and drafts
+		if($this->request->isAction('view')) {
+            if($this->Auth->user()) {
+                return;
+            }
+            
+            $id = $this->request->param('id');
+                        
+            $video = $this->Videos->find()
+                ->select(['active', 'created'])
+                ->where(compact('id'))
+                ->cache(sprintf('status_%s', md5($id)), $this->Videos->cache)
+                ->firstOrFail();
+            
+            if($video->active && $video->created->isPast()) {
+                return;
+            }
+            
+            $this->Auth->deny('view');
+        }
+    }
+    
+	/**
      * Lists videos
-	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
     public function index() {
-		//Checks if the cache is valid
-		$this->Videos->checkIfCacheIsValid();
-		
 		//Sets the cache name
 		$cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
@@ -79,10 +108,7 @@ class VideosController extends AppController {
 	 * @param int $day Day
 	 * @property \MeYoutube\Model\Table\VideosTable $Videos
 	 */
-	public function index_by_date($year, $month, $day) {
-		//Checks if the cache is valid
-		$this->Videos->checkIfCacheIsValid();
-		
+	public function index_by_date($year, $month, $day) {		
 		//Sets the cache name
 		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
@@ -134,45 +160,37 @@ class VideosController extends AppController {
     /**
      * Views video
      * @param string $id Video ID
-	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
      */
-    public function view($id = NULL) {
-		//Checks if the cache is valid
-		$this->Videos->checkIfCacheIsValid();
-		
-		$video = $this->Videos->find('active')
+    public function view($id = NULL) {		
+		$video = $this->Videos->find()
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
-			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'created'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
 			->firstOrFail();
 		
+		$this->set(compact('video'));
+        
 		//If requested, gets the ID of a spot and adds it to the video
 		if(config('video.spot')) {
 			$spot = $this->Videos->getRandomSpots();
 			$video->spot_id = $spot[0]->youtube_id;
 		}
-		
-		$this->set(compact('video'));
     }
 	
 	/**
 	 * Lists videos as RSS
 	 * @throws \Cake\Network\Exception\ForbiddenException
 	 * @uses Cake\Controller\Component\RequestHandlerComponent:isRss()
-	 * @uses MeCms\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
 	public function rss() {
 		//This method works only for RSS
 		if(!$this->RequestHandler->isRss())
             throw new \Cake\Network\Exception\ForbiddenException();
-		
-		//Checks if the cache is valid
-		$this->Videos->checkIfCacheIsValid();
 		
 		$this->set('videos', $this->Videos->find('active')
 			->select(['id', 'youtube_id', 'title', 'description', 'created'])
@@ -185,9 +203,8 @@ class VideosController extends AppController {
 	}
 	
 	/**
-	 * Search videos
+	 * Searches videos
 	 * @uses MeCms\Controller\AppController::_checkLastSearch()
-	 * @uses MeCms\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
 	public function search() {
         $pattern = $this->request->query('p');
@@ -197,9 +214,6 @@ class VideosController extends AppController {
 			if(strlen($pattern) >= 4) {
 				if($this->_checkLastSearch($pattern)) {
 					$this->paginate['limit'] = config('frontend.records_for_searches');
-					
-					//Checks if the cache is valid
-					$this->Videos->checkIfCacheIsValid();
 					
 					//Sets the initial cache name
 					$cache = sprintf('search_%s', md5($pattern));
