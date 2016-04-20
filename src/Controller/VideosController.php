@@ -32,6 +32,39 @@ use MeYoutube\Controller\AppController;
  */
 class VideosController extends AppController {
 	/**
+	 * Called before the controller action. 
+	 * You can use this method to perform logic that needs to happen before each controller action.
+	 * @param \Cake\Event\Event $event An Event instance
+	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
+	 * @uses MeCms\Controller\AppController::beforeFilter()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function beforeFilter(\Cake\Event\Event $event) {
+        parent::beforeFilter($event);
+        
+        //View videos. It checks created datetime and status. Logged users can view future objects and drafts
+		if($this->request->isAction('view')) {
+            if($this->Auth->user()) {
+                return;
+            }
+            
+            $id = $this->request->param('id');
+                        
+            $video = $this->Videos->find()
+                ->select(['active', 'created'])
+                ->where(compact('id'))
+                ->cache(sprintf('status_%s', md5($id)), $this->Videos->cache)
+                ->firstOrFail();
+            
+            if($video->active && $video->created->isPast()) {
+                return;
+            }
+            
+            $this->Auth->deny('view');
+        }
+    }
+    
+	/**
      * Lists videos
 	 * @uses MeYoutube\Model\Table\VideosTable::checkIfCacheIsValid()
 	 */
@@ -141,7 +174,7 @@ class VideosController extends AppController {
 		//Checks if the cache is valid
 		$this->Videos->checkIfCacheIsValid();
 		
-		$video = $this->Videos->find('active')
+		$video = $this->Videos->find()
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
@@ -151,13 +184,13 @@ class VideosController extends AppController {
 			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
 			->firstOrFail();
 		
+		$this->set(compact('video'));
+        
 		//If requested, gets the ID of a spot and adds it to the video
 		if(config('video.spot')) {
 			$spot = $this->Videos->getRandomSpots();
 			$video->spot_id = $spot[0]->youtube_id;
 		}
-		
-		$this->set(compact('video'));
     }
 	
 	/**

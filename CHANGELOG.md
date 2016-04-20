@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.3 branch
+### 2.3.2
+* logged users can view future videos and drafts;
+
 ### 2.3.1
 * added userbar for frontend. It allows to edit an delete videos.
 
