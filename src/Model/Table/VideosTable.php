@@ -22,7 +22,7 @@
  */
 namespace MeYoutube\Model\Table;
 
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
