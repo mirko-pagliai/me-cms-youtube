@@ -32,30 +32,36 @@
         $date->month($this->request->param('month'));
         $date->day($this->request->param('day'));
 		
-		if($date->isToday())
+		if($date->isToday()) {
 			$title = __d('me_youtube', 'Videos of today');
-		elseif($date->isYesterday())
+        }
+		elseif($date->isYesterday()) {
 			$title = __d('me_youtube', 'Videos of yesterday');
-		else
+        }
+		else {
 			$title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat(config('main.date.long')));
+        }
 	}
-	elseif($this->request->isAction('view', 'VideosCategories') && !empty($videos[0]->category->title))
+	elseif($this->request->isAction('view', 'VideosCategories') && !empty($videos[0]->category->title)) {
 		$title = $videos[0]->category->title;
-    else
-        $title = __d('me_youtube', 'Videos');
-
-	$this->assign('title', $title);
+    }
+    
+    if(!empty($title)) {
+        $this->assign('title', $title);
+    }
 ?>
 
 <div class="videos index">
 	<?php
-		if(!empty($title))
+		if(!empty($title)) {
 			echo $this->Html->h2($title);
-		
+        }
+        
 		if(!empty($videos)) {
-			foreach($videos as $video)
+			foreach($videos as $video) {
 				echo $this->element('frontend/views/video', compact('video'));
-
+            }
+            
 			echo $this->element('MeTools.paginator');
 		}
 	?>
