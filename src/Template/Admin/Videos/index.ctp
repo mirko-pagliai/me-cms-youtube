@@ -30,6 +30,7 @@
 <div class="videos index">
 	<?= $this->Html->h2(__d('me_youtube', 'Videos')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	<?= $this->Html->button(__d('me_cms', 'Add category'), ['controller' => 'VideosCategories', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
 	<?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
 		<fieldset>
