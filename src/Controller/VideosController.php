@@ -22,7 +22,7 @@
  */
 namespace MeYoutube\Controller;
 
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use MeYoutube\Controller\AppController;
 

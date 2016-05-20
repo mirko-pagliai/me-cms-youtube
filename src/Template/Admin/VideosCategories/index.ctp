@@ -27,6 +27,7 @@
 <div class="videosCategories index">
 	<?= $this->Html->h2(__d('me_youtube', 'Videos categories')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	<?= $this->Html->button(__d('me_cms', 'Add video'), ['controller' => 'Videos', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
     <table class="table table-hover">
 		<thead>
