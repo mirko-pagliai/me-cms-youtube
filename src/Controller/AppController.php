@@ -35,6 +35,6 @@ class AppController extends BaseController {
 		parent::beforeRender($event);
 		
 		//Uses a custom View class (`MeYoutube.AppView` or `MeCms.AdminView`)
-		$this->viewClass = !$this->request->isAdmin() ? 'MeYoutube.View/App' : 'MeCms.View/Admin';
+        $this->viewBuilder()->className($this->request->isAdmin() ? 'MeCms.View/Admin' : 'MeYoutube.View/App');
 	}
 }

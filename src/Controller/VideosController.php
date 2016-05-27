@@ -56,27 +56,24 @@ class VideosController extends AppController {
 		
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
-			$videos = $this->paginate(
-				$this->Videos->find('active')
-					->contain([
-						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Users'			=> ['fields' => ['first_name', 'last_name']]
-					])
-					->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
-					->where(['is_spot' => FALSE])
-					->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-			)->toArray();
+            $query = $this->Videos->find('active')
+                ->contain([
+                    'Categories' => ['fields' => ['title', 'slug']],
+                    'Users' => ['fields' => ['first_name', 'last_name']],
+                ])
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+                ->where(['is_spot' => FALSE])
+                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+            
+			$videos = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
 		}
 		//Else, sets the paging parameter
-		else
+		else {
 			$this->request->params['paging'] = $paging;
-				
-		//Sets the category title as title, if has been specified a category
-		if(!empty($category) && !empty($videos[0]->category->title))
-			$this->set('title', $videos[0]->category->title);
+        }
 		
         $this->set(compact('videos'));
     }
@@ -96,30 +93,31 @@ class VideosController extends AppController {
 		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
 		
 		//If the data are not available from the cache
-		if(empty($videos) || empty($paging)) {		
-			$videos = $this->paginate(
-				$this->Videos->find('active')
-					->contain([
-						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Users'			=> ['fields' => ['first_name', 'last_name']]
-					])
-					->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
-					->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-					->where([
-						'is_spot' => FALSE,
-						sprintf('%s.created >=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
-						sprintf('%s.created <=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL)
-					])
-					->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-			)->toArray();
+		if(empty($videos) || empty($paging)) {
+            $query = $this->Videos->find('active')
+                ->contain([
+                    'Categories' => ['fields' => ['title', 'slug']],
+                    'Users' => ['fields' => ['first_name', 'last_name']],
+                ])
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+                ->where([
+                    'is_spot' => FALSE,
+                    sprintf('%s.created >=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
+                    sprintf('%s.created <=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL),
+                ])
+                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+			
+			$videos = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
 		}
 		//Else, sets the paging parameter
-		else
+		else {
 			$this->request->params['paging'] = $paging;
-		
+        }
+        
         $this->set(compact('videos'));
 		
 		$this->render('Videos/index');
@@ -135,6 +133,86 @@ class VideosController extends AppController {
 	 */
 	public function index_compatibility($page) {
 		return $this->redirect(['_name' => 'videos', '?' => ['page' => $page]], 301);
+	}
+	
+	/**
+	 * Lists videos as RSS
+	 * @throws \Cake\Network\Exception\ForbiddenException
+	 */
+	public function rss() {
+		//This method works only for RSS
+		if(!$this->RequestHandler->isRss()) {
+            throw new \Cake\Network\Exception\ForbiddenException();
+        }
+        
+		$videos = $this->Videos->find('active')
+			->select(['id', 'youtube_id', 'title', 'description', 'created'])
+			->where(['is_spot' => FALSE])
+			->limit(config('frontend.records_for_rss'))
+			->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+			->cache('rss', $this->Videos->cache);
+        
+        $this->set(compact('videos'));
+		
+		$this->viewBuilder()->layout('MeCms.frontend');
+	}
+	
+	/**
+	 * Searches videos
+	 * @uses MeCms\Controller\AppController::_checkLastSearch()
+	 */
+	public function search() {
+        $pattern = $this->request->query('p');
+        
+		if($pattern) {
+			//Checks if the pattern is at least 4 characters long
+			if(strlen($pattern) >= 4) {
+				if($this->_checkLastSearch($pattern)) {
+					$this->paginate['limit'] = config('frontend.records_for_searches');
+					
+					//Sets the initial cache name
+					$cache = sprintf('search_%s', md5($pattern));
+
+					//Updates the cache name with the query limit and the number of the page
+					$cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
+					$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
+
+					//Tries to get data from the cache
+					list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
+
+					//If the data are not available from the cache
+					if(empty($videos) || empty($paging)) {
+                        $query = $this->Videos->find('active')
+                            ->select(['id', 'title', 'description', 'created'])
+                            ->where(['OR' => [
+                                'title LIKE' => sprintf('%%%s%%', $pattern),
+                                'subtitle LIKE' => sprintf('%%%s%%', $pattern),
+                                'description LIKE' => sprintf('%%%s%%', $pattern),
+                            ]])
+                            ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+                        
+						$videos = $this->paginate($query)->toArray();
+
+						//Writes on cache
+						Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
+					}
+					//Else, sets the paging parameter
+					else {
+						$this->request->params['paging'] = $paging;
+                    }
+                    
+					$this->set(compact('videos'));
+				}
+				else {
+					$this->Flash->alert(__d('me_cms', 'You have to wait {0} seconds to perform a new search', config('security.search_interval')));
+                }
+			}
+			else {
+				$this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
+            }
+		}
+        
+        $this->set(compact('pattern'));
 	}
 	
     /**
@@ -188,79 +266,4 @@ class VideosController extends AppController {
         
         $this->render('view');
     }
-	
-	/**
-	 * Lists videos as RSS
-	 * @throws \Cake\Network\Exception\ForbiddenException
-	 * @uses Cake\Controller\Component\RequestHandlerComponent:isRss()
-	 */
-	public function rss() {
-		//This method works only for RSS
-		if(!$this->RequestHandler->isRss())
-            throw new \Cake\Network\Exception\ForbiddenException();
-		
-		$this->set('videos', $this->Videos->find('active')
-			->select(['id', 'youtube_id', 'title', 'description', 'created'])
-			->where(['is_spot' => FALSE])
-			->limit(config('frontend.records_for_rss'))
-			->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-			->cache('rss', $this->Videos->cache));
-		
-		$this->viewBuilder()->layout('MeCms.frontend');
-	}
-	
-	/**
-	 * Searches videos
-	 * @uses MeCms\Controller\AppController::_checkLastSearch()
-	 */
-	public function search() {
-        $pattern = $this->request->query('p');
-        
-		if($pattern) {
-			//Checks if the pattern is at least 4 characters long
-			if(strlen($pattern) >= 4) {
-				if($this->_checkLastSearch($pattern)) {
-					$this->paginate['limit'] = config('frontend.records_for_searches');
-					
-					//Sets the initial cache name
-					$cache = sprintf('search_%s', md5($pattern));
-
-					//Updates the cache name with the query limit and the number of the page
-					$cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
-					$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
-
-					//Tries to get data from the cache
-					list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
-
-					//If the data are not available from the cache
-					if(empty($videos) || empty($paging)) {
-						$videos = $this->paginate(
-							$this->Videos->find('active')
-								->select(['id', 'title', 'description', 'created'])
-								->where(['OR' => [
-									'title LIKE'		=> sprintf('%%%s%%', $pattern),
-									'subtitle LIKE'		=> sprintf('%%%s%%', $pattern),
-									'description LIKE'	=> sprintf('%%%s%%', $pattern)
-								]])
-								->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-						)->toArray();
-
-						//Writes on cache
-						Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
-					}
-					//Else, sets the paging parameter
-					else
-						$this->request->params['paging'] = $paging;
-
-					$this->set(compact('videos'));
-				}
-				else
-					$this->Flash->alert(__d('me_cms', 'You have to wait {0} seconds to perform a new search', config('security.search_interval')));
-			}
-			else
-				$this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
-		}
-        
-        $this->set(compact('pattern'));
-	}
 }
