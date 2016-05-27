@@ -37,31 +37,11 @@ class VideosController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
         
-        //View videos. It checks created datetime and status. Logged users can view future objects and drafts
-		if($this->request->isAction('view')) {
-            if($this->Auth->user()) {
-                return;
-            }
-            
-            $id = $this->request->param('id');
-                        
-            $video = $this->Videos->find()
-                ->select(['active', 'created'])
-                ->where(compact('id'))
-                ->cache(sprintf('status_%s', md5($id)), $this->Videos->cache)
-                ->firstOrFail();
-            
-            if($video->active && $video->created->isPast()) {
-                return;
-            }
-            
-            $this->Auth->deny('view');
-        }
+        $this->Auth->deny('preview');
     }
     
 	/**
@@ -163,10 +143,10 @@ class VideosController extends AppController {
 	 * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
      */
     public function view($id = NULL) {		
-		$video = $this->Videos->find()
+		$video = $this->Videos->find('active')
 			->contain([
-				'Categories'	=> ['fields' => ['title', 'slug']],
-				'Users'			=> ['fields' => ['first_name', 'last_name']]
+				'Categories' => ['fields' => ['title', 'slug']],
+				'Users' => ['fields' => ['first_name', 'last_name']],
 			])
 			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'created', 'modified'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
@@ -180,6 +160,33 @@ class VideosController extends AppController {
 			$spot = $this->Videos->getRandomSpots();
 			$video->spot_id = $spot[0]->youtube_id;
 		}
+    }
+    
+    /**
+     * Preview for videos.
+     * It uses the `view` template.
+     * @param string $id Video ID
+	 * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
+     */
+    public function preview($id = NULL) {		
+		$video = $this->Videos->find()
+			->contain([
+				'Categories' => ['fields' => ['title', 'slug']],
+				'Users' => ['fields' => ['first_name', 'last_name']],
+			])
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'created', 'modified'])
+			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
+			->firstOrFail();
+		
+		$this->set(compact('video'));
+        
+		//If requested, gets the ID of a spot and adds it to the video
+		if(config('video.spot')) {
+			$spot = $this->Videos->getRandomSpots();
+			$video->spot_id = $spot[0]->youtube_id;
+		}
+        
+        $this->render('view');
     }
 	
 	/**
