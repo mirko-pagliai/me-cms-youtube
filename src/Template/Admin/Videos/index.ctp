@@ -99,6 +99,11 @@
                                 echo $this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'record-label record-label-primary']);
                             }
                             
+                            //If the video is scheduled
+                            if($video->created->isFuture()) {
+                                echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
+                            }
+                            
                             //If the video is not active (it's a draft)
                             if(!$video->active) {
                                 echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
