@@ -23,16 +23,16 @@
 ?>
 
 <?php $this->append('userbar'); ?>
-<?php if(!$video->active || $video->created->isFuture()): ?>
-    <li>
-        <?php if(!$video->active): ?>
-            <?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?>
-        <?php endif; ?>
+<?php if($video->is_spot): ?>
+    <li><?= $this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'label label-primary']) ?></li>
+<?php endif; ?>
 
-        <?php if($video->created->isFuture()): ?>
-            <?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?>
-        <?php endif; ?>
-    </li>
+<?php if(!$video->active): ?>
+    <li><?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?></li>
+<?php endif; ?>
+
+<?php if($video->created->isFuture()): ?>
+    <li><?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?></li>
 <?php endif; ?>
 
 <li><?= $this->Html->link(__d('me_youtube', 'Edit video'), ['action' => 'edit', $video->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
