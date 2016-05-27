@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.3 branch
 ### 2.3.5
-* added specific methods for previews. This improves the code.
+* added specific methods for previews. This improves the code;
+* fixed some labels (scheduled/spot).
 
 ### 2.3.4
 * added some buttons for backend;
