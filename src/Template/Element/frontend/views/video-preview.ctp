@@ -20,7 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 use Cake\Routing\Router;
 ?>
 
@@ -30,19 +29,23 @@ use Cake\Routing\Router;
 			<div>
 				<div class="content-title">
 					<?php
-						if(isset($truncate['title']) && !$truncate['title'])
+						if(isset($truncate['title']) && !$truncate['title']) {
 							echo $video->title;
-						else
+                        }
+						else {
 							echo $this->Text->truncate($video->title, empty($truncate['title']) ? 40 : $truncate['title'], ['exact' => FALSE]);
+                        }
 					?>
 				</div>
 				<?php if(!empty($video->description)): ?>
 					<div class="content-text">
 						<?php
-							if(isset($truncate['description']) && !$truncate['description'])
+							if(isset($truncate['description']) && !$truncate['description']) {
 								echo strip_tags($video->description);
-							else
+                            }
+							else {
 								echo $this->Text->truncate(strip_tags($video->description), empty($truncate['description']) ? 80 : $truncate['description'], ['exact' => FALSE]);
+                            }
 						?>
 					</div>
 				<?php endif; ?>

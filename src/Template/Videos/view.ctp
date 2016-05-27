@@ -43,16 +43,18 @@
 	$this->assign('title', $video->title);
 	
 	//Set some tags
-	$this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-    $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
-	
-	if(!empty($video->preview)) {
-		$this->Html->meta(['href' => $video->preview, 'rel' => 'image_src']);
-		$this->Html->meta(['content' => $video->preview, 'property' => 'og:image']);
-	}
-	
-	if(!empty($video->description)) {
-		$this->Html->meta(['content' => $this->Text->truncate($video->description, 100, ['html' => TRUE]), 'property' => 'og:description']);
+    if($this->request->isAction('view', 'Videos')) {
+        $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
+        $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
+
+        if(!empty($video->preview)) {
+            $this->Html->meta(['href' => $video->preview, 'rel' => 'image_src']);
+            $this->Html->meta(['content' => $video->preview, 'property' => 'og:image']);
+        }
+
+        if(!empty($video->description)) {
+            $this->Html->meta(['content' => $this->Text->truncate($video->description, 100, ['html' => TRUE]), 'property' => 'og:description']);
+        }
     }
 ?>
 

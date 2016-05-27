@@ -26,27 +26,31 @@ use Cake\Routing\Router;
 <div class="video-container content-container clearfix">
 	<div class="content-header">
 		<?php
-			if(config('video.category') && !empty($video->category->title) && !empty($video->category->slug))
+			if(config('video.category') && !empty($video->category->title) && !empty($video->category->slug)) {
 				echo $this->Html->h5($this->Html->link($video->category->title, ['_name' => 'videos_category', $video->category->slug]), ['class' => 'content-category']);
-
+            }
+            
 			echo $this->Html->h3($this->Html->link($video->title, ['_name' => 'video', $video->id]), ['class' => 'content-title']);
 
-			if(!empty($video->subtitle))
+			if(!empty($video->subtitle)) {
 				echo $this->Html->h4($this->Html->link($video->subtitle, ['_name' => 'video', $video->id]), ['class' => 'content-subtitle']);
+            }
 		?>
 		<div class="content-info">
 			<?php
-				if(config('video.author') && !empty($video->user->full_name))
+				if(config('video.author') && !empty($video->user->full_name)) {
 					echo $this->Html->div('content-author',
 						__d('me_cms', 'Posted by {0}', $video->user->full_name),
 						['icon' => 'user']
 					);
+                }
 
-				if(config('video.created') && !empty($video->created))
+				if(config('video.created') && !empty($video->created)) {
 					echo $this->Html->div('content-date',
 						__d('me_cms', 'Posted on {0}', $video->created->i18nFormat(config('main.datetime.long'))),
 						['icon' => 'clock-o']
 					);
+                }
 			?>
 		</div>
 	</div>
@@ -55,17 +59,18 @@ use Cake\Routing\Router;
 			<?= $this->Asset->js('MeYoutube.video', ['block' => 'script_bottom']) ?>
 			<div class="embed-responsive embed-responsive-16by9 margin-20 relative">
 				<?php
-					if(config('video.skip_button'))
+					if(config('video.skip_button')) {
 						echo $this->Html->div(NULL, __d('me_youtube', 'Skip to the video'), [
 							'data-secs'	=> config('video.skip_seconds'),
-							'id'		=> 'skip-to-video'
+							'id'		=> 'skip-to-video',
 						]);
-					
+                    }
+                    
 					echo $this->Html->div(NULL, '', [
 						'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
 						'data-id'		=> $video->youtube_id,
 						'data-spot'		=> empty($video->spot_id) ? NULL : $video->spot_id,
-						'id'			=> 'player'
+						'id'			=> 'player',
 					]);
 				?>
 			</div>
@@ -77,8 +82,8 @@ use Cake\Routing\Router;
 		<?php endif; ?>
 	</div>
 	<?php
-		if(config('video.shareaholic') && config('shareaholic.app_id'))
-			if($this->request->isAction('view', 'Videos') && !$this->request->isAjax())
-				echo $this->Html->shareaholic(config('shareaholic.app_id'));
+		if(config('video.shareaholic') && config('shareaholic.app_id') && $this->request->isAction('view', 'Videos') && !$this->request->isAjax()) {
+			echo $this->Html->shareaholic(config('shareaholic.app_id'));
+        }
 	?>
 </div>

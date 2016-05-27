@@ -60,11 +60,13 @@ class VideosController extends AppController {
 			$this->redirect(['controller' => 'VideosCategories', 'action' => 'index']);
 		}
 		
-		if(!empty($categories))
+		if(!empty($categories)) {
 			$this->set(compact('categories'));
-		
-		if(!empty($users))
+        }
+        
+		if(!empty($users)) {
 			$this->set(compact('users'));
+        }
 	}
 	
 	/**
@@ -78,13 +80,15 @@ class VideosController extends AppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can edit all videos.
 		//Users can edit only their own videos
-		if($this->request->isAction('edit') && !$this->Auth->isGroup(['admin', 'manager']))
+		if($this->request->isAction('edit') && !$this->Auth->isGroup(['admin', 'manager'])) {
 			return $this->Videos->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
-		
+        }
+        
 		//Only admins and managers can delete videos
-		if($this->request->isAction('delete'))
+		if($this->request->isAction('delete')) {
 			return $this->Auth->isGroup(['admin', 'manager']);
-		
+        }
+        
 		return TRUE;
 	}
 	
@@ -95,8 +99,8 @@ class VideosController extends AppController {
     public function index() {
 		$query =$this->Videos->find()
 			->contain([
-				'Categories'	=> ['fields' => ['id', 'title']],
-				'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
+				'Categories' => ['fields' => ['id', 'title']],
+				'Users' => ['fields' => ['id', 'first_name', 'last_name']],
 			])
 			->select(['id', 'title', 'priority', 'active', 'is_spot', 'duration', 'seconds', 'created']);
 		
@@ -114,23 +118,29 @@ class VideosController extends AppController {
     public function add() {
 		//If the address of a YouTube video has been specified
 		if($this->request->query('url') && $this->request->is('get')) {
-			//Checks for the Youtube video ID and the video information	
-			if(!$youtube_id = Youtube::getId($this->request->query('url')))
+            //Gets video ID and information
+            $youtube_id = Youtube::getId($this->request->query('url'));
+            $youtube_info = Youtube::getInfo($youtube_id);
+            
+			if(!$youtube_id) {
 				$this->Flash->error(__d('me_youtube', 'This is not a {0} video', 'YouTube'));
-			//Checks if the informations are accesible
-			elseif(!$youtube_info = Youtube::getInfo($youtube_id))
+            }
+			elseif(!$youtube_info) {
 				$this->Flash->error(__d('me_youtube', 'Unable to retrieve video informations. Probably the video is private'));
-			else
+            }
+			else {
 				$this->request->data = am(compact('youtube_id'), Youtube::getInfo($youtube_id));
+            }
 		}
 		
         $video = $this->Videos->newEntity();
 		
         if($this->request->is('post')) {
 			//Only admins and managers can add videos on behalf of other users
-			if(!$this->Auth->isGroup(['admin', 'manager']))
+			if(!$this->Auth->isGroup(['admin', 'manager'])) {
 				$this->request->data('user_id', $this->Auth->user('id'));
-			
+            }
+            
 			$this->request->data['created'] = new Time($this->request->data('created'));
 			
             $video = $this->Videos->patchEntity($video, $this->request->data);
@@ -139,8 +149,9 @@ class VideosController extends AppController {
                 $this->Flash->success(__d('me_youtube', 'The video has been saved'));
 				return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_youtube', 'The video could not be saved'));
+            }
         }
 
         $this->set(compact('video'));
@@ -155,9 +166,10 @@ class VideosController extends AppController {
 		
         if($this->request->is(['patch', 'post', 'put'])) {
 			//Only admins and managers can edit videos on behalf of other users
-			if(!$this->Auth->isGroup(['admin', 'manager']))
+			if(!$this->Auth->isGroup(['admin', 'manager'])) {
 				$this->request->data('user_id', $this->Auth->user('id'));
-			
+            }
+            
 			$this->request->data['created'] = new Time($this->request->data('created'));
 			
             $video = $this->Videos->patchEntity($video, $this->request->data);
@@ -166,8 +178,9 @@ class VideosController extends AppController {
                 $this->Flash->success(__d('me_youtube', 'The video has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_youtube', 'The video could not be saved'));
+            }
         }
 
         $this->set(compact('video'));
@@ -181,11 +194,13 @@ class VideosController extends AppController {
 		
         $video = $this->Videos->get($id);
 		
-        if($this->Videos->delete($video))
+        if($this->Videos->delete($video)) {
             $this->Flash->success(__d('me_youtube', 'The video has been deleted'));
-        else
+        }
+        else {
             $this->Flash->error(__d('me_youtube', 'The video could not be deleted'));
-			
+        }
+        
         return $this->redirect(['action' => 'index']);
     }
 }

@@ -56,8 +56,9 @@ class VideosCategoriesController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins can delete videos categories
-		if($this->request->isAction('delete'))
+		if($this->request->isAction('delete')) {
 			return $this->Auth->isGroup('admin');
+        }
 		
 		//Admins and managers can access other actions
 		return parent::isAuthorized($user);
@@ -95,8 +96,9 @@ class VideosCategoriesController extends AppController {
                 $this->Flash->success(__d('me_youtube', 'The videos category has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_youtube', 'The videos category could not be saved'));
+            }
         }
 
         $this->set(compact('category'));
@@ -116,8 +118,9 @@ class VideosCategoriesController extends AppController {
                 $this->Flash->success(__d('me_youtube', 'The videos category has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_youtube', 'The videos category could not be saved'));
+            }
         }
 
         $this->set(compact('category'));
@@ -134,13 +137,16 @@ class VideosCategoriesController extends AppController {
 		
 		//Before deleting, it checks if the category has some videos
 		if(!$category->video_count) {
-			if($this->VideosCategories->delete($category))
+			if($this->VideosCategories->delete($category)) {
 				$this->Flash->success(__d('me_youtube', 'The videos category has been deleted'));
-			else
+            }
+			else {
 				$this->Flash->error(__d('me_youtube', 'The videos category could not be deleted'));
+            }
 		}
-		else
+		else {
 			$this->Flash->alert(__d('me_youtube', 'Before you delete this category, you have to delete its videos or assign them to another category'));
+        }
 		
         return $this->redirect(['action' => 'index']);
     }
