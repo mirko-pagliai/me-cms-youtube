@@ -157,12 +157,12 @@ class VideosTable extends AppTable {
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
             'joinType' => 'INNER',
-            'className' => 'MeYoutube.VideosCategories'
+            'className' => 'MeYoutube.VideosCategories',
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
-            'className' => 'MeCms.Users'
+            'className' => 'MeCms.Users',
         ]);
 		
         $this->addBehavior('Timestamp');
@@ -180,9 +180,10 @@ class VideosTable extends AppTable {
 		$query = parent::queryFromFilter($query, $data);
 		
 		//"Is spot?" field
-		if(!empty($data['spot']) && $data['spot'])
+		if(!empty($data['spot']) && $data['spot']) {
 			$query->where([sprintf('%s.is_spot', $this->alias()) => TRUE]);
-		
+        }
+        
 		return $query;
 	}
 	
@@ -197,7 +198,7 @@ class VideosTable extends AppTable {
 			->select('created')
 			->where([
 				sprintf('%s.active', $this->alias()) => TRUE,
-				sprintf('%s.created >', $this->alias()) => new Time()
+				sprintf('%s.created >', $this->alias()) => new Time(),
 			])
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
