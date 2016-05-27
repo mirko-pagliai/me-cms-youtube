@@ -106,6 +106,22 @@ class VideosTable extends AppTable {
     }
 	
 	/**
+	 * "Active" find method
+	 * @param Query $query Query object
+	 * @param array $options Options
+	 * @return Query Query object
+	 */
+	public function findActive(Query $query, array $options) {
+        $query->where([
+            sprintf('%s.active', $this->alias()) => TRUE,
+            sprintf('%s.is_spot', $this->alias()) => FALSE,
+			sprintf('%s.created <=', $this->alias()) => new Time(),
+        ]);
+		
+        return $query;
+    }
+	
+	/**
 	 * Gets random spots
 	 * @param int $limit Limit
 	 * @return array Spots
