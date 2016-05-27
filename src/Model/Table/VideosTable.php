@@ -129,9 +129,13 @@ class VideosTable extends AppTable {
 	 */
 	public function getRandomSpots($limit = 1) {
 		//Gets all spots
-		$spots = $this->find('active')
+		$spots = $this->find()
 			->select('youtube_id')
-			->where(['is_spot' => TRUE])
+			->where([
+                sprintf('%s.active', $this->alias()) => TRUE,
+                sprintf('%s.is_spot', $this->alias()) => TRUE,
+                sprintf('%s.created <=', $this->alias()) => new Time(),
+            ])
 			->cache('all_spots', $this->cache)
 			->toArray();
 		
