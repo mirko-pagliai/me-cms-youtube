@@ -121,8 +121,8 @@
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $video->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
                             }
                             
-                            //If the video is active and is not scheduled
-                            if($video->active && !$video->created->isFuture()) {
+                            //If the video is not a spot, is active and is not scheduled
+                            if(!$video->is_spot && $video->active && !$video->created->isFuture()) {
                                 $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'video', $video->id], ['icon' => 'external-link', 'target' => '_blank']);
                             }
                             else {

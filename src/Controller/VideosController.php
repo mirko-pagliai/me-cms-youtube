@@ -152,14 +152,14 @@ class VideosController extends AppController {
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
 			->firstOrFail();
-		
-		$this->set(compact('video'));
         
 		//If requested, gets the ID of a spot and adds it to the video
-		if(config('video.spot')) {
+		if(!$video->is_spot && config('video.spot')) {
 			$spot = $this->Videos->getRandomSpots();
 			$video->spot_id = $spot[0]->youtube_id;
 		}
+        
+		$this->set(compact('video'));
     }
     
     /**
@@ -177,14 +177,14 @@ class VideosController extends AppController {
 			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'is_spot', 'created', 'modified'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->firstOrFail();
-		
-		$this->set(compact('video'));
         
 		//If requested, gets the ID of a spot and adds it to the video
-		if(config('video.spot')) {
+		if(!$video->is_spot && config('video.spot')) {
 			$spot = $this->Videos->getRandomSpots();
 			$video->spot_id = $spot[0]->youtube_id;
 		}
+		
+		$this->set(compact('video'));
         
         $this->render('view');
     }

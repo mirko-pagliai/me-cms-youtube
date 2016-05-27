@@ -20,7 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 use Cake\Routing\Router;
 ?>
 
@@ -52,7 +51,7 @@ use Cake\Routing\Router;
 		</div>
 	</div>
 	<div class="content-text">
-		<?php if($this->request->isAction('view', 'Videos')): ?>
+		<?php if($this->request->isAction(['view', 'preview'], 'Videos')): ?>
 			<?= $this->Asset->js('MeYoutube.video', ['block' => 'script_bottom']) ?>
 			<div class="embed-responsive embed-responsive-16by9 margin-20 relative">
 				<?php
