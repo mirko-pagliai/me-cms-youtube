@@ -46,7 +46,7 @@ class VideosCategoriesController extends AppController {
 	
 	/**
 	 * Lists videos for a category.
-     * It uses the `index` template.
+     * It uses the `Videos/index` template.
 	 * @param string $category Category slug
 	 */
 	public function view($category = NULL) {
@@ -88,6 +88,6 @@ class VideosCategoriesController extends AppController {
         
 		$this->set(compact('videos'));
 		
-		$this->render('index');
+		$this->render('Videos/index');
 	}
 }
