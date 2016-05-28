@@ -106,6 +106,22 @@ class VideosTable extends AppTable {
     }
 	
 	/**
+	 * "Active" find method
+	 * @param Query $query Query object
+	 * @param array $options Options
+	 * @return Query Query object
+	 */
+	public function findActive(Query $query, array $options) {
+        $query->where([
+            sprintf('%s.active', $this->alias()) => TRUE,
+            sprintf('%s.is_spot', $this->alias()) => FALSE,
+			sprintf('%s.created <=', $this->alias()) => new Time(),
+        ]);
+		
+        return $query;
+    }
+	
+	/**
 	 * Gets random spots
 	 * @param int $limit Limit
 	 * @return array Spots
@@ -113,9 +129,13 @@ class VideosTable extends AppTable {
 	 */
 	public function getRandomSpots($limit = 1) {
 		//Gets all spots
-		$spots = $this->find('active')
+		$spots = $this->find()
 			->select('youtube_id')
-			->where(['is_spot' => TRUE])
+			->where([
+                sprintf('%s.active', $this->alias()) => TRUE,
+                sprintf('%s.is_spot', $this->alias()) => TRUE,
+                sprintf('%s.created <=', $this->alias()) => new Time(),
+            ])
 			->cache('all_spots', $this->cache)
 			->toArray();
 		
@@ -141,12 +161,12 @@ class VideosTable extends AppTable {
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
             'joinType' => 'INNER',
-            'className' => 'MeYoutube.VideosCategories'
+            'className' => 'MeYoutube.VideosCategories',
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
-            'className' => 'MeCms.Users'
+            'className' => 'MeCms.Users',
         ]);
 		
         $this->addBehavior('Timestamp');
@@ -164,9 +184,10 @@ class VideosTable extends AppTable {
 		$query = parent::queryFromFilter($query, $data);
 		
 		//"Is spot?" field
-		if(!empty($data['spot']) && $data['spot'])
+		if(!empty($data['spot']) && $data['spot']) {
 			$query->where([sprintf('%s.is_spot', $this->alias()) => TRUE]);
-		
+        }
+        
 		return $query;
 	}
 	
@@ -181,7 +202,7 @@ class VideosTable extends AppTable {
 			->select('created')
 			->where([
 				sprintf('%s.active', $this->alias()) => TRUE,
-				sprintf('%s.created >', $this->alias()) => new Time()
+				sprintf('%s.created >', $this->alias()) => new Time(),
 			])
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();

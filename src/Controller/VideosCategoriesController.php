@@ -35,22 +35,26 @@ class VideosCategoriesController extends AppController {
      * Lists videos categories
      */
     public function index() {
-		$this->set('categories', $this->VideosCategories->find('active')
+		$categories = $this->VideosCategories->find('active')
 			->select(['title', 'slug'])
 			->order(['title' => 'ASC'])
 			->cache('categories_index', $this->VideosCategories->cache)
-			->all());
+			->all();
+        
+        $this->set(compact('categories'));
     }
 	
 	/**
-	 * Lists videos for a category
+	 * Lists videos for a category.
+     * It uses the `index` template.
 	 * @param string $category Category slug
 	 */
 	public function view($category = NULL) {
 		//The category can be passed as query string, from a widget
-		if($this->request->query('q'))
+		if($this->request->query('q')) {
 			return $this->redirect([$this->request->query('q')]);
-		
+        }
+        
 		//Sets the cache name
 		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
@@ -61,28 +65,29 @@ class VideosCategoriesController extends AppController {
 		if(empty($videos) || empty($paging)) {
 			$query = $this->VideosCategories->Videos->find('active')
 				->contain([
-					'Categories'	=> ['fields' => ['title', 'slug']],
-					'Users'			=> ['fields' => ['first_name', 'last_name']]
+					'Categories' => ['fields' => ['title', 'slug']],
+					'Users' => ['fields' => ['first_name', 'last_name']],
 				])
 				->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
 				->where(['Categories.slug' => $category, 'is_spot' => FALSE])
 				->order([sprintf('%s.created', $this->VideosCategories->Videos->alias()) => 'DESC']);
 					
-			if($query->isEmpty())
+			if($query->isEmpty()) {
 				throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
-					
+            }
+            
 			$videos = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->VideosCategories->cache);
 		}
 		//Else, sets the paging parameter
-		else
+		else {
 			$this->request->params['paging'] = $paging;
-		
+        }
+        
 		$this->set(compact('videos'));
 		
-		//Renders on a different view
-		$this->render('Videos/index');
+		$this->render('index');
 	}
 }

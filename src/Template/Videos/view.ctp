@@ -23,16 +23,16 @@
 ?>
 
 <?php $this->append('userbar'); ?>
-<?php if(!$video->active || $video->created->isFuture()): ?>
-    <li>
-        <?php if(!$video->active): ?>
-            <?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?>
-        <?php endif; ?>
+<?php if($video->is_spot): ?>
+    <li><?= $this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'label label-primary']) ?></li>
+<?php endif; ?>
 
-        <?php if($video->created->isFuture()): ?>
-            <?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?>
-        <?php endif; ?>
-    </li>
+<?php if(!$video->active): ?>
+    <li><?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?></li>
+<?php endif; ?>
+
+<?php if($video->created->isFuture()): ?>
+    <li><?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?></li>
 <?php endif; ?>
 
 <li><?= $this->Html->link(__d('me_youtube', 'Edit video'), ['action' => 'edit', $video->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
@@ -43,16 +43,18 @@
 	$this->assign('title', $video->title);
 	
 	//Set some tags
-	$this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-    $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
-	
-	if(!empty($video->preview)) {
-		$this->Html->meta(['href' => $video->preview, 'rel' => 'image_src']);
-		$this->Html->meta(['content' => $video->preview, 'property' => 'og:image']);
-	}
-	
-	if(!empty($video->description)) {
-		$this->Html->meta(['content' => $this->Text->truncate($video->description, 100, ['html' => TRUE]), 'property' => 'og:description']);
+    if($this->request->isAction('view', 'Videos')) {
+        $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
+        $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
+
+        if(!empty($video->preview)) {
+            $this->Html->meta(['href' => $video->preview, 'rel' => 'image_src']);
+            $this->Html->meta(['content' => $video->preview, 'property' => 'og:image']);
+        }
+
+        if(!empty($video->description)) {
+            $this->Html->meta(['content' => $this->Text->truncate($video->description, 100, ['html' => TRUE]), 'property' => 'og:description']);
+        }
     }
 ?>
 

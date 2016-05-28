@@ -37,31 +37,11 @@ class VideosController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
         
-        //View videos. It checks created datetime and status. Logged users can view future objects and drafts
-		if($this->request->isAction('view')) {
-            if($this->Auth->user()) {
-                return;
-            }
-            
-            $id = $this->request->param('id');
-                        
-            $video = $this->Videos->find()
-                ->select(['active', 'created'])
-                ->where(compact('id'))
-                ->cache(sprintf('status_%s', md5($id)), $this->Videos->cache)
-                ->firstOrFail();
-            
-            if($video->active && $video->created->isPast()) {
-                return;
-            }
-            
-            $this->Auth->deny('view');
-        }
+        $this->Auth->deny('preview');
     }
     
 	/**
@@ -76,27 +56,24 @@ class VideosController extends AppController {
 		
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
-			$videos = $this->paginate(
-				$this->Videos->find('active')
-					->contain([
-						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Users'			=> ['fields' => ['first_name', 'last_name']]
-					])
-					->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
-					->where(['is_spot' => FALSE])
-					->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-			)->toArray();
+            $query = $this->Videos->find('active')
+                ->contain([
+                    'Categories' => ['fields' => ['title', 'slug']],
+                    'Users' => ['fields' => ['first_name', 'last_name']],
+                ])
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+                ->where(['is_spot' => FALSE])
+                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+            
+			$videos = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
 		}
 		//Else, sets the paging parameter
-		else
+		else {
 			$this->request->params['paging'] = $paging;
-				
-		//Sets the category title as title, if has been specified a category
-		if(!empty($category) && !empty($videos[0]->category->title))
-			$this->set('title', $videos[0]->category->title);
+        }
 		
         $this->set(compact('videos'));
     }
@@ -116,30 +93,31 @@ class VideosController extends AppController {
 		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
 		
 		//If the data are not available from the cache
-		if(empty($videos) || empty($paging)) {		
-			$videos = $this->paginate(
-				$this->Videos->find('active')
-					->contain([
-						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Users'			=> ['fields' => ['first_name', 'last_name']]
-					])
-					->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
-					->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-					->where([
-						'is_spot' => FALSE,
-						sprintf('%s.created >=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
-						sprintf('%s.created <=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL)
-					])
-					->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-			)->toArray();
+		if(empty($videos) || empty($paging)) {
+            $query = $this->Videos->find('active')
+                ->contain([
+                    'Categories' => ['fields' => ['title', 'slug']],
+                    'Users' => ['fields' => ['first_name', 'last_name']],
+                ])
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+                ->where([
+                    'is_spot' => FALSE,
+                    sprintf('%s.created >=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
+                    sprintf('%s.created <=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL),
+                ])
+                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+			
+			$videos = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
 		}
 		//Else, sets the paging parameter
-		else
+		else {
 			$this->request->params['paging'] = $paging;
-		
+        }
+        
         $this->set(compact('videos'));
 		
 		$this->render('Videos/index');
@@ -157,47 +135,24 @@ class VideosController extends AppController {
 		return $this->redirect(['_name' => 'videos', '?' => ['page' => $page]], 301);
 	}
 	
-    /**
-     * Views video
-     * @param string $id Video ID
-	 * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
-     */
-    public function view($id = NULL) {		
-		$video = $this->Videos->find()
-			->contain([
-				'Categories'	=> ['fields' => ['title', 'slug']],
-				'Users'			=> ['fields' => ['first_name', 'last_name']]
-			])
-			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'created', 'modified'])
-			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
-			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
-			->firstOrFail();
-		
-		$this->set(compact('video'));
-        
-		//If requested, gets the ID of a spot and adds it to the video
-		if(config('video.spot')) {
-			$spot = $this->Videos->getRandomSpots();
-			$video->spot_id = $spot[0]->youtube_id;
-		}
-    }
-	
 	/**
 	 * Lists videos as RSS
 	 * @throws \Cake\Network\Exception\ForbiddenException
-	 * @uses Cake\Controller\Component\RequestHandlerComponent:isRss()
 	 */
 	public function rss() {
 		//This method works only for RSS
-		if(!$this->RequestHandler->isRss())
+		if(!$this->RequestHandler->isRss()) {
             throw new \Cake\Network\Exception\ForbiddenException();
-		
-		$this->set('videos', $this->Videos->find('active')
+        }
+        
+		$videos = $this->Videos->find('active')
 			->select(['id', 'youtube_id', 'title', 'description', 'created'])
 			->where(['is_spot' => FALSE])
 			->limit(config('frontend.records_for_rss'))
 			->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-			->cache('rss', $this->Videos->cache));
+			->cache('rss', $this->Videos->cache);
+        
+        $this->set(compact('videos'));
 		
 		$this->viewBuilder()->layout('MeCms.frontend');
 	}
@@ -227,33 +182,88 @@ class VideosController extends AppController {
 
 					//If the data are not available from the cache
 					if(empty($videos) || empty($paging)) {
-						$videos = $this->paginate(
-							$this->Videos->find('active')
-								->select(['id', 'title', 'description', 'created'])
-								->where(['OR' => [
-									'title LIKE'		=> sprintf('%%%s%%', $pattern),
-									'subtitle LIKE'		=> sprintf('%%%s%%', $pattern),
-									'description LIKE'	=> sprintf('%%%s%%', $pattern)
-								]])
-								->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-						)->toArray();
+                        $query = $this->Videos->find('active')
+                            ->select(['id', 'title', 'description', 'created'])
+                            ->where(['OR' => [
+                                'title LIKE' => sprintf('%%%s%%', $pattern),
+                                'subtitle LIKE' => sprintf('%%%s%%', $pattern),
+                                'description LIKE' => sprintf('%%%s%%', $pattern),
+                            ]])
+                            ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+                        
+						$videos = $this->paginate($query)->toArray();
 
 						//Writes on cache
 						Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
 					}
 					//Else, sets the paging parameter
-					else
+					else {
 						$this->request->params['paging'] = $paging;
-
+                    }
+                    
 					$this->set(compact('videos'));
 				}
-				else
+				else {
 					$this->Flash->alert(__d('me_cms', 'You have to wait {0} seconds to perform a new search', config('security.search_interval')));
+                }
 			}
-			else
+			else {
 				$this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
+            }
 		}
         
         $this->set(compact('pattern'));
 	}
+	
+    /**
+     * Views video
+     * @param string $id Video ID
+	 * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
+     */
+    public function view($id = NULL) {		
+		$video = $this->Videos->find('active')
+			->contain([
+				'Categories' => ['fields' => ['title', 'slug']],
+				'Users' => ['fields' => ['first_name', 'last_name']],
+			])
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'is_spot', 'created', 'modified'])
+			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
+			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
+			->firstOrFail();
+        
+		//If requested, gets the ID of a spot and adds it to the video
+		if(!$video->is_spot && config('video.spot')) {
+			$spot = $this->Videos->getRandomSpots();
+			$video->spot_id = $spot[0]->youtube_id;
+		}
+        
+		$this->set(compact('video'));
+    }
+    
+    /**
+     * Preview for videos.
+     * It uses the `view` template.
+     * @param string $id Video ID
+	 * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
+     */
+    public function preview($id = NULL) {		
+		$video = $this->Videos->find()
+			->contain([
+				'Categories' => ['fields' => ['title', 'slug']],
+				'Users' => ['fields' => ['first_name', 'last_name']],
+			])
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'is_spot', 'created', 'modified'])
+			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
+			->firstOrFail();
+        
+		//If requested, gets the ID of a spot and adds it to the video
+		if(!$video->is_spot && config('video.spot')) {
+			$spot = $this->Videos->getRandomSpots();
+			$video->spot_id = $spot[0]->youtube_id;
+		}
+		
+		$this->set(compact('video'));
+        
+        $this->render('view');
+    }
 }
