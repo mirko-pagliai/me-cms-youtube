@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.3 branch
+### 2.3.6
+* fixed bug viewing a category.
+
 ### 2.3.5
 * added specific methods for previews. This improves the code;
 * fixed some labels (scheduled/spot).
