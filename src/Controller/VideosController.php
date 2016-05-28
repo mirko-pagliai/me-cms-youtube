@@ -61,7 +61,7 @@ class VideosController extends AppController {
                     'Categories' => ['fields' => ['title', 'slug']],
                     'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
-                ->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->where(['is_spot' => FALSE])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
             
@@ -99,7 +99,7 @@ class VideosController extends AppController {
                     'Categories' => ['fields' => ['title', 'slug']],
                     'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
-                ->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
                 ->where([
                     'is_spot' => FALSE,
@@ -146,7 +146,7 @@ class VideosController extends AppController {
         }
         
 		$videos = $this->Videos->find('active')
-			->select(['id', 'youtube_id', 'title', 'description', 'created'])
+			->select(['id', 'youtube_id', 'title', 'text', 'created'])
 			->where(['is_spot' => FALSE])
 			->limit(config('frontend.records_for_rss'))
 			->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
@@ -183,11 +183,11 @@ class VideosController extends AppController {
 					//If the data are not available from the cache
 					if(empty($videos) || empty($paging)) {
                         $query = $this->Videos->find('active')
-                            ->select(['id', 'title', 'description', 'created'])
+                            ->select(['id', 'title', 'text', 'created'])
                             ->where(['OR' => [
                                 'title LIKE' => sprintf('%%%s%%', $pattern),
                                 'subtitle LIKE' => sprintf('%%%s%%', $pattern),
-                                'description LIKE' => sprintf('%%%s%%', $pattern),
+                                'text LIKE' => sprintf('%%%s%%', $pattern),
                             ]])
                             ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
                         
@@ -226,7 +226,7 @@ class VideosController extends AppController {
 				'Categories' => ['fields' => ['title', 'slug']],
 				'Users' => ['fields' => ['first_name', 'last_name']],
 			])
-			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'is_spot', 'created', 'modified'])
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
 			->firstOrFail();
@@ -252,7 +252,7 @@ class VideosController extends AppController {
 				'Categories' => ['fields' => ['title', 'slug']],
 				'Users' => ['fields' => ['first_name', 'last_name']],
 			])
-			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'is_spot', 'created', 'modified'])
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->firstOrFail();
         

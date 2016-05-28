@@ -91,10 +91,10 @@ use MeYoutube\Utility\Youtube;
 			]);
 			echo $this->Form->input('title', ['label' => __d('me_cms', 'Title')]);
 			echo $this->Form->input('subtitle', ['label' => __d('me_cms', 'Subtitle')]);
-			echo $this->Form->input('description', [
-				'label' => __d('me_cms', 'Description'),
-				'rows'	=> 8
-			]);
+            echo $this->Form->input('text', [
+                'label' => __d('me_cms', 'Text'),
+                'rows'	=> 8,
+            ]);
         ?>
     </fieldset>
     <?= $this->Form->submit(__d('me_youtube', 'Edit video')) ?>

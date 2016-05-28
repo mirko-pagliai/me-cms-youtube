@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.4 branch
+### 2.4.0
+* renamed `description` field as `text`.
+
 ## 2.3 branch
 ### 2.3.5
 * added specific methods for previews. This improves the code;

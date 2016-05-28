@@ -35,7 +35,7 @@ use Cake\ORM\Entity;
  * @property \MeYoutube\Model\Entity\Category $category
  * @property string $title
  * @property string $subtitle
- * @property string $description
+ * @property string $text
  * @property int $priority
  * @property bool $active
  * @property bool $is_spot

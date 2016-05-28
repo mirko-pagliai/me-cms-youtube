@@ -36,8 +36,8 @@ class VideoValidator extends AppValidator {
 		
 		//Category
         $this->add('category_id', ['naturalNumber' => [
-			'message'	=> __d('me_cms', 'You have to select a valid option'),
-			'rule'		=> 'naturalNumber'
+			'message' => __d('me_cms', 'You have to select a valid option'),
+			'rule' => 'naturalNumber',
 		]])->requirePresence('category_id', 'create');
 		
 		//User (author)
@@ -46,13 +46,13 @@ class VideoValidator extends AppValidator {
 		//Title
 		$this->requirePresence('title', 'create');
 		
-		//Description
-        $this->requirePresence('description', 'create');
+		//Text
+        $this->requirePresence('text', 'create');
 		
 		//"Is spot"
         $this->add('is_spot', ['boolean' => [
-			'message'	=> __d('me_cms', 'You have to select a valid option'),
-			'rule'		=> 'boolean'
+			'message' => __d('me_cms', 'You have to select a valid option'),
+			'rule' => 'boolean',
 		]]);
 		
         return $this;

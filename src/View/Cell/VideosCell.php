@@ -85,7 +85,7 @@ class VideosCell extends Cell {
 			return;
 
 		$this->set('videos', $this->Videos->find('active')
-			->select(['id', 'youtube_id', 'title', 'description'])
+			->select(['id', 'youtube_id', 'title', 'text'])
 			->limit($limit)
 			->order(['created' => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache)
@@ -109,7 +109,7 @@ class VideosCell extends Cell {
 
 		//Gets videos
 		$videos = $this->Videos->find('active')
-			->select(['id', 'youtube_id', 'title', 'description'])
+			->select(['id', 'youtube_id', 'title', 'text'])
 			->limit($limit)
 			->order('rand()')
 			->toArray();

@@ -23,8 +23,9 @@
 ?>
 
 <?php
-	if(empty($categories) || count($categories) < 2)
+	if(empty($categories) || count($categories) < 2) {
 		return;
+    }
 	
 	//Extends the widget common view
 	$this->extend('MeCms./Common/widget');
@@ -35,7 +36,7 @@
 		'empty'		=> __d('me_cms', 'Select a category'),
 		'label'		=> FALSE,
 		'onchange'	=> 'send_form(this)',
-		'options'	=> $categories
+		'options'	=> $categories,
 	]);
 	echo $this->Form->end();
 ?>

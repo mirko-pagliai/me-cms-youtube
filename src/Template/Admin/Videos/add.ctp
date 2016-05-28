@@ -110,8 +110,8 @@ use MeYoutube\Utility\Youtube;
 				]);
 				echo $this->Form->input('title', ['label' => __d('me_cms', 'Title')]);
 				echo $this->Form->input('subtitle', ['label' => __d('me_cms', 'Subtitle')]);
-				echo $this->Form->input('description', [
-					'label' => __d('me_cms', 'Description'),
+				echo $this->Form->input('text', [
+					'label' => __d('me_cms', 'Text'),
 					'rows'	=> 8,
 				]);
 			?>

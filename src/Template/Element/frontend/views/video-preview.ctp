@@ -37,14 +37,14 @@ use Cake\Routing\Router;
                         }
 					?>
 				</div>
-				<?php if(!empty($video->description)): ?>
+				<?php if(!empty($video->text)): ?>
 					<div class="content-text">
 						<?php
-							if(isset($truncate['description']) && !$truncate['description']) {
-								echo strip_tags($video->description);
+							if(isset($truncate['text']) && !$truncate['text']) {
+								echo strip_tags($video->text);
                             }
 							else {
-								echo $this->Text->truncate(strip_tags($video->description), empty($truncate['description']) ? 80 : $truncate['description'], ['exact' => FALSE]);
+								echo $this->Text->truncate(strip_tags($video->text), empty($truncate['text']) ? 80 : $truncate['text'], ['exact' => FALSE]);
                             }
 						?>
 					</div>
