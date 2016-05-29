@@ -94,6 +94,9 @@ class VideosController extends AppController {
 		
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
+            $first = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
+            $last = (new Time($first))->addDay(1);
+            
             $query = $this->Videos->find('active')
                 ->contain([
                     'Categories' => ['fields' => ['title', 'slug']],
@@ -103,8 +106,8 @@ class VideosController extends AppController {
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
                 ->where([
                     'is_spot' => FALSE,
-                    sprintf('%s.created >=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
-                    sprintf('%s.created <=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL),
+                    sprintf('%s.created >=', $this->Videos->alias()) => $first,
+                    sprintf('%s.created <', $this->Videos->alias()) => $last,
                 ])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
 			
