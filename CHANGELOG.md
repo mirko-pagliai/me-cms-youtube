@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.4 branch
 ### 2.4.0
+* added action to list videos by month (year and month);
+* added "videos by month" widget;
 * renamed `description` field as `text`.
 
 ## 2.3 branch

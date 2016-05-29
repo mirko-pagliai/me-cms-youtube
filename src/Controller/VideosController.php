@@ -83,7 +83,6 @@ class VideosController extends AppController {
 	 * @param int $year Year
 	 * @param int $month Month
 	 * @param int $day Day
-	 * @property \MeYoutube\Model\Table\VideosTable $Videos
 	 */
 	public function index_by_date($year, $month, $day) {		
 		//Sets the cache name
@@ -125,6 +124,59 @@ class VideosController extends AppController {
 		
 		$this->render('Videos/index');
 	}
+    
+    /**
+	 * Lists videos by a month (year and month).
+     * It uses the `index` template.
+	 * @param int $year Year
+	 * @param int $month Month
+     */
+    public function index_by_month($year, $month) {
+        //Data can be passed as query string, from a widget
+		if($this->request->query('q')) {
+            $exploded = explode('-', $this->request->query('q'));
+			return $this->redirect([$exploded[1], $exploded[0]]);
+        }
+        
+		//Sets the cache name
+		$cache = sprintf('index_month_%s_limit_%s_page_%s', md5(serialize([$year, $month])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+		
+		//Tries to get data from the cache
+		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
+		
+		//If the data are not available from the cache
+		if(empty($videos) || empty($paging)) {
+            $first = (new Time())->setDate($year, $month, 1)->setTime(0, 0, 0);
+            $last = (new Time($first))->addMonth(1);
+            
+            $query = $this->Videos->find('active')
+                ->contain([
+                    'Categories' => ['fields' => ['title', 'slug']],
+                    'Users' => ['fields' => ['first_name', 'last_name']],
+                ])
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
+                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+                ->where([
+                    'is_spot' => FALSE,
+                    sprintf('%s.created >=', $this->Videos->alias()) => $first,
+                    sprintf('%s.created <', $this->Videos->alias()) => $last,
+                ])
+                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+			
+			$videos = $this->paginate($query)->toArray();
+						
+			//Writes on cache
+			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
+		}
+		//Else, sets the paging parameter
+		else {
+			$this->request->params['paging'] = $paging;
+        }
+        
+        $this->set(compact('videos'));
+		
+		$this->render('Videos/index');
+    }
 	
 	/**
 	 * This allows backward compatibility for URLs like:

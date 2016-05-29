@@ -42,6 +42,14 @@
 			$title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat(config('main.date.long')));
         }
 	}
+    elseif($this->request->isAction('index_by_month', 'Videos')) {
+        $date = (new \Cake\I18n\Time());
+        $date->year($this->request->param('year'));
+        $date->month($this->request->param('month'));
+        $date->day(1);
+        
+        $title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat('MMMM Y'));
+    }
 	elseif($this->request->isAction('view', 'VideosCategories') && !empty($videos[0]->category->title)) {
 		$title = $videos[0]->category->title;
     }
