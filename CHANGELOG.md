@@ -3,7 +3,8 @@
 ### 2.4.0
 * added action to list videos by month (year and month);
 * added "videos by month" widget;
-* renamed `description` field as `text`.
+* renamed `description` field as `text`;
+* `index_by_date` action renamed as `index_by_day`.
 
 ## 2.3 branch
 ### 2.3.5
