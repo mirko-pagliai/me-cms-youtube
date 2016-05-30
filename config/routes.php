@@ -60,11 +60,17 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 		'month'	=> '0[1-9]|1[012]',
 		'day'	=> '0[1-9]|[12][0-9]|3[01]',
 		'pass'	=> ['year', 'month', 'day']
-	]);$routes->connect('/videos/:year/:month/', ['controller' => 'Videos', 'action' => 'index_by_month'], [
+	]);
+    $routes->connect('/videos/:year/:month', ['controller' => 'Videos', 'action' => 'index_by_month'], [
 		'_name'	=> 'videos_by_month',
 		'year'	=> '[12][0-9]{3}',
 		'month'	=> '0[1-9]|1[012]',
 		'pass'	=> ['year', 'month']
+	]);
+    $routes->connect('/videos/:year/', ['controller' => 'Videos', 'action' => 'index_by_year'], [
+		'_name'	=> 'videos_by_year',
+		'year'	=> '[12][0-9]{3}',
+		'pass'	=> ['year']
 	]);
 	$routes->connect('/videos/today', [
 		'controller'	=> 'Videos', 

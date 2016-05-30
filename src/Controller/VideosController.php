@@ -143,6 +143,7 @@ class VideosController extends AppController {
      * It uses the `index` template.
 	 * @param int $year Year
 	 * @param int $month Month
+     * @uses _index_by_date()
      */
     public function index_by_month($year, $month) {
         //Data can be passed as query string, from a widget
@@ -153,6 +154,21 @@ class VideosController extends AppController {
         
         $start = (new Time())->setDate($year, $month, 1)->setTime(0, 0, 0);
         $end = (new Time($start))->addMonth(1);
+        
+        $this->_index_by_date($start, $end);
+        
+		$this->render('index');
+    }
+    
+    /**
+	 * Lists videos by a year.
+     * It uses the `index` template.
+	 * @param int $year Year
+     * @uses _index_by_date()
+     */
+    public function index_by_year($year) {
+        $start = (new Time())->setDate($year, 1, 1)->setTime(0, 0, 0);
+        $end = (new Time($start))->addYear(1);
         
         $this->_index_by_date($start, $end);
         
