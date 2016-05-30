@@ -48,7 +48,7 @@
         $date->month($this->request->param('month'));
         $date->day(1);
         
-        $title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat('MMMM Y'));
+        $title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat('MMMM y'));
     }
 	elseif($this->request->isAction('view', 'VideosCategories') && !empty($videos[0]->category->title)) {
 		$title = $videos[0]->category->title;
