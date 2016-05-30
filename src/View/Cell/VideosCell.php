@@ -96,37 +96,6 @@ class VideosCell extends Cell {
         
         $this->set(compact('videos'));
     }
-	
-	/**
-	 * Random widget
-	 * @param int $limit Limit
-	 * @uses MeTools\Network\Request::isController()
-	 */
-	public function random($limit = 1) {
-		//Returns on the same controllers
-		if($this->request->isController(['Videos', 'VideosCategories'])) {
-			return;
-        }
-		
-		//Returns, if there are no records available
-		if(Cache::read($cache = 'no_videos', $this->Videos->cache)) {
-			return;
-        }
-
-		//Gets videos
-		$videos = $this->Videos->find('active')
-			->select(['id', 'youtube_id', 'title', 'text'])
-			->limit($limit)
-			->order('rand()')
-			->toArray();
-		
-		//Writes on cache, if there are no records available
-		if(empty($videos)) {
-			Cache::write($cache, TRUE, $this->Videos->cache);
-        }
-        
-		$this->set(compact('videos'));
-	}
     
     /**
      * Videos by month widget
@@ -162,6 +131,37 @@ class VideosCell extends Cell {
         
         $this->set(compact('months'));
     }
+	
+	/**
+	 * Random widget
+	 * @param int $limit Limit
+	 * @uses MeTools\Network\Request::isController()
+	 */
+	public function random($limit = 1) {
+		//Returns on the same controllers
+		if($this->request->isController(['Videos', 'VideosCategories'])) {
+			return;
+        }
+		
+		//Returns, if there are no records available
+		if(Cache::read($cache = 'no_videos', $this->Videos->cache)) {
+			return;
+        }
+
+		//Gets videos
+		$videos = $this->Videos->find('active')
+			->select(['id', 'youtube_id', 'title', 'text'])
+			->limit($limit)
+			->order('rand()')
+			->toArray();
+		
+		//Writes on cache, if there are no records available
+		if(empty($videos)) {
+			Cache::write($cache, TRUE, $this->Videos->cache);
+        }
+        
+		$this->set(compact('videos'));
+	}
 	
 	/**
 	 * Search widget
