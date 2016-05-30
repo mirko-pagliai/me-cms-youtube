@@ -114,7 +114,7 @@ class VideosCell extends Cell {
             $months = $this->Videos->find('active')
                 ->select([
                     'month' => 'DATE_FORMAT(created, "%m-%Y")',
-                    'post_count' => 'COUNT(DATE_FORMAT(created, "%m-%Y"))',
+                    'video_count' => 'COUNT(DATE_FORMAT(created, "%m-%Y"))',
                 ])
                 ->distinct(['month'])
                 ->order(['created' => 'DESC'])
@@ -122,7 +122,7 @@ class VideosCell extends Cell {
             
             foreach($months as $k => $month) {
                 $exploded = explode('-', $month->month);
-                $months[$month->month] = sprintf('%s (%s)', (new Time())->year($exploded[1])->month($exploded[0])->day(1)->i18nFormat('MMMM Y'), $month->post_count);
+                $months[$month->month] = sprintf('%s (%s)', (new Time())->year($exploded[1])->month($exploded[0])->day(1)->i18nFormat('MMMM y'), $month->video_count);
                 unset($months[$k]);
             }
             
