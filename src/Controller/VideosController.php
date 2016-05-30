@@ -78,25 +78,22 @@ class VideosController extends AppController {
         $this->set(compact('videos'));
     }
 	
-	/**
-	 * Lists videos by a day (year, month and day).
-     * It uses the `index` template.
-	 * @param int $year Year
-	 * @param int $month Month
-	 * @param int $day Day
-	 */
-	public function index_by_day($year, $month, $day) {		
+    /**
+	 * Internal method to list videos in a date interval
+     * @param Time $start Start time
+     * @param Time $end End time
+     */
+    protected function _index_by_date(Time $start, Time $end) {
+        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        
 		//Sets the cache name
-		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $page);
 		
 		//Tries to get data from the cache
 		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
 		
 		//If the data are not available from the cache
-		if(empty($videos) || empty($paging)) {
-            $first = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
-            $last = (new Time($first))->addDay(1);
-            
+		if(empty($videos) || empty($paging)) {            
             $query = $this->Videos->find('active')
                 ->contain([
                     'Categories' => ['fields' => ['title', 'slug']],
@@ -106,8 +103,8 @@ class VideosController extends AppController {
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
                 ->where([
                     'is_spot' => FALSE,
-                    sprintf('%s.created >=', $this->Videos->alias()) => $first,
-                    sprintf('%s.created <', $this->Videos->alias()) => $last,
+                    sprintf('%s.created >=', $this->Videos->alias()) => $start,
+                    sprintf('%s.created <', $this->Videos->alias()) => $end,
                 ])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
 			
@@ -122,8 +119,23 @@ class VideosController extends AppController {
         }
         
         $this->set(compact('videos'));
+    }
+    
+	/**
+	 * Lists videos by a day (year, month and day).
+     * It uses the `index` template.
+	 * @param int $year Year
+	 * @param int $month Month
+	 * @param int $day Day
+     * @uses _index_by_date()
+	 */
+	public function index_by_day($year, $month, $day) {
+        $start = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
+        $end = (new Time($start))->addDay(1);
+        
+        $this->_index_by_date($start, $end);
 		
-		$this->render('Videos/index');
+		$this->render('index');
 	}
     
     /**
@@ -139,44 +151,12 @@ class VideosController extends AppController {
 			return $this->redirect([$exploded[1], $exploded[0]]);
         }
         
-		//Sets the cache name
-		$cache = sprintf('index_month_%s_limit_%s_page_%s', md5(serialize([$year, $month])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
-		
-		//Tries to get data from the cache
-		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
-		
-		//If the data are not available from the cache
-		if(empty($videos) || empty($paging)) {
-            $first = (new Time())->setDate($year, $month, 1)->setTime(0, 0, 0);
-            $last = (new Time($first))->addMonth(1);
-            
-            $query = $this->Videos->find('active')
-                ->contain([
-                    'Categories' => ['fields' => ['title', 'slug']],
-                    'Users' => ['fields' => ['first_name', 'last_name']],
-                ])
-                ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
-                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
-                ->where([
-                    'is_spot' => FALSE,
-                    sprintf('%s.created >=', $this->Videos->alias()) => $first,
-                    sprintf('%s.created <', $this->Videos->alias()) => $last,
-                ])
-                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
-			
-			$videos = $this->paginate($query)->toArray();
-						
-			//Writes on cache
-			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
-		}
-		//Else, sets the paging parameter
-		else {
-			$this->request->params['paging'] = $paging;
-        }
+        $start = (new Time())->setDate($year, $month, 1)->setTime(0, 0, 0);
+        $end = (new Time($start))->addMonth(1);
         
-        $this->set(compact('videos'));
-		
-		$this->render('Videos/index');
+        $this->_index_by_date($start, $end);
+        
+		$this->render('index');
     }
 	
 	/**
