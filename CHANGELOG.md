@@ -5,14 +5,12 @@
 * added "videos by month" widget;
 * `Videos::categories` and `Videos::months` widgets can render as form or list;
 * renamed `description` field as `text`;
+* fixed bug on category view.
 * `index_by_date` action renamed as `index_by_day`;
 * added `youtube_url` virtual field;
 * some fixes for MeCms 2.8.2.
 
 ## 2.3 branch
-### 2.3.6
-* fixed bug viewing a category.
-
 ### 2.3.5
 * added specific methods for previews. This improves the code;
 * fixed some labels (scheduled/spot).
