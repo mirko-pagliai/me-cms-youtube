@@ -20,7 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-use MeYoutube\Utility\Youtube;
 ?>
 
 <?php
@@ -92,10 +91,10 @@ use MeYoutube\Utility\Youtube;
             </div>
             <div class="col-sm-6">
                 <h4><?= __d('me_youtube', 'Thumbnail preview') ?></h4>
-                <?= $this->Thumb->image(Youtube::getPreview($this->request->data('youtube_id')), ['height' => 315, 'class' => 'center-block']) ?>
+                <?= $this->Thumb->image($this->request->data('preview'), ['height' => 315, 'class' => 'center-block']) ?>
             </div>
         </div>
-        <p><?= $this->Html->link(__d('me_youtube', 'Open on {0}', 'YouTube'), Youtube::getUrl($this->request->data('youtube_id')), ['icon' => 'external-link', 'target' => '_blank']) ?></p>
+        <p><?= $this->Html->link(__d('me_youtube', 'Open on {0}', 'YouTube'), $this->request->data('youtube_url'), ['icon' => 'external-link', 'target' => '_blank']) ?></p>
         <?php
             echo $this->Form->input('youtube_id', [
                 'label'	=> __d('me_youtube', '{0} ID', 'YouTube'),
