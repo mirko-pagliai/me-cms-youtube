@@ -32,14 +32,16 @@ use Cake\Utility\Hash;
 Configure::load('MeYoutube.me_youtube');
 
 //Merges with the configuration from application, if exists
-if(is_readable(CONFIG.'me_youtube.php'))
+if(is_readable(CONFIG.'me_youtube.php')) {
 	Configure::load('me_youtube');
+}
 
 //Merges with the MeCms configuration
 Configure::write('MeCms', Hash::merge(config('MeCms'), Configure::consume('MeYoutube')));
 
-if(!config('Youtube.key') || config('Youtube.key') === 'your-key-here')
+if(!config('Youtube.key') || config('Youtube.key') === 'your-key-here') {
     throw new InternalErrorException('YouTube API key is missing');
+}
 
 /**
  * Loads the cache configuration
@@ -47,14 +49,16 @@ if(!config('Youtube.key') || config('Youtube.key') === 'your-key-here')
 Configure::load('MeYoutube.cache');
 
 //Merges with the configuration from application, if exists
-if(is_readable(CONFIG.'cache.php'))
+if(is_readable(CONFIG.'cache.php')) {
 	Configure::load('cache');
-    
+}
+
 //Adds all cache configurations
 foreach(Configure::consume('Cache') as $key => $config) {
 	//Drops cache configurations that already exist
-	if(Cache::config($key))
+	if(Cache::config($key)) {
 		Cache::drop($key);
-	
+    }
+    
 	Cache::config($key, $config);
 }
