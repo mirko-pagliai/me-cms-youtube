@@ -20,7 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-use Cake\Routing\Router;
 ?>
 
 <div class="video-container content-container clearfix">
@@ -61,21 +60,21 @@ use Cake\Routing\Router;
 				<?php
 					if(config('video.skip_button')) {
 						echo $this->Html->div(NULL, __d('me_youtube', 'Skip to the video'), [
-							'data-secs'	=> config('video.skip_seconds'),
-							'id'		=> 'skip-to-video',
+							'data-secs' => config('video.skip_seconds'),
+							'id' => 'skip-to-video',
 						]);
                     }
                     
 					echo $this->Html->div(NULL, '', [
 						'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
-						'data-id'		=> $video->youtube_id,
-						'data-spot'		=> empty($video->spot_id) ? NULL : $video->spot_id,
-						'id'			=> 'player',
+						'data-id' => $video->youtube_id,
+						'data-spot' => empty($video->spot_id) ? NULL : $video->spot_id,
+						'id' => 'player',
 					]);
 				?>
 			</div>
 		<?php else: ?>
-			<a class="video-fake" href="<?= Router::url(['_name' => 'video', $video->id]) ?>">
+			<a class="video-fake" href="<?= $this->Url->build(['_name' => 'video', $video->id]) ?>">
 				<?= $this->Html->img($video->preview) ?>
 				<?= $this->Html->icon('youtube-play') ?>
 			</a>

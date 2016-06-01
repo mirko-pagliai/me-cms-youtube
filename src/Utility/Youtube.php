@@ -32,7 +32,7 @@ class Youtube extends BaseYoutube {
 	/**
 	 * Gets information about a video
 	 * @param string $id Video ID
-	 * @return array|bool Array of information or FALSE
+	 * @return mixed Array or `FALSE`
      * @see https://developers.google.com/youtube/v3/getting-started#partial
 	 */
 	public static function getInfo($id) {
@@ -46,18 +46,18 @@ class Youtube extends BaseYoutube {
 			return FALSE;
         }
 				
-		$info = am([
-			'preview' => $info['items'][0]['snippet']['thumbnails']['high']['url']
-		], $info['items'][0]['snippet'], $info['items'][0]['contentDetails']);
-		
-		unset($info['thumbnails']);
-				
-		preg_match('/PT(([0-9]+)M)?(([0-9]+)S)?/', $info['duration'], $matches);
+		preg_match('/PT(([0-9]+)M)?(([0-9]+)S)?/', $info['items'][0]['contentDetails']['duration'], $matches);
 		
 		$mins = empty($matches[2]) ? "00" : sprintf("%02d", $matches[2]);
 		$secs = empty($matches[4]) ? "00" : sprintf("%02d", $matches[4]);
 		
-		$info['seconds'] = (int)$mins * 60 + (int) $secs;
+        $info = [
+            'preview' => $info['items'][0]['snippet']['thumbnails']['high']['url'],
+            'text' => $info['items'][0]['snippet']['description'],
+            'title' => $info['items'][0]['snippet']['title'],
+        ];
+        
+		$info['seconds'] = (int) $mins * 60 + (int) $secs;
 		$info['duration'] = sprintf('%s:%s', $mins, $secs);
 
 		return $info;

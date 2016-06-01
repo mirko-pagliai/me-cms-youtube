@@ -20,41 +20,23 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Model\Validation;
+?>
 
-use MeCms\Model\Validation\AppValidator;
-
-class VideoValidator extends AppValidator {
-	/**
-	 * Construct.
-	 * 
-	 * Adds some validation rules.
-	 * @uses MeCms\Model\Validation\AppValidator::__construct()
-	 */
-    public function __construct() {
-        parent::__construct();
-		
-		//Category
-        $this->add('category_id', ['naturalNumber' => [
-			'message' => __d('me_cms', 'You have to select a valid option'),
-			'rule' => 'naturalNumber',
-		]])->requirePresence('category_id', 'create');
-		
-		//User (author)
-		$this->requirePresence('user_id', 'create');
-		
-		//Title
-		$this->requirePresence('title', 'create');
-		
-		//Text
-        $this->requirePresence('text', 'create');
-		
-		//"Is spot"
-        $this->add('is_spot', ['boolean' => [
-			'message' => __d('me_cms', 'You have to select a valid option'),
-			'rule' => 'boolean',
-		]]);
-		
-        return $this;
-	}
-}
+<?php
+	if(empty($months) || count($months) < 2) {
+		return;
+    }
+    
+	$this->extend('MeCms./Common/widget');
+	$this->assign('title', __d('me_youtube', 'Videos by month'));
+    
+	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'videos_by_month', date('Y'), date('m')]]);
+	echo $this->Form->input('q', [
+		'label' => FALSE,
+		'onchange' => 'send_form(this)',
+		'options' => array_map(function($month) {
+            return sprintf('%s (%s)', $month->month->i18nFormat('MMMM Y'), $month->video_count);
+        }, $months),
+	]);
+	echo $this->Form->end();
+?>

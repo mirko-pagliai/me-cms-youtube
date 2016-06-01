@@ -23,19 +23,20 @@
 ?>
 
 <?php
-	if(empty($categories) || count($categories) < 2)
+	if(empty($categories) || count($categories) < 2) {
 		return;
-	
-	//Extends the widget common view
+    }
+    
 	$this->extend('MeCms./Common/widget');
 	$this->assign('title', __d('me_youtube', 'Videos categories'));
 	
 	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'videos_category', 'category']]);
 	echo $this->Form->input('q', [
-		'empty'		=> __d('me_cms', 'Select a category'),
-		'label'		=> FALSE,
-		'onchange'	=> 'send_form(this)',
-		'options'	=> $categories
+		'label' => FALSE,
+		'onchange' => 'send_form(this)',
+		'options' => array_map(function($category) {
+            return sprintf('%s (%d)', $category->title, $category->video_count);
+        }, $categories),
 	]);
 	echo $this->Form->end();
 ?>

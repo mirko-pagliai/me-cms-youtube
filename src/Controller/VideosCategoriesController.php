@@ -68,7 +68,7 @@ class VideosCategoriesController extends AppController {
 					'Categories' => ['fields' => ['title', 'slug']],
 					'Users' => ['fields' => ['first_name', 'last_name']],
 				])
-				->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+				->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
 				->where(['Categories.slug' => $category, 'is_spot' => FALSE])
 				->order([sprintf('%s.created', $this->VideosCategories->Videos->alias()) => 'DESC']);
 					

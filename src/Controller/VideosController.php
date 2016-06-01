@@ -61,7 +61,7 @@ class VideosController extends AppController {
                     'Categories' => ['fields' => ['title', 'slug']],
                     'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
-                ->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->where(['is_spot' => FALSE])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
             
@@ -78,33 +78,33 @@ class VideosController extends AppController {
         $this->set(compact('videos'));
     }
 	
-	/**
-	 * List videos by a date
-	 * @param int $year Year
-	 * @param int $month Month
-	 * @param int $day Day
-	 * @property \MeYoutube\Model\Table\VideosTable $Videos
-	 */
-	public function index_by_date($year, $month, $day) {		
+    /**
+	 * Internal method to list videos in a date interval
+     * @param Time $start Start time
+     * @param Time $end End time
+     */
+    protected function _index_by_date(Time $start, Time $end) {
+        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        
 		//Sets the cache name
-		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $page);
 		
 		//Tries to get data from the cache
 		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
 		
 		//If the data are not available from the cache
-		if(empty($videos) || empty($paging)) {
+		if(empty($videos) || empty($paging)) {            
             $query = $this->Videos->find('active')
                 ->contain([
                     'Categories' => ['fields' => ['title', 'slug']],
                     'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
-                ->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'created'])
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
                 ->where([
                     'is_spot' => FALSE,
-                    sprintf('%s.created >=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
-                    sprintf('%s.created <=', $this->Videos->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL),
+                    sprintf('%s.created >=', $this->Videos->alias()) => $start,
+                    sprintf('%s.created <', $this->Videos->alias()) => $end,
                 ])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
 			
@@ -119,9 +119,66 @@ class VideosController extends AppController {
         }
         
         $this->set(compact('videos'));
+    }
+    
+	/**
+	 * Lists videos by a day (year, month and day).
+     * It uses the `index` template.
+	 * @param int $year Year
+	 * @param int $month Month
+	 * @param int $day Day
+     * @uses _index_by_date()
+	 */
+	public function index_by_day($year, $month, $day) {
+        $start = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
+        $end = (new Time($start))->addDay(1);
+        
+        $this->_index_by_date($start, $end);
 		
-		$this->render('Videos/index');
+		$this->render('index');
 	}
+    
+    /**
+	 * Lists videos by a month (year and month).
+     * It uses the `index` template.
+	 * @param int $year Year
+	 * @param int $month Month
+     * @uses _index_by_date()
+     */
+    public function index_by_month($year, $month) {
+        //Data can be passed as query string, from a widget
+		if($this->request->query('q')) {
+            $exploded = explode('-', $this->request->query('q'));
+			return $this->redirect([$exploded[1], $exploded[0]]);
+        }
+        
+        $start = (new Time())->setDate($year, $month, 1)->setTime(0, 0, 0);
+        $end = (new Time($start))->addMonth(1);
+        
+        $this->_index_by_date($start, $end);
+        
+		$this->render('index');
+    }
+    
+    /**
+	 * Lists videos by a year.
+     * It uses the `index` template.
+	 * @param int $year Year
+     * @uses _index_by_date()
+     */
+    public function index_by_year($year) {
+        //Data can be passed as query string, from a widget
+		if($this->request->query('q')) {
+            return $this->redirect([$this->request->query('q')]);
+        }
+        
+        $start = (new Time())->setDate($year, 1, 1)->setTime(0, 0, 0);
+        $end = (new Time($start))->addYear(1);
+        
+        $this->_index_by_date($start, $end);
+        
+		$this->render('index');
+    }
 	
 	/**
 	 * This allows backward compatibility for URLs like:
@@ -146,7 +203,7 @@ class VideosController extends AppController {
         }
         
 		$videos = $this->Videos->find('active')
-			->select(['id', 'youtube_id', 'title', 'description', 'created'])
+			->select(['id', 'youtube_id', 'title', 'text', 'created'])
 			->where(['is_spot' => FALSE])
 			->limit(config('frontend.records_for_rss'))
 			->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
@@ -183,11 +240,11 @@ class VideosController extends AppController {
 					//If the data are not available from the cache
 					if(empty($videos) || empty($paging)) {
                         $query = $this->Videos->find('active')
-                            ->select(['id', 'title', 'description', 'created'])
+                            ->select(['id', 'title', 'text', 'created'])
                             ->where(['OR' => [
                                 'title LIKE' => sprintf('%%%s%%', $pattern),
                                 'subtitle LIKE' => sprintf('%%%s%%', $pattern),
-                                'description LIKE' => sprintf('%%%s%%', $pattern),
+                                'text LIKE' => sprintf('%%%s%%', $pattern),
                             ]])
                             ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
                         
@@ -226,7 +283,7 @@ class VideosController extends AppController {
 				'Categories' => ['fields' => ['title', 'slug']],
 				'Users' => ['fields' => ['first_name', 'last_name']],
 			])
-			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'is_spot', 'created', 'modified'])
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
 			->firstOrFail();
@@ -252,7 +309,7 @@ class VideosController extends AppController {
 				'Categories' => ['fields' => ['title', 'slug']],
 				'Users' => ['fields' => ['first_name', 'last_name']],
 			])
-			->select(['id', 'youtube_id', 'title', 'subtitle', 'description', 'active', 'is_spot', 'created', 'modified'])
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->firstOrFail();
         

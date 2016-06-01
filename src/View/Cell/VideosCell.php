@@ -23,6 +23,7 @@
 namespace MeYoutube\View\Cell;
 
 use Cake\Cache\Cache;
+use Cake\I18n\FrozenDate;
 use Cake\View\Cell;
 
 /**
@@ -46,12 +47,14 @@ class VideosCell extends Cell {
 	
 	/**
 	 * Categories widget
+     * @param string $render Render type (`form` or `list`)
 	 * @uses MeTools\Network\Request::isHere()
 	 */
-	public function categories() {
+	public function categories($render = 'form') {
 		//Returns on categories index
-		if($this->request->isHere(['_name' => 'videos_categories']))
+		if($this->request->isHere(['_name' => 'videos_categories'])) {
 			return;
+        }
 		
 		//Tries to get data from the cache
 		$categories = Cache::read($cache = 'widget_categories', $this->Videos->cache);
@@ -63,15 +66,19 @@ class VideosCell extends Cell {
 				->order(['title' => 'ASC'])
 				->toArray();
 			
-			foreach($categories as $k => $category) {
-				$categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->video_count);
-				unset($categories[$k]);
-			}
+            foreach($categories as $k => $category) {
+                $categories[$category->slug] = $category;
+                unset($categories[$k]);
+            }
 			
             Cache::write($cache, $categories, $this->Videos->cache);
 		}
 		
 		$this->set(compact('categories'));
+        
+        if($render !== 'form') {
+            $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+        }
 	}
 	
 	/**
@@ -81,16 +88,59 @@ class VideosCell extends Cell {
 	 */
     public function latest($limit = 1) {
 		//Returns on index, except for category
-		if($this->request->isAction('index', 'Videos') && !$this->request->param('slug'))
+		if($this->request->isAction('index', 'Videos') && !$this->request->param('slug')) {
 			return;
+        }
 
-		$this->set('videos', $this->Videos->find('active')
-			->select(['id', 'youtube_id', 'title', 'description'])
+		$videos = $this->Videos->find('active')
+			->select(['id', 'youtube_id', 'title', 'text'])
 			->limit($limit)
 			->order(['created' => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache)
-			->toArray()
-		);
+			->toArray();
+        
+        $this->set(compact('videos'));
+    }
+    
+    /**
+     * Videos by month widget
+     * @param string $render Render type (`form` or `list`)
+     */
+    public function months($render = 'form') {
+		//Returns on index
+		if($this->request->isAction('index', 'Videos')) {
+			return;
+        }
+        
+		//Tries to get data from the cache
+		$months = Cache::read($cache = 'widget_months', $this->Videos->cache);
+        
+		//If the data are not available from the cache
+        if(empty($months)) {
+            $months = $this->Videos->find('active')
+                ->select([
+                    'month' => 'DATE_FORMAT(created, "%m-%Y")',
+                    'video_count' => 'COUNT(DATE_FORMAT(created, "%m-%Y"))',
+                ])
+                ->distinct(['month'])
+                ->order(['created' => 'DESC'])
+                ->toArray();
+            
+            foreach($months as $k => $month) {
+                $exploded = explode('-', $month->month);
+                $months[$month->month] = $month;
+                $months[$month->month]->month = (new FrozenDate())->year($exploded[1])->month($exploded[0])->day(1);
+                unset($months[$k]);
+            }
+            
+            Cache::write($cache, $months, $this->Videos->cache);
+        }
+        
+        $this->set(compact('months'));
+        
+        if($render !== 'form') {
+            $this->viewBuilder()->template(sprintf('months_as_%s', $render));
+        }
     }
 	
 	/**
@@ -100,24 +150,27 @@ class VideosCell extends Cell {
 	 */
 	public function random($limit = 1) {
 		//Returns on the same controllers
-		if($this->request->isController(['Videos', 'VideosCategories']))
+		if($this->request->isController(['Videos', 'VideosCategories'])) {
 			return;
+        }
 		
 		//Returns, if there are no records available
-		if(Cache::read($cache = 'no_videos', $this->Videos->cache))
+		if(Cache::read($cache = 'no_videos', $this->Videos->cache)) {
 			return;
+        }
 
 		//Gets videos
 		$videos = $this->Videos->find('active')
-			->select(['id', 'youtube_id', 'title', 'description'])
+			->select(['id', 'youtube_id', 'title', 'text'])
 			->limit($limit)
 			->order('rand()')
 			->toArray();
 		
 		//Writes on cache, if there are no records available
-		if(empty($videos))
+		if(empty($videos)) {
 			Cache::write($cache, TRUE, $this->Videos->cache);
-		
+        }
+        
 		$this->set(compact('videos'));
 	}
 	

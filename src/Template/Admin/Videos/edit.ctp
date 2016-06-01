@@ -20,83 +20,82 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-
-use MeYoutube\Utility\Youtube;
 ?>
 
 <?php
-	$this->assign('title', __d('me_youtube', 'Edit video'));
+    $this->extend('MeCms./Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Edit video'));
 	$this->Library->datetimepicker();
 ?>
 
-<div class="videos form">
-	<?= $this->Html->h2(__d('me_youtube', 'Edit video')) ?>
-    <?= $this->Form->create($video); ?>
-	<div class='float-form'>
-		<?php
-			//Only admins and managers can add videos on behalf of other users
-			if($this->Auth->isGroup(['admin', 'manager']))
-				echo $this->Form->input('user_id', [
-					'empty'	=> FALSE,
-					'label' => __d('me_cms', 'Author')
-				]);
+<?= $this->Form->create($video); ?>
+<div class='float-form'>
+    <?php
+        //Only admins and managers can add videos on behalf of other users
+        if($this->Auth->isGroup(['admin', 'manager']))
+            echo $this->Form->input('user_id', [
+                'empty'	=> FALSE,
+                'label' => __d('me_cms', 'Author'),
+            ]);
 
-			echo $this->Form->input('category_id', [
-					'empty'	=> FALSE,
-				'label' => __d('me_cms', 'Category')
-			]);
-			echo $this->Form->datetimepicker('created', [
-				'label'	=> __d('me_cms', 'Date'),
-				'tip'	=> [
-					__d('me_cms', 'If blank, the current date and time will be used'),
-					__d('me_cms', 'You can delay the publication by entering a future date')
-				],
-				'value'	=> $video->created->i18nFormat(FORMAT_FOR_MYSQL)
-			]);
-			echo $this->Form->input('priority', [
-				'label' => __d('me_cms', 'Priority')
-			]);
-			echo $this->Form->input('is_spot', [
-				'label'	=> sprintf('%s?', __d('me_youtube', 'Is a spot')),
-				'tip'	=> __d('me_youtube', 'Enable this option if this video is a spot')
-			]);
-			echo $this->Form->input('active', [
-				'label'	=> sprintf('%s?', __d('me_cms', 'Published')),
-				'tip'	=> __d('me_cms', 'Disable this option to save as a draft')
-			]);
-		?>
-	</div>
-	
-    <fieldset>
-		<div class="row margin-20 text-center">
-			<div class="col-sm-6">
-				<h4><?= __d('me_youtube', 'Video') ?></h4>
-				<?= $this->Html->youtube($video->youtube_id, ['class' => 'center-block', 'height' => 315, 'width' => 560]) ?>
-			</div>
-			<div class="col-sm-6">
-				<h4><?= __d('me_youtube', 'Thumbnail preview') ?></h4>
-				<?= $this->Thumb->image(Youtube::getPreview($video->youtube_id), ['height' => 315, 'class' => 'center-block']) ?>
-			</div>
-		</div>
-        <?php            
-			echo $this->Form->input('youtube_id', [
-				'label'		=> __d('me_youtube', '{0} ID', 'YouTube'),
-				'readonly'	=> TRUE,
-				'type'		=> 'text'
-			]);
-			echo $this->Html->para(NULL, $this->Html->link(__d('me_youtube', 'Open on {0}', 'YouTube'), Youtube::getUrl($video->youtube_id), ['icon' => 'external-link', 'target' => '_blank']));
-			echo $this->Form->input('duration', [
-				'label'		=> __d('me_youtube', 'Duration'),
-				'readonly'	=> TRUE
-			]);
-			echo $this->Form->input('title', ['label' => __d('me_cms', 'Title')]);
-			echo $this->Form->input('subtitle', ['label' => __d('me_cms', 'Subtitle')]);
-			echo $this->Form->input('description', [
-				'label' => __d('me_cms', 'Description'),
-				'rows'	=> 8
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_youtube', 'Edit video')) ?>
-    <?= $this->Form->end() ?>
+        echo $this->Form->input('category_id', [
+            'empty'	=> FALSE,
+            'label' => __d('me_cms', 'Category'),
+        ]);
+        echo $this->Form->datetimepicker('created', [
+            'label'	=> __d('me_cms', 'Date'),
+            'tip' => [
+                __d('me_cms', 'If blank, the current date and time will be used'),
+                __d('me_cms', 'You can delay the publication by entering a future date'),
+            ],
+        ]);
+        echo $this->Form->input('priority', [
+            'label' => __d('me_cms', 'Priority'),
+        ]);
+        echo $this->Form->input('is_spot', [
+            'label'	=> sprintf('%s?', __d('me_youtube', 'Is a spot')),
+            'tip' => __d('me_youtube', 'Enable this option if this video is a spot'),
+        ]);
+        echo $this->Form->input('active', [
+            'label'	=> sprintf('%s?', __d('me_cms', 'Published')),
+            'tip' => __d('me_cms', 'Disable this option to save as a draft'),
+        ]);
+    ?>
 </div>
+
+<fieldset>
+    <div class="row margin-20 text-center">
+        <div class="col-sm-6">
+            <h4><?= __d('me_youtube', 'Video') ?></h4>
+            <?= $this->Html->youtube($video->youtube_id, ['class' => 'center-block', 'height' => 315, 'width' => 560]) ?>
+        </div>
+        <div class="col-sm-6">
+            <h4><?= __d('me_youtube', 'Thumbnail preview') ?></h4>
+            <?= $this->Thumb->image($video->preview, ['height' => 315, 'class' => 'center-block']) ?>
+        </div>
+    </div>
+    <p><?= $this->Html->link(__d('me_youtube', 'Open on {0}', 'YouTube'), $video->youtube_url, ['icon' => 'external-link', 'target' => '_blank']) ?></p>
+    <?php            
+        echo $this->Form->input('youtube_id', [
+            'label' => __d('me_youtube', '{0} ID', 'YouTube'),
+            'readonly' => TRUE,
+            'type' => 'text',
+        ]);
+        echo $this->Form->input('duration', [
+            'label' => __d('me_youtube', 'Duration'),
+            'readonly' => TRUE,
+        ]);
+        echo $this->Form->input('title', [
+            'label' => __d('me_cms', 'Title'),
+        ]);
+        echo $this->Form->input('subtitle', [
+            'label' => __d('me_cms', 'Subtitle'),
+        ]);
+        echo $this->Form->input('text', [
+            'label' => __d('me_cms', 'Text'),
+            'rows' => 8,
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

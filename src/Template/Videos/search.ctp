@@ -54,7 +54,7 @@
                     <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?> 
                     <span class="small text-muted">(<?= $video->created->i18nFormat(config('main.datetime.short')) ?>)</span>
                     <div class="text-justify">
-                        <?= $this->Text->truncate(strip_tags($video->description), 350, ['exact' => FALSE, 'html' => TRUE]) ?>
+                        <?= $this->Text->truncate(strip_tags($video->text), 350, ['exact' => FALSE, 'html' => TRUE]) ?>
                     </div>
                 </div>
             <?php endforeach; ?>
