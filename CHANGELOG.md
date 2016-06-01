@@ -4,7 +4,8 @@
 * added action to list videos by month (year and month) and by year;
 * added "videos by month" and "videos by year" widgets;
 * renamed `description` field as `text`;
-* `index_by_date` action renamed as `index_by_day`.
+* `index_by_date` action renamed as `index_by_day`;
+* some fixes for MeCms 2.8.2.
 
 ## 2.3 branch
 ### 2.3.5
