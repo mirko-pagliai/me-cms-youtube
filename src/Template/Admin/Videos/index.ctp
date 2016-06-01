@@ -25,11 +25,8 @@
 <?php
     $this->extend('MeCms./Admin/Common/index');
     $this->assign('title', $title = __d('me_youtube', 'Videos'));
-    
-    $this->start('actions');
-	echo $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']);
-	echo $this->Html->button(__d('me_cms', 'Add category'), ['controller' => 'VideosCategories', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']);
-    $this->end();
+    $this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
+	$this->append('actions', $this->Html->button(__d('me_cms', 'Add category'), ['controller' => 'VideosCategories', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
     
 	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
