@@ -61,16 +61,16 @@ use Cake\Routing\Router;
 				<?php
 					if(config('video.skip_button')) {
 						echo $this->Html->div(NULL, __d('me_youtube', 'Skip to the video'), [
-							'data-secs'	=> config('video.skip_seconds'),
-							'id'		=> 'skip-to-video',
+							'data-secs' => config('video.skip_seconds'),
+							'id' => 'skip-to-video',
 						]);
                     }
                     
 					echo $this->Html->div(NULL, '', [
 						'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
-						'data-id'		=> $video->youtube_id,
-						'data-spot'		=> empty($video->spot_id) ? NULL : $video->spot_id,
-						'id'			=> 'player',
+						'data-id' => $video->youtube_id,
+						'data-spot' => empty($video->spot_id) ? NULL : $video->spot_id,
+						'id' => 'player',
 					]);
 				?>
 			</div>
