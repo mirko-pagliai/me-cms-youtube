@@ -104,8 +104,9 @@ class VideosCell extends Cell {
     
     /**
      * Videos by month widget
+     * @param string $render Render type (`form` or `list`)
      */
-    public function months() {
+    public function months($render = 'form') {
 		//Returns on index
 		if($this->request->isAction('index', 'Videos')) {
 			return;
@@ -136,6 +137,10 @@ class VideosCell extends Cell {
         }
         
         $this->set(compact('months'));
+        
+        if($render === 'list') {
+            $this->viewBuilder()->template('months_as_list');
+        }
     }
 	
 	/**

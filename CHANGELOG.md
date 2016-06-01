@@ -3,7 +3,7 @@
 ### 2.4.0
 * added action to list videos by month (year and month) and by year;
 * added "videos by month" widget;
-* `Videos::categories` widget can now render as form or list;
+* `Videos::categories` and `Videos::months` widgets can render as form or list;
 * renamed `description` field as `text`;
 * `index_by_date` action renamed as `index_by_day`;
 * added `youtube_url` virtual field;
