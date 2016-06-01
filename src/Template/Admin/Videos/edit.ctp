@@ -72,7 +72,7 @@ use MeYoutube\Utility\Youtube;
         </div>
         <div class="col-sm-6">
             <h4><?= __d('me_youtube', 'Thumbnail preview') ?></h4>
-            <?= $this->Thumb->image(Youtube::getPreview($video->youtube_id), ['height' => 315, 'class' => 'center-block']) ?>
+            <?= $this->Thumb->image($video->preview, ['height' => 315, 'class' => 'center-block']) ?>
         </div>
     </div>
     <p><?= $this->Html->link(__d('me_youtube', 'Open on {0}', 'YouTube'), Youtube::getUrl($video->youtube_id), ['icon' => 'external-link', 'target' => '_blank']) ?></p>

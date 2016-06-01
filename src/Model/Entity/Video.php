@@ -23,6 +23,7 @@
 namespace MeYoutube\Model\Entity;
 
 use Cake\ORM\Entity;
+use MeYoutube\Utility\Youtube;
 
 /**
  * YoutubeVideo entity
@@ -66,6 +67,6 @@ class Video extends Entity {
 	 * @return string Preview url
 	 */
 	protected function _getPreview() {
-		return \MeYoutube\Utility\Youtube::getPreview($this->_properties['youtube_id']);
+		return Youtube::getPreview($this->_properties['youtube_id']);
 	}
 }
