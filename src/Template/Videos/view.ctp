@@ -52,8 +52,8 @@
             $this->Html->meta(['content' => $video->preview, 'property' => 'og:image']);
         }
 
-        if(!empty($video->description)) {
-            $this->Html->meta(['content' => $this->Text->truncate($video->description, 100, ['html' => TRUE]), 'property' => 'og:description']);
+        if(!empty($video->text)) {
+            $this->Html->meta(['content' => $this->Text->truncate($video->text, 100, ['html' => TRUE]), 'property' => 'og:description']);
         }
     }
 ?>

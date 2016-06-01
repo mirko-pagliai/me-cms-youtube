@@ -14,7 +14,7 @@ CREATE TABLE `youtube_videos` (
   `category_id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `subtitle` varchar(150) DEFAULT NULL,
-  `description` text,
+  `text` text,
   `priority` int(1) NOT NULL DEFAULT '3',
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `is_spot` tinyint(1) NOT NULL DEFAULT '0',
@@ -50,9 +50,9 @@ ALTER TABLE `youtube_videos_categories`
 
 
 ALTER TABLE `youtube_videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9904;
 ALTER TABLE `youtube_videos_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

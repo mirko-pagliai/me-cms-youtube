@@ -20,11 +20,10 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-use Cake\Routing\Router;
 ?>
 
 <div class="content-preview">
-	<a href="<?= Router::url(['_name' => 'video', $video->id]) ?>">
+	<a href="<?= $this->Url->build(['_name' => 'video', $video->id]) ?>">
 		<div>
 			<div>
 				<div class="content-title">
@@ -37,14 +36,14 @@ use Cake\Routing\Router;
                         }
 					?>
 				</div>
-				<?php if(!empty($video->description)): ?>
+				<?php if(!empty($video->text)): ?>
 					<div class="content-text">
 						<?php
-							if(isset($truncate['description']) && !$truncate['description']) {
-								echo strip_tags($video->description);
+							if(isset($truncate['text']) && !$truncate['text']) {
+								echo strip_tags($video->text);
                             }
 							else {
-								echo $this->Text->truncate(strip_tags($video->description), empty($truncate['description']) ? 80 : $truncate['description'], ['exact' => FALSE]);
+								echo $this->Text->truncate(strip_tags($video->text), empty($truncate['text']) ? 80 : $truncate['text'], ['exact' => FALSE]);
                             }
 						?>
 					</div>

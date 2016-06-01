@@ -23,6 +23,7 @@
 namespace MeYoutube\Model\Entity;
 
 use Cake\ORM\Entity;
+use MeYoutube\Utility\Youtube;
 
 /**
  * YoutubeVideo entity
@@ -35,7 +36,7 @@ use Cake\ORM\Entity;
  * @property \MeYoutube\Model\Entity\Category $category
  * @property string $title
  * @property string $subtitle
- * @property string $description
+ * @property string $text
  * @property int $priority
  * @property bool $active
  * @property bool $is_spot
@@ -59,13 +60,23 @@ class Video extends Entity {
 	 * Virtual fields that should be exposed
 	 * @var array
 	 */
-    protected $_virtual = ['preview'];
+    protected $_virtual = ['preview', 'youtube_url'];
 	
 	/**
 	 * Gets the preview (virtual field)
-	 * @return string Preview url
+	 * @return string
+     * @uses MeYoutube\Utility\Youtube::getPreview()
 	 */
 	protected function _getPreview() {
-		return \MeYoutube\Utility\Youtube::getPreview($this->_properties['youtube_id']);
+		return Youtube::getPreview($this->_properties['youtube_id']);
 	}
+    
+    /**
+     * Gets the Youtube url (virtual field)
+     * @return string
+     * @uses MeYoutube\Utility\Youtube::getUrl()
+     */
+    protected function _getYoutubeUrl() {
+		return Youtube::getUrl($this->_properties['youtube_id']);
+    }
 }

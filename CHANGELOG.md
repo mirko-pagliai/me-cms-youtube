@@ -1,4 +1,15 @@
 # 2.x branch
+## 2.4 branch
+### 2.4.0
+* added action to list videos by month (year and month) and by year;
+* added "videos by month" widget;
+* `Videos::categories` and `Videos::months` widgets can render as form or list;
+* renamed `description` field as `text`;
+* fixed bug on category view.
+* `index_by_date` action renamed as `index_by_day`;
+* added `youtube_url` virtual field;
+* some fixes for MeCms 2.8.2.
+
 ## 2.3 branch
 ### 2.3.5
 * added specific methods for previews. This improves the code;

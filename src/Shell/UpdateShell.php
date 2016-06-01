@@ -29,11 +29,24 @@ use MeCms\Shell\BaseUpdateShell;
  */
 class UpdateShell extends BaseUpdateShell {
 	/**
-	 * Updates to 2.6.0 version
+	 * Updates to 2.4.0 version
+	 * @uses MeCms\Shell\BaseUpdateShell::$connection
+	 */
+	public function to2v4v0() {
+		$this->loadModel('MeYoutube.Videos');
+        
+        //Renames the "description" field as "text"
+        if($this->_checkColumn('description', $this->Videos->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` CHANGE `description` `text` TEXT NULL DEFAULT NULL;', $this->Videos->table()));
+        }
+    }
+    
+	/**
+	 * Updates to 2.3.0 version
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
      * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
 	 */
-	public function to2v6v0() {
+	public function to2v3v0() {
 		$this->loadModel('MeYoutube.VideosCategories');
         
         //Adds "created" field to the videos categories table and sets the default value
@@ -85,7 +98,8 @@ class UpdateShell extends BaseUpdateShell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
-            'to2v6v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.6.0')],
+            'to2v4v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.4.0')],
+            'to2v3v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.3.0')],
 			'to2v0v4vRC4' => ['help' => __d('me_cms', 'Updates to {0} version', '2.0.4-RC4')],
 		]);
 	}

@@ -22,53 +22,62 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_youtube', 'Videos categories')); ?>
+<?php
+    $this->extend('MeCms./Admin/Common/index');
+    $this->assign('title', $title = __d('me_youtube', 'Videos categories'));
+	$this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
+	$this->append('actions', $this->Html->button(__d('me_cms', 'Add video'), ['controller' => 'Videos', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
+?>
 
-<div class="videosCategories index">
-	<?= $this->Html->h2(__d('me_youtube', 'Videos categories')) ?>
-	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
-	<?= $this->Html->button(__d('me_cms', 'Add video'), ['controller' => 'Videos', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
-	
-    <table class="table table-hover">
-		<thead>
-			<tr>
-				<th><?= __d('me_cms', 'Title') ?></th>
-				<th class="text-center"><?= __d('me_cms', 'Parent') ?></th>
-				<th class="min-width text-center"><?= __d('me_youtube', 'Videos') ?></th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php foreach($categories as $category): ?>
-				<tr>
-					<td>
-                        <strong><?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?></strong>
-						<?php
-							$actions = [
-								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $category->id], ['icon' => 'pencil'])
-							];
-							
-							//Only admins can delete videos categories
-							if($this->Auth->isGroup('admin'))
-								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $category->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-							
-							if($category->video_count)
-								$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'videos_category', $category->slug], ['icon' => 'external-link', 'target' => '_blank']);
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th><?= __d('me_cms', 'Title') ?></th>
+            <th class="text-center"><?= __d('me_cms', 'Parent') ?></th>
+            <th class="min-width text-center"><?= __d('me_youtube', 'Videos') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($categories as $category): ?>
+            <tr>
+                <td>
+                    <strong><?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?></strong>
+                    <?php
+                        $actions = [
+                            $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $category->id], ['icon' => 'pencil']),
+                        ];
 
-							echo $this->Html->ul($actions, ['class' => 'actions']);
-						?>
-					</td>
-					<td class="text-center"><?= empty($category->parent->title) ? NULL : $category->parent->title ?></td>
-					<td class="min-width text-center">
-						<?php
-							if($category->video_count) 
-								echo $this->Html->link($category->video_count, ['controller' => 'Videos', 'action' => 'index', '?' => ['category' => $category->id]], ['title' => __d('me_cms', 'View items that belong to this category')]);
-							else
-								echo $category->video_count;
-						?>
-					</td>
-				</tr>
-			<?php endforeach; ?>
-		</tbody>
-    </table>
-	<?= $this->element('MeTools.paginator') ?>
-</div>
+                        //Only admins can delete videos categories
+                        if($this->Auth->isGroup('admin')) {
+                            $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $category->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
+                        }
+                        
+                        if($category->video_count) {
+                            $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'videos_category', $category->slug], ['icon' => 'external-link', 'target' => '_blank']);
+                        }
+                        
+                        echo $this->Html->ul($actions, ['class' => 'actions']);
+                    ?>
+                </td>
+                <td class="text-center">
+                    <?php
+                        if(!empty($category->parent->title)) {
+                            echo $category->parent->title;
+                        }
+                    ?>
+                </td>
+                <td class="min-width text-center">
+                    <?php
+                        if($category->video_count) {
+                            echo $this->Html->link($category->video_count, ['controller' => 'Videos', 'action' => 'index', '?' => ['category' => $category->id]], ['title' => __d('me_cms', 'View items that belong to this category')]);
+                        }
+                        else {
+                            echo $category->video_count;
+                        }
+                    ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?= $this->element('MeTools.paginator') ?>

@@ -24,13 +24,13 @@
 	
 <?php
 	$this->set([
-		'documentData'	=> ['xmlns:dc' => 'http://purl.org/dc/elements/1.1/'],
-		'channelData'	=> [
-			'title'			=> __d('me_youtube', 'Latest videos'),
-			'link'			=> \Cake\Routing\Router::url('/', TRUE),
-			'description'	=> __d('me_youtube', 'Latest videos'),
-			'language'		=> 'en-us'
-		]
+		'documentData' => ['xmlns:dc' => 'http://purl.org/dc/elements/1.1/'],
+		'channelData' => [
+			'title' => __d('me_youtube', 'Latest videos'),
+			'link' => \Cake\Routing\Router::url('/', TRUE),
+			'description' => __d('me_youtube', 'Latest videos'),
+			'language' => 'en-us',
+		],
 	]);
 	
 	foreach($videos as $video) {
@@ -39,15 +39,16 @@
 		
 		//Sets text
 		$text = $this->Text->truncate(
-			strip_tags($video->description),
+			strip_tags($video->text),
 			config('frontend.truncate_to'),
 			['ending' => '...', 'exact' => FALSE, 'html' => TRUE]
 		);
 		
 		//Adds the preview image
-		if(!empty($video->preview))
+		if(!empty($video->preview)) {
 			$text = sprintf('%s%s', $this->Thumb->image($video->preview, ['width' => 400]), '<br />'.PHP_EOL.$text);
-
+        }
+        
 		echo $this->Rss->item([], [
 			'description'	=> $text,
 			'guid'			=> ['url' => $link, 'isPermaLink' => 'true'],

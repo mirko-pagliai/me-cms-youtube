@@ -114,6 +114,7 @@ class VideosController extends AppController {
      * Adds video
 	 * @uses MeYoutube\Utility\Youtube::getId()
 	 * @uses MeYoutube\Utility\Youtube::getInfo()
+	 * @uses MeYoutube\Utility\Youtube::getUrl()
      */
     public function add() {
 		//If the address of a YouTube video has been specified
@@ -121,15 +122,16 @@ class VideosController extends AppController {
             //Gets video ID and information
             $youtube_id = Youtube::getId($this->request->query('url'));
             $youtube_info = Youtube::getInfo($youtube_id);
+            $youtube_url = Youtube::getUrl($youtube_id);
             
 			if(!$youtube_id) {
 				$this->Flash->error(__d('me_youtube', 'This is not a {0} video', 'YouTube'));
             }
-			elseif(!$youtube_info) {
+			elseif(!$youtube_info || !$youtube_url) {
 				$this->Flash->error(__d('me_youtube', 'Unable to retrieve video informations. Probably the video is private'));
             }
 			else {
-				$this->request->data = am(compact('youtube_id'), Youtube::getInfo($youtube_id));
+				$this->request->data = am(compact('youtube_id', 'youtube_url'), $youtube_info);
             }
 		}
 		

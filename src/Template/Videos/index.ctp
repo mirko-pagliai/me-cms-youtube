@@ -26,7 +26,7 @@
 	/**
 	 * This template can be used by many actions
 	 */
-    if($this->request->isAction('index_by_date', 'Videos')) {
+    if($this->request->isAction('index_by_day', 'Videos')) {
 		$date = (new \Cake\I18n\Time());
         $date->year($this->request->param('year'));
         $date->month($this->request->param('month'));
@@ -42,6 +42,22 @@
 			$title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat(config('main.date.long')));
         }
 	}
+    elseif($this->request->isAction('index_by_month', 'Videos')) {
+        $date = (new \Cake\I18n\Time());
+        $date->year($this->request->param('year'));
+        $date->month($this->request->param('month'));
+        $date->day(1);
+        
+        $title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat('MMMM y'));
+    }
+    elseif($this->request->isAction('index_by_year', 'Videos')) {
+        $date = (new \Cake\I18n\Time());
+        $date->year($this->request->param('year'));
+        $date->month(1);
+        $date->day(1);
+        
+        $title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat('y'));
+    }
 	elseif($this->request->isAction('view', 'VideosCategories') && !empty($videos[0]->category->title)) {
 		$title = $videos[0]->category->title;
     }

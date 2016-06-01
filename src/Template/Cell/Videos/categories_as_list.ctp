@@ -20,41 +20,19 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Model\Validation;
+?>
 
-use MeCms\Model\Validation\AppValidator;
-
-class VideoValidator extends AppValidator {
-	/**
-	 * Construct.
-	 * 
-	 * Adds some validation rules.
-	 * @uses MeCms\Model\Validation\AppValidator::__construct()
-	 */
-    public function __construct() {
-        parent::__construct();
-		
-		//Category
-        $this->add('category_id', ['naturalNumber' => [
-			'message' => __d('me_cms', 'You have to select a valid option'),
-			'rule' => 'naturalNumber',
-		]])->requirePresence('category_id', 'create');
-		
-		//User (author)
-		$this->requirePresence('user_id', 'create');
-		
-		//Title
-		$this->requirePresence('title', 'create');
-		
-		//Text
-        $this->requirePresence('text', 'create');
-		
-		//"Is spot"
-        $this->add('is_spot', ['boolean' => [
-			'message' => __d('me_cms', 'You have to select a valid option'),
-			'rule' => 'boolean',
-		]]);
-		
-        return $this;
-	}
-}
+<?php
+	if(empty($categories) || count($categories) < 2) {
+		return;
+    }
+    
+	$this->extend('MeCms./Common/widget');
+	$this->assign('title', __d('me_youtube', 'Videos categories'));
+	
+    $categories = array_map(function($category) {
+		return $this->Html->link($category->title, ['_name' => 'videos_category', $category->slug]);
+	}, $categories);
+    
+	echo $this->Html->ul($categories, ['icon' => 'caret-right']);
+?>
