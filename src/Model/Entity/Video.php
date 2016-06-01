@@ -60,13 +60,23 @@ class Video extends Entity {
 	 * Virtual fields that should be exposed
 	 * @var array
 	 */
-    protected $_virtual = ['preview'];
+    protected $_virtual = ['preview', 'youtube_url'];
 	
 	/**
 	 * Gets the preview (virtual field)
-	 * @return string Preview url
+	 * @return string
+     * @uses MeYoutube\Utility\Youtube::getPreview()
 	 */
 	protected function _getPreview() {
 		return Youtube::getPreview($this->_properties['youtube_id']);
 	}
+    
+    /**
+     * Gets the Youtube url (virtual field)
+     * @return string
+     * @uses MeYoutube\Utility\Youtube::getUrl()
+     */
+    protected function _getYoutubeUrl() {
+		return Youtube::getUrl($this->_properties['youtube_id']);
+    }
 }

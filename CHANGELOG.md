@@ -5,6 +5,7 @@
 * added "videos by month" and "videos by year" widgets;
 * renamed `description` field as `text`;
 * `index_by_date` action renamed as `index_by_day`;
+* added `youtube_url` virtual field;
 * some fixes for MeCms 2.8.2.
 
 ## 2.3 branch
