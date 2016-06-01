@@ -47,16 +47,17 @@ class VideosCell extends Cell {
 	
 	/**
 	 * Categories widget
+     * @param string $render Render type (`form` or `list`)
 	 * @uses MeTools\Network\Request::isHere()
 	 */
-	public function categories() {
+	public function categories($render = 'form') {
 		//Returns on categories index
 		if($this->request->isHere(['_name' => 'videos_categories'])) {
 			return;
         }
 		
 		//Tries to get data from the cache
-		$categories = Cache::read($cache = 'widget_categories', $this->Videos->cache);
+		$categories = Cache::read($cache = sprintf('widget_categories_as_%s', $render), $this->Videos->cache);
 		
 		//If the data are not available from the cache
         if(empty($categories)) {
@@ -65,15 +66,21 @@ class VideosCell extends Cell {
 				->order(['title' => 'ASC'])
 				->toArray();
 			
-			foreach($categories as $k => $category) {
-				$categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->video_count);
-				unset($categories[$k]);
-			}
+            if($render === 'form') {
+                foreach($categories as $k => $category) {
+                    $categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->video_count);
+                    unset($categories[$k]);
+                }
+            }
 			
             Cache::write($cache, $categories, $this->Videos->cache);
 		}
 		
 		$this->set(compact('categories'));
+        
+        if($render === 'list') {
+            $this->viewBuilder()->template('categories_as_list');
+        }
 	}
 	
 	/**
