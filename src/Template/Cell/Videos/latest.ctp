@@ -26,8 +26,7 @@
 	if(empty($videos)) {
 		return;
     }
-	
-	//Extends the widget common view
+    
 	$this->extend('MeCms./Common/widget');
 	$this->assign('title', count($videos) > 1 ? __d('me_youtube', 'Latest {0} videos', count($videos)) : __d('me_youtube', 'Latest video'));
 	

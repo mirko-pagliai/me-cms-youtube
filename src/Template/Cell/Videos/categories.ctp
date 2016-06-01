@@ -26,8 +26,7 @@
 	if(empty($categories) || count($categories) < 2) {
 		return;
     }
-	
-	//Extends the widget common view
+    
 	$this->extend('MeCms./Common/widget');
 	$this->assign('title', __d('me_youtube', 'Videos categories'));
 	

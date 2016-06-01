@@ -27,8 +27,7 @@
 	if($this->request->isHere(['_name' => 'videos_search'])) {
 		return;
     }
-		
-	//Extends the widget common view
+    
 	$this->extend('MeCms./Common/widget');
 	$this->assign('title', __d('me_youtube', 'Search videos'));
 
