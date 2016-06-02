@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.4 branch
+### 2.4.1
+* fixed serious bug on the created date of objects when editing.
+
 ### 2.4.0
 * added action to list videos by month (year and month) and by year;
 * added "videos by month" widget;
