@@ -50,11 +50,11 @@
         }
         
 		echo $this->Rss->item([], [
-			'description'	=> $text,
-			'guid'			=> ['url' => $link, 'isPermaLink' => 'true'],
-			'link'			=> $link,
-			'pubDate'		=> $video->created,
-			'title'			=> $video->title
+			'description' => $text,
+			'guid' => ['url' => $link, 'isPermaLink' => 'true'],
+			'link' => $link,
+			'pubDate' => $video->created,
+			'title' => $video->title,
 		]);
 	}
 ?>

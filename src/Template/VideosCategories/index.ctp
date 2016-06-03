@@ -22,16 +22,13 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_youtube', 'Videos categories')); ?>
+<?php
+    $this->extend('MeCms./Common/index');
+    $this->assign('title', __d('me_youtube', 'Videos categories'));
+    
+    $categories = array_map(function($category) {
+        return $this->Html->link($category->title, ['_name' => 'videos_category', $category->slug]);
+    }, $categories->toArray());
 
-<div class="videosCategories index">
-	<?php
-		echo $this->Html->h2(__d('me_youtube', 'Videos categories'));	
-		
-        $categories = array_map(function($category) {
-            return $this->Html->link($category->title, ['_name' => 'videos_category', $category->slug]);
-        }, $categories->toArray());
-
-		echo $this->Html->ul($categories, ['icon' => 'caret-right']);
-	?>
-</div>
+    echo $this->Html->ul($categories, ['icon' => 'caret-right']);
+?>

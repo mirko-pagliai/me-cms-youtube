@@ -21,8 +21,10 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
+
 <?php
+    $this->extend('MeCms./Common/index');
+    
 	/**
 	 * This template can be used by many actions
 	 */
@@ -65,20 +67,12 @@
     if(!empty($title)) {
         $this->assign('title', $title);
     }
-?>
-
-<div class="videos index">
-	<?php
-		if(!empty($title)) {
-			echo $this->Html->h2($title);
+    
+    if(!empty($videos)) {
+        foreach($videos as $video) {
+            echo $this->element('frontend/views/video', compact('video'));
         }
-        
-		if(!empty($videos)) {
-			foreach($videos as $video) {
-				echo $this->element('frontend/views/video', compact('video'));
-            }
-            
-			echo $this->element('MeTools.paginator');
-		}
-	?>
-</div>
+
+        echo $this->element('MeTools.paginator');
+    }
+?>

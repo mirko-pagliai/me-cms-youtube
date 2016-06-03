@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.4 branch
+### 2.4.2
+* some fixes for MeCms 2.10.0.
+
 ### 2.4.1
 * fixed serious bug on the created date of objects when editing.
 
