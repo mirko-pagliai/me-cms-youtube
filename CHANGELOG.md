@@ -20,7 +20,7 @@
 
 ### 2.3.4
 * added some buttons for backend;
-* some fixed for MeCms 2.7.3.
+* some fixes for MeCms 2.7.3.
 
 ### 2.3.3
 * fixed titles.
