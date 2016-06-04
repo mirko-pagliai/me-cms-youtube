@@ -24,33 +24,30 @@
 
 <div class="video-container content-container clearfix">
 	<div class="content-header">
-		<?php
-			if(config('video.category') && !empty($video->category->title) && !empty($video->category->slug)) {
-				echo $this->Html->h5($this->Html->link($video->category->title, ['_name' => 'videos_category', $video->category->slug]), ['class' => 'content-category']);
-            }
-            
-			echo $this->Html->h3($this->Html->link($video->title, ['_name' => 'video', $video->id]), ['class' => 'content-title']);
-
-			if(!empty($video->subtitle)) {
-				echo $this->Html->h4($this->Html->link($video->subtitle, ['_name' => 'video', $video->id]), ['class' => 'content-subtitle']);
-            }
-		?>
+        <?php if(config('video.category')): ?>
+            <h5 class="content-category">
+                <?= $this->Html->link($video->category->title, ['_name' => 'videos_category', $video->category->slug]) ?>
+            </h5>
+        <?php endif; ?>
+        
+        <h3 class="content-title">
+            <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?>
+        </h3>
+        
+        <?php if($video->subtitle): ?>
+            <h4 class="content-subtitle">
+                <?= $this->Html->link($video->subtitle, ['_name' => 'video', $video->id]) ?>
+            </h4>
+        <?php endif; ?>
+        
 		<div class="content-info">
-			<?php
-				if(config('video.author') && !empty($video->user->full_name)) {
-					echo $this->Html->div('content-author',
-						__d('me_cms', 'Posted by {0}', $video->user->full_name),
-						['icon' => 'user']
-					);
-                }
-
-				if(config('video.created') && !empty($video->created)) {
-					echo $this->Html->div('content-date',
-						__d('me_cms', 'Posted on {0}', $video->created->i18nFormat(config('main.datetime.long'))),
-						['icon' => 'clock-o']
-					);
-                }
-			?>
+			<?php if(config('video.author')): ?>
+				<?= $this->Html->div('content-author', __d('me_cms', 'Posted by {0}', $video->user->full_name), ['icon' => 'user']) ?>
+            <?php endif; ?>
+            
+            <?php if(config('video.created')): ?>
+				<?= $this->Html->div('content-date', __d('me_cms', 'Posted on {0}', $video->created->i18nFormat(config('main.datetime.long'))), ['icon' => 'clock-o']) ?>
+            <?php endif; ?>
 		</div>
 	</div>
 	<div class="content-text">
