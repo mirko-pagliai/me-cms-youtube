@@ -30,7 +30,8 @@
 
 ### 2.3.2
 * logged users can view future videos and drafts;
-* improved the code to check the cache validity. Removed `checkIfCacheIsValid()` and `getNextToBePublished()` methods;
+* improved the code to check the cache validity. Removed 
+	`checkIfCacheIsValid()` and `getNextToBePublished()` methods;
 * updated Facebook's tags.
 
 ### 2.3.1
@@ -60,7 +61,8 @@
 * updated for MeCms.
 
 ### 2.1.8
-* it checks whether the information of a video are present. This avoids post a private video;
+* it checks whether the information of a video are present. This avoids post 
+	a private video;
 * updated to CakePHP 3.2.
 
 ### 2.1.7
@@ -69,7 +71,8 @@
 * widgets now use a common view. Rewritten the code of all widgets.
 
 ### 2.1.6
-* you can disable the "Skip to the video" button or set the number of seconds before it appears;
+* you can disable the "Skip to the video" button or set the number of seconds 
+	before it appears;
 * added the "video fake" functionality;
 * added routes for "videos of today" and "videos of yesterday".
 
@@ -124,5 +127,6 @@
 
 ### 1.1.1
 * support for videos with `youtube.be` address;
-* many buttons are disabled after the click, to prevent some actions are performed repeatedly;
+* many buttons are disabled after the click, to prevent some actions are 
+	performed repeatedly;
 * added the changelog file.
