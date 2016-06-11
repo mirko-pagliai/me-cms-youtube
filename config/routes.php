@@ -29,7 +29,7 @@ Router::extensions('rss');
 /**
  * MeYoutube routes
  */
-Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
+Router::scope('/', ['plugin' => 'MeYoutube'], function($routes) {
 	/**
 	 * VideosCategories controller
 	 */
@@ -71,7 +71,7 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
 	/**
 	 * Admin routes
 	 */
-    $routes->prefix('admin', function ($routes) {
+    $routes->prefix('admin', function($routes) {
 		/**
 		 * Other admin routes
 		 */
