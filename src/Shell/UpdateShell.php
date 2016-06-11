@@ -32,7 +32,7 @@ class UpdateShell extends BaseUpdateShell {
 	 * Updates to 2.4.0 version
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
 	 */
-	public function to_2_4_0() {
+	public function to2v4v0() {
 		$this->loadModel('MeYoutube.Videos');
         
         //Renames the "description" field as "text"
@@ -46,7 +46,7 @@ class UpdateShell extends BaseUpdateShell {
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
      * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
 	 */
-	public function to_2_3_0() {
+	public function to2v3v0() {
 		$this->loadModel('MeYoutube.VideosCategories');
         
         //Adds "created" field to the videos categories table and sets the default value
@@ -66,7 +66,7 @@ class UpdateShell extends BaseUpdateShell {
 	 * Updates to 2.0.4-RC4 version
 	 * @uses MeYoutube\Utility\Youtube::getInfo()
 	 */
-	public function to_2_0_4_RC4() {
+	public function to2v0v4vRC4() {
 		$this->loadModel('MeYoutube.Videos');
 		
 		$videos = $this->Videos->find('all')
