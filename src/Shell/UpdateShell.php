@@ -89,18 +89,4 @@ class UpdateShell extends BaseUpdateShell {
 				->execute();
 		}
 	}
-	
-	/**
-	 * Gets the option parser instance and configures it.
-	 * @return ConsoleOptionParser
-	 */
-	public function getOptionParser() {
-		$parser = parent::getOptionParser();
-		
-		return $parser->addSubcommands([
-            'to2v4v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.4.0')],
-            'to2v3v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.3.0')],
-			'to2v0v4vRC4' => ['help' => __d('me_cms', 'Updates to {0} version', '2.0.4-RC4')],
-		]);
-	}
 }

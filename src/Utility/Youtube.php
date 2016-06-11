@@ -23,7 +23,7 @@
 namespace MeYoutube\Utility;
 
 use Cake\Network\Http\Client;
-use MeCms\Utility\Youtube as BaseYoutube;
+use MeTools\Utility\Youtube as BaseYoutube;
 
 /**
  * An utility to get information about YouTube videos

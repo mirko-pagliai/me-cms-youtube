@@ -22,6 +22,11 @@
  */
 ?>
 
+<?php
+    $this->extend('MeCms./Common/view');
+    $this->assign('title', $video->title);
+?>
+
 <?php $this->append('userbar'); ?>
 <?php if($video->is_spot): ?>
     <li><?= $this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'label label-primary']) ?></li>
@@ -40,8 +45,6 @@
 <?php $this->end(); ?>
 
 <?php
-	$this->assign('title', $video->title);
-	
 	//Set some tags
     if($this->request->isAction('view', 'Videos')) {
         $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
@@ -53,11 +56,12 @@
         }
 
         if(!empty($video->text)) {
-            $this->Html->meta(['content' => $this->Text->truncate($video->text, 100, ['html' => TRUE]), 'property' => 'og:description']);
+            $this->Html->meta([
+                'content' => $this->Text->truncate($video->text, 100, ['html' => TRUE]),
+                'property' => 'og:description',
+            ]);
         }
     }
+    
+    echo $this->element('frontend/views/video', compact('video'));
 ?>
-
-<div class="videos view">
-	<?= $this->element('frontend/views/video', compact('video')); ?>
-</div>

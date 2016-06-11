@@ -23,20 +23,6 @@
 ?>
 
 <?php
-	if(empty($months) || count($months) < 2) {
-		return;
-    }
-    
-	$this->extend('MeCms./Common/widget');
-	$this->assign('title', __d('me_youtube', 'Videos by month'));
-    
-	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'videos_by_date', sprintf('%s/%s', date('Y'), date('m'))]]);
-	echo $this->Form->input('q', [
-		'label' => FALSE,
-		'onchange' => 'send_form(this)',
-		'options' => array_map(function($month) {
-            return sprintf('%s (%s)', $month->month->i18nFormat('MMMM Y'), $month->video_count);
-        }, $months),
-	]);
-	echo $this->Form->end();
+    $this->extend('Videos/index');
+    $this->assign('title', $category);
 ?>

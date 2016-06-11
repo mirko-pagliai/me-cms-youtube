@@ -21,44 +21,43 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_youtube', 'Search videos')); ?>
 
-<div class="videos index">
-	<?php
-		echo $this->Html->h2(__d('me_youtube', 'Search videos'));
-		
-		echo $this->Form->create(NULL, ['type' => 'get', 'url' => ['_name' => 'videos_search']]);
-		echo $this->Form->input('p', [
-			'default'		=> $this->request->query('p'),
-			'label'			=> FALSE,
-			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
-		]);
-		echo $this->Form->submit(__d('me_cms', 'Search'), [
-			'class' => 'btn-primary visible-lg-inline',
-			'icon'	=> 'search'
-		]);
-		echo $this->Form->end();
-	?>
-    
-    <?php if(!empty($pattern)): ?>
-        <div class="bg-info margin-20 padding-10">
-            <?= __d('me_cms', 'You have searched for: {0}', $this->Html->em($pattern)) ?>
-        </div>
-	<?php endif; ?>
-    
-    <?php if(!empty($videos)): ?>
-        <div class="as-table">
-            <?php foreach($videos as $video): ?>
-                <div class="margin-10 padding-10">
-                    <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?> 
-                    <span class="small text-muted">(<?= $video->created->i18nFormat(config('main.datetime.short')) ?>)</span>
-                    <div class="text-justify">
-                        <?= $this->Text->truncate(strip_tags($video->text), 350, ['exact' => FALSE, 'html' => TRUE]) ?>
-                    </div>
+<?php
+    $this->extend('MeCms./Common/index');
+    $this->assign('title', __d('me_youtube', 'Search videos'));
+?>
+
+<?php
+    echo $this->Form->create(NULL, ['type' => 'get', 'url' => ['_name' => 'videos_search']]);
+    echo $this->Form->input('p', [
+        'default' => $this->request->query('p'),
+        'label' => FALSE,
+        'placeholder' => sprintf('%s...', __d('me_cms', 'Search')),
+    ]);
+    echo $this->Form->submit(__d('me_cms', 'Search'), [
+        'class' => 'btn-primary visible-lg-inline',
+        'icon' => 'search',
+    ]);
+    echo $this->Form->end();
+?>
+
+<?php if(!empty($pattern)): ?>
+    <div class="bg-info margin-20 padding-10">
+        <?= __d('me_cms', 'You have searched for: {0}', $this->Html->em($pattern)) ?>
+    </div>
+<?php endif; ?>
+
+<?php if(!empty($videos)): ?>
+    <div class="as-table">
+        <?php foreach($videos as $video): ?>
+            <div class="margin-10 padding-10">
+                <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?> 
+                <span class="small text-muted">(<?= $video->created->i18nFormat(config('main.datetime.short')) ?>)</span>
+                <div class="text-justify">
+                    <?= $this->Text->truncate(strip_tags($video->text), 350, ['exact' => FALSE, 'html' => TRUE]) ?>
                 </div>
-            <?php endforeach; ?>
-        </div>
-        <?= $this->element('MeTools.paginator') ?>
-    <?php endif; ?>
-</div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?= $this->element('MeTools.paginator') ?>
+<?php endif; ?>

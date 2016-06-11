@@ -48,8 +48,10 @@ class VideosController extends AppController {
      * Lists videos
 	 */
     public function index() {
+        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        
 		//Sets the cache name
-		$cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+		$cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
 		
 		//Tries to get data from the cache
 		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Videos->cache));
@@ -57,18 +59,25 @@ class VideosController extends AppController {
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
             $query = $this->Videos->find('active')
-                ->contain([
-                    'Categories' => ['fields' => ['title', 'slug']],
-                    'Users' => ['fields' => ['first_name', 'last_name']],
-                ])
                 ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
+                ->contain([
+                    'Categories' => function($q) {
+                        return $q->select(['title', 'slug']);
+                    },
+                    'Users' => function($q) {
+                        return $q->select(['first_name', 'last_name']);
+                    },
+                ])
                 ->where(['is_spot' => FALSE])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
             
 			$videos = $this->paginate($query)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
+			Cache::writeMany([
+                $cache => $videos,
+                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+            ], $this->Videos->cache);
 		}
 		//Else, sets the paging parameter
 		else {
@@ -77,13 +86,56 @@ class VideosController extends AppController {
 		
         $this->set(compact('videos'));
     }
-	
+    
     /**
-	 * Internal method to list videos in a date interval
-     * @param Time $start Start time
-     * @param Time $end End time
+     * List videos for a specific date:
+     * 
+     * The date must be passed in the format:
+     * <pre>YYYY/MM/dd</pre>
+     * The month and day are optional.  
+     * You can also use the special keywords "today" and "yesterday".
+     * 
+     * Examples:
+     * <pre>/index_by_date/2016/06/11</pre>
+     * <pre>/index_by_date/2016/06</pre>
+     * <pre>/index_by_date/2016</pre>
+     * <pre>/index_by_date/today</pre>
+     * <pre>/index_by_date/yesterday</pre>
+     * @param string $date
      */
-    protected function _index_by_date(Time $start, Time $end) {
+    public function index_by_date($date = NULL) {
+        //Data can be passed as query string, from a widget
+		if($this->request->query('q')) {
+            return $this->redirect([$this->request->query('q')]);
+        }
+        
+        //Sets `$year`, `$month` and `$day`
+        //`$month` and `$day` may be `NULL`
+        if($date === 'today' || $date === 'yesterday') {
+            $date = new Time($date === 'today' ? 'now' : '1 days ago');
+            
+            list($year, $month, $day) = explode('/', $date->i18nFormat('YYYY/MM/dd'));
+        }
+        else {
+            list($year, $month, $day) = am(explode('/', $date), [NULL, NULL, NULL]);
+        }
+        
+        //Sets the start date
+        $start = (new Time())
+            ->setDate($year, empty($month) ? 1 : $month, empty($day) ? 1 : $day)
+            ->setTime(0, 0, 0);
+        
+        //Sets the end date
+        if($year && $month && $day) {
+            $end = (new Time($start))->addDay(1);
+        }
+        elseif($year && $month) {
+            $end = (new Time($start))->addMonth(1);
+        }
+        else {
+            $end = (new Time($start))->addYear(1);
+        }
+        
         $page = $this->request->query('page') ? $this->request->query('page') : 1;
         
 		//Sets the cache name
@@ -95,11 +147,15 @@ class VideosController extends AppController {
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {            
             $query = $this->Videos->find('active')
-                ->contain([
-                    'Categories' => ['fields' => ['title', 'slug']],
-                    'Users' => ['fields' => ['first_name', 'last_name']],
-                ])
                 ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
+                ->contain([
+                    'Categories' => function($q) {
+                        return $q->select(['title', 'slug']);
+                    },
+                    'Users' => function($q) {
+                        return $q->select(['first_name', 'last_name']);
+                    },
+                ])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
                 ->where([
                     'is_spot' => FALSE,
@@ -111,73 +167,17 @@ class VideosController extends AppController {
 			$videos = $this->paginate($query)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
+			Cache::writeMany([
+                $cache => $videos,
+                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+            ], $this->Videos->cache);
 		}
 		//Else, sets the paging parameter
 		else {
 			$this->request->params['paging'] = $paging;
         }
         
-        $this->set(compact('videos'));
-    }
-    
-	/**
-	 * Lists videos by a day (year, month and day).
-     * It uses the `index` template.
-	 * @param int $year Year
-	 * @param int $month Month
-	 * @param int $day Day
-     * @uses _index_by_date()
-	 */
-	public function index_by_day($year, $month, $day) {
-        $start = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
-        $end = (new Time($start))->addDay(1);
-        
-        $this->_index_by_date($start, $end);
-		
-		$this->render('index');
-	}
-    
-    /**
-	 * Lists videos by a month (year and month).
-     * It uses the `index` template.
-	 * @param int $year Year
-	 * @param int $month Month
-     * @uses _index_by_date()
-     */
-    public function index_by_month($year, $month) {
-        //Data can be passed as query string, from a widget
-		if($this->request->query('q')) {
-            $exploded = explode('-', $this->request->query('q'));
-			return $this->redirect([$exploded[1], $exploded[0]]);
-        }
-        
-        $start = (new Time())->setDate($year, $month, 1)->setTime(0, 0, 0);
-        $end = (new Time($start))->addMonth(1);
-        
-        $this->_index_by_date($start, $end);
-        
-		$this->render('index');
-    }
-    
-    /**
-	 * Lists videos by a year.
-     * It uses the `index` template.
-	 * @param int $year Year
-     * @uses _index_by_date()
-     */
-    public function index_by_year($year) {
-        //Data can be passed as query string, from a widget
-		if($this->request->query('q')) {
-            return $this->redirect([$this->request->query('q')]);
-        }
-        
-        $start = (new Time())->setDate($year, 1, 1)->setTime(0, 0, 0);
-        $end = (new Time($start))->addYear(1);
-        
-        $this->_index_by_date($start, $end);
-        
-		$this->render('index');
+        $this->set(compact('videos', 'year', 'month', 'day'));
     }
 	
 	/**
@@ -279,11 +279,15 @@ class VideosController extends AppController {
      */
     public function view($id = NULL) {		
 		$video = $this->Videos->find('active')
-			->contain([
-				'Categories' => ['fields' => ['title', 'slug']],
-				'Users' => ['fields' => ['first_name', 'last_name']],
-			])
 			->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
+			->contain([
+                'Categories' => function($q) {
+                    return $q->select(['title', 'slug']);
+                },
+                'Users' => function($q) {
+                    return $q->select(['first_name', 'last_name']);
+                },
+			])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
 			->firstOrFail();
@@ -305,11 +309,15 @@ class VideosController extends AppController {
      */
     public function preview($id = NULL) {		
 		$video = $this->Videos->find()
-			->contain([
-				'Categories' => ['fields' => ['title', 'slug']],
-				'Users' => ['fields' => ['first_name', 'last_name']],
-			])
 			->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
+			->contain([
+                'Categories' => function($q) {
+                    return $q->select(['title', 'slug']);
+                },
+                'Users' => function($q) {
+                    return $q->select(['first_name', 'last_name']);
+                },
+			])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->firstOrFail();
         
