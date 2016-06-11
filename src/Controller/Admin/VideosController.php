@@ -98,11 +98,15 @@ class VideosController extends AppController {
      */
     public function index() {
 		$query =$this->Videos->find()
+			->select(['id', 'title', 'priority', 'active', 'is_spot', 'duration', 'seconds', 'created'])
 			->contain([
-				'Categories' => ['fields' => ['id', 'title']],
-				'Users' => ['fields' => ['id', 'first_name', 'last_name']],
-			])
-			->select(['id', 'title', 'priority', 'active', 'is_spot', 'duration', 'seconds', 'created']);
+                'Categories' => function($q) {
+                    return $q->select(['id', 'title']);
+                },
+                'Users' => function($q) {
+                    return $q->select(['id', 'first_name', 'last_name']);
+                },
+			]);
 		
 		$this->paginate['order'] = ['created' => 'DESC'];
 		$this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'Users.first_name', 'seconds', 'priority', 'created'];

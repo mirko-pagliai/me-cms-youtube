@@ -70,9 +70,13 @@ class VideosCategoriesController extends AppController {
      */
     public function index() {
 		$categories = $this->VideosCategories->find('all')
-			->contain(['Parents' => ['fields' => ['title']]])
-			->order(['VideosCategories.lft' => 'ASC'])
 			->select(['id', 'title', 'slug', 'video_count'])
+			->contain([
+                'Parents' => function($q) {
+                    return $q->select(['title']);
+                },
+            ])
+			->order(['VideosCategories.lft' => 'ASC'])
 			->toArray();
 		
 		//Changes the category titles, replacing them with the titles of the tree list
