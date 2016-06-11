@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-06-01 14:38+0200\n"
-"PO-Revision-Date: 2016-06-01 14:39+0100\n"
+"POT-Creation-Date: 2016-06-11 19:32+0200\n"
+"PO-Revision-Date: 2016-06-11 19:33+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -13,23 +13,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: it\n"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:96;118
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:100;122
 msgid "The videos category has been saved"
 msgstr "La categoria video è stata salvata"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:100;122
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:104;126
 msgid "The videos category could not be saved"
 msgstr "La categoria video non può essere salvata"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:141
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:145
 msgid "The videos category has been deleted"
 msgstr "La categoria video è stata cancellata"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:144
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:148
 msgid "The videos category could not be deleted"
 msgstr "La categoria video non può essere cancellata"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:148
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:152
 msgid ""
 "Before you delete this category, you have to delete its videos or assign them"
 " to another category"
@@ -41,29 +41,29 @@ msgstr ""
 msgid "Before you can manage videos, you have to create at least a category"
 msgstr "Prima di gestire i video, devi creare almeno una categoria"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:128
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:134
 msgid "This is not a {0} video"
 msgstr "Questo non è un video di {0}"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:131
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:137
 msgid "Unable to retrieve video informations. Probably the video is private"
 msgstr ""
 "Impossibile recuperare le informazioni del video. Probabilmente il video è "
 "privato"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:151;180
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:157;186
 msgid "The video has been saved"
 msgstr "Il video è stato salvato"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:155;184
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:161;190
 msgid "The video could not be saved"
 msgstr "Il video non può essere salvato"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:200
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:206
 msgid "The video has been deleted"
 msgstr "Il video è stato cancellato"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:203
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:209
 msgid "The video could not be deleted"
 msgstr "Il video non può essere cancellato"
 
@@ -72,37 +72,37 @@ msgid "Video url"
 msgstr "Url del video"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:75
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:56
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:58
 msgid "Is a spot"
 msgstr "È uno spot"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:76
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:57
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:59
 msgid "Enable this option if this video is a spot"
 msgstr "Abilita questa opzione se il video è uno spot"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:89
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:69
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:71
 msgid "Video"
 msgstr "Video"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:93
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:73
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:75
 msgid "Thumbnail preview"
 msgstr "Anteprima miniatura"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:97
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:77
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:79
 msgid "Open on {0}"
 msgstr "Apri su {0}"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:100
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:80
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:82
 msgid "{0} ID"
 msgstr "{0} ID"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:105
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:85
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:87
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/index.ctp:83
 msgid "Duration"
 msgstr "Durata"
@@ -114,14 +114,14 @@ msgid "Videos"
 msgstr "Video"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/index.ctp:69;96
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/view.ctp:27
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/view.ctp:32
 msgid "Spot"
 msgstr "Spot"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/VideosCategories/index.ctp:27
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/categories.ctp:31
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/categories_as_list.ctp:31
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/VideosCategories/index.ctp:25;29
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/VideosCategories/index.ctp:27
 msgid "Videos categories"
 msgstr "Categorie video"
 
@@ -147,31 +147,42 @@ msgid "Random video"
 msgstr "Video casuale"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/search.ctp:32
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/search.ctp:25;29
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/search.ctp:27
 msgid "Search videos"
 msgstr "Cerca video"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Element/frontend/views/video.ctp:62
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Element/frontend/views/video.ctp:59
 msgid "Skip to the video"
 msgstr "Salta al video"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index.ctp:36
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index_by_date.ctp:35
 msgid "Videos of today"
 msgstr "Video di oggi"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index.ctp:39
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index_by_date.ctp:38
 msgid "Videos of yesterday"
 msgstr "Video di ieri"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index.ctp:42;51;59
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index_by_date.ctp:41
+msgctxt "videos of day"
 msgid "Videos of {0}"
 msgstr "Video del {0}"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/view.ctp:38
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index_by_date.ctp:45
+msgctxt "videos of month"
+msgid "Videos of {0}"
+msgstr "Video di {0}"
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index_by_date.ctp:48
+msgctxt "videos of year"
+msgid "Videos of {0}"
+msgstr "Video del {0}"
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/view.ctp:43
 msgid "Edit video"
 msgstr "Modifica video"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/view.ctp:39
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/view.ctp:44
 msgid "Delete video"
 msgstr "Cancella video"
 
