@@ -60,9 +60,6 @@
         
         $title = __d('me_youtube', 'Videos of {0}', $date->i18nFormat('y'));
     }
-	elseif($this->request->isAction('view', 'VideosCategories') && !empty($videos[0]->category->title)) {
-		$title = $videos[0]->category->title;
-    }
     
     if(!empty($title)) {
         $this->assign('title', $title);

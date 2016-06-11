@@ -45,8 +45,7 @@ class VideosCategoriesController extends AppController {
     }
 	
 	/**
-	 * Lists videos for a category.
-     * It uses the `Videos/index` template.
+	 * Lists videos for a category
 	 * @param string $category Category slug
 	 */
 	public function view($category = NULL) {
@@ -55,8 +54,10 @@ class VideosCategoriesController extends AppController {
 			return $this->redirect([$this->request->query('q')]);
         }
         
+        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        
 		//Sets the cache name
-		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $page);
 		
 		//Tries to get data from the cache
 		list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->VideosCategories->cache));
@@ -65,11 +66,18 @@ class VideosCategoriesController extends AppController {
 		if(empty($videos) || empty($paging)) {
 			$query = $this->VideosCategories->Videos->find('active')
 				->contain([
-					'Categories' => ['fields' => ['title', 'slug']],
-					'Users' => ['fields' => ['first_name', 'last_name']],
+                    'Categories' => function($q) {
+                        return $q->select(['title', 'slug']);
+                    },
+                    'Users' => function($q) {
+                        return $q->select(['first_name', 'last_name']);
+                    },
 				])
 				->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
-				->where(['Categories.slug' => $category, 'is_spot' => FALSE])
+				->where([
+                    'Categories.slug' => $category,
+                    'is_spot' => FALSE,
+                ])
 				->order([sprintf('%s.created', $this->VideosCategories->Videos->alias()) => 'DESC']);
 					
 			if($query->isEmpty()) {
@@ -79,15 +87,18 @@ class VideosCategoriesController extends AppController {
 			$videos = $this->paginate($query)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->VideosCategories->cache);
+			Cache::writeMany([
+                $cache => $videos,
+                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+            ], $this->VideosCategories->cache);
 		}
 		//Else, sets the paging parameter
 		else {
 			$this->request->params['paging'] = $paging;
         }
         
-		$this->set(compact('videos'));
-		
-		$this->render('Videos/index');
+		$this->set(am([
+            'category' => $videos[0]->category->title,
+        ], compact('videos')));
 	}
 }
