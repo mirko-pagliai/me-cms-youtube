@@ -65,6 +65,7 @@ class VideosCategoriesController extends AppController {
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
 			$query = $this->VideosCategories->Videos->find('active')
+				->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
 				->contain([
                     'Categories' => function($q) {
                         return $q->select(['title', 'slug']);
@@ -73,7 +74,6 @@ class VideosCategoriesController extends AppController {
                         return $q->select(['first_name', 'last_name']);
                     },
 				])
-				->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
 				->where([
                     'Categories.slug' => $category,
                     'is_spot' => FALSE,

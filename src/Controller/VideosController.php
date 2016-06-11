@@ -59,6 +59,7 @@ class VideosController extends AppController {
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {
             $query = $this->Videos->find('active')
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->contain([
                     'Categories' => function($q) {
                         return $q->select(['title', 'slug']);
@@ -67,7 +68,6 @@ class VideosController extends AppController {
                         return $q->select(['first_name', 'last_name']);
                     },
                 ])
-                ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->where(['is_spot' => FALSE])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
             
@@ -147,6 +147,7 @@ class VideosController extends AppController {
 		//If the data are not available from the cache
 		if(empty($videos) || empty($paging)) {            
             $query = $this->Videos->find('active')
+                ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->contain([
                     'Categories' => function($q) {
                         return $q->select(['title', 'slug']);
@@ -155,7 +156,6 @@ class VideosController extends AppController {
                         return $q->select(['first_name', 'last_name']);
                     },
                 ])
-                ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
                 ->where([
                     'is_spot' => FALSE,
@@ -279,6 +279,7 @@ class VideosController extends AppController {
      */
     public function view($id = NULL) {		
 		$video = $this->Videos->find('active')
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
 			->contain([
                 'Categories' => function($q) {
                     return $q->select(['title', 'slug']);
@@ -287,7 +288,6 @@ class VideosController extends AppController {
                     return $q->select(['first_name', 'last_name']);
                 },
 			])
-			->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
 			->firstOrFail();
@@ -309,6 +309,7 @@ class VideosController extends AppController {
      */
     public function preview($id = NULL) {		
 		$video = $this->Videos->find()
+			->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
 			->contain([
                 'Categories' => function($q) {
                     return $q->select(['title', 'slug']);
@@ -317,7 +318,6 @@ class VideosController extends AppController {
                     return $q->select(['first_name', 'last_name']);
                 },
 			])
-			->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
 			->where([sprintf('%s.id', $this->Videos->alias()) => $id])
 			->firstOrFail();
         
