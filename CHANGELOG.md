@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.4 branch
 ### 2.4.2
+* the code to list videos by date has been greatly improved and simplified;
 * some fixes for MeCms 2.10.0.
 
 ### 2.4.1
