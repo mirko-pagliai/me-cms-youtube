@@ -38,13 +38,13 @@
 			$this->assign('title', __d('me_youtube', 'Videos of yesterday'));
         }
 		else {
-			$this->assign('title', __d('me_youtube', 'Videos of {0}', $date->i18nFormat(config('main.date.long'))));
+			$this->assign('title', __dx('me_youtube', 'videos of day', 'Videos of {0}', $date->i18nFormat(config('main.date.long'))));
         }
     }
     elseif($year && $month) {
-        $this->assign('title', __d('me_youtube', 'Videos of {0}', $date->i18nFormat('MMMM y')));
+        $this->assign('title', __dx('me_youtube', 'videos of month', 'Videos of {0}', $date->i18nFormat('MMMM y')));
     }
     else {
-        $this->assign('title', __d('me_youtube', 'Videos of {0}', $date->i18nFormat('y')));
+        $this->assign('title', __dx('me_youtube', 'videos of year', 'Videos of {0}', $date->i18nFormat('y')));
     }
 ?>    
