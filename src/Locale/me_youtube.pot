@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-06-13 16:13+0200\n"
+"POT-Creation-Date: 2016-06-13 17:30+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,52 +14,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:100;122
-msgid "The videos category has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:104;126
-msgid "The videos category could not be saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:145
-msgid "The videos category has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:148
-msgid "The videos category could not be deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosCategoriesController.php:152
-msgid "Before you delete this category, you have to delete its videos or assign them to another category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:59
-msgid "Before you can manage videos, you have to create at least a category"
-msgstr ""
-
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:134
 msgid "This is not a {0} video"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:137
 msgid "Unable to retrieve video informations. Probably the video is private"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:157;186
-msgid "The video has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:161;190
-msgid "The video could not be saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:206
-msgid "The video has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:209
-msgid "The video could not be deleted"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:34;37

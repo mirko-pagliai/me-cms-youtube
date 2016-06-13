@@ -56,7 +56,7 @@ class VideosController extends AppController {
 		
 		//Checks for categories
 		if(isset($categories) && empty($categories)) {
-			$this->Flash->alert(__d('me_youtube', 'Before you can manage videos, you have to create at least a category'));
+			$this->Flash->alert(__d('me_cms', 'You must first create a category'));
 			$this->redirect(['controller' => 'VideosCategories', 'action' => 'index']);
 		}
 		
@@ -154,11 +154,11 @@ class VideosController extends AppController {
             $video = $this->Videos->patchEntity($video, $this->request->data);
 			
             if($this->Videos->save($video)) {
-                $this->Flash->success(__d('me_youtube', 'The video has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 				return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_youtube', 'The video could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -183,11 +183,11 @@ class VideosController extends AppController {
             $video = $this->Videos->patchEntity($video, $this->request->data);
 			
             if($this->Videos->save($video)) {
-                $this->Flash->success(__d('me_youtube', 'The video has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_youtube', 'The video could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -203,10 +203,10 @@ class VideosController extends AppController {
         $video = $this->Videos->get($id);
 		
         if($this->Videos->delete($video)) {
-            $this->Flash->success(__d('me_youtube', 'The video has been deleted'));
+            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
         else {
-            $this->Flash->error(__d('me_youtube', 'The video could not be deleted'));
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
         
         return $this->redirect(['action' => 'index']);
