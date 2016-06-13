@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-06-11 19:32+0200\n"
-"PO-Revision-Date: 2016-06-11 19:33+0100\n"
-"Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
+"POT-Creation-Date: 2016-06-13 16:13+0200\n"
+"PO-Revision-Date: 2016-06-13 16:18+0100\n"
+"Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -126,12 +126,10 @@ msgid "Videos categories"
 msgstr "Categorie video"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/latest.ctp:31
-msgid "Latest {0} videos"
-msgstr "Ultimi {0} video"
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/latest.ctp:31
 msgid "Latest video"
-msgstr "Ultimo video"
+msgid_plural "Latest {0} videos"
+msgstr[0] "Ultimo video"
+msgstr[1] "Ultimi {0} video"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/months.ctp:31
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/months_as_list.ctp:31
@@ -139,12 +137,10 @@ msgid "Videos by month"
 msgstr "Video per mese"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/random.ctp:31
-msgid "Random {0} videos"
-msgstr "{0} video casuali"
-
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/random.ctp:31
 msgid "Random video"
-msgstr "Video casuale"
+msgid_plural "Random {0} videos"
+msgstr[0] "Video casuale"
+msgstr[1] "{0} video casuali"
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/search.ctp:32
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/search.ctp:27

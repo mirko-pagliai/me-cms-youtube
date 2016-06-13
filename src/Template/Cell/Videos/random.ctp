@@ -28,7 +28,7 @@
     }
     
 	$this->extend('MeCms./Common/widget');
-	$this->assign('title', count($videos) > 1 ? __d('me_youtube', 'Random {0} videos', count($videos)) : __d('me_youtube', 'Random video'));
+	$this->assign('title', __dn('me_youtube', 'Random video', 'Random {0} videos', count($videos), count($videos)));
 	
 	foreach($videos as $video) {
 		echo $this->element('MeYoutube.frontend/views/video-preview', am(['truncate' => ['title' => FALSE, 'text' => FALSE]], compact('video')));
