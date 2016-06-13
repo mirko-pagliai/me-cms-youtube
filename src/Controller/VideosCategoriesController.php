@@ -68,7 +68,7 @@ class VideosCategoriesController extends AppController {
 				->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
 				->contain([
                     'Categories' => function($q) {
-                        return $q->select(['title', 'slug']);
+                        return $q->select(['id', 'title', 'slug']);
                     },
                     'Users' => function($q) {
                         return $q->select(['first_name', 'last_name']);
@@ -98,7 +98,7 @@ class VideosCategoriesController extends AppController {
         }
         
 		$this->set(am([
-            'category' => $videos[0]->category->title,
+            'category' => $videos[0]->category,
         ], compact('videos')));
 	}
 }
