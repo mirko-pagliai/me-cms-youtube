@@ -25,26 +25,24 @@
 <?php
     $this->extend('MeCms./Common/view');
     $this->assign('title', $video->title);
-?>
-
-<?php $this->append('userbar'); ?>
-<?php if($video->is_spot): ?>
-    <li><?= $this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'label label-primary']) ?></li>
-<?php endif; ?>
-
-<?php if(!$video->active): ?>
-    <li><?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?></li>
-<?php endif; ?>
-
-<?php if($video->created->isFuture()): ?>
-    <li><?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?></li>
-<?php endif; ?>
-
-<li><?= $this->Html->link(__d('me_youtube', 'Edit video'), ['action' => 'edit', $video->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
-<li><?= $this->Form->postLink(__d('me_youtube', 'Delete video'), ['action' => 'delete', $video->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']) ?></li>
-<?php $this->end(); ?>
-
-<?php
+    
+    if($video->is_spot) {
+        $this->userbar($this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'label label-primary']));
+    }
+    
+    if(!$video->active) {
+        $this->userbar($this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']));
+    }
+    
+    if($video->created->isFuture()) {
+        $this->userbar($this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']));
+    }
+    
+    $this->userbar([
+        $this->Html->link(__d('me_youtube', 'Edit video'), ['action' => 'edit', $video->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']),
+        $this->Form->postLink(__d('me_youtube', 'Delete video'), ['action' => 'delete', $video->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']),
+    ]);
+    
 	//Set some tags
     if($this->request->isAction('view', 'Videos')) {
         $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
@@ -62,6 +60,6 @@
             ]);
         }
     }
-    
-    echo $this->element('frontend/views/video', compact('video'));
 ?>
+
+<?= $this->element('frontend/views/video', compact('video')) ?>
