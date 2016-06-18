@@ -3,7 +3,8 @@
 ### 2.4.3
 * added links on userbar for videos categories;
 * fixed messages pluralized;
-* strings to be translated were defined and simplified.
+* strings to be translated were defined and simplified;
+* fixed cache code for widgets.
 
 ### 2.4.2
 * the code to list videos by date has been greatly improved and simplified;
