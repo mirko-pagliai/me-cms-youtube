@@ -51,10 +51,10 @@ class Sitemap extends SitemapBuilder {
         
         $categories = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain(['Videos' => function($q) {
+            ->contain(['Videos' => function($q) use($table) {
                 return $q
                     ->select(['id', 'category_id', 'modified'])
-                    ->order(['Videos.modified' => 'DESC']);
+                    ->order([sprintf('%s.modified', $table->Videos->alias()) => 'DESC']);
             }]);
         
         if($categories->isEmpty()) {
@@ -63,7 +63,7 @@ class Sitemap extends SitemapBuilder {
         
         $latest = $table->Videos->find()
             ->select(['modified'])
-            ->order(['Videos.modified' => 'DESC'])
+            ->order([sprintf('%s.modified', $table->Videos->alias()) => 'DESC'])
             ->firstOrFail();
         
         //Adds videos index, categories index and videos search
