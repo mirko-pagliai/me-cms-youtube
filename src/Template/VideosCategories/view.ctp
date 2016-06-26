@@ -37,6 +37,4 @@
     /**
      * Breadcrumb
      */
-    $this->Breadcrumb->add(__d('me_cms', 'Videos categories'), ['_name' => 'videos_categories']);
     $this->Breadcrumb->add($category->title, ['_name' => 'videos_category', $category->title]);
-?>
