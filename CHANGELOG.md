@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.4 branch
+### 2.4.4
+* added breadcrumb.
+
 ### 2.4.3
 * added links on userbar for videos categories;
 * fixed messages pluralized;
