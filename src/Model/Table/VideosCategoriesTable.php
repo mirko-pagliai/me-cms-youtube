@@ -57,7 +57,9 @@ class VideosCategoriesTable extends AppTable {
 	 * @return Query Query object
 	 */
 	public function findActive(Query $query, array $options) {
-        $query->where([sprintf('%s.video_count >', $this->alias()) => 0]);
+        $query->where([
+            sprintf('%s.video_count >', $this->alias()) => 0,
+        ]);
 		
         return $query;
     }
@@ -97,15 +99,15 @@ class VideosCategoriesTable extends AppTable {
 		
         $this->belongsTo('Parents', [
             'className' => 'MeYoutube.VideosCategories',
-            'foreignKey' => 'parent_id'
+            'foreignKey' => 'parent_id',
         ]);
         $this->hasMany('Childs', [
             'className' => 'MeYoutube.VideosCategories',
-            'foreignKey' => 'parent_id'
+            'foreignKey' => 'parent_id',
         ]);
 		 $this->hasMany('Videos', [
             'className' => 'MeYoutube.Videos',
-            'foreignKey' => 'category_id'
+            'foreignKey' => 'category_id',
         ]);
 		
         $this->addBehavior('Timestamp');

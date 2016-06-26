@@ -185,7 +185,9 @@ class VideosTable extends AppTable {
 		
 		//"Is spot?" field
 		if(!empty($data['spot']) && $data['spot']) {
-			$query->where([sprintf('%s.is_spot', $this->alias()) => TRUE]);
+			$query->where([
+                sprintf('%s.is_spot', $this->alias()) => TRUE,
+            ]);
         }
         
 		return $query;
@@ -194,7 +196,6 @@ class VideosTable extends AppTable {
 	/**
 	 * Sets to cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
-	 * @uses Cake\I18n\Time::toUnixString()
 	 * @uses $cache
 	 */
 	public function setNextToBePublished() {
@@ -207,7 +208,9 @@ class VideosTable extends AppTable {
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), $this->cache);
+        $next = empty($next->created) ? FALSE : $next->created->toUnixString();
+        
+		Cache::write('next_to_be_published', $next, $this->cache);
 	}
 
     /**

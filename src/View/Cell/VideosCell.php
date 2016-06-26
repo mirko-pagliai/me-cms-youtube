@@ -55,24 +55,17 @@ class VideosCell extends Cell {
 		if($this->request->isHere(['_name' => 'videos_categories'])) {
 			return;
         }
-		
-		//Tries to get data from the cache
-		$categories = Cache::read($cache = 'widget_categories', $this->Videos->cache);
-		
-		//If the data are not available from the cache
-        if(empty($categories)) {
-			$categories = $this->Videos->Categories->find('active')
-				->select(['title', 'slug', 'video_count'])
-				->order(['title' => 'ASC'])
-				->toArray();
-			
-            foreach($categories as $k => $category) {
-                $categories[$category->slug] = $category;
-                unset($categories[$k]);
-            }
-			
-            Cache::write($cache, $categories, $this->Videos->cache);
-		}
+        
+        $categories = $this->Videos->Categories->find('active')
+            ->select(['title', 'slug', 'video_count'])
+            ->order(['title' => 'ASC'])
+            ->cache('widget_categories', $this->Videos->cache)
+            ->toArray();
+
+        foreach($categories as $k => $category) {
+            $categories[$category->slug] = $category;
+            unset($categories[$k]);
+        }
 		
 		$this->set(compact('categories'));
         
@@ -112,30 +105,23 @@ class VideosCell extends Cell {
 			return;
         }
         
-		//Tries to get data from the cache
-		$months = Cache::read($cache = 'widget_months', $this->Videos->cache);
-        
-		//If the data are not available from the cache
-        if(empty($months)) {
-            $months = $this->Videos->find('active')
-                ->select([
-                    'month' => 'DATE_FORMAT(created, "%m-%Y")',
-                    'video_count' => 'COUNT(DATE_FORMAT(created, "%m-%Y"))',
-                ])
-                ->distinct(['month'])
-                ->order(['created' => 'DESC'])
-                ->toArray();
-            
-            foreach($months as $old_key => $month) {
-                $exploded = explode('-', $month->month);
-                $new_key = sprintf('%s/%s', $exploded[1], $exploded[0]);
-                
-                $months[$new_key] = $month;
-                $months[$new_key]->month = (new FrozenDate())->year($exploded[1])->month($exploded[0]);
-                unset($months[$old_key]);
-            }
-            
-            Cache::write($cache, $months, $this->Videos->cache);
+        $months = $this->Videos->find('active')
+            ->select([
+                'month' => 'DATE_FORMAT(created, "%m-%Y")',
+                'video_count' => 'COUNT(DATE_FORMAT(created, "%m-%Y"))',
+            ])
+            ->distinct(['month'])
+            ->order(['created' => 'DESC'])
+            ->cache('widget_months', $this->Videos->cache)
+            ->toArray();
+
+        foreach($months as $old_key => $month) {
+            $exploded = explode('-', $month->month);
+            $new_key = sprintf('%s/%s', $exploded[1], $exploded[0]);
+
+            $months[$new_key] = $month;
+            $months[$new_key]->month = (new FrozenDate())->year($exploded[1])->month($exploded[0]);
+            unset($months[$old_key]);
         }
         
         $this->set(compact('months'));

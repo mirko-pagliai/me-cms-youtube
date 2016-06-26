@@ -24,5 +24,10 @@
 
 <?php
     $this->extend('Videos/index');
-    $this->assign('title', $category);
+    $this->assign('title', $category->title);
+    
+    $this->userbar([
+        $this->Html->link(__d('me_cms', 'Edit category'), ['action' => 'edit', 'prefix' => 'admin', $category->id], ['icon' => 'pencil', 'target' => '_blank']),
+        $this->Form->postLink(__d('me_cms', 'Delete category'), ['action' => 'delete', 'prefix' => 'admin', $category->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']),
+    ])
 ?>
