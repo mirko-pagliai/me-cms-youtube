@@ -27,7 +27,7 @@
     
     if(!empty($videos)) {
         foreach($videos as $video) {
-            echo $this->element('frontend/views/video', compact('video'));
+            echo $this->element('views/video', compact('video'));
         }
 
         echo $this->element('MeTools.paginator');

@@ -40,7 +40,7 @@
 		//Sets text
 		$text = $this->Text->truncate(
 			strip_tags($video->text),
-			config('frontend.truncate_to'),
+			config('default.truncate_to'),
 			['ending' => '...', 'exact' => FALSE, 'html' => TRUE]
 		);
 		

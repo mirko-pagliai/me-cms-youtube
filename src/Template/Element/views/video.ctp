@@ -24,7 +24,7 @@
 
 <div class="video-container content-container clearfix">
 	<div class="content-header">
-        <?php if(config('video.category')): ?>
+        <?php if(config('video.category') && $video->category && $video->category->title && $video->category->slug): ?>
             <h5 class="content-category">
                 <?= $this->Html->link($video->category->title, ['_name' => 'videos_category', $video->category->slug]) ?>
             </h5>

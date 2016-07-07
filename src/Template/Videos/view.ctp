@@ -87,4 +87,4 @@
     }
 ?>
 
-<?= $this->element('frontend/views/video', compact('video')) ?>
+<?= $this->element('views/video', compact('video')) ?>
