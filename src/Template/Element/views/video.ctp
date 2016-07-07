@@ -54,21 +54,19 @@
 		<?php if($this->request->isAction(['view', 'preview'], 'Videos')): ?>
 			<?= $this->Asset->js('MeYoutube.video', ['block' => 'script_bottom']) ?>
 			<div class="embed-responsive embed-responsive-16by9 margin-20 relative">
-				<?php
-					if(config('video.skip_button')) {
-						echo $this->Html->div(NULL, __d('me_youtube', 'Skip to the video'), [
-							'data-secs' => config('video.skip_seconds'),
-							'id' => 'skip-to-video',
-						]);
-                    }
-                    
-					echo $this->Html->div(NULL, '', [
-						'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
-						'data-id' => $video->youtube_id,
-						'data-spot' => empty($video->spot_id) ? NULL : $video->spot_id,
-						'id' => 'player',
-					]);
-				?>
+				<?php if(config('video.skip_button')): ?>
+					<?= $this->Html->div(NULL, __d('me_youtube', 'Skip to the video'), [
+                        'data-secs' => config('video.skip_seconds'),
+                        'id' => 'skip-to-video',
+                    ]) ?>
+                <?php endif; ?>
+                
+                <?= $this->Html->div(NULL, '', [
+                    'data-autoplay'	=> empty($autoplay) && empty($video->spot_id) ? '0' : '1',
+                    'data-id' => $video->youtube_id,
+                    'data-spot' => empty($video->spot_id) ? NULL : $video->spot_id,
+                    'id' => 'player',
+                ]) ?>
 			</div>
 		<?php else: ?>
 			<a class="video-fake" href="<?= $this->Url->build(['_name' => 'video', $video->id]) ?>">
@@ -77,6 +75,7 @@
 			</a>
 		<?php endif; ?>
 	</div>
+    
 	<?php
 		if(config('video.shareaholic') && config('shareaholic.app_id') && $this->request->isAction('view', 'Videos') && !$this->request->isAjax()) {
 			echo $this->Html->shareaholic(config('shareaholic.app_id'));
