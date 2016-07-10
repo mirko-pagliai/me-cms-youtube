@@ -25,6 +25,11 @@
 <?php
     $this->extend('MeCms./Common/index');
     $this->assign('title', __d('me_youtube', 'Search videos'));
+    
+    /**
+     * Breadcrumb
+     */
+    $this->Breadcrumb->add($title, ['_name' => 'videos_search']);
 ?>
 
 <?php

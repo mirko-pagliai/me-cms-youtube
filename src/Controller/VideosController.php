@@ -205,13 +205,11 @@ class VideosController extends AppController {
 		$videos = $this->Videos->find('active')
 			->select(['id', 'youtube_id', 'title', 'text', 'created'])
 			->where(['is_spot' => FALSE])
-			->limit(config('frontend.records_for_rss'))
+			->limit(config('default.records_for_rss'))
 			->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
 			->cache('rss', $this->Videos->cache);
         
         $this->set(compact('videos'));
-		
-		$this->viewBuilder()->layout('MeCms.frontend');
 	}
 	
 	/**
@@ -225,7 +223,7 @@ class VideosController extends AppController {
 			//Checks if the pattern is at least 4 characters long
 			if(strlen($pattern) >= 4) {
 				if($this->_checkLastSearch($pattern)) {
-					$this->paginate['limit'] = config('frontend.records_for_searches');
+					$this->paginate['limit'] = config('default.records_for_searches');
 					
 					//Sets the initial cache name
 					$cache = sprintf('search_%s', md5($pattern));

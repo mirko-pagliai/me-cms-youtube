@@ -23,7 +23,6 @@
 use Cake\Routing\Router;
 
 Router::defaultRouteClass('InflectedRoute');
-
 Router::extensions('rss');
 
 /**

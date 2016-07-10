@@ -26,6 +26,9 @@
     $this->extend('MeCms./Common/view');
     $this->assign('title', $video->title);
     
+    /**
+     * Userbar
+     */
     if($video->is_spot) {
         $this->userbar($this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'label label-primary']));
     }
@@ -43,14 +46,36 @@
         $this->Form->postLink(__d('me_youtube', 'Delete video'), ['action' => 'delete', $video->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']),
     ]);
     
-	//Set some tags
+    /**
+     * Breadcrumb
+     */
+    if(config('video.category')) {
+        $this->Breadcrumb->add($video->category->title, ['_name' => 'videos_category', $video->category->slug]);
+    }
+    $this->Breadcrumb->add($video->title, ['_name' => 'video', $video->slug]);
+    
+    /**
+     * Meta tags
+     */
     if($this->request->isAction('view', 'Videos')) {
-        $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-        $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
+        $this->Html->meta([
+            'content' => 'article',
+            'property' => 'og:type',
+        ]);
+        $this->Html->meta([
+            'content' => $video->modified->toUnixString(),
+            'property' => 'og:updated_time',
+        ]);
 
         if(!empty($video->preview)) {
-            $this->Html->meta(['href' => $video->preview, 'rel' => 'image_src']);
-            $this->Html->meta(['content' => $video->preview, 'property' => 'og:image']);
+            $this->Html->meta([
+                'href' => $video->preview,
+                'rel' => 'image_src',
+            ]);
+            $this->Html->meta([
+                'content' => $video->preview,
+                'property' => 'og:image',
+            ]);
         }
 
         if(!empty($video->text)) {
@@ -62,4 +87,4 @@
     }
 ?>
 
-<?= $this->element('frontend/views/video', compact('video')) ?>
+<?= $this->element('views/video', compact('video')) ?>

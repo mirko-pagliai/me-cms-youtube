@@ -31,6 +31,6 @@
 	$this->assign('title', __dn('me_youtube', 'Random video', 'Random {0} videos', count($videos), count($videos)));
 	
 	foreach($videos as $video) {
-		echo $this->element('MeYoutube.frontend/views/video-preview', am(['truncate' => ['title' => FALSE, 'text' => FALSE]], compact('video')));
+		echo $this->element('MeYoutube.views/video-preview', am(['truncate' => ['title' => FALSE, 'text' => FALSE]], compact('video')));
     }
 ?>
