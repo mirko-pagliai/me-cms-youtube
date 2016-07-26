@@ -77,6 +77,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
+            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
             <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Categories.title', __d('me_cms', 'Category')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Users.first_name', __d('me_cms', 'Author')) ?></th>
@@ -88,6 +89,9 @@
     <tbody>
         <?php foreach($videos as $video): ?>
             <tr>
+                <td class="min-width text-center">
+                    <code><?= $video->id ?></code>
+                </td>
                 <td>
                     <strong><?= $this->Html->link($video->title, ['action' => 'edit', $video->id]) ?></strong>
                     <?php
