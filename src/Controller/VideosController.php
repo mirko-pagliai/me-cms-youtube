@@ -23,6 +23,7 @@
 namespace MeYoutube\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Network\Exception\ForbiddenException;
 use Cake\I18n\Time;
 use MeYoutube\Controller\AppController;
 
@@ -199,7 +200,7 @@ class VideosController extends AppController {
 	public function rss() {
 		//This method works only for RSS
 		if(!$this->RequestHandler->isRss()) {
-            throw new \Cake\Network\Exception\ForbiddenException();
+            throw new ForbiddenException();
         }
         
 		$videos = $this->Videos->find('active')
@@ -210,6 +211,8 @@ class VideosController extends AppController {
 			->cache('rss', $this->Videos->cache);
         
         $this->set(compact('videos'));
+        
+        $this->viewBuilder()->layout('MeCms.default');
 	}
 	
 	/**

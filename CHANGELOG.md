@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.5 branch
+### 2.5.1
+* admin indexes display ID for all elements;
+* fixed bug for rss layout.
+
 ### 2.5.0
 * some fixes for MeCms 2.12.0.
 
