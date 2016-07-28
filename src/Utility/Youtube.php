@@ -22,7 +22,7 @@
  */
 namespace MeYoutube\Utility;
 
-use Cake\Network\Http\Client;
+use Cake\Http\Client;
 use MeTools\Utility\Youtube as BaseYoutube;
 
 /**

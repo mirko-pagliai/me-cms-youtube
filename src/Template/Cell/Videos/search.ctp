@@ -24,7 +24,7 @@
 
 <?php
 	//Returns on search
-	if($this->request->isHere(['_name' => 'videos_search'])) {
+	if($this->request->is('here', ['_name' => 'videos_search'])) {
 		return;
     }
     

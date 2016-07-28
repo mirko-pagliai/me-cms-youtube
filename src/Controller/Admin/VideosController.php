@@ -40,16 +40,15 @@ class VideosController extends AppController {
 	 * @uses MeCms\Model\Table\VideosCategoriesTable::getTreeList()
 	 * @uses MeCms\Model\Table\UsersTable::getActiveList()
 	 * @uses MeCms\Model\Table\UsersTable::getList()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
-		if($this->request->isAction('index')) {
+		if($this->request->is('action', 'index')) {
 			$categories = $this->Videos->Categories->getList();
 			$users = $this->Videos->Users->getList();
 		}
-		elseif($this->request->isAction(['add', 'edit'])) {
+		elseif($this->request->is('action', ['add', 'edit'])) {
 			$categories = $this->Videos->Categories->getTreeList();
 			$users = $this->Videos->Users->getActiveList();
 		}
@@ -75,17 +74,16 @@ class VideosController extends AppController {
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeCms\Model\Table\AppTable::isOwnedBy()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can edit all videos.
 		//Users can edit only their own videos
-		if($this->request->isAction('edit') && !$this->Auth->isGroup(['admin', 'manager'])) {
+		if($this->request->is('action', 'edit') && !$this->Auth->isGroup(['admin', 'manager'])) {
 			return $this->Videos->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
         }
         
 		//Only admins and managers can delete videos
-		if($this->request->isAction('delete')) {
+		if($this->request->is('action', 'delete')) {
 			return $this->Auth->isGroup(['admin', 'manager']);
         }
         

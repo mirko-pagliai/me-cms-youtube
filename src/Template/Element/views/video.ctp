@@ -51,7 +51,7 @@
 		</div>
 	</div>
 	<div class="content-text">
-		<?php if($this->request->isAction(['view', 'preview'], 'Videos')): ?>
+		<?php if($this->request->is('action', ['view', 'preview'], 'Videos')): ?>
 			<?= $this->Asset->js('MeYoutube.video', ['block' => 'script_bottom']) ?>
 			<div class="embed-responsive embed-responsive-16by9 margin-20 relative">
 				<?php if(config('video.skip_button')): ?>
@@ -77,7 +77,7 @@
 	</div>
     
 	<?php
-		if(config('video.shareaholic') && config('shareaholic.app_id') && $this->request->isAction('view', 'Videos') && !$this->request->isAjax()) {
+		if(config('video.shareaholic') && config('shareaholic.app_id') && $this->request->is('action', 'view', 'Videos') && !$this->request->isAjax()) {
 			echo $this->Html->shareaholic(config('shareaholic.app_id'));
         }
 	?>

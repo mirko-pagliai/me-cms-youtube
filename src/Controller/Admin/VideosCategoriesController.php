@@ -35,12 +35,11 @@ class VideosCategoriesController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @uses MeCms\Controller\AppController::beforeFilter()
 	 * @uses MeYoutube\Model\Table\VideosCategoriesTable::getTreeList()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
-		if($this->request->isAction(['add', 'edit'])) {
+		if($this->request->is('action', ['add', 'edit'])) {
 			//Gets and sets categories
 			$this->set('categories', $categories = $this->VideosCategories->getTreeList());
 		}
@@ -52,11 +51,10 @@ class VideosCategoriesController extends AppController {
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins can delete videos categories
-		if($this->request->isAction('delete')) {
+		if($this->request->is('action', 'delete')) {
 			return $this->Auth->isGroup('admin');
         }
 		

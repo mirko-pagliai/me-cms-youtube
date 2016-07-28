@@ -57,7 +57,7 @@
     /**
      * Meta tags
      */
-    if($this->request->isAction('view', 'Videos')) {
+    if($this->request->is('action', 'view', 'Videos')) {
         $this->Html->meta([
             'content' => 'article',
             'property' => 'og:type',

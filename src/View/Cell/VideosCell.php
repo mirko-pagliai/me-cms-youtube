@@ -32,13 +32,13 @@ use Cake\View\Cell;
 class VideosCell extends Cell {
 	/**
 	 * Constructor. It loads the model
-	 * @param \MeTools\Network\Request $request The request to use in the cell
+	 * @param \Cake\Network\Request $request The request to use in the cell
 	 * @param \Cake\Network\Response $response The request to use in the cell
 	 * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
 	 * @param array $cellOptions Cell options to apply
 	 * @uses Cake\View\Cell::__construct()
 	 */
-	public function __construct(\MeTools\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
+	public function __construct(\Cake\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
 		parent::__construct($request, $response, $eventManager, $cellOptions);
 		
 		//Loads the Videos model
@@ -48,11 +48,10 @@ class VideosCell extends Cell {
 	/**
 	 * Categories widget
      * @param string $render Render type (`form` or `list`)
-	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function categories($render = 'form') {
 		//Returns on categories index
-		if($this->request->isHere(['_name' => 'videos_categories'])) {
+		if($this->request->is('here', ['_name' => 'videos_categories'])) {
 			return;
         }
         
@@ -77,11 +76,10 @@ class VideosCell extends Cell {
 	/**
 	 * Latest widget
 	 * @param int $limit Limit
-	 * @uses MeTools\Network\Request::isAction()
 	 */
     public function latest($limit = 1) {
 		//Returns on index, except for category
-		if($this->request->isAction('index', 'Videos') && !$this->request->param('slug')) {
+		if($this->request->is('action', 'index', 'Videos') && !$this->request->param('slug')) {
 			return;
         }
 
@@ -101,7 +99,7 @@ class VideosCell extends Cell {
      */
     public function months($render = 'form') {
 		//Returns on index
-		if($this->request->isAction('index', 'Videos')) {
+		if($this->request->is('action', 'index', 'Videos')) {
 			return;
         }
         
@@ -134,11 +132,10 @@ class VideosCell extends Cell {
 	/**
 	 * Random widget
 	 * @param int $limit Limit
-	 * @uses MeTools\Network\Request::isController()
 	 */
 	public function random($limit = 1) {
 		//Returns on the same controllers
-		if($this->request->isController(['Videos', 'VideosCategories'])) {
+		if($this->request->is('controller', ['Videos', 'VideosCategories'])) {
 			return;
         }
 		
