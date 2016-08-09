@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.5 branch
+### 2.5.2
+* filter forms can now use records ID.
+
 ### 2.5.1
 * admin indexes display ID for all elements;
 * fixed bug for rss layout.
