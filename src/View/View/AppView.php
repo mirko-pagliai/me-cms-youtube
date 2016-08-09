@@ -33,7 +33,7 @@ class AppView extends BaseView {
 	 * @param string $content Content to render in a view, wrapped by the surrounding layout
 	 * @param string|null $layout Layout name
 	 * @return mixed Rendered output, or false on error
-	 * @see http://api.cakephp.org/3.2/source-class-Cake.View.View.html#477-513
+	 * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_renderLayout
      * @throws Cake\Core\Exception\Exception
 	 * @uses MeCms\View\View\AppView::renderLayout()
 	 * @uses MeTools\View\Helper\HtmlHelper::meta()

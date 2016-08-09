@@ -29,7 +29,7 @@ class AppController extends BaseController {
 	 * Called after the controller action is run, but before the view is rendered.
 	 * You can use this method to perform logic or set view variables that are required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeRender
+	 * @see http://api.cakephp.org/3.3/class-Cake.Controller.Controller.html#_beforeRender
 	 */
 	public function beforeRender(\Cake\Event\Event $event) {
 		parent::beforeRender($event);
