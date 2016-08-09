@@ -63,20 +63,28 @@ class Video extends Entity {
     protected $_virtual = ['preview', 'youtube_url'];
 	
 	/**
-	 * Gets the preview (virtual field)
-	 * @return string
+	 * Gets the image preview (virtual field)
+	 * @return string|NULL
      * @uses MeYoutube\Utility\Youtube::getPreview()
 	 */
 	protected function _getPreview() {
+        if(empty($this->_properties['youtube_id'])) {
+            return NULL;
+        }
+        
 		return Youtube::getPreview($this->_properties['youtube_id']);
 	}
     
     /**
      * Gets the Youtube url (virtual field)
-     * @return string
+	 * @return string|NULL
      * @uses MeYoutube\Utility\Youtube::getUrl()
      */
     protected function _getYoutubeUrl() {
+        if(empty($this->_properties['youtube_id'])) {
+            return NULL;
+        }
+        
 		return Youtube::getUrl($this->_properties['youtube_id']);
     }
 }
