@@ -15,22 +15,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-	if(empty($videos)) {
-		return;
-    }
-    
-	$this->extend('MeCms./Common/widget');
-	$this->assign('title', __dn('me_youtube', 'Random video', 'Random {0} videos', count($videos), count($videos)));
-	
-	foreach($videos as $video) {
-		echo $this->element('MeYoutube.views/video-preview', am(['truncate' => ['title' => FALSE, 'text' => FALSE]], compact('video')));
-    }
-?>
+if (empty($videos)) {
+    return;
+}
+
+$this->extend('MeCms./Common/widget');
+$this->assign('title', __dn('me_youtube', 'Random video', 'Random {0} videos', count($videos), count($videos)));
+
+foreach ($videos as $video) {
+    echo $this->element(
+        'MeYoutube.views/video-preview',
+        am(['truncate' => ['title' => false, 'text' => false]], compact('video'))
+    );
+}

@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeYoutube\View\View;
 
@@ -27,23 +27,29 @@ use MeCms\View\View\AppView as BaseView;
 /**
  * Application view class
  */
-class AppView extends BaseView {	
-	/**
-	 * Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout
-	 * @param string $content Content to render in a view, wrapped by the surrounding layout
-	 * @param string|null $layout Layout name
-	 * @return mixed Rendered output, or false on error
-	 * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_renderLayout
+class AppView extends BaseView
+{
+    /**
+     * Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout
+     * @param string $content Content to render in a view, wrapped by the surrounding layout
+     * @param string|null $layout Layout name
+     * @return mixed Rendered output, or false on error
+     * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_renderLayout
      * @throws Cake\Core\Exception\Exception
-	 * @uses MeCms\View\View\AppView::renderLayout()
-	 * @uses MeTools\View\Helper\HtmlHelper::meta()
-	 */
-	public function renderLayout($content, $layout = NULL) {
-		//Automatically adds the meta tag for RSS videos
-		if(config('default.rss_meta')) {
-			$this->Html->meta(__d('me_youtube', 'Latest videos'), '/videos/rss', ['type' => 'rss']);
+     * @uses MeCms\View\View\AppView::renderLayout()
+     * @uses MeTools\View\Helper\HtmlHelper::meta()
+     */
+    public function renderLayout($content, $layout = null)
+    {
+        //Automatically adds the meta tag for RSS videos
+        if (config('default.rss_meta')) {
+            $this->Html->meta(
+                __d('me_youtube', 'Latest videos'),
+                '/videos/rss',
+                ['type' => 'rss']
+            );
         }
-        
-		return parent::renderLayout($content, $layout);
-	}
+
+        return parent::renderLayout($content, $layout);
+    }
 }

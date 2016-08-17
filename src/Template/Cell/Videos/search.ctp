@@ -15,24 +15,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-	//Returns on search
-	if($this->request->is('here', ['_name' => 'videos_search'])) {
-		return;
-    }
-    
-	$this->extend('MeCms./Common/widget');
-	$this->assign('title', __d('me_youtube', 'Search videos'));
+//Returns on search
+if ($this->request->is('here', ['_name' => 'videos_search'])) {
+    return;
+}
 
-	echo $this->Form->createInline(FALSE, ['type' => 'get', 'url' => ['_name' => 'videos_search']]);
-	echo $this->Form->input('p', ['placeholder' => sprintf('%s...', __d('me_cms', 'Search'))]);
-	echo $this->Form->submit(NULL, ['class' => 'btn-primary visible-lg-inline', 'icon' => 'search']);
-	echo $this->Form->end();
-?>
+$this->extend('MeCms./Common/widget');
+$this->assign('title', __d('me_youtube', 'Search videos'));
+
+echo $this->Form->createInline(false, ['type' => 'get', 'url' => ['_name' => 'videos_search']]);
+echo $this->Form->input('p', ['placeholder' => sprintf('%s...', __d('me_cms', 'Search'))]);
+echo $this->Form->submit(null, ['class' => 'btn-primary visible-lg-inline', 'icon' => 'search']);
+echo $this->Form->end();

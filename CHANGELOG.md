@@ -2,6 +2,7 @@
 ## 2.5 branch
 ### 2.5.2
 * filter forms can now use records ID;
+* fixed code for CakePHP Code Sniffer;
 * updated for CakePHP 3.3.
 
 ### 2.5.1

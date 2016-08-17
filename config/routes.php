@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 use Cake\Routing\Router;
 
@@ -28,79 +28,88 @@ Router::extensions('rss');
 /**
  * MeYoutube routes
  */
-Router::scope('/', ['plugin' => 'MeYoutube'], function($routes) {
+Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
     //Categories
-	$routes->connect('/videos/categories',
+    $routes->connect(
+        '/videos/categories',
         ['controller' => 'VideosCategories', 'action' => 'index'],
         ['_name' => 'videos_categories']
     );
     //Category
-	$routes->connect('/videos/category/:slug',
-		['controller' => 'VideosCategories', 'action' => 'view'],
-		['_name' => 'videos_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-	);
-    
+    $routes->connect(
+        '/videos/category/:slug',
+        ['controller' => 'VideosCategories', 'action' => 'view'],
+        ['_name' => 'videos_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+    );
+
     //Videos
-	$routes->connect('/videos',
+    $routes->connect(
+        '/videos',
         ['controller' => 'Videos', 'action' => 'index'],
         ['_name' => 'videos']
     );
     //Videos (RSS)
-	$routes->connect('/videos/rss',
+    $routes->connect(
+        '/videos/rss',
         ['controller' => 'Videos', 'action' => 'rss', '_ext' => 'rss'],
         ['_name' => 'videos_rss']
     );
     //Videos search
-	$routes->connect('/videos/search',
+    $routes->connect(
+        '/videos/search',
         ['controller' => 'Videos', 'action' => 'search'],
         ['_name' => 'videos_search']
     );
     //Videos by date
-    $routes->connect('/videos/:date',
-        ['controller' => 'Videos', 'action' => 'index_by_date'],
+    $routes->connect(
+        '/videos/:date',
+        ['controller' => 'Videos', 'action' => 'indexByDate'],
         [
-            '_name'	=> 'videos_by_date',
+            '_name' => 'videos_by_date',
             'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
-            'pass' => ['date']
+            'pass' => ['date'],
         ]
     );
-	//Video
-	$routes->connect('/video/:id',
-		['controller' => 'videos', 'action' => 'view'],
-		['_name' => 'video', 'id' => '\d+', 'pass' => ['id']]
-	);
+    //Video
+    $routes->connect(
+        '/video/:id',
+        ['controller' => 'videos', 'action' => 'view'],
+        ['_name' => 'video', 'id' => '\d+', 'pass' => ['id']]
+    );
     //Video preview
-	$routes->connect('/video/preview/:id',
-		['controller' => 'videos', 'action' => 'preview'],
-		['_name' => 'videos_preview', 'id' => '\d+', 'pass' => ['id']]
-	);
-    
-	/**
-	 * This allows backward compatibility for URLs like:
-	 * /videos/page:3
-	 * /videos/page:3/sort:Video.created/direction:desc
-	 * These URLs will become:
-	 * /videos?page=3
-	 */
-	$routes->connect('/videos/page::page/*',
-        ['controller' => 'Videos', 'action' => 'index_compatibility'],
+    $routes->connect(
+        '/video/preview/:id',
+        ['controller' => 'videos', 'action' => 'preview'],
+        ['_name' => 'videos_preview', 'id' => '\d+', 'pass' => ['id']]
+    );
+
+    /**
+     * This allows backward compatibility for URLs like:
+     * /videos/page:3
+     * /videos/page:3/sort:Video.created/direction:desc
+     * These URLs will become:
+     * /videos?page=3
+     */
+    $routes->connect(
+        '/videos/page::page/*',
+        ['controller' => 'Videos', 'action' => 'indexCompatibility'],
         ['page' => '\d+', 'pass' => ['page']]
     );
-	
-	/**
-	 * Admin routes
-	 */
-    $routes->prefix('admin', function($routes) {
-		/**
-		 * Other admin routes
-		 */
-		$controllers = sprintf('(%s)', implode('|', [
+
+    /**
+     * Admin routes
+     */
+    $routes->prefix('admin', function ($routes) {
+        /**
+         * Other admin routes
+         */
+        $controllers = sprintf('(%s)', implode('|', [
             'videos_categories',
             'videos',
         ]));
-		
-		$routes->connect('/:controller', [], ['controller' => $controllers]);
-		$routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);
+
+        $routes->connect('/:controller', [], ['controller' => $controllers]);
+        $routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);
     });
 
     $routes->fallbacks();

@@ -15,31 +15,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeYoutube\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
 
-class VideosCategoryValidator extends AppValidator {
-	/**
-	 * Construct.
-	 * 
-	 * Adds some validation rules.
-	 * @uses MeCms\Model\Validation\AppValidator::__construct()
-	 */
-    public function __construct() {
+class VideosCategoryValidator extends AppValidator
+{
+    /**
+     * Construct.
+     *
+     * Adds some validation rules.
+     * @uses MeCms\Model\Validation\AppValidator::__construct()
+     */
+    public function __construct()
+    {
         parent::__construct();
-		
-		//Title
-		$this->requirePresence('title', 'create');
-		
-		//Slug
+
+        //Title
+        $this->requirePresence('title', 'create');
+
+        //Slug
         $this->requirePresence('slug', 'create');
-		
+
         return $this;
-	}
+    }
 }
