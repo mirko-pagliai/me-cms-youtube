@@ -24,6 +24,9 @@ namespace MeYoutube\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
 
+/**
+ * VideosCategory validator class
+ */
 class VideosCategoryValidator extends AppValidator
 {
     /**
@@ -41,7 +44,5 @@ class VideosCategoryValidator extends AppValidator
 
         //Slug
         $this->requirePresence('slug', 'create');
-
-        return $this;
     }
 }

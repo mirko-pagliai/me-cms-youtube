@@ -24,6 +24,9 @@ namespace MeYoutube\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
 
+/**
+ * Video validator class
+ */
 class VideoValidator extends AppValidator
 {
     /**
@@ -60,7 +63,5 @@ class VideoValidator extends AppValidator
                 'rule' => 'boolean',
             ],
         ]);
-
-        return $this;
     }
 }
