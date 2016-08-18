@@ -118,7 +118,7 @@ class VideosController extends AppController
         }
 
         //Sets `$year`, `$month` and `$day`
-        //`$month` and `$day` may be `NULL`
+        //`$month` and `$day` may be `null`
         if ($date === 'today' || $date === 'yesterday') {
             $date = new Time($date === 'today' ? 'now' : '1 days ago');
 

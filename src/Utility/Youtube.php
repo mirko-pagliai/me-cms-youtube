@@ -33,7 +33,7 @@ class Youtube extends BaseYoutube
     /**
      * Gets information about a video
      * @param string $id Video ID
-     * @return mixed Array or `FALSE`
+     * @return mixed Array or `false`
      * @see https://developers.google.com/youtube/v3/getting-started#partial
      */
     public static function getInfo($id)

@@ -53,7 +53,7 @@ class VideosCategoriesController extends AppController
      * Checks if the provided user is authorized for the request
      * @param array $user The user to check the authorization of. If empty the
      *  user in the session will be used
-     * @return bool `TRUE` if the user is authorized, otherwise `FALSE`
+     * @return bool `true` if the user is authorized, otherwise `false`
      * @uses MeCms\Controller\AppController::isAuthorized()
      * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
