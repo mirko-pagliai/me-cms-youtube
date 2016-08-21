@@ -27,10 +27,13 @@ $this->assign('title', $title = __d('me_youtube', 'Videos categories'));
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add($title, ['_name' => 'videos_categories']);
+$this->Breadcrumb->add($title, ['_name' => 'videosCategories']);
 
 $categories = array_map(function ($category) {
-    return $this->Html->link($category->title, ['_name' => 'videos_category', $category->slug]);
+    return $this->Html->link(
+        $category->title,
+        ['_name' => 'videosCategory', $category->slug]
+    );
 }, $categories->toArray());
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);

@@ -27,9 +27,12 @@ $this->assign('title', $title = __d('me_youtube', 'Search videos'));
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add($title, ['_name' => 'videos_search']);
+$this->Breadcrumb->add($title, ['_name' => 'videosSearch']);
 
-echo $this->Form->create(null, ['type' => 'get', 'url' => ['_name' => 'videos_search']]);
+echo $this->Form->create(null, [
+    'type' => 'get',
+    'url' => ['_name' => 'videosSearch']
+]);
 echo $this->Form->input('p', [
     'default' => $this->request->query('p'),
     'label' => false,

@@ -22,14 +22,17 @@
  */
 
 //Returns on search
-if ($this->request->is('here', ['_name' => 'videos_search'])) {
+if ($this->request->is('here', ['_name' => 'videosSearch'])) {
     return;
 }
 
 $this->extend('MeCms./Common/widget');
 $this->assign('title', __d('me_youtube', 'Search videos'));
 
-echo $this->Form->createInline(false, ['type' => 'get', 'url' => ['_name' => 'videos_search']]);
+echo $this->Form->createInline(false, [
+    'type' => 'get',
+    'url' => ['_name' => 'videosSearch']
+]);
 echo $this->Form->input('p', ['placeholder' => sprintf('%s...', __d('me_cms', 'Search'))]);
 echo $this->Form->submit(null, ['class' => 'btn-primary visible-lg-inline', 'icon' => 'search']);
 echo $this->Form->end();

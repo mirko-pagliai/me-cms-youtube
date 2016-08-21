@@ -30,21 +30,21 @@ Router::extensions('rss');
  */
 Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
     //Categories
-    if (!routeNameExists('videos_categories')) {
+    if (!routeNameExists('videosCategories')) {
         $routes->connect(
             '/videos/categories',
             ['controller' => 'VideosCategories', 'action' => 'index'],
-            ['_name' => 'videos_categories']
+            ['_name' => 'videosCategories']
         );
     }
     
     //Category
-    if (!routeNameExists('videos_category')) {
+    if (!routeNameExists('videosCategory')) {
         $routes->connect(
             '/videos/category/:slug',
             ['controller' => 'VideosCategories', 'action' => 'view'],
             [
-                '_name' => 'videos_category',
+                '_name' => 'videosCategory',
                 'slug' => '[a-z0-9\-]+',
                 'pass' => ['slug'],
             ]
@@ -61,30 +61,30 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
     }
     
     //Videos (RSS)
-    if (!routeNameExists('videos_rss')) {
+    if (!routeNameExists('videosRss')) {
         $routes->connect(
             '/videos/rss',
             ['controller' => 'Videos', 'action' => 'rss', '_ext' => 'rss'],
-            ['_name' => 'videos_rss']
+            ['_name' => 'videosRss']
         );
     }
     
     //Videos search
-    if (!routeNameExists('videos_search')) {
+    if (!routeNameExists('videosSearch')) {
         $routes->connect(
             '/videos/search',
             ['controller' => 'Videos', 'action' => 'search'],
-            ['_name' => 'videos_search']
+            ['_name' => 'videosSearch']
         );
     }
     
     //Videos by date
-    if (!routeNameExists('videos_by_date')) {
+    if (!routeNameExists('videosByDate')) {
         $routes->connect(
             '/videos/:date',
             ['controller' => 'Videos', 'action' => 'indexByDate'],
             [
-                '_name' => 'videos_by_date',
+                '_name' => 'videosByDate',
                 'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
                 'pass' => ['date'],
             ]
@@ -101,11 +101,11 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
     }
     
     //Video preview
-    if (!routeNameExists('videos_preview')) {
+    if (!routeNameExists('videosPreview')) {
         $routes->connect(
             '/video/preview/:id',
             ['controller' => 'videos', 'action' => 'preview'],
-            ['_name' => 'videos_preview', 'id' => '\d+', 'pass' => ['id']]
+            ['_name' => 'videosPreview', 'id' => '\d+', 'pass' => ['id']]
         );
     }
 
@@ -126,7 +126,7 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
     $routes->prefix('admin', function ($routes) {
         //Other admin routes
         $controllers = sprintf('(%s)', implode('|', [
-            'videos_categories',
+            'videosCategories',
             'videos',
         ]));
 

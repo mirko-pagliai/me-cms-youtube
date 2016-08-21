@@ -59,7 +59,7 @@ class VideosCell extends Cell
     public function categories($render = 'form')
     {
         //Returns on categories index
-        if ($this->request->is('here', ['_name' => 'videos_categories'])) {
+        if ($this->request->is('here', ['_name' => 'videosCategories'])) {
             return;
         }
 

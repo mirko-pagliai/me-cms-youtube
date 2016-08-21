@@ -26,7 +26,12 @@
     <div class="content-header">
         <?php if (config('video.category') && $video->category && $video->category->title && $video->category->slug) : ?>
             <h5 class="content-category">
-                <?= $this->Html->link($video->category->title, ['_name' => 'videos_category', $video->category->slug]) ?>
+                <?php
+                    echo $this->Html->link(
+                        $video->category->title,
+                        ['_name' => 'videosCategory', $video->category->slug]
+                    );
+                ?>
             </h5>
         <?php endif; ?>
 
@@ -41,13 +46,27 @@
         <?php endif; ?>
 
         <div class="content-info">
-            <?php if (config('video.author')) : ?>
-                <?= $this->Html->div('content-author', __d('me_cms', 'Posted by {0}', $video->user->full_name), ['icon' => 'user']) ?>
-            <?php endif; ?>
+            <?php
+            if (config('video.author')) {
+                echo $this->Html->div(
+                    'content-author',
+                    __d('me_cms', 'Posted by {0}', $video->user->full_name),
+                    ['icon' => 'user']
+                );
+            }
 
-            <?php if (config('video.created')) : ?>
-                <?= $this->Html->div('content-date', __d('me_cms', 'Posted on {0}', $video->created->i18nFormat(config('main.datetime.long'))), ['icon' => 'clock-o']) ?>
-            <?php endif; ?>
+            if (config('video.created')) {
+                echo $this->Html->div(
+                    'content-date',
+                    __d(
+                        'me_cms',
+                        'Posted on {0}',
+                        $video->created->i18nFormat(config('main.datetime.long'))
+                    ),
+                    ['icon' => 'clock-o']
+                );
+            }
+            ?>
         </div>
     </div>
     <div class="content-text">
@@ -83,7 +102,11 @@
     </div>
 
     <?php
-    if (config('video.shareaholic') && config('shareaholic.app_id') && $this->request->is('action', 'view', 'Videos') && !$this->request->isAjax()) {
+    if (config('video.shareaholic') &&
+        config('shareaholic.app_id') &&
+        $this->request->is('action', 'view', 'Videos') &&
+        !$this->request->isAjax()
+    ) {
         echo $this->Html->shareaholic(config('shareaholic.app_id'));
     }
     ?>

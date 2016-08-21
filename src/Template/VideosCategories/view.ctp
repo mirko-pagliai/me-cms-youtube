@@ -48,4 +48,7 @@ $this->userbar([
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add($category->title, ['_name' => 'videos_category', $category->title]);
+$this->Breadcrumb->add(
+    $category->title,
+    ['_name' => 'videosCategory', $category->title]
+);

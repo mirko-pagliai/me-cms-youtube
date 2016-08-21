@@ -72,14 +72,14 @@ class Sitemap extends SitemapBuilder
         //Adds videos index, categories index and videos search
         $url = [
             self::parse(['_name' => 'videos'], ['lastmod' => $latest->modified]),
-            self::parse(['_name' => 'videos_categories']),
-            self::parse(['_name' => 'videos_search'], ['priority' => '0.2']),
+            self::parse(['_name' => 'videosCategories']),
+            self::parse(['_name' => 'videosSearch'], ['priority' => '0.2']),
         ];
 
         foreach ($categories as $category) {
             //Adds the category
             $url[] = self::parse(
-                ['_name' => 'videos_category', $category->slug],
+                ['_name' => 'videosCategory', $category->slug],
                 ['lastmod' => $category->videos[0]->modified]
             );
 

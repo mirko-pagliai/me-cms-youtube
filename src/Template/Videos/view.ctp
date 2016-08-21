@@ -28,15 +28,24 @@ $this->assign('title', $video->title);
  * Userbar
  */
 if ($video->is_spot) {
-    $this->userbar($this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'label label-primary']));
+    $this->userbar($this->Html->span(
+        __d('me_youtube', 'Spot'),
+        ['class' => 'label label-primary']
+    ));
 }
 
 if (!$video->active) {
-    $this->userbar($this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(
+        __d('me_cms', 'Draft'),
+        ['class' => 'label label-warning']
+    ));
 }
 
 if ($video->created->isFuture()) {
-    $this->userbar($this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(
+        __d('me_cms', 'Scheduled'),
+        ['class' => 'label label-warning']
+    ));
 }
 
 $this->userbar([
@@ -48,7 +57,11 @@ $this->userbar([
     $this->Form->postLink(
         __d('me_youtube', 'Delete video'),
         ['action' => 'delete', $video->id, 'prefix' => 'admin'],
-        ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']
+        [
+            'icon' => 'trash-o',
+            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+            'target' => '_blank',
+        ]
     ),
 ]);
 
@@ -56,7 +69,10 @@ $this->userbar([
  * Breadcrumb
  */
 if (config('video.category')) {
-    $this->Breadcrumb->add($video->category->title, ['_name' => 'videos_category', $video->category->slug]);
+    $this->Breadcrumb->add(
+        $video->category->title,
+        ['_name' => 'videosCategory', $video->category->slug]
+    );
 }
 $this->Breadcrumb->add($video->title, ['_name' => 'video', $video->slug]);
 
@@ -86,7 +102,11 @@ if ($this->request->is('action', 'view', 'Videos')) {
 
     if (!empty($video->text)) {
         $this->Html->meta([
-            'content' => $this->Text->truncate($video->text, 100, ['html' => true]),
+            'content' => $this->Text->truncate(
+                $video->text,
+                100,
+                ['html' => true]
+            ),
             'property' => 'og:description',
         ]);
     }

@@ -28,7 +28,10 @@ if (empty($categories) || count($categories) < 2) {
 $this->extend('MeCms./Common/widget');
 $this->assign('title', __d('me_youtube', 'Videos categories'));
 
-echo $this->Form->create(false, ['type' => 'get', 'url' => ['_name' => 'videos_category', 'category']]);
+echo $this->Form->create(false, [
+    'type' => 'get',
+    'url' => ['_name' => 'videosCategory', 'category']
+]);
 echo $this->Form->input('q', [
     'label' => false,
     'onchange' => 'send_form(this)',

@@ -66,11 +66,11 @@ class MenuHelper extends Helper
         if ($this->Auth->isGroup(['admin', 'manager'])) {
             $menu[] = $this->Html->link(
                 __d('me_cms', 'List categories'),
-                ['controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'MeYoutube']
+                ['controller' => 'videosCategories', 'action' => 'index', 'plugin' => 'MeYoutube']
             );
             $menu[] = $this->Html->link(
                 __d('me_cms', 'Add category'),
-                ['controller' => 'videos_categories', 'action' => 'add', 'plugin' => 'MeYoutube']
+                ['controller' => 'videosCategories', 'action' => 'add', 'plugin' => 'MeYoutube']
             );
         }
 
