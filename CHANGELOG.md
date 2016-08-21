@@ -2,6 +2,7 @@
 ## 2.6 branch
 ### 2.6.0
 * filter forms can now use records ID;
+* checks if there are already routes with the same name, before declaring new;
 * fixed code for CakePHP Code Sniffer;
 * updated for CakePHP 3.3.
 

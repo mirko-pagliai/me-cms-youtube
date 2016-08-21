@@ -30,58 +30,84 @@ Router::extensions('rss');
  */
 Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
     //Categories
-    $routes->connect(
-        '/videos/categories',
-        ['controller' => 'VideosCategories', 'action' => 'index'],
-        ['_name' => 'videos_categories']
-    );
+    if (!routeNameExists('videos_categories')) {
+        $routes->connect(
+            '/videos/categories',
+            ['controller' => 'VideosCategories', 'action' => 'index'],
+            ['_name' => 'videos_categories']
+        );
+    }
+    
     //Category
-    $routes->connect(
-        '/videos/category/:slug',
-        ['controller' => 'VideosCategories', 'action' => 'view'],
-        ['_name' => 'videos_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-    );
-
+    if (!routeNameExists('videos_category')) {
+        $routes->connect(
+            '/videos/category/:slug',
+            ['controller' => 'VideosCategories', 'action' => 'view'],
+            [
+                '_name' => 'videos_category',
+                'slug' => '[a-z0-9\-]+',
+                'pass' => ['slug'],
+            ]
+        );
+    }
+    
     //Videos
-    $routes->connect(
-        '/videos',
-        ['controller' => 'Videos', 'action' => 'index'],
-        ['_name' => 'videos']
-    );
+    if (!routeNameExists('videos')) {
+        $routes->connect(
+            '/videos',
+            ['controller' => 'Videos', 'action' => 'index'],
+            ['_name' => 'videos']
+        );
+    }
+    
     //Videos (RSS)
-    $routes->connect(
-        '/videos/rss',
-        ['controller' => 'Videos', 'action' => 'rss', '_ext' => 'rss'],
-        ['_name' => 'videos_rss']
-    );
+    if (!routeNameExists('videos_rss')) {
+        $routes->connect(
+            '/videos/rss',
+            ['controller' => 'Videos', 'action' => 'rss', '_ext' => 'rss'],
+            ['_name' => 'videos_rss']
+        );
+    }
+    
     //Videos search
-    $routes->connect(
-        '/videos/search',
-        ['controller' => 'Videos', 'action' => 'search'],
-        ['_name' => 'videos_search']
-    );
+    if (!routeNameExists('videos_search')) {
+        $routes->connect(
+            '/videos/search',
+            ['controller' => 'Videos', 'action' => 'search'],
+            ['_name' => 'videos_search']
+        );
+    }
+    
     //Videos by date
-    $routes->connect(
-        '/videos/:date',
-        ['controller' => 'Videos', 'action' => 'indexByDate'],
-        [
-            '_name' => 'videos_by_date',
-            'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
-            'pass' => ['date'],
-        ]
-    );
+    if (!routeNameExists('videos_by_date')) {
+        $routes->connect(
+            '/videos/:date',
+            ['controller' => 'Videos', 'action' => 'indexByDate'],
+            [
+                '_name' => 'videos_by_date',
+                'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
+                'pass' => ['date'],
+            ]
+        );
+    }
+    
     //Video
-    $routes->connect(
-        '/video/:id',
-        ['controller' => 'videos', 'action' => 'view'],
-        ['_name' => 'video', 'id' => '\d+', 'pass' => ['id']]
-    );
+    if (!routeNameExists('video')) {
+        $routes->connect(
+            '/video/:id',
+            ['controller' => 'videos', 'action' => 'view'],
+            ['_name' => 'video', 'id' => '\d+', 'pass' => ['id']]
+        );
+    }
+    
     //Video preview
-    $routes->connect(
-        '/video/preview/:id',
-        ['controller' => 'videos', 'action' => 'preview'],
-        ['_name' => 'videos_preview', 'id' => '\d+', 'pass' => ['id']]
-    );
+    if (!routeNameExists('videos_preview')) {
+        $routes->connect(
+            '/video/preview/:id',
+            ['controller' => 'videos', 'action' => 'preview'],
+            ['_name' => 'videos_preview', 'id' => '\d+', 'pass' => ['id']]
+        );
+    }
 
     /**
      * This allows backward compatibility for URLs like:
@@ -96,13 +122,9 @@ Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
         ['page' => '\d+', 'pass' => ['page']]
     );
 
-    /**
-     * Admin routes
-     */
+    //Admin routes
     $routes->prefix('admin', function ($routes) {
-        /**
-         * Other admin routes
-         */
+        //Other admin routes
         $controllers = sprintf('(%s)', implode('|', [
             'videos_categories',
             'videos',
