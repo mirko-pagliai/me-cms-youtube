@@ -22,117 +22,25 @@
  */
 use Cake\Routing\Router;
 
-Router::defaultRouteClass('InflectedRoute');
+Router::defaultRouteClass('DashedRoute');
 Router::extensions('rss');
 
 /**
  * MeYoutube routes
  */
 Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
-    //Categories
-    if (!routeNameExists('videosCategories')) {
-        $routes->connect(
-            '/videos/categories',
-            ['controller' => 'VideosCategories', 'action' => 'index'],
-            ['_name' => 'videosCategories']
-        );
-    }
+    //Includes routes
+    include_once 'routes/videos.php';
     
-    //Category
-    if (!routeNameExists('videosCategory')) {
-        $routes->connect(
-            '/videos/category/:slug',
-            ['controller' => 'VideosCategories', 'action' => 'view'],
-            [
-                '_name' => 'videosCategory',
-                'slug' => '[a-z0-9\-]+',
-                'pass' => ['slug'],
-            ]
-        );
-    }
-    
-    //Videos
-    if (!routeNameExists('videos')) {
-        $routes->connect(
-            '/videos',
-            ['controller' => 'Videos', 'action' => 'index'],
-            ['_name' => 'videos']
-        );
-    }
-    
-    //Videos (RSS)
-    if (!routeNameExists('videosRss')) {
-        $routes->connect(
-            '/videos/rss',
-            ['controller' => 'Videos', 'action' => 'rss', '_ext' => 'rss'],
-            ['_name' => 'videosRss']
-        );
-    }
-    
-    //Videos search
-    if (!routeNameExists('videosSearch')) {
-        $routes->connect(
-            '/videos/search',
-            ['controller' => 'Videos', 'action' => 'search'],
-            ['_name' => 'videosSearch']
-        );
-    }
-    
-    //Videos by date
-    if (!routeNameExists('videosByDate')) {
-        $routes->connect(
-            '/videos/:date',
-            ['controller' => 'Videos', 'action' => 'indexByDate'],
-            [
-                '_name' => 'videosByDate',
-                'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
-                'pass' => ['date'],
-            ]
-        );
-    }
-    
-    //Video
-    if (!routeNameExists('video')) {
-        $routes->connect(
-            '/video/:id',
-            ['controller' => 'videos', 'action' => 'view'],
-            ['_name' => 'video', 'id' => '\d+', 'pass' => ['id']]
-        );
-    }
-    
-    //Video preview
-    if (!routeNameExists('videosPreview')) {
-        $routes->connect(
-            '/video/preview/:id',
-            ['controller' => 'videos', 'action' => 'preview'],
-            ['_name' => 'videosPreview', 'id' => '\d+', 'pass' => ['id']]
-        );
-    }
-
-    /**
-     * This allows backward compatibility for URLs like:
-     * /videos/page:3
-     * /videos/page:3/sort:Video.created/direction:desc
-     * These URLs will become:
-     * /videos?page=3
-     */
-    $routes->connect(
-        '/videos/page::page/*',
-        ['controller' => 'Videos', 'action' => 'indexCompatibility'],
-        ['page' => '\d+', 'pass' => ['page']]
-    );
-
     //Admin routes
     $routes->prefix('admin', function ($routes) {
         //Other admin routes
         $controllers = sprintf('(%s)', implode('|', [
-            'videosCategories',
+            'videos-categories',
             'videos',
         ]));
 
         $routes->connect('/:controller', [], ['controller' => $controllers]);
         $routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);
     });
-
-    $routes->fallbacks();
 });
