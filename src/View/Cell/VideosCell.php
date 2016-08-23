@@ -59,7 +59,7 @@ class VideosCell extends Cell
     public function categories($render = 'form')
     {
         //Returns on categories index
-        if ($this->request->is('here', ['_name' => 'videosCategories'])) {
+        if ($this->request->isUrl(['_name' => 'videosCategories'])) {
             return;
         }
 
@@ -89,7 +89,7 @@ class VideosCell extends Cell
     public function latest($limit = 1)
     {
         //Returns on index, except for category
-        if ($this->request->is('action', 'index', 'Videos') && !$this->request->param('slug')) {
+        if ($this->request->isAction('index', 'Videos') && !$this->request->param('slug')) {
             return;
         }
 
@@ -111,7 +111,7 @@ class VideosCell extends Cell
     public function months($render = 'form')
     {
         //Returns on index
-        if ($this->request->is('action', 'index', 'Videos')) {
+        if ($this->request->isAction('index', 'Videos')) {
             return;
         }
 
@@ -149,7 +149,7 @@ class VideosCell extends Cell
     public function random($limit = 1)
     {
         //Returns on the same controllers
-        if ($this->request->is('controller', ['Videos', 'VideosCategories'])) {
+        if ($this->request->isController(['Videos', 'VideosCategories'])) {
             return;
         }
 

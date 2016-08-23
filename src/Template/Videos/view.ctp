@@ -79,7 +79,7 @@ $this->Breadcrumb->add($video->title, ['_name' => 'video', $video->slug]);
 /**
  * Meta tags
  */
-if ($this->request->is('action', 'view', 'Videos')) {
+if ($this->request->isAction('view', 'Videos')) {
     $this->Html->meta([
         'content' => 'article',
         'property' => 'og:type',
