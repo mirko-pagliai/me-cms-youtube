@@ -112,10 +112,11 @@ $this->Library->datetimepicker();
             ?>
         </p>
         <?php
-            echo $this->Form->input('youtubeId', [
+            echo $this->Form->input('youtube_id', [
                 'label' => __d('me_youtube', '{0} ID', 'YouTube'),
                 'readonly' => true,
                 'type' => 'text',
+                'value' => $this->request->data('youtubeId'),
             ]);
             echo $this->Form->input('duration', [
                 'label' => __d('me_youtube', 'Duration'),
