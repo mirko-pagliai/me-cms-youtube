@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.6 branch
+### 2.6.1
+* improved admin routes. They are automatically handled by CakePHP.
+
 ### 2.6.0
 * filter forms can now use records ID;
 * checks if there are already routes with the same name, before declaring new;
