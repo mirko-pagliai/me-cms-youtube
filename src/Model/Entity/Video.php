@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeYoutube\Model\Entity;
 
@@ -45,38 +45,49 @@ use MeYoutube\Utility\Youtube;
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  */
-class Video extends Entity {
+class Video extends Entity
+{
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
      */
     protected $_accessible = [
-        '*' => TRUE,
-        'id' => FALSE,
-		'modified' => FALSE,
+        '*' => true,
+        'id' => false,
+        'modified' => false,
     ];
-	
-	/**
-	 * Virtual fields that should be exposed
-	 * @var array
-	 */
+
+    /**
+     * Virtual fields that should be exposed
+     * @var array
+     */
     protected $_virtual = ['preview', 'youtube_url'];
-	
-	/**
-	 * Gets the preview (virtual field)
-	 * @return string
+
+    /**
+     * Gets the image preview (virtual field)
+     * @return string|null
      * @uses MeYoutube\Utility\Youtube::getPreview()
-	 */
-	protected function _getPreview() {
-		return Youtube::getPreview($this->_properties['youtube_id']);
-	}
-    
+     */
+    protected function _getPreview()
+    {
+        if (empty($this->_properties['youtube_id'])) {
+            return null;
+        }
+
+        return Youtube::getPreview($this->_properties['youtube_id']);
+    }
+
     /**
      * Gets the Youtube url (virtual field)
-     * @return string
+     * @return string|null
      * @uses MeYoutube\Utility\Youtube::getUrl()
      */
-    protected function _getYoutubeUrl() {
-		return Youtube::getUrl($this->_properties['youtube_id']);
+    protected function _getYoutubeUrl()
+    {
+        if (empty($this->_properties['youtube_id'])) {
+            return null;
+        }
+
+        return Youtube::getUrl($this->_properties['youtube_id']);
     }
 }

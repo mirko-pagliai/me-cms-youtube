@@ -15,26 +15,35 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeYoutube\Controller;
 
 use MeCms\Controller\AppController as BaseController;
 
-class AppController extends BaseController {
-	/**
-	 * Called after the controller action is run, but before the view is rendered.
-	 * You can use this method to perform logic or set view variables that are required on every request.
-	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeRender
-	 */
-	public function beforeRender(\Cake\Event\Event $event) {
-		parent::beforeRender($event);
-		
-		//Uses a custom View class (`MeYoutube.AppView` or `MeCms.AdminView`)
-        $this->viewBuilder()->className($this->request->isAdmin() ? 'MeCms.View/Admin' : 'MeYoutube.View/App');
-	}
+class AppController extends BaseController
+{
+    /**
+     * Called after the controller action is run, but before the view is
+     *  rendered.
+     * You can use this method to perform logic or set view variables that
+     *  are required on every request.
+     * @param \Cake\Event\Event $event An Event instance
+     * @return void
+     * @see http://api.cakephp.org/3.3/class-Cake.Controller.Controller.html#_beforeRender
+     */
+    public function beforeRender(\Cake\Event\Event $event)
+    {
+        parent::beforeRender($event);
+
+        //Uses a custom View class (`MeYoutube.AppView` or `MeCms.AdminView`)
+        if ($this->request->isAdmin()) {
+            $this->viewBuilder()->className('MeCms.View/Admin');
+        } else {
+            $this->viewBuilder()->className('MeYoutube.View/App');
+        }
+    }
 }

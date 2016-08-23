@@ -1,4 +1,12 @@
 # 2.x branch
+## 2.6 branch
+### 2.6.0
+* filter forms can now use records ID;
+* checks if there are already routes with the same name, before declaring new;
+* fixed code for CakePHP Code Sniffer;
+* updated for CakePHP 3.3;
+* improved routes. Now `DashedRoute` is the default route class.
+
 ## 2.5 branch
 ### 2.5.1
 * admin indexes display ID for all elements;

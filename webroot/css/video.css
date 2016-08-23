@@ -1,61 +1,61 @@
 /*!
  * This file is part of MeYoutube.
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  */
 
 /* -------------------------------- */
-/*			"Video fake"			*/
+/*          "Video fake"            */
 /* -------------------------------- */
 /* "Video fake" */
 .video-fake {
-	display: block;
-	position: relative;
+    display: block;
+    position: relative;
 }
 
 /* "Video fake", image */
 .video-fake > img {
-	width: 100%;
+    width: 100%;
 }
 
 /* "Video fake", icon */
 .video-fake > .fa {
-	color: #222;
-	font-size: 600%;
-	left: 50%;
-	opacity: .8;
-	position: absolute;
-	top: 50%;
-	/* Horizontal and vertical align: middle */
-	-webkit-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
+    color: #222;
+    font-size: 600%;
+    left: 50%;
+    opacity: .8;
+    position: absolute;
+    top: 50%;
+    /* Horizontal and vertical align: middle */
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 /* "Video fake" on hover, icon */
 .video-fake:hover > .fa {
-	color: #ff0000;
+    color: #ff0000;
 }
 
 /* -------------------------------- */
-/*	"Skip to the video" button		*/
+/*  "Skip to the video" button      */
 /* -------------------------------- */
 #skip-to-video {
-	background: rgba(255, 255, 255, .66);
-	box-shadow:  0 0 5px 0 rgba(255, 255, 255, .75);
-	border: 1px solid #000;
-	color: #000;
-	cursor: pointer;
-	display: none;
-	font-size: 18px;
-	left: 50%;
-	padding: 6px 10px;
-	position: absolute;
-	top: 7%;
-	z-index: 9999;
-	/* Horizontal align: middle */
-	-webkit-transform: translateX(-50%);
-	-ms-transform: translateX(-50%);
-	transform: translateX(-50%);
+    background: rgba(255, 255, 255, .66);
+    box-shadow: 0 0 5px 0 rgba(255, 255, 255, .75);
+    border: 1px solid #000;
+    color: #000;
+    cursor: pointer;
+    display: none;
+    font-size: 18px;
+    left: 50%;
+    padding: 6px 10px;
+    position: absolute;
+    top: 7%;
+    z-index: 9999;
+    /* Horizontal align: middle */
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
 }

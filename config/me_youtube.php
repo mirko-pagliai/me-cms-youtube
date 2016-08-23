@@ -9,27 +9,27 @@ return [
         //Youtube videos
         'video' => [
             //Displays the video author
-            'author' => TRUE,
+            'author' => true,
             //Displays the video category
-            'category' => TRUE,
+            'category' => true,
             //Displays the video created datetime
-            'created' => TRUE,
+            'created' => true,
             //Displays the "Skip to the video" button
-            'skip_button' => TRUE,
+            'skip_button' => true,
             //Seconds before showing the "Skip to the video" button.
             //Use `0` to show it immediately
             'skip_seconds' => 3,
             //Plays a spot automatically before each video
-            'spot' => TRUE,
+            'spot' => true,
             //Displays the Shareaholic social buttons.
             //Remember you have to set app and site IDs.
-            //See `shareaholic.app_id` and `shareaholic.site_id` in the 
+            //See `shareaholic.app_id` and `shareaholic.site_id` in the
             //MeCms configuration
-            'shareaholic' => FALSE,
+            'shareaholic' => false,
         ],
     ],
     'Youtube' => [
         //API key
-        'key' => 'your-key-here'
+        'key' => 'your-key-here',
     ],
 ];

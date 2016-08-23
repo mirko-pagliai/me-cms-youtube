@@ -15,50 +15,53 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeYoutube\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
 
-class VideoValidator extends AppValidator {
-	/**
-	 * Construct.
-	 * 
-	 * Adds some validation rules.
-	 * @uses MeCms\Model\Validation\AppValidator::__construct()
-	 */
-    public function __construct() {
+/**
+ * Video validator class
+ */
+class VideoValidator extends AppValidator
+{
+    /**
+     * Construct.
+     *
+     * Adds some validation rules.
+     * @uses MeCms\Model\Validation\AppValidator::__construct()
+     */
+    public function __construct()
+    {
         parent::__construct();
-		
-		//Category
+
+        //Category
         $this->add('category_id', [
             'naturalNumber' => [
                 'message' => __d('me_cms', 'You have to select a valid option'),
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('category_id', 'create');
-		
-		//User (author)
-		$this->requirePresence('user_id', 'create');
-		
-		//Title
-		$this->requirePresence('title', 'create');
-		
-		//Text
+
+        //User (author)
+        $this->requirePresence('user_id', 'create');
+
+        //Title
+        $this->requirePresence('title', 'create');
+
+        //Text
         $this->requirePresence('text', 'create');
-		
-		//"Is spot"
+
+        //"Is spot"
         $this->add('is_spot', [
             'boolean' => [
                 'message' => __d('me_cms', 'You have to select a valid option'),
                 'rule' => 'boolean',
             ],
         ]);
-		
-        return $this;
-	}
+    }
 }

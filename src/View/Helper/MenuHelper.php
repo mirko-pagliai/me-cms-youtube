@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  * @see         MeCms\View\Helper\MenuBuilderHelper
  */
 namespace MeYoutube\View\Helper;
@@ -27,36 +27,57 @@ use Cake\View\Helper;
 
 /**
  * Menu Helper.
- * 
- * This helper contains methods that will be called automatically to generate 
+ *
+ * This helper contains methods that will be called automatically to generate
  * the menu of the admin layout.
  * You do not need to call these methods manually.
  */
-class MenuHelper extends Helper {
-	/**
-	 * Helpers
-	 * @var array
-	 */
-	public $helpers = ['MeCms.Auth', 'Html' => ['className' => 'MeTools.Html']];
-	
-	/**
-	 * Internal function to generate the menu for "videos" actions
-	 * @return mixed Array with menu, title and link options
-	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
-	 * @uses MeTools\View\Helper\HtmlHelper::link()
-	 */
-	public function videos() {
-		$menu = [
-			$this->Html->link(__d('me_youtube', 'List videos'), ['controller' => 'videos', 'action' => 'index', 'plugin' => 'MeYoutube']),
-			$this->Html->link(__d('me_youtube', 'Add video'), ['controller' => 'videos', 'action' => 'add', 'plugin' => 'MeYoutube'])
-		];
-		
-		//Only admins and managers can access this controller
-		if($this->Auth->isGroup(['admin', 'manager'])) {
-			$menu[] = $this->Html->link(__d('me_cms', 'List categories'), ['controller' => 'videos_categories', 'action' => 'index', 'plugin' => 'MeYoutube']);
-			$menu[] = $this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'videos_categories', 'action' => 'add', 'plugin' => 'MeYoutube']);
+class MenuHelper extends Helper
+{
+    /**
+     * Helpers
+     * @var array
+     */
+    public $helpers = [
+        'Html' => ['className' => 'MeTools.Html'],
+        'MeCms.Auth',
+    ];
+
+    /**
+     * Internal function to generate the menu for "videos" actions
+     * @return mixed Array with menu, title and link options
+     * @uses MeCms\View\Helper\AuthHelper::isGroup()
+     * @uses MeTools\View\Helper\HtmlHelper::link()
+     */
+    public function videos()
+    {
+        $menu = [
+            $this->Html->link(
+                __d('me_youtube', 'List videos'),
+                ['controller' => 'videos', 'action' => 'index', 'plugin' => 'MeYoutube']
+            ),
+            $this->Html->link(
+                __d('me_youtube', 'Add video'),
+                ['controller' => 'videos', 'action' => 'add', 'plugin' => 'MeYoutube']
+            )
+        ];
+
+        //Only admins and managers can access this controller
+        if ($this->Auth->isGroup(['admin', 'manager'])) {
+            $menu[] = $this->Html->link(
+                __d('me_cms', 'List categories'),
+                ['controller' => 'videosCategories', 'action' => 'index', 'plugin' => 'MeYoutube']
+            );
+            $menu[] = $this->Html->link(
+                __d('me_cms', 'Add category'),
+                ['controller' => 'videosCategories', 'action' => 'add', 'plugin' => 'MeYoutube']
+            );
         }
-		
-		return [$menu, __d('me_youtube', 'Videos'), ['icon' => 'film']];
-	}
+
+        return [
+            $menu,
+            __d('me_youtube', 'Videos'),
+            ['icon' => 'film']
+        ];
+    }
 }

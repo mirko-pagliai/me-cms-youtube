@@ -15,22 +15,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+$this->extend('MeCms./Admin/Common/form');
+$this->assign('title', $title = __d('me_cms', 'Add video'));
+$this->Library->datetimepicker();
 ?>
 
-<?php
-    $this->extend('MeCms./Admin/Common/form');
-    $this->assign('title', $title = __d('me_cms', 'Add video'));
-	$this->Library->datetimepicker();
-?>
-	
 <div class="well">
-    <?php 
-        echo $this->Form->createInline(FALSE, ['type' => 'get']);
+    <?php
+        echo $this->Form->createInline(false, ['type' => 'get']);
         echo $this->Form->label('url', __d('me_youtube', 'Video url'));
         echo $this->Form->input('url', [
             'default' => $this->request->query('url'),
@@ -39,29 +37,29 @@
             'onchange' => 'send_form(this)',
             'size' => 100,
         ]);
-        echo $this->Form->submit(__d('me_cms', 'Select'), ['div' => FALSE]);
+        echo $this->Form->submit(__d('me_cms', 'Select'), ['div' => false]);
         echo $this->Form->end();
     ?>
 </div>
 
-<?php if($this->request->data('youtube_id')): ?>
+<?php if ($this->request->data('youtubeId')) : ?>
     <?= $this->Form->create($video); ?>
     <div class='float-form'>
         <?php
-            //Only admins and managers can add videos on behalf of other users
-            if($this->Auth->isGroup(['admin', 'manager'])) {
-                echo $this->Form->input('user_id', [
-                    'default' => $this->Auth->user('id'),
-                    'label' => __d('me_cms', 'Author'),
-                ]);
-            }
+        //Only admins and managers can add videos on behalf of other users
+        if ($this->Auth->isGroup(['admin', 'manager'])) {
+            echo $this->Form->input('user_id', [
+                'default' => $this->Auth->user('id'),
+                'label' => __d('me_cms', 'Author'),
+            ]);
+        }
 
             echo $this->Form->input('category_id', [
-                'default' => count($categories) < 2 ? fv($categories) : NULL,
+                'default' => count($categories) < 2 ? firstValue($categories) : null,
                 'label' => __d('me_cms', 'Category'),
             ]);
             echo $this->Form->datetimepicker('created', [
-                'label'	=> __d('me_cms', 'Date'),
+                'label' => __d('me_cms', 'Date'),
                 'tip' => [
                     __d('me_cms', 'If blank, the current date and time will be used'),
                     __d('me_cms', 'You can delay the publication by entering a future date'),
@@ -76,7 +74,7 @@
                 'tip' => __d('me_youtube', 'Enable this option if this video is a spot'),
             ]);
             echo $this->Form->input('active', [
-                'checked' => TRUE,
+                'checked' => true,
                 'label' => sprintf('%s?', __d('me_cms', 'Published')),
                 'tip' => __d('me_cms', 'Disable this option to save as a draft'),
             ]);
@@ -87,23 +85,41 @@
         <div class="row margin-20 text-center">
             <div class="col-sm-6">
                 <h4><?= __d('me_youtube', 'Video') ?></h4>
-                <?= $this->Html->youtube($this->request->data('youtube_id'), ['class' => 'center-block', 'height' => 315, 'width' => 560]) ?>
+                <?php
+                    echo $this->Html->youtube(
+                        $this->request->data('youtubeId'),
+                        ['class' => 'center-block', 'height' => 315, 'width' => 560]
+                    );
+                ?>
             </div>
             <div class="col-sm-6">
                 <h4><?= __d('me_youtube', 'Thumbnail preview') ?></h4>
-                <?= $this->Thumb->image($this->request->data('preview'), ['height' => 315, 'class' => 'center-block']) ?>
+                <?php
+                    echo $this->Thumb->image(
+                        $this->request->data('preview'),
+                        ['height' => 315, 'class' => 'center-block']
+                    );
+                ?>
             </div>
         </div>
-        <p><?= $this->Html->link(__d('me_youtube', 'Open on {0}', 'YouTube'), $this->request->data('youtube_url'), ['icon' => 'external-link', 'target' => '_blank']) ?></p>
+        <p>
+            <?php
+                echo $this->Html->link(
+                    __d('me_youtube', 'Open on {0}', 'YouTube'),
+                    $this->request->data('youtubeUrl'),
+                    ['icon' => 'external-link', 'target' => '_blank']
+                );
+            ?>
+        </p>
         <?php
-            echo $this->Form->input('youtube_id', [
-                'label'	=> __d('me_youtube', '{0} ID', 'YouTube'),
-                'readonly' => TRUE,
+            echo $this->Form->input('youtubeId', [
+                'label' => __d('me_youtube', '{0} ID', 'YouTube'),
+                'readonly' => true,
                 'type' => 'text',
             ]);
             echo $this->Form->input('duration', [
                 'label' => __d('me_youtube', 'Duration'),
-                'readonly' => TRUE,
+                'readonly' => true,
             ]);
             echo $this->Form->input('title', [
                 'label' => __d('me_cms', 'Title'),

@@ -15,46 +15,43 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
-	
-<?php
-	$this->set([
-		'documentData' => ['xmlns:dc' => 'http://purl.org/dc/elements/1.1/'],
-		'channelData' => [
-			'title' => __d('me_youtube', 'Latest videos'),
-			'link' => $this->Url->build('/', TRUE),
-			'description' => __d('me_youtube', 'Latest videos'),
-			'language' => \Cake\I18n\I18n::locale(),
-		],
-	]);
-	
-	foreach($videos as $video) {
-		//Sets link
-		$link = ['_name' => 'video', $video->id];
-		
-		//Sets text
-		$text = $this->Text->truncate(
-			strip_tags($video->text),
-			config('default.truncate_to'),
-			['ending' => '...', 'exact' => FALSE, 'html' => TRUE]
-		);
-		
-		//Adds the preview image
-		if(!empty($video->preview)) {
-			$text = sprintf('%s%s', $this->Thumb->image($video->preview, ['width' => 400]), '<br />'.PHP_EOL.$text);
-        }
-        
-		echo $this->Rss->item([], [
-			'description' => $text,
-			'guid' => ['url' => $link, 'isPermaLink' => 'true'],
-			'link' => $link,
-			'pubDate' => $video->created,
-			'title' => $video->title,
-		]);
-	}
-?>
+
+$this->set([
+    'documentData' => ['xmlns:dc' => 'http://purl.org/dc/elements/1.1/'],
+    'channelData' => [
+        'title' => __d('me_youtube', 'Latest videos'),
+        'link' => $this->Url->build('/', true),
+        'description' => __d('me_youtube', 'Latest videos'),
+        'language' => \Cake\I18n\I18n::locale(),
+    ],
+]);
+
+foreach ($videos as $video) {
+    //Sets link
+    $link = ['_name' => 'video', $video->id];
+
+    //Sets text
+    $text = $this->Text->truncate(
+        strip_tags($video->text),
+        config('default.truncate_to'),
+        ['ending' => '...', 'exact' => false, 'html' => true]
+    );
+
+    //Adds the preview image
+    if (!empty($video->preview)) {
+        $text = sprintf('%s%s', $this->Thumb->image($video->preview, ['width' => 400]), '<br />' . PHP_EOL . $text);
+    }
+
+    echo $this->Rss->item([], [
+        'description' => $text,
+        'guid' => ['url' => $link, 'isPermaLink' => 'true'],
+        'link' => $link,
+        'pubDate' => $video->created,
+        'title' => $video->title,
+    ]);
+}
