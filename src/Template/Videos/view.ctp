@@ -23,7 +23,8 @@
 
 $this->extend('MeCms./Common/view');
 $this->assign('title', $video->title);
-
+debug($video->preview);
+exit;
 /**
  * Userbar
  */
