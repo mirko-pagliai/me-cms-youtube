@@ -35,7 +35,10 @@ $this->append('actions', $this->Html->button(
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
 
-$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
+$this->Library->datepicker(
+    '#created',
+    ['format' => 'MM-YYYY', 'viewMode' => 'years']
+);
 ?>
 
 <?= $this->Form->createInline(false, ['class' => 'filter-form', 'type' => 'get']) ?>
@@ -55,7 +58,10 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             echo $this->Form->input('active', [
                 'default' => $this->request->query('active'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
-                'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')],
+                'options' => [
+                    'yes' => __d('me_cms', 'Only published'),
+                    'no' => __d('me_cms', 'Only drafts'),
+                ],
             ]);
             echo $this->Form->input('user', [
                 'default' => $this->request->query('user'),
@@ -112,24 +118,40 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     <?php
                     //If the video is a spot
                     if ($video->is_spot) {
-                        echo $this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'record-label record-label-primary']);
+                        echo $this->Html->span(
+                            __d('me_youtube', 'Spot'),
+                            ['class' => 'record-label record-label-primary']
+                        );
                     }
 
                     //If the video is scheduled
                     if ($video->created->isFuture()) {
-                        echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
+                        echo $this->Html->span(
+                            __d('me_cms', 'Scheduled'),
+                            ['class' => 'record-label record-label-warning']
+                        );
                     }
 
                     //If the video is not active (it's a draft)
                     if (!$video->active) {
-                        echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
+                        echo $this->Html->span(
+                            __d('me_cms', 'Draft'),
+                            ['class' => 'record-label record-label-warning']
+                        );
                     }
 
                     $actions = [];
 
-                    //Only admins and managers can edit all videos. Users can edit only their own videos
-                    if ($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($video->user->id)) {
-                        $actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $video->id], ['icon' => 'pencil']);
+                    //Only admins and managers can edit all videos.
+                    //Users can edit only their own videos
+                    if ($this->Auth->isGroup(['admin', 'manager']) || 
+                        $this->Auth->hasId($video->user->id)
+                    ) {
+                        $actions[] = $this->Html->link(
+                            __d('me_cms', 'Edit'),
+                            ['action' => 'edit', $video->id],
+                            ['icon' => 'pencil']
+                        );
                     }
 
                     //Only admins and managers can delete videos
@@ -137,7 +159,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                         $actions[] = $this->Form->postLink(
                             __d('me_cms', 'Delete'),
                             ['action' => 'delete', $video->id],
-                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]
+                            [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                            ]
                         );
                     }
 
@@ -184,19 +210,34 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     <?php
                     switch ($video->priority) {
                         case '1':
-                            echo $this->Html->badge('1', ['class' => 'priority-verylow', 'tooltip' => __d('me_cms', 'Very low')]);
+                            echo $this->Html->badge('1', [
+                                'class' => 'priority-verylow',
+                                'tooltip' => __d('me_cms', 'Very low'),
+                            ]);
                             break;
                         case '2':
-                            echo $this->Html->badge('2', ['class' => 'priority-low', 'tooltip' => __d('me_cms', 'Low')]);
+                            echo $this->Html->badge('2', [
+                                'class' => 'priority-low',
+                                'tooltip' => __d('me_cms', 'Low'),
+                            ]);
                             break;
                         case '4':
-                            echo $this->Html->badge('4', ['class' => 'priority-high', 'tooltip' => __d('me_cms', 'High')]);
+                            echo $this->Html->badge('4', [
+                                'class' => 'priority-high',
+                                'tooltip' => __d('me_cms', 'High'),
+                            ]);
                             break;
                         case '5':
-                            echo $this->Html->badge('5', ['class' => 'priority-veryhigh', 'tooltip' => __d('me_cms', 'Very high')]);
+                            echo $this->Html->badge('5', [
+                                'class' => 'priority-veryhigh',
+                                'tooltip' => __d('me_cms', 'Very high'),
+                            ]);
                             break;
                         default:
-                            echo $this->Html->badge('3', ['class' => 'priority-normal', 'tooltip' => __d('me_cms', 'Normal')]);
+                            echo $this->Html->badge('3', [
+                                'class' => 'priority-normal',
+                                'tooltip' => __d('me_cms', 'Normal'),
+                            ]);
                             break;
                     }
                     ?>

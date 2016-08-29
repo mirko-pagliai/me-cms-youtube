@@ -60,7 +60,7 @@ class VideosCategoriesController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can delete videos categories
-        if ($this->request->isAction('delete')) {
+        if ($this->request->isDelete()) {
             return $this->Auth->isGroup('admin');
         }
 

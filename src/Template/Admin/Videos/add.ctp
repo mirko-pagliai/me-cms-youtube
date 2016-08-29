@@ -55,7 +55,7 @@ $this->Library->datetimepicker();
         }
 
             echo $this->Form->input('category_id', [
-                'default' => count($categories) < 2 ? firstValue($categories) : null,
+                'default' => count($categories) < 2 ? firstValue($categories) : false,
                 'label' => __d('me_cms', 'Category'),
             ]);
             echo $this->Form->datetimepicker('created', [
@@ -112,10 +112,11 @@ $this->Library->datetimepicker();
             ?>
         </p>
         <?php
-            echo $this->Form->input('youtubeId', [
+            echo $this->Form->input('youtube_id', [
                 'label' => __d('me_youtube', '{0} ID', 'YouTube'),
                 'readonly' => true,
                 'type' => 'text',
+                'value' => $this->request->data('youtubeId'),
             ]);
             echo $this->Form->input('duration', [
                 'label' => __d('me_youtube', 'Duration'),

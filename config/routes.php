@@ -25,22 +25,15 @@ use Cake\Routing\Router;
 Router::defaultRouteClass('DashedRoute');
 Router::extensions('rss');
 
-/**
- * MeYoutube routes
- */
 Router::scope('/', ['plugin' => 'MeYoutube'], function ($routes) {
     //Includes routes
     include_once 'routes/videos.php';
-    
+});
+
+Router::plugin('MeYoutube', ['path' => '/me-youtube'], function ($routes) {
     //Admin routes
     $routes->prefix('admin', function ($routes) {
-        //Other admin routes
-        $controllers = sprintf('(%s)', implode('|', [
-            'videos-categories',
-            'videos',
-        ]));
-
-        $routes->connect('/:controller', [], ['controller' => $controllers]);
-        $routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);
+        //All admin routes
+        $routes->fallbacks('DashedRoute');
     });
 });

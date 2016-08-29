@@ -1,5 +1,10 @@
 # 2.x branch
 ## 2.6 branch
+### 2.6.1
+* fixed bug adding videos;
+* improved admin routes. They are automatically handled by CakePHP;
+* updated for MeCms 2.13.1.
+
 ### 2.6.0
 * filter forms can now use records ID;
 * checks if there are already routes with the same name, before declaring new;

@@ -54,11 +54,19 @@ class MenuHelper extends Helper
         $menu = [
             $this->Html->link(
                 __d('me_youtube', 'List videos'),
-                ['controller' => 'videos', 'action' => 'index', 'plugin' => 'MeYoutube']
+                [
+                    'controller' => 'Videos',
+                    'action' => 'index',
+                    'plugin' => 'MeYoutube',
+                ]
             ),
             $this->Html->link(
                 __d('me_youtube', 'Add video'),
-                ['controller' => 'videos', 'action' => 'add', 'plugin' => 'MeYoutube']
+                [
+                    'controller' => 'Videos',
+                    'action' => 'add',
+                    'plugin' => 'MeYoutube',
+                ]
             )
         ];
 
@@ -66,11 +74,19 @@ class MenuHelper extends Helper
         if ($this->Auth->isGroup(['admin', 'manager'])) {
             $menu[] = $this->Html->link(
                 __d('me_cms', 'List categories'),
-                ['controller' => 'videosCategories', 'action' => 'index', 'plugin' => 'MeYoutube']
+                [
+                    'controller' => 'VideosCategories',
+                    'action' => 'index',
+                    'plugin' => 'MeYoutube',
+                ]
             );
             $menu[] = $this->Html->link(
                 __d('me_cms', 'Add category'),
-                ['controller' => 'videosCategories', 'action' => 'add', 'plugin' => 'MeYoutube']
+                [
+                    'controller' => 'VideosCategories',
+                    'action' => 'add',
+                    'plugin' => 'MeYoutube',
+                ]
             );
         }
 

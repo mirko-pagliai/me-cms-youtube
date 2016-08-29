@@ -65,7 +65,12 @@ class VideosCategoriesController extends AppController
         $cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($videos, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->VideosCategories->cache));
+        list($videos, $paging) = array_values(
+            Cache::readMany(
+                [$cache, sprintf('%s_paging', $cache)],
+                $this->VideosCategories->cache
+            )
+        );
 
         //If the data are not available from the cache
         if (empty($videos) || empty($paging)) {
