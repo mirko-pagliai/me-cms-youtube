@@ -69,7 +69,7 @@ $this->append('actions', $this->Html->button(
                                 ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]
                             );
                         }
-                        
+
                         if ($category->video_count) {
                             $actions[] = $this->Html->link(
                                 __d('me_cms', 'Open'),
@@ -77,7 +77,7 @@ $this->append('actions', $this->Html->button(
                                 ['icon' => 'external-link', 'target' => '_blank']
                             );
                         }
-                        
+
                         echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>

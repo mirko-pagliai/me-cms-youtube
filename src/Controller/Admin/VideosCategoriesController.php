@@ -106,7 +106,7 @@ class VideosCategoriesController extends AppController
 
             if ($this->VideosCategories->save($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-                
+
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
@@ -130,7 +130,7 @@ class VideosCategoriesController extends AppController
 
             if ($this->VideosCategories->save($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-                
+
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));

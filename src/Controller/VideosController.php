@@ -248,7 +248,7 @@ class VideosController extends AppController
                     $this->paginate['limit'] = config('default.records_for_searches');
 
                     $page = $this->request->query('page') ? $this->request->query('page') : 1;
-                    
+
                     //Sets the initial cache name
                     $cache = sprintf('search_%s', md5($pattern));
 

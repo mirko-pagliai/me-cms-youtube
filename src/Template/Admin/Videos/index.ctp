@@ -144,7 +144,7 @@ $this->Library->datepicker(
 
                     //Only admins and managers can edit all videos.
                     //Users can edit only their own videos
-                    if ($this->Auth->isGroup(['admin', 'manager']) || 
+                    if ($this->Auth->isGroup(['admin', 'manager']) ||
                         $this->Auth->hasId($video->user->id)
                     ) {
                         $actions[] = $this->Html->link(
