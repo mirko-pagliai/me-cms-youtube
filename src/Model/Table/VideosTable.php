@@ -86,7 +86,7 @@ class VideosTable extends AppTable
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['category_id'], 'Categories'));
-        
+
         return $rules;
     }
 
