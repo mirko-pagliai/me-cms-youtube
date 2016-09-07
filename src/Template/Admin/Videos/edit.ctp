@@ -43,7 +43,7 @@ $this->Library->datetimepicker();
         ]);
         echo $this->Form->datetimepicker('created', [
             'label' => __d('me_cms', 'Date'),
-            'tip' => [
+            'help' => [
                 __d('me_cms', 'If blank, the current date and time will be used'),
                 __d('me_cms', 'You can delay the publication by entering a future date'),
             ],
@@ -54,11 +54,11 @@ $this->Library->datetimepicker();
         ]);
         echo $this->Form->input('is_spot', [
             'label' => sprintf('%s?', __d('me_youtube', 'Is a spot')),
-            'tip' => __d('me_youtube', 'Enable this option if this video is a spot'),
+            'help' => __d('me_youtube', 'Enable this option if this video is a spot'),
         ]);
         echo $this->Form->input('active', [
             'label' => sprintf('%s?', __d('me_cms', 'Published')),
-            'tip' => __d('me_cms', 'Disable this option to save as a draft'),
+            'help' => __d('me_cms', 'Disable this option to save as a draft'),
         ]);
     ?>
 </div>

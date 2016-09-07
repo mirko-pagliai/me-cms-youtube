@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.6 branch
+### 2.6.2
+* updated for MeTools 2.10.0.
+
 ### 2.6.1
 * fixed bug adding videos;
 * improved admin routes. They are automatically handled by CakePHP;
