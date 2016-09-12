@@ -37,7 +37,7 @@ if (is_readable(CONFIG . 'me_youtube.php')) {
 }
 
 //Merges with the MeCms configuration
-Configure::write('MeCms', Hash::merge(config('MeCms'), Configure::consume('MeYoutube')));
+Configure::write(MECMS, Hash::merge(config(MECMS), Configure::consume('MeYoutube')));
 
 if (!config('Youtube.key') || config('Youtube.key') === 'your-key-here') {
     throw new InternalErrorException('YouTube API key is missing');
