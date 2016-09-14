@@ -5,7 +5,7 @@
  */
 
 return [
-    'MeYoutube' => [
+    MEYOUTUBE => [
         //Youtube videos
         'video' => [
             //Displays the video author
