@@ -26,10 +26,15 @@ use Cake\Core\Configure;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Utility\Hash;
 
+//Sets the default MeYoutube name
+if (!defined('MEYOUTUBE')) {
+    define('MEYOUTUBE', 'MeYoutube');
+}
+
 /**
  * Loads the MeYoutube configuration
  */
-Configure::load('MeYoutube.me_youtube');
+Configure::load(sprintf('%s.me_youtube', MEYOUTUBE));
 
 //Merges with the configuration from application, if exists
 if (is_readable(CONFIG . 'me_youtube.php')) {
@@ -37,7 +42,10 @@ if (is_readable(CONFIG . 'me_youtube.php')) {
 }
 
 //Merges with the MeCms configuration
-Configure::write('MeCms', Hash::merge(config('MeCms'), Configure::consume('MeYoutube')));
+Configure::write(
+    MECMS,
+    Hash::merge(config(MECMS), Configure::consume(MEYOUTUBE))
+);
 
 if (!config('Youtube.key') || config('Youtube.key') === 'your-key-here') {
     throw new InternalErrorException('YouTube API key is missing');
@@ -46,7 +54,7 @@ if (!config('Youtube.key') || config('Youtube.key') === 'your-key-here') {
 /**
  * Loads the cache configuration
  */
-Configure::load('MeYoutube.cache');
+Configure::load(sprintf('%s.cache', MEYOUTUBE));
 
 //Merges with the configuration from application, if exists
 if (is_readable(CONFIG . 'cache.php')) {

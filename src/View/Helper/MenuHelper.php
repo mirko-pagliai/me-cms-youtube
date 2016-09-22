@@ -57,7 +57,7 @@ class MenuHelper extends Helper
                 [
                     'controller' => 'Videos',
                     'action' => 'index',
-                    'plugin' => 'MeYoutube',
+                    'plugin' => MEYOUTUBE,
                 ]
             ),
             $this->Html->link(
@@ -65,7 +65,7 @@ class MenuHelper extends Helper
                 [
                     'controller' => 'Videos',
                     'action' => 'add',
-                    'plugin' => 'MeYoutube',
+                    'plugin' => MEYOUTUBE,
                 ]
             )
         ];
@@ -77,7 +77,7 @@ class MenuHelper extends Helper
                 [
                     'controller' => 'VideosCategories',
                     'action' => 'index',
-                    'plugin' => 'MeYoutube',
+                    'plugin' => MEYOUTUBE,
                 ]
             );
             $menu[] = $this->Html->link(
@@ -85,7 +85,7 @@ class MenuHelper extends Helper
                 [
                     'controller' => 'VideosCategories',
                     'action' => 'add',
-                    'plugin' => 'MeYoutube',
+                    'plugin' => MEYOUTUBE,
                 ]
             );
         }
