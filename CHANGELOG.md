@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.6 branch
+### 2.6.3
+* updated for Assets 1.1.0.
+
 ### 2.6.2
 * updated for MeTools 2.10.0.
 
