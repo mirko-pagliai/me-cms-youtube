@@ -22,7 +22,7 @@
  */
 
 //Categories
-if (!routeNameExists('videosCategories')) {
+if (!$routes->nameExists('videosCategories')) {
     $routes->connect(
         '/videos/categories',
         ['controller' => 'VideosCategories', 'action' => 'index'],
@@ -31,7 +31,7 @@ if (!routeNameExists('videosCategories')) {
 }
 
 //Category
-if (!routeNameExists('videosCategory')) {
+if (!$routes->nameExists('videosCategory')) {
     $routes->connect(
         '/videos/category/:slug',
         ['controller' => 'VideosCategories', 'action' => 'view'],
@@ -44,7 +44,7 @@ if (!routeNameExists('videosCategory')) {
 }
 
 //Videos
-if (!routeNameExists('videos')) {
+if (!$routes->nameExists('videos')) {
     $routes->connect(
         '/videos',
         ['controller' => 'Videos', 'action' => 'index'],
@@ -53,7 +53,7 @@ if (!routeNameExists('videos')) {
 }
 
 //Videos (RSS)
-if (!routeNameExists('videosRss')) {
+if (!$routes->nameExists('videosRss')) {
     $routes->connect(
         '/videos/rss',
         ['controller' => 'Videos', 'action' => 'rss', '_ext' => 'rss'],
@@ -62,7 +62,7 @@ if (!routeNameExists('videosRss')) {
 }
 
 //Videos search
-if (!routeNameExists('videosSearch')) {
+if (!$routes->nameExists('videosSearch')) {
     $routes->connect(
         '/videos/search',
         ['controller' => 'Videos', 'action' => 'search'],
@@ -71,7 +71,7 @@ if (!routeNameExists('videosSearch')) {
 }
 
 //Videos by date
-if (!routeNameExists('videosByDate')) {
+if (!$routes->nameExists('videosByDate')) {
     $routes->connect(
         '/videos/:date',
         ['controller' => 'Videos', 'action' => 'indexByDate'],
@@ -84,7 +84,7 @@ if (!routeNameExists('videosByDate')) {
 }
 
 //Video
-if (!routeNameExists('video')) {
+if (!$routes->nameExists('video')) {
     $routes->connect(
         '/video/:id',
         ['controller' => 'videos', 'action' => 'view'],
@@ -93,7 +93,7 @@ if (!routeNameExists('video')) {
 }
 
 //Video preview
-if (!routeNameExists('videosPreview')) {
+if (!$routes->nameExists('videosPreview')) {
     $routes->connect(
         '/video/preview/:id',
         ['controller' => 'videos', 'action' => 'preview'],

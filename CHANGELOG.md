@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.6 branch
+### 2.6.4
+* updated for MeCms 2.14.4.
+
 ### 2.6.3
 * updated for Assets 1.1.0.
 
