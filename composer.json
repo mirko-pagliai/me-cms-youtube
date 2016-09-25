@@ -23,5 +23,6 @@
         "psr-4": {
             "MeYoutube\\": "src"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
