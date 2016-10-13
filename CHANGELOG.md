@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.6 branch
+### 2.6.5
+* some fixed for MeCms 2.14.5.
+
 ### 2.6.4
 * updated for MeCms 2.14.4.
 
