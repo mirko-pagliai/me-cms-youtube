@@ -95,9 +95,10 @@ $this->Library->datetimepicker();
             <div class="col-sm-6">
                 <h4><?= __d('me_youtube', 'Thumbnail preview') ?></h4>
                 <?php
-                    echo $this->Thumb->image(
+                    echo $this->Thumb->resize(
                         $this->request->data('preview'),
-                        ['height' => 315, 'class' => 'center-block']
+                        ['height' => 315],
+                        ['class' => 'center-block']
                     );
                 ?>
             </div>
