@@ -56,6 +56,6 @@
                 <?php endif; ?>
             </div>
         </div>
-        <?= $this->Thumb->crop($video->preview, ['width' => 205]) ?>
+        <?= $this->Thumb->fit($video->preview, ['width' => 205]) ?>
     </a>
 </div>
