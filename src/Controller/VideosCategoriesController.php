@@ -65,12 +65,10 @@ class VideosCategoriesController extends AppController
         $cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($videos, $paging) = array_values(
-            Cache::readMany(
-                [$cache, sprintf('%s_paging', $cache)],
-                $this->VideosCategories->cache
-            )
-        );
+        list($videos, $paging) = array_values(Cache::readMany(
+            [$cache, sprintf('%s_paging', $cache)],
+            $this->VideosCategories->cache
+        ));
 
         //If the data are not available from the cache
         if (empty($videos) || empty($paging)) {
@@ -84,10 +82,7 @@ class VideosCategoriesController extends AppController
                         return $q->select(['first_name', 'last_name']);
                     },
                 ])
-                ->where([
-                    'Categories.slug' => $category,
-                    'is_spot' => false,
-                ])
+                ->where(['Categories.slug' => $category, 'is_spot' => false])
                 ->order([sprintf('%s.created', $this->VideosCategories->Videos->alias()) => 'DESC']);
 
             if ($query->isEmpty()) {
@@ -106,8 +101,6 @@ class VideosCategoriesController extends AppController
             $this->request->params['paging'] = $paging;
         }
 
-        $this->set(am([
-            'category' => $videos[0]->category,
-        ], compact('videos')));
+        $this->set(am(['category' => $videos[0]->category], compact('videos')));
     }
 }

@@ -26,12 +26,7 @@
     <div class="content-header">
         <?php if (config('video.category') && $video->category && $video->category->title && $video->category->slug) : ?>
             <h5 class="content-category">
-                <?php
-                    echo $this->Html->link(
-                        $video->category->title,
-                        ['_name' => 'videosCategory', $video->category->slug]
-                    );
-                ?>
+                <?= $this->Html->link($video->category->title, ['_name' => 'videosCategory', $video->category->slug]) ?>
             </h5>
         <?php endif; ?>
 
@@ -58,11 +53,7 @@
             if (config('video.created')) {
                 echo $this->Html->div(
                     'content-date',
-                    __d(
-                        'me_cms',
-                        'Posted on {0}',
-                        $video->created->i18nFormat(config('main.datetime.long'))
-                    ),
+                    __d('me_cms', 'Posted on {0}', $video->created->i18nFormat(config('main.datetime.long'))),
                     ['icon' => 'clock-o']
                 );
             }
@@ -75,14 +66,10 @@
             <div class="embed-responsive embed-responsive-16by9 margin-20 relative">
                 <?php
                 if (config('video.skip_button')) {
-                    echo $this->Html->div(
-                        null,
-                        __d('me_youtube', 'Skip to the video'),
-                        [
-                            'data-secs' => config('video.skip_seconds'),
-                            'id' => 'skip-to-video',
-                        ]
-                    );
+                    echo $this->Html->div(null, __d('me_youtube', 'Skip to the video'), [
+                        'data-secs' => config('video.skip_seconds'),
+                        'id' => 'skip-to-video',
+                    ]);
                 }
 
                 echo $this->Html->div(null, null, [

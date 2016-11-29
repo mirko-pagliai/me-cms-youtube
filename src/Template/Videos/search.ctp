@@ -56,7 +56,9 @@ echo $this->Form->end();
         <?php foreach ($videos as $video) : ?>
             <div class="margin-10 padding-10">
                 <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?> 
-                <span class="small text-muted">(<?= $video->created->i18nFormat(config('main.datetime.short')) ?>)</span>
+                <span class="small text-muted">
+                    (<?= $video->created->i18nFormat(config('main.datetime.short')) ?>)
+                </span>
                 <div class="text-justify">
                     <?= $this->Text->truncate(strip_tags($video->text), 350, ['exact' => false, 'html' => true]) ?>
                 </div>

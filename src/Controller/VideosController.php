@@ -61,12 +61,10 @@ class VideosController extends AppController
         $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($videos, $paging) = array_values(
-            Cache::readMany(
-                [$cache, sprintf('%s_paging', $cache)],
-                $this->Videos->cache
-            )
-        );
+        list($videos, $paging) = array_values(Cache::readMany(
+            [$cache, sprintf('%s_paging', $cache)],
+            $this->Videos->cache
+        ));
 
         //If the data are not available from the cache
         if (empty($videos) || empty($paging)) {
@@ -152,12 +150,10 @@ class VideosController extends AppController
         $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($videos, $paging) = array_values(
-            Cache::readMany(
-                [$cache, sprintf('%s_paging', $cache)],
-                $this->Videos->cache
-            )
-        );
+        list($videos, $paging) = array_values(Cache::readMany(
+            [$cache, sprintf('%s_paging', $cache)],
+            $this->Videos->cache
+        ));
 
         //If the data are not available from the cache
         if (empty($videos) || empty($paging)) {
@@ -257,12 +253,10 @@ class VideosController extends AppController
                     $cache = sprintf('%s_page_%s', $cache, $page);
 
                     //Tries to get data from the cache
-                    list($videos, $paging) = array_values(
-                        Cache::readMany(
-                            [$cache, sprintf('%s_paging', $cache)],
-                            $this->Videos->cache
-                        )
-                    );
+                    list($videos, $paging) = array_values(Cache::readMany(
+                        [$cache, sprintf('%s_paging', $cache)],
+                        $this->Videos->cache
+                    ));
 
                     //If the data are not available from the cache
                     if (empty($videos) || empty($paging)) {
@@ -278,7 +272,10 @@ class VideosController extends AppController
                         $videos = $this->paginate($query)->toArray();
 
                         //Writes on cache
-                        Cache::writeMany([$cache => $videos, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Videos->cache);
+                        Cache::writeMany([
+                            $cache => $videos,
+                            sprintf('%s_paging', $cache) => $this->request->param('paging')
+                        ], $this->Videos->cache);
                     //Else, sets the paging parameter
                     } else {
                         $this->request->params['paging'] = $paging;

@@ -36,11 +36,11 @@ foreach ($videos as $video) {
     $link = ['_name' => 'video', $video->id];
 
     //Sets text
-    $text = $this->Text->truncate(
-        strip_tags($video->text),
-        config('default.truncate_to'),
-        ['ending' => '...', 'exact' => false, 'html' => true]
-    );
+    $text = $this->Text->truncate(strip_tags($video->text), config('default.truncate_to'), [
+        'ending' => '...',
+        'exact' => false,
+        'html' => true,
+    ]);
 
     //Adds the preview image
     if (!empty($video->preview)) {

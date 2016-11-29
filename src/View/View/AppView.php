@@ -45,11 +45,7 @@ class AppView extends BaseView
     {
         //Automatically adds the meta tag for RSS videos
         if (config('default.rss_meta')) {
-            $this->Html->meta(
-                __d('me_youtube', 'Latest videos'),
-                '/videos/rss',
-                ['type' => 'rss']
-            );
+            $this->Html->meta(__d('me_youtube', 'Latest videos'), '/videos/rss', ['type' => 'rss']);
         }
 
         return parent::renderLayout($content, $layout);

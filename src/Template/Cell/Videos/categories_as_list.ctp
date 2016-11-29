@@ -29,10 +29,7 @@ $this->extend('MeCms./Common/widget');
 $this->assign('title', __d('me_youtube', 'Videos categories'));
 
 $categories = array_map(function ($category) {
-    return $this->Html->link(
-        $category->title,
-        ['_name' => 'videosCategory', $category->slug]
-    );
+    return $this->Html->link($category->title, ['_name' => 'videosCategory', $category->slug]);
 }, $categories);
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);
