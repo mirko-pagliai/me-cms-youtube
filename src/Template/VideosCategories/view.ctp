@@ -40,7 +40,7 @@ $this->userbar([
             'class' => 'text-danger',
             'icon' => 'trash-o',
             'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-            'target' => '_blank'
+            'target' => '_blank',
         ]
     ),
 ]);
@@ -48,7 +48,4 @@ $this->userbar([
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add(
-    $category->title,
-    ['_name' => 'videosCategory', $category->title]
-);
+$this->Breadcrumbs->add($category->title, ['_name' => 'videosCategory', $category->title]);

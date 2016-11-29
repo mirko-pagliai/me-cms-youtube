@@ -43,4 +43,4 @@ if ($year && $month && $day) {
 }
 
 $this->assign('title', $title);
-$this->Breadcrumb->add($title);
+$this->Breadcrumbs->add($title);
