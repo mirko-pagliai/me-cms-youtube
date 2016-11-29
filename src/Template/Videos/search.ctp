@@ -27,7 +27,7 @@ $this->assign('title', $title = __d('me_youtube', 'Search videos'));
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add($title, ['_name' => 'videosSearch']);
+$this->Breadcrumbs->add($title, ['_name' => 'videosSearch']);
 
 echo $this->Form->create(null, [
     'type' => 'get',
@@ -58,13 +58,7 @@ echo $this->Form->end();
                 <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?> 
                 <span class="small text-muted">(<?= $video->created->i18nFormat(config('main.datetime.short')) ?>)</span>
                 <div class="text-justify">
-                    <?php
-                        echo $this->Text->truncate(
-                            strip_tags($video->text),
-                            350,
-                            ['exact' => false, 'html' => true]
-                        );
-                    ?>
+                    <?= $this->Text->truncate(strip_tags($video->text), 350, ['exact' => false, 'html' => true]) ?>
                 </div>
             </div>
         <?php endforeach; ?>

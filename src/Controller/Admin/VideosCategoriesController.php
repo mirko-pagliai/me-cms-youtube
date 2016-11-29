@@ -76,7 +76,6 @@ class VideosCategoriesController extends AppController
     public function index()
     {
         $categories = $this->VideosCategories->find('all')
-            ->select(['id', 'title', 'slug', 'video_count'])
             ->contain([
                 'Parents' => function ($q) {
                     return $q->select(['title']);

@@ -22,7 +22,7 @@
  */
 
 $this->extend('MeCms./Admin/Common/form');
-$this->assign('title', $title = __d('me_cms', 'Add video'));
+$this->assign('title', $title = __d('me_youtube', 'Add video'));
 $this->Library->datetimepicker();
 ?>
 
