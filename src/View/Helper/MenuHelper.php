@@ -52,48 +52,32 @@ class MenuHelper extends Helper
     public function videos()
     {
         $menu = [
-            $this->Html->link(
-                __d('me_youtube', 'List videos'),
-                [
-                    'controller' => 'Videos',
-                    'action' => 'index',
-                    'plugin' => MEYOUTUBE,
-                ]
-            ),
-            $this->Html->link(
-                __d('me_youtube', 'Add video'),
-                [
-                    'controller' => 'Videos',
-                    'action' => 'add',
-                    'plugin' => MEYOUTUBE,
-                ]
-            )
+            $this->Html->link(__d('me_youtube', 'List videos'), [
+                'controller' => 'Videos',
+                'action' => 'index',
+                'plugin' => MEYOUTUBE,
+            ]),
+            $this->Html->link(__d('me_youtube', 'Add video'), [
+                'controller' => 'Videos',
+                'action' => 'add',
+                'plugin' => MEYOUTUBE,
+            ]),
         ];
 
         //Only admins and managers can access this controller
         if ($this->Auth->isGroup(['admin', 'manager'])) {
-            $menu[] = $this->Html->link(
-                __d('me_cms', 'List categories'),
-                [
-                    'controller' => 'VideosCategories',
-                    'action' => 'index',
-                    'plugin' => MEYOUTUBE,
-                ]
-            );
-            $menu[] = $this->Html->link(
-                __d('me_cms', 'Add category'),
-                [
-                    'controller' => 'VideosCategories',
-                    'action' => 'add',
-                    'plugin' => MEYOUTUBE,
-                ]
-            );
+            $menu[] = $this->Html->link(__d('me_cms', 'List categories'), [
+                'controller' => 'VideosCategories',
+                'action' => 'index',
+                'plugin' => MEYOUTUBE,
+            ]);
+            $menu[] = $this->Html->link(__d('me_cms', 'Add category'), [
+                'controller' => 'VideosCategories',
+                'action' => 'add',
+                'plugin' => MEYOUTUBE,
+            ]);
         }
 
-        return [
-            $menu,
-            __d('me_youtube', 'Videos'),
-            ['icon' => 'film']
-        ];
+        return [$menu, __d('me_youtube', 'Videos'), ['icon' => 'film']];
     }
 }

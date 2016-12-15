@@ -24,9 +24,7 @@
 $this->extend('/Videos/index');
 
 $date = new \Cake\I18n\Time();
-$date->year($year)
-    ->month(empty($month) ? 1 : $month)
-    ->day(empty($day) ? 1 : $day);
+$date->year($year)->month(empty($month) ? 1 : $month)->day(empty($day) ? 1 : $day);
 
 if ($year && $month && $day) {
     if ($date->isToday()) {
