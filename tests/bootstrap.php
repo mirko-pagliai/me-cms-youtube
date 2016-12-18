@@ -116,21 +116,21 @@ Configure::write('Session', [
     'defaults' => 'php'
 ]);
 
-//Configure::write('Assets.target', TMP . 'assets');
+Configure::write('Assets.target', TMP . 'assets');
 //Configure::write('Thumbs.target', TMP . 'thumbs');
 //
-////@codingStandardsIgnoreStart
-//@mkdir(Configure::read('Assets.target'));
+//@codingStandardsIgnoreStart
+@mkdir(Configure::read('Assets.target'));
 //@mkdir(Configure::read('Thumbs.target'));
-////@codingStandardsIgnoreEnd
+//@codingStandardsIgnoreEnd
 
 /**
  * Loads plugins
  */
-//Plugin::load('Assets', [
-//    'bootstrap' => true,
-//    'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
-//]);
+Plugin::load('Assets', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
+]);
 Plugin::load('MeTools', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
