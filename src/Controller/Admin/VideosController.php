@@ -140,7 +140,10 @@ class VideosController extends AppController
             } elseif (!$youtubeInfo || !$youtubeUrl) {
                 $this->Flash->error(__d('me_cms_youtube', 'Unable to retrieve video informations. Probably the video is private'));
             } else {
-                $this->request->data = am(compact('youtubeId', 'youtubeUrl'), $youtubeInfo);
+                $this->request->data = am([
+                    'youtube_id' => $youtubeId,
+                    'youtube_url' => $youtubeUrl,
+                ], $youtubeInfo);
             }
         }
 
@@ -163,6 +166,15 @@ class VideosController extends AppController
             } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $youtubeId = Youtube::getId($this->request->query('url'));
+            $youtubeInfo = (new Youtube)->getInfo($youtubeId);
+            $youtubeUrl = Youtube::getUrl($youtubeId);
+
+            $this->request->data = am([
+                'youtube_id' => $youtubeId,
+                'youtube_url' => $youtubeUrl,
+            ], $youtubeInfo, $this->request->data);
         }
 
         $this->set(compact('video'));

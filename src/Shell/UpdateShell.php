@@ -87,11 +87,8 @@ class UpdateShell extends BaseUpdateShell
         foreach ($videos as $video) {
             $data = (new Youtube)->getInfo($video->youtube_id);
 
-            $video->duration = $data['duration'];
-            $video->seconds = $data['seconds'];
-
             $this->Videos->query()->update()
-                ->set(['duration' => $data['duration'], 'seconds' => $data['seconds']])
+                ->set(['duration' => $data->duration, 'seconds' => $data->seconds])
                 ->where(['id' => $video->id])
                 ->execute();
         }

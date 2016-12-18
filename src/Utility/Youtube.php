@@ -66,32 +66,32 @@ class Youtube extends BaseYoutube
     /**
      * Gets information about a video
      * @param string $id Video ID
-     * @return mixed Array or `false`
+     * @return mixed Object or `false`
      * @see https://developers.google.com/youtube/v3/getting-started#partial
      * @uses _getInfoResponse()
      */
     public function getInfo($id)
     {
-        $info = json_decode($this->_getInfoResponse($id), true);
+        $info = json_decode($this->_getInfoResponse($id));
 
-        if (empty($info['items'][0]['snippet']) || empty($info['items'][0]['contentDetails'])) {
+        if (empty($info->items[0])) {
             return false;
         }
 
-        preg_match('/PT(([0-9]+)M)?(([0-9]+)S)?/', $info['items'][0]['contentDetails']['duration'], $matches);
+        $info = $info->items[0];
+
+        preg_match('/PT(([0-9]+)M)?(([0-9]+)S)?/', $info->contentDetails->duration, $matches);
 
         $mins = empty($matches[2]) ? "00" : sprintf("%02d", $matches[2]);
         $secs = empty($matches[4]) ? "00" : sprintf("%02d", $matches[4]);
 
-        $info = [
-            'preview' => $info['items'][0]['snippet']['thumbnails']['high']['url'],
-            'text' => $info['items'][0]['snippet']['description'],
-            'title' => $info['items'][0]['snippet']['title'],
-        ];
+        $object = new \stdClass;
+        $object->preview = $info->snippet->thumbnails->high->url;
+        $object->text = $info->snippet->description;
+        $object->title = $info->snippet->title;
+        $object->seconds = (int)$mins * 60 + (int)$secs;
+        $object->duration = sprintf('%s:%s', $mins, $secs);
 
-        $info['seconds'] = (int)$mins * 60 + (int)$secs;
-        $info['duration'] = sprintf('%s:%s', $mins, $secs);
-
-        return $info;
+        return $object;
     }
 }
