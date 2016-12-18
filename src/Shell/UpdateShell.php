@@ -85,7 +85,7 @@ class UpdateShell extends BaseUpdateShell
             ]]);
 
         foreach ($videos as $video) {
-            $data = \MeCmsYoutube\Utility\Youtube::getInfo($video->youtube_id);
+            $data = (new Youtube)->getInfo($video->youtube_id);
 
             $video->duration = $data['duration'];
             $video->seconds = $data['seconds'];

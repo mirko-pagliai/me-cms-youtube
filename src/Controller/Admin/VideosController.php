@@ -132,7 +132,7 @@ class VideosController extends AppController
         if ($this->request->query('url') && $this->request->is('get')) {
             //Gets video ID and information
             $youtubeId = Youtube::getId($this->request->query('url'));
-            $youtubeInfo = Youtube::getInfo($youtubeId);
+            $youtubeInfo = (new Youtube)->getInfo($youtubeId);
             $youtubeUrl = Youtube::getUrl($youtubeId);
 
             if (!$youtubeId) {

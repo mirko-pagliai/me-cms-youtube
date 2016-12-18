@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.7 branch
 ### 2.7.0
+* `Youtube` class does not contain more static methods;
 * renamed repository and package. Now is `me-cms-youtube`.
 
 ## 2.6 branch

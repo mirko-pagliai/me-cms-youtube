@@ -31,18 +31,48 @@ use MeTools\Utility\Youtube as BaseYoutube;
 class Youtube extends BaseYoutube
 {
     /**
+     * API key
+     * @var string
+     */
+    protected $key;
+
+    /**
+     * Construct
+     * @param string $key API key
+     * @uses $key
+     */
+    public function __construct($key = null)
+    {
+        if (empty($key)) {
+            $key = config('Youtube.key');
+        }
+
+        $this->key = $key;
+    }
+
+    /**
+     * Internal method to get a info response
+     * @param string $id Video ID
+     * @return mixed The response body
+     * @uses $key
+     */
+    protected function _getInfoResponse($id)
+    {
+        $url = 'https://www.googleapis.com/youtube/v3/videos?id=' . $id . '&key=' . $this->key . '&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
+
+        return (new Client())->get($url)->body();
+    }
+
+    /**
      * Gets information about a video
      * @param string $id Video ID
      * @return mixed Array or `false`
      * @see https://developers.google.com/youtube/v3/getting-started#partial
+     * @uses _getInfoResponse()
      */
-    public static function getInfo($id)
+    public function getInfo($id)
     {
-        $url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
-        $url = sprintf($url, $id, config('Youtube.key'));
-
-        $response = (new Client())->get($url);
-        $info = json_decode($response->body(), true);
+        $info = json_decode($this->_getInfoResponse($id), true);
 
         if (empty($info['items'][0]['snippet']) || empty($info['items'][0]['contentDetails'])) {
             return false;
