@@ -3,7 +3,8 @@
 ### 2.7.0
 * `Youtube` class does not contain more static methods;
 * `Youtube::getInfo()` method returns an object;
-* renamed repository and package. Now is `me-cms-youtube`.
+* renamed repository and package. Now is `me-cms-youtube`;
+* added test for `Youtube` class.
 
 ## 2.6 branch
 ### 2.6.7
