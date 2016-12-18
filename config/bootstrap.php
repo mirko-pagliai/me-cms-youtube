@@ -26,13 +26,13 @@ use Cake\Core\Configure;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Utility\Hash;
 
-//Sets the default MeYoutube name
+//Sets the default me-cms-youtube name
 if (!defined('ME_CMS_YOUTUBE')) {
     define('ME_CMS_YOUTUBE', 'MeCmsYoutube');
 }
 
 /**
- * Loads the MeYoutube configuration
+ * Loads the me-cms-youtube configuration
  */
 Configure::load(sprintf('%s.me_youtube', ME_CMS_YOUTUBE));
 
@@ -42,10 +42,7 @@ if (is_readable(CONFIG . 'me_youtube.php')) {
 }
 
 //Merges with the MeCms configuration
-Configure::write(
-    MECMS,
-    Hash::merge(config(MECMS), Configure::consume(ME_CMS_YOUTUBE))
-);
+Configure::write(MECMS, Hash::merge(config(MECMS), Configure::consume(ME_CMS_YOUTUBE)));
 
 if (!config('Youtube.key') || config('Youtube.key') === 'your-key-here') {
     throw new InternalErrorException('YouTube API key is missing');
