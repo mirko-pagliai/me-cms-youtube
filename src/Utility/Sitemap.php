@@ -21,7 +21,7 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  * @see         MeCms\Utility\SitemapBuilder
  */
-namespace MeYoutube\Utility;
+namespace MeCmsYoutube\Utility;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;

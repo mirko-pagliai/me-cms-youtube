@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Utility;
+namespace MeCmsYoutube\Utility;
 
 use Cake\Http\Client;
 use MeTools\Utility\Youtube as BaseYoutube;

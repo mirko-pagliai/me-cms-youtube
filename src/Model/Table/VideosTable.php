@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Model\Table;
+namespace MeCmsYoutube\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\I18n\Time;

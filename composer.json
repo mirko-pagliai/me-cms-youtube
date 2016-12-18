@@ -21,7 +21,12 @@
     },
     "autoload": {
         "psr-4": {
-            "MeYoutube\\": "src"
+            "MeCmsYoutube\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MeCmsYoutube\\Test\\": "tests"
         }
     },
     "minimum-stability": "dev"

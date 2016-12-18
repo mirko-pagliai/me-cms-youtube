@@ -21,7 +21,7 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  * @see         MeCms\View\Helper\MenuBuilderHelper
  */
-namespace MeYoutube\View\Helper;
+namespace MeCmsYoutube\View\Helper;
 
 use Cake\View\Helper;
 

@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Controller\Admin;
+namespace MeCmsYoutube\Controller\Admin;
 
 use MeYoutube\Controller\AppController;
 

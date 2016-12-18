@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\View\View;
+namespace MeCmsYoutube\View\View;
 
 use MeCms\View\View\AppView as BaseView;
 

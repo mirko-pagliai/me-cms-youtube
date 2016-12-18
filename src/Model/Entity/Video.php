@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Model\Entity;
+namespace MeCmsYoutube\Model\Entity;
 
 use Cake\ORM\Entity;
 use MeYoutube\Utility\Youtube;

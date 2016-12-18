@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Model\Validation;
+namespace MeCmsYoutube\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
 
