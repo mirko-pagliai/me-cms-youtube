@@ -4,7 +4,7 @@
  * https://developers.google.com/youtube/registering_an_application
  */
 return [
-    MEYOUTUBE => [
+    ME_CMS_YOUTUBE => [
         //Youtube videos
         'video' => [
             //Displays the video author

@@ -27,14 +27,14 @@ use Cake\Network\Exception\InternalErrorException;
 use Cake\Utility\Hash;
 
 //Sets the default MeYoutube name
-if (!defined('MEYOUTUBE')) {
-    define('MEYOUTUBE', 'MeYoutube');
+if (!defined('ME_CMS_YOUTUBE')) {
+    define('ME_CMS_YOUTUBE', 'MeCmsYoutube');
 }
 
 /**
  * Loads the MeYoutube configuration
  */
-Configure::load(sprintf('%s.me_youtube', MEYOUTUBE));
+Configure::load(sprintf('%s.me_youtube', ME_CMS_YOUTUBE));
 
 //Merges with the configuration from application, if exists
 if (is_readable(CONFIG . 'me_youtube.php')) {
@@ -44,7 +44,7 @@ if (is_readable(CONFIG . 'me_youtube.php')) {
 //Merges with the MeCms configuration
 Configure::write(
     MECMS,
-    Hash::merge(config(MECMS), Configure::consume(MEYOUTUBE))
+    Hash::merge(config(MECMS), Configure::consume(ME_CMS_YOUTUBE))
 );
 
 if (!config('Youtube.key') || config('Youtube.key') === 'your-key-here') {
@@ -54,7 +54,7 @@ if (!config('Youtube.key') || config('Youtube.key') === 'your-key-here') {
 /**
  * Loads the cache configuration
  */
-Configure::load(sprintf('%s.cache', MEYOUTUBE));
+Configure::load(sprintf('%s.cache', ME_CMS_YOUTUBE));
 
 //Merges with the configuration from application, if exists
 if (is_readable(CONFIG . 'cache.php')) {

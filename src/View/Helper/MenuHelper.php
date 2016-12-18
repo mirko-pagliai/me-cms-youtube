@@ -55,12 +55,12 @@ class MenuHelper extends Helper
             $this->Html->link(__d('me_youtube', 'List videos'), [
                 'controller' => 'Videos',
                 'action' => 'index',
-                'plugin' => MEYOUTUBE,
+                'plugin' => ME_CMS_YOUTUBE,
             ]),
             $this->Html->link(__d('me_youtube', 'Add video'), [
                 'controller' => 'Videos',
                 'action' => 'add',
-                'plugin' => MEYOUTUBE,
+                'plugin' => ME_CMS_YOUTUBE,
             ]),
         ];
 
@@ -69,12 +69,12 @@ class MenuHelper extends Helper
             $menu[] = $this->Html->link(__d('me_cms', 'List categories'), [
                 'controller' => 'VideosCategories',
                 'action' => 'index',
-                'plugin' => MEYOUTUBE,
+                'plugin' => ME_CMS_YOUTUBE,
             ]);
             $menu[] = $this->Html->link(__d('me_cms', 'Add category'), [
                 'controller' => 'VideosCategories',
                 'action' => 'add',
-                'plugin' => MEYOUTUBE,
+                'plugin' => ME_CMS_YOUTUBE,
             ]);
         }
 
