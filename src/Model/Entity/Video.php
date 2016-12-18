@@ -74,7 +74,7 @@ class Video extends Entity
             return null;
         }
 
-        return Youtube::getPreview($this->_properties['youtube_id']);
+        return (new Youtube)->getPreview($this->_properties['youtube_id']);
     }
 
     /**
@@ -88,6 +88,6 @@ class Video extends Entity
             return null;
         }
 
-        return Youtube::getUrl($this->_properties['youtube_id']);
+        return (new Youtube)->getUrl($this->_properties['youtube_id']);
     }
 }

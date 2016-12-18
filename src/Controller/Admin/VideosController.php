@@ -128,12 +128,14 @@ class VideosController extends AppController
      */
     public function add()
     {
+        $youtube = new Youtube;
+
         //If the address of a YouTube video has been specified
         if ($this->request->query('url') && $this->request->is('get')) {
             //Gets video ID and information
-            $youtubeId = Youtube::getId($this->request->query('url'));
-            $youtubeInfo = (new Youtube)->getInfo($youtubeId);
-            $youtubeUrl = Youtube::getUrl($youtubeId);
+            $youtubeId = $youtube->getId($this->request->query('url'));
+            $youtubeInfo = $youtube->getInfo($youtubeId);
+            $youtubeUrl = $youtube->getUrl($youtubeId);
 
             if (!$youtubeId) {
                 $this->Flash->error(__d('me_cms_youtube', 'This is not a {0} video', 'YouTube'));
@@ -167,9 +169,10 @@ class VideosController extends AppController
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
 
-            $youtubeId = Youtube::getId($this->request->query('url'));
-            $youtubeInfo = (new Youtube)->getInfo($youtubeId);
-            $youtubeUrl = Youtube::getUrl($youtubeId);
+            //Gets video ID and information
+            $youtubeId = $youtube->getId($this->request->query('url'));
+            $youtubeInfo = $youtube->getInfo($youtubeId);
+            $youtubeUrl = $youtube->getUrl($youtubeId);
 
             $this->request->data = am([
                 'youtube_id' => $youtubeId,
