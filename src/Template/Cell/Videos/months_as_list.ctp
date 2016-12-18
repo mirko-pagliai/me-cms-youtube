@@ -26,7 +26,7 @@ if (empty($months) || count($months) < 2) {
 }
 
 $this->extend('MeCms./Common/widget');
-$this->assign('title', __d('me_youtube', 'Videos by month'));
+$this->assign('title', __d('me_cms_youtube', 'Videos by month'));
 
 $months = array_map(function ($month) {
     return $this->Html->link($month->month->i18nFormat('MMMM Y'), [

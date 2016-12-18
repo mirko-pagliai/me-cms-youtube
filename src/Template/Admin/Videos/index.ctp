@@ -22,7 +22,7 @@
  */
 
 $this->extend('MeCms./Admin/Common/index');
-$this->assign('title', $title = __d('me_youtube', 'Videos'));
+$this->assign('title', $title = __d('me_cms_youtube', 'Videos'));
 
 $this->append('actions', $this->Html->button(
     __d('me_cms', 'Add'),
@@ -84,7 +84,7 @@ $this->Library->datepicker(
             echo $this->Form->input('spot', [
                 'default' => $this->request->query('spot'),
                 'hiddenField' => false,
-                'label' => sprintf('%s?', __d('me_youtube', 'Spot')),
+                'label' => sprintf('%s?', __d('me_cms_youtube', 'Spot')),
                 'type' => 'checkbox',
             ]);
             echo $this->Form->submit(null, ['icon' => 'search']);
@@ -99,7 +99,7 @@ $this->Library->datepicker(
             <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Categories.title', __d('me_cms', 'Category')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Users.first_name', __d('me_cms', 'Author')) ?></th>
-            <th class="text-center hidden-xs"><?= $this->Paginator->sort('seconds', __d('me_youtube', 'Duration')) ?></th>
+            <th class="text-center hidden-xs"><?= $this->Paginator->sort('seconds', __d('me_cms_youtube', 'Duration')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
         </tr>
@@ -119,7 +119,7 @@ $this->Library->datepicker(
                     //If the video is a spot
                     if ($video->is_spot) {
                         echo $this->Html->span(
-                            __d('me_youtube', 'Spot'),
+                            __d('me_cms_youtube', 'Spot'),
                             ['class' => 'record-label record-label-primary']
                         );
                     }

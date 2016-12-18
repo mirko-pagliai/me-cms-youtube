@@ -22,7 +22,7 @@
  */
 
 $this->extend('MeCms./Common/index');
-$this->assign('title', $title = __d('me_youtube', 'Search videos'));
+$this->assign('title', $title = __d('me_cms_youtube', 'Search videos'));
 
 /**
  * Breadcrumb

@@ -26,7 +26,7 @@ if (empty($months) || count($months) < 2) {
 }
 
 $this->extend('MeCms./Common/widget');
-$this->assign('title', __d('me_youtube', 'Videos by month'));
+$this->assign('title', __d('me_cms_youtube', 'Videos by month'));
 
 echo $this->Form->create(false, ['type' => 'get', 'url' => [
     '_name' => 'videosByDate',

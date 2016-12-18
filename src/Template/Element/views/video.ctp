@@ -66,7 +66,7 @@
             <div class="embed-responsive embed-responsive-16by9 margin-20 relative">
                 <?php
                 if (config('video.skip_button')) {
-                    echo $this->Html->div(null, __d('me_youtube', 'Skip to the video'), [
+                    echo $this->Html->div(null, __d('me_cms_youtube', 'Skip to the video'), [
                         'data-secs' => config('video.skip_seconds'),
                         'id' => 'skip-to-video',
                     ]);

@@ -24,9 +24,9 @@
 $this->set([
     'documentData' => ['xmlns:dc' => 'http://purl.org/dc/elements/1.1/'],
     'channelData' => [
-        'title' => __d('me_youtube', 'Latest videos'),
+        'title' => __d('me_cms_youtube', 'Latest videos'),
         'link' => $this->Url->build('/', true),
-        'description' => __d('me_youtube', 'Latest videos'),
+        'description' => __d('me_cms_youtube', 'Latest videos'),
         'language' => \Cake\I18n\I18n::locale(),
     ],
 ]);

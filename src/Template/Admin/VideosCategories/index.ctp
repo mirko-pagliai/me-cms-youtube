@@ -22,7 +22,7 @@
  */
 
 $this->extend('MeCms./Admin/Common/index');
-$this->assign('title', $title = __d('me_youtube', 'Videos categories'));
+$this->assign('title', $title = __d('me_cms_youtube', 'Videos categories'));
 
 $this->append('actions', $this->Html->button(
     __d('me_cms', 'Add'),
@@ -42,7 +42,7 @@ $this->append('actions', $this->Html->button(
             <th class="text-center"><?= __d('me_cms', 'ID') ?></th>
             <th><?= __d('me_cms', 'Title') ?></th>
             <th class="text-center"><?= __d('me_cms', 'Parent') ?></th>
-            <th class="min-width text-center"><?= __d('me_youtube', 'Videos') ?></th>
+            <th class="min-width text-center"><?= __d('me_cms_youtube', 'Videos') ?></th>
         </tr>
     </thead>
     <tbody>

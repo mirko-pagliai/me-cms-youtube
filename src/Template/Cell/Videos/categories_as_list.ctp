@@ -26,7 +26,7 @@ if (empty($categories) || count($categories) < 2) {
 }
 
 $this->extend('MeCms./Common/widget');
-$this->assign('title', __d('me_youtube', 'Videos categories'));
+$this->assign('title', __d('me_cms_youtube', 'Videos categories'));
 
 $categories = array_map(function ($category) {
     return $this->Html->link($category->title, ['_name' => 'videosCategory', $category->slug]);

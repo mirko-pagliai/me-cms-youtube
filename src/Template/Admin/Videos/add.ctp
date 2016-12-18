@@ -22,17 +22,17 @@
  */
 
 $this->extend('MeCms./Admin/Common/form');
-$this->assign('title', $title = __d('me_youtube', 'Add video'));
+$this->assign('title', $title = __d('me_cms_youtube', 'Add video'));
 $this->Library->datetimepicker();
 ?>
 
 <div class="well">
     <?php
         echo $this->Form->createInline(false, ['type' => 'get']);
-        echo $this->Form->label('url', __d('me_youtube', 'Video url'));
+        echo $this->Form->label('url', __d('me_cms_youtube', 'Video url'));
         echo $this->Form->input('url', [
             'default' => $this->request->query('url'),
-            'label' => __d('me_youtube', 'Video url'),
+            'label' => __d('me_cms_youtube', 'Video url'),
             'name' => 'url',
             'onchange' => 'send_form(this)',
             'size' => 100,
@@ -70,8 +70,8 @@ $this->Library->datetimepicker();
                 'label' => __d('me_cms', 'Priority'),
             ]);
             echo $this->Form->input('is_spot', [
-                'label' => sprintf('%s?', __d('me_youtube', 'Is a spot')),
-                'help' => __d('me_youtube', 'Enable this option if this video is a spot'),
+                'label' => sprintf('%s?', __d('me_cms_youtube', 'Is a spot')),
+                'help' => __d('me_cms_youtube', 'Enable this option if this video is a spot'),
             ]);
             echo $this->Form->input('active', [
                 'checked' => true,
@@ -84,7 +84,7 @@ $this->Library->datetimepicker();
     <fieldset>
         <div class="row margin-20 text-center">
             <div class="col-sm-6">
-                <h4><?= __d('me_youtube', 'Video') ?></h4>
+                <h4><?= __d('me_cms_youtube', 'Video') ?></h4>
                 <?php
                     echo $this->Html->youtube(
                         $this->request->data('youtubeId'),
@@ -93,7 +93,7 @@ $this->Library->datetimepicker();
                 ?>
             </div>
             <div class="col-sm-6">
-                <h4><?= __d('me_youtube', 'Thumbnail preview') ?></h4>
+                <h4><?= __d('me_cms_youtube', 'Thumbnail preview') ?></h4>
                 <?php
                     echo $this->Thumb->resize(
                         $this->request->data('preview'),
@@ -106,7 +106,7 @@ $this->Library->datetimepicker();
         <p>
             <?php
                 echo $this->Html->link(
-                    __d('me_youtube', 'Open on {0}', 'YouTube'),
+                    __d('me_cms_youtube', 'Open on {0}', 'YouTube'),
                     $this->request->data('youtubeUrl'),
                     ['icon' => 'external-link', 'target' => '_blank']
                 );
@@ -114,13 +114,13 @@ $this->Library->datetimepicker();
         </p>
         <?php
             echo $this->Form->input('youtube_id', [
-                'label' => __d('me_youtube', '{0} ID', 'YouTube'),
+                'label' => __d('me_cms_youtube', '{0} ID', 'YouTube'),
                 'readonly' => true,
                 'type' => 'text',
                 'value' => $this->request->data('youtubeId'),
             ]);
             echo $this->Form->input('duration', [
-                'label' => __d('me_youtube', 'Duration'),
+                'label' => __d('me_cms_youtube', 'Duration'),
                 'readonly' => true,
             ]);
             echo $this->Form->input('title', [

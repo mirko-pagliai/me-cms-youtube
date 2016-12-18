@@ -28,9 +28,9 @@ $date->year($year)->month(empty($month) ? 1 : $month)->day(empty($day) ? 1 : $da
 
 if ($year && $month && $day) {
     if ($date->isToday()) {
-        $title = __d('me_youtube', 'Videos of today');
+        $title = __d('me_cms_youtube', 'Videos of today');
     } elseif ($date->isYesterday()) {
-        $title = __d('me_youtube', 'Videos of yesterday');
+        $title = __d('me_cms_youtube', 'Videos of yesterday');
     } else {
         $title = __dx('me_youtube', 'videos of day', 'Videos of {0}', $date->i18nFormat(config('main.date.long')));
     }

@@ -28,7 +28,7 @@ $this->assign('title', $video->title);
  * Userbar
  */
 if ($video->is_spot) {
-    $this->userbar($this->Html->span(__d('me_youtube', 'Spot'), ['class' => 'label label-primary']));
+    $this->userbar($this->Html->span(__d('me_cms_youtube', 'Spot'), ['class' => 'label label-primary']));
 }
 
 if (!$video->active) {
@@ -41,12 +41,12 @@ if ($video->created->isFuture()) {
 
 $this->userbar([
     $this->Html->link(
-        __d('me_youtube', 'Edit video'),
+        __d('me_cms_youtube', 'Edit video'),
         ['action' => 'edit', $video->id, 'prefix' => 'admin'],
         ['icon' => 'pencil', 'target' => '_blank']
     ),
     $this->Form->postLink(
-        __d('me_youtube', 'Delete video'),
+        __d('me_cms_youtube', 'Delete video'),
         ['action' => 'delete', $video->id, 'prefix' => 'admin'],
         [
             'icon' => 'trash-o',

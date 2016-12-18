@@ -27,7 +27,7 @@ if ($this->request->isUrl(['_name' => 'videosSearch'])) {
 }
 
 $this->extend('MeCms./Common/widget');
-$this->assign('title', __d('me_youtube', 'Search videos'));
+$this->assign('title', __d('me_cms_youtube', 'Search videos'));
 
 echo $this->Form->createInline(false, [
     'type' => 'get',
