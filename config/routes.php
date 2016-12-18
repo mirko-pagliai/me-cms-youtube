@@ -30,7 +30,7 @@ Router::scope('/', ['plugin' => ME_CMS_YOUTUBE], function ($routes) {
     include_once 'routes/videos.php';
 });
 
-Router::plugin(ME_CMS_YOUTUBE, ['path' => '/me-youtube'], function ($routes) {
+Router::plugin(ME_CMS_YOUTUBE, ['path' => '/me-cms-youtube'], function ($routes) {
     //Admin routes
     $routes->prefix('admin', function ($routes) {
         //All admin routes
