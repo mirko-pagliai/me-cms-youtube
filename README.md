@@ -1,13 +1,13 @@
 # Youtube plugin for MeCms
 
-[![Build Status](https://travis-ci.org/mirko-pagliai/me-youtube.svg?branch=master)](https://travis-ci.org/mirko-pagliai/me-youtube)
+[![Build Status](https://travis-ci.org/mirko-pagliai/me-cms-youtube.svg?branch=master)](https://travis-ci.org/mirko-pagliai/me-cms-youtube)
 
 *me-cms-youtube* plugin allows you to manage Youtube videos with 
 [//github.com/mirko-pagliai/cakephp-for-mecms](MeCms platform).
 
 To install:
 
-    $ composer require --prefer-dist mirko-pagliai/me-youtube
+    $ composer require --prefer-dist mirko-pagliai/me-cms-youtube
     $ bin/cake me_youtube.install all -v
 
 Then you need to get an 
@@ -15,7 +15,7 @@ Then you need to get an
 and edit `APP/config/youtube_keys.php`.
 
 For widgets provided by this plugin, see 
-[here](//github.com/mirko-pagliai/me-youtube/wiki/Widgets).
+[here](//github.com/mirko-pagliai/me-cms-youtube/wiki/Widgets).
 
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward 
