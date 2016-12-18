@@ -25,7 +25,7 @@ namespace MeCmsYoutube\Controller;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\Network\Exception\ForbiddenException;
-use MeYoutube\Controller\AppController;
+use MeCmsYoutube\Controller\AppController;
 
 /**
  * Videos controller

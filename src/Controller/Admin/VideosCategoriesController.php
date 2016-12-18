@@ -22,7 +22,7 @@
  */
 namespace MeCmsYoutube\Controller\Admin;
 
-use MeYoutube\Controller\AppController;
+use MeCmsYoutube\Controller\AppController;
 
 /**
  * VideosCategories controller

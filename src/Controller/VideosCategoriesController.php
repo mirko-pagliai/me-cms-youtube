@@ -24,7 +24,7 @@ namespace MeCmsYoutube\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use MeYoutube\Controller\AppController;
+use MeCmsYoutube\Controller\AppController;
 
 /**
  * VideosCategories controller

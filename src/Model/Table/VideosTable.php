@@ -28,7 +28,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 use MeCms\Model\Table\AppTable;
-use MeYoutube\Model\Entity\Video;
+use MeCmsYoutube\Model\Entity\Video;
 
 /**
  * Videos model

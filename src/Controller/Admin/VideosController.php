@@ -23,8 +23,8 @@
 namespace MeCmsYoutube\Controller\Admin;
 
 use Cake\I18n\Time;
-use MeYoutube\Controller\AppController;
-use MeYoutube\Utility\Youtube;
+use MeCmsYoutube\Controller\AppController;
+use MeCmsYoutube\Utility\Youtube;
 
 /**
  * Videos controller

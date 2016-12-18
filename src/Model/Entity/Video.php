@@ -23,7 +23,7 @@
 namespace MeCmsYoutube\Model\Entity;
 
 use Cake\ORM\Entity;
-use MeYoutube\Utility\Youtube;
+use MeCmsYoutube\Utility\Youtube;
 
 /**
  * YoutubeVideo entity
