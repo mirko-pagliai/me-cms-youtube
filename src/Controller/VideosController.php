@@ -29,7 +29,7 @@ use MeCmsYoutube\Controller\AppController;
 
 /**
  * Videos controller
- * @property \MeYoutube\Model\Table\VideosTable $Videos
+ * @property \MeCmsYoutube\Model\Table\VideosTable $Videos
  */
 class VideosController extends AppController
 {
@@ -297,7 +297,7 @@ class VideosController extends AppController
      * Views video
      * @param string $id Video ID
      * @return void
-     * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
+     * @uses MeCmsYoutube\Model\Table\VideosTable::getRandomSpots()
      */
     public function view($id = null)
     {
@@ -329,7 +329,7 @@ class VideosController extends AppController
      * It uses the `view` template.
      * @param string $id Video ID
      * @return void
-     * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
+     * @uses MeCmsYoutube\Model\Table\VideosTable::getRandomSpots()
      */
     public function preview($id = null)
     {

@@ -125,10 +125,10 @@ class VideosCategoriesTable extends AppTable
     /**
      * Default validation rules
      * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeYoutube\Model\Validation\VideosCategoryValidator
+     * @return \MeCmsYoutube\Model\Validation\VideosCategoryValidator
      */
     public function validationDefault(\Cake\Validation\Validator $validator)
     {
-        return new \MeYoutube\Model\Validation\VideosCategoryValidator;
+        return new \MeCmsYoutube\Model\Validation\VideosCategoryValidator;
     }
 }

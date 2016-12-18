@@ -231,10 +231,10 @@ class VideosTable extends AppTable
     /**
      * Default validation rules
      * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeYoutube\Model\Validation\VideoValidator
+     * @return \MeCmsYoutube\Model\Validation\VideoValidator
      */
     public function validationDefault(\Cake\Validation\Validator $validator)
     {
-        return new \MeYoutube\Model\Validation\VideoValidator;
+        return new \MeCmsYoutube\Model\Validation\VideoValidator;
     }
 }

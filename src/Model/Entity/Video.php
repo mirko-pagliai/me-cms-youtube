@@ -29,11 +29,11 @@ use MeCmsYoutube\Utility\Youtube;
  * YoutubeVideo entity
  * @property int $id
  * @property int $user_id
- * @property \MeYoutube\Model\Entity\User $user
+ * @property \MeCmsYoutube\Model\Entity\User $user
  * @property string $youtube_id
- * @property \MeYoutube\Model\Entity\Youtube $youtube
+ * @property \MeCmsYoutube\Model\Entity\Youtube $youtube
  * @property int $category_id
- * @property \MeYoutube\Model\Entity\Category $category
+ * @property \MeCmsYoutube\Model\Entity\Category $category
  * @property string $title
  * @property string $subtitle
  * @property string $text
@@ -66,7 +66,7 @@ class Video extends Entity
     /**
      * Gets the image preview (virtual field)
      * @return string|null
-     * @uses MeYoutube\Utility\Youtube::getPreview()
+     * @uses MeCmsYoutube\Utility\Youtube::getPreview()
      */
     protected function _getPreview()
     {
@@ -80,7 +80,7 @@ class Video extends Entity
     /**
      * Gets the Youtube url (virtual field)
      * @return string|null
-     * @uses MeYoutube\Utility\Youtube::getUrl()
+     * @uses MeCmsYoutube\Utility\Youtube::getUrl()
      */
     protected function _getYoutubeUrl()
     {

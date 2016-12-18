@@ -70,7 +70,7 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.0.4-RC4 version
      * @return void
-     * @uses MeYoutube\Utility\Youtube::getInfo()
+     * @uses MeCmsYoutube\Utility\Youtube::getInfo()
      */
     public function to2v0v4vRC4()
     {
@@ -85,7 +85,7 @@ class UpdateShell extends BaseUpdateShell
             ]]);
 
         foreach ($videos as $video) {
-            $data = \MeYoutube\Utility\Youtube::getInfo($video->youtube_id);
+            $data = \MeCmsYoutube\Utility\Youtube::getInfo($video->youtube_id);
 
             $video->duration = $data['duration'];
             $video->seconds = $data['seconds'];

@@ -28,7 +28,7 @@ use MeCmsYoutube\Utility\Youtube;
 
 /**
  * Videos controller
- * @property \MeYoutube\Model\Table\VideosTable $Videos
+ * @property \MeCmsYoutube\Model\Table\VideosTable $Videos
  */
 class VideosController extends AppController
 {
@@ -98,7 +98,7 @@ class VideosController extends AppController
     /**
      * Lists videos
      * @return void
-     * @uses MeYoutube\Model\Table\VideosTable::queryFromFilter()
+     * @uses MeCmsYoutube\Model\Table\VideosTable::queryFromFilter()
      */
     public function index()
     {
@@ -122,9 +122,9 @@ class VideosController extends AppController
     /**
      * Adds video
      * @return \Cake\Network\Response|null|void
-     * @uses MeYoutube\Utility\Youtube::getId()
-     * @uses MeYoutube\Utility\Youtube::getInfo()
-     * @uses MeYoutube\Utility\Youtube::getUrl()
+     * @uses MeCmsYoutube\Utility\Youtube::getId()
+     * @uses MeCmsYoutube\Utility\Youtube::getInfo()
+     * @uses MeCmsYoutube\Utility\Youtube::getUrl()
      */
     public function add()
     {

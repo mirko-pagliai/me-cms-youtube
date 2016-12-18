@@ -26,7 +26,7 @@ use MeCmsYoutube\Controller\AppController;
 
 /**
  * VideosCategories controller
- * @property \MeYoutube\Model\Table\VideosCategoriesTable $VideosCategories
+ * @property \MeCmsYoutube\Model\Table\VideosCategoriesTable $VideosCategories
  */
 class VideosCategoriesController extends AppController
 {
@@ -37,7 +37,7 @@ class VideosCategoriesController extends AppController
      * @param \Cake\Event\Event $event An Event instance
      * @return void
      * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeYoutube\Model\Table\VideosCategoriesTable::getTreeList()
+     * @uses MeCmsYoutube\Model\Table\VideosCategoriesTable::getTreeList()
      */
     public function beforeFilter(\Cake\Event\Event $event)
     {
