@@ -26,9 +26,7 @@ use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\Validation\Validator;
 use MeCms\Model\Table\AppTable;
-use MeCmsYoutube\Model\Entity\Video;
 
 /**
  * Videos model

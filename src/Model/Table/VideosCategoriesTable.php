@@ -24,9 +24,7 @@ namespace MeCmsYoutube\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\Validation\Validator;
 use MeCms\Model\Table\AppTable;
-use MeCmsYoutube\Model\Entity\VideosCategory;
 
 /**
  * VideosCategories model
