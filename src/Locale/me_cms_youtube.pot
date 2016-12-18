@@ -1,0 +1,154 @@
+# LANGUAGE translation of me-cms-youtube
+# Copyright 2016 Mirko Pagliai <mirko.pagliai@gmail.com>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2016-12-18 17:25+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:139
+msgid "This is not a {0} video"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:141
+msgid "Unable to retrieve video informations. Probably the video is private"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:25
+#: /home/mirko/Libs/Plugins/MeYoutube/src/View/Helper/MenuHelper.php:60
+msgid "Add video"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:32;35
+msgid "Video url"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:73
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:56
+msgid "Is a spot"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:74
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:57
+msgid "Enable this option if this video is a spot"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:87
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:69
+msgid "Video"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:96
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:78
+msgid "Thumbnail preview"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:109
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:91
+msgid "Open on {0}"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:117
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:100
+msgid "{0} ID"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:123
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:105
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/index.ctp:102
+msgid "Duration"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/edit.ctp:25
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/view.ctp:44
+msgid "Edit video"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/index.ctp:25
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/VideosCategories/index.ctp:45
+#: /home/mirko/Libs/Plugins/MeYoutube/src/View/Helper/MenuHelper.php:81
+msgid "Videos"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/index.ctp:87;122
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/view.ctp:31
+msgid "Spot"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/VideosCategories/index.ctp:25
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/categories.ctp:29
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/categories_as_list.ctp:29
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/VideosCategories/index.ctp:25
+msgid "Videos categories"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/latest.ctp:29
+msgid "Latest video"
+msgid_plural "Latest {0} videos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/months.ctp:29
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/months_as_list.ctp:29
+msgid "Videos by month"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/random.ctp:29
+msgid "Random video"
+msgid_plural "Random {0} videos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Cell/Videos/search.ctp:30
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/search.ctp:25
+msgid "Search videos"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Element/views/video.ctp:69
+msgid "Skip to the video"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index_by_date.ctp:31
+msgid "Videos of today"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index_by_date.ctp:33
+msgid "Videos of yesterday"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index_by_date.ctp:35
+msgctxt "videos of day"
+msgid "Videos of {0}"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index_by_date.ctp:38
+msgctxt "videos of month"
+msgid "Videos of {0}"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/index_by_date.ctp:40
+msgctxt "videos of year"
+msgid "Videos of {0}"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/view.ctp:49
+msgid "Delete video"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Videos/rss/rss.ctp:27;29
+#: /home/mirko/Libs/Plugins/MeYoutube/src/View/View/AppView.php:48
+msgid "Latest videos"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/View/Helper/MenuHelper.php:55
+msgid "List videos"
+msgstr ""
+
