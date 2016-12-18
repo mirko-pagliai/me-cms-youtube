@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.7 branch
+### 2.7.0
+* renamed repository and package. Now is `me-cms-youtube`.
+
 ## 2.6 branch
 ### 2.6.7
 * updated for MeCms 2.14.10.
