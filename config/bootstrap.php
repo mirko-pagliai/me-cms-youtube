@@ -34,11 +34,11 @@ if (!defined('ME_CMS_YOUTUBE')) {
 /**
  * Loads the me-cms-youtube configuration
  */
-Configure::load(sprintf('%s.me_youtube', ME_CMS_YOUTUBE));
+Configure::load(sprintf('%s.me_cms_youtube', ME_CMS_YOUTUBE));
 
 //Merges with the configuration from application, if exists
-if (is_readable(CONFIG . 'me_youtube.php')) {
-    Configure::load('me_youtube');
+if (is_readable(CONFIG . 'me_cms_youtube.php')) {
+    Configure::load('me_cms_youtube');
 }
 
 //Merges with the MeCms configuration

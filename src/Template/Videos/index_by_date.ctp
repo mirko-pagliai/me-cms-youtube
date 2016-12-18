@@ -32,12 +32,12 @@ if ($year && $month && $day) {
     } elseif ($date->isYesterday()) {
         $title = __d('me_cms_youtube', 'Videos of yesterday');
     } else {
-        $title = __dx('me_youtube', 'videos of day', 'Videos of {0}', $date->i18nFormat(config('main.date.long')));
+        $title = __dx('me_cms_youtube', 'videos of day', 'Videos of {0}', $date->i18nFormat(config('main.date.long')));
     }
 } elseif ($year && $month) {
-    $title = __dx('me_youtube', 'videos of month', 'Videos of {0}', $date->i18nFormat('MMMM y'));
+    $title = __dx('me_cms_youtube', 'videos of month', 'Videos of {0}', $date->i18nFormat('MMMM y'));
 } else {
-    $title = __dx('me_youtube', 'videos of year', 'Videos of {0}', $date->i18nFormat('y'));
+    $title = __dx('me_cms_youtube', 'videos of year', 'Videos of {0}', $date->i18nFormat('y'));
 }
 
 $this->assign('title', $title);

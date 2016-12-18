@@ -26,7 +26,7 @@ if (empty($videos)) {
 }
 
 $this->extend('MeCms./Common/widget');
-$this->assign('title', __dn('me_youtube', 'Latest video', 'Latest {0} videos', count($videos), count($videos)));
+$this->assign('title', __dn('me_cms_youtube', 'Latest video', 'Latest {0} videos', count($videos), count($videos)));
 
 foreach ($videos as $video) {
     echo $this->element('MeCmsYoutube.views/video-preview', am(
