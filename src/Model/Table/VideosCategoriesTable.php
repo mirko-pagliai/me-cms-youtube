@@ -106,15 +106,15 @@ class VideosCategoriesTable extends AppTable
         $this->primaryKey('id');
 
         $this->belongsTo('Parents', [
-            'className' => 'MeYoutube.VideosCategories',
+            'className' => 'MeCmsYoutube.VideosCategories',
             'foreignKey' => 'parent_id',
         ]);
         $this->hasMany('Childs', [
-            'className' => 'MeYoutube.VideosCategories',
+            'className' => 'MeCmsYoutube.VideosCategories',
             'foreignKey' => 'parent_id',
         ]);
         $this->hasMany('Videos', [
-            'className' => 'MeYoutube.Videos',
+            'className' => 'MeCmsYoutube.Videos',
             'foreignKey' => 'category_id',
         ]);
 

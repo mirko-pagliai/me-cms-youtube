@@ -41,7 +41,7 @@ class InstallShell extends BaseInstallShell
 
         //Configuration files to be copied
         $this->config = [
-            'MeYoutube.me_youtube',
+            'MeCmsYoutube.me_youtube',
         ];
     }
 

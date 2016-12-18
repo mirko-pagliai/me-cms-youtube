@@ -62,7 +62,7 @@
     </div>
     <div class="content-text">
         <?php if ($this->request->isAction(['view', 'preview'], 'Videos')) : ?>
-            <?= $this->Asset->script('MeYoutube.video', ['block' => 'script_bottom']) ?>
+            <?= $this->Asset->script('MeCmsYoutube.video', ['block' => 'script_bottom']) ?>
             <div class="embed-responsive embed-responsive-16by9 margin-20 relative">
                 <?php
                 if (config('video.skip_button')) {

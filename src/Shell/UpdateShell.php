@@ -36,7 +36,7 @@ class UpdateShell extends BaseUpdateShell
      */
     public function to2v4v0()
     {
-        $this->loadModel('MeYoutube.Videos');
+        $this->loadModel('MeCmsYoutube.Videos');
 
         //Renames the "description" field as "text"
         if ($this->_checkColumn('description', $this->Videos->table())) {
@@ -52,7 +52,7 @@ class UpdateShell extends BaseUpdateShell
      */
     public function to2v3v0()
     {
-        $this->loadModel('MeYoutube.VideosCategories');
+        $this->loadModel('MeCmsYoutube.VideosCategories');
 
         //Adds "created" field to the videos categories table and sets the default value
         if (!$this->_checkColumn('created', $this->VideosCategories->table())) {
@@ -74,7 +74,7 @@ class UpdateShell extends BaseUpdateShell
      */
     public function to2v0v4vRC4()
     {
-        $this->loadModel('MeYoutube.Videos');
+        $this->loadModel('MeCmsYoutube.Videos');
 
         $videos = $this->Videos->find('all')
             ->select(['id', 'youtube_id', 'duration', 'seconds'])

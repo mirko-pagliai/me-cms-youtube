@@ -173,7 +173,7 @@ class VideosTable extends AppTable
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
             'joinType' => 'INNER',
-            'className' => 'MeYoutube.VideosCategories',
+            'className' => 'MeCmsYoutube.VideosCategories',
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',

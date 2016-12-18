@@ -44,7 +44,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function videos()
     {
-        $table = TableRegistry::get('MeYoutube.VideosCategories');
+        $table = TableRegistry::get('MeCmsYoutube.VideosCategories');
 
         $url = Cache::read('sitemap', $table->cache);
 

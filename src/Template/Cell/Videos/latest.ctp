@@ -29,7 +29,7 @@ $this->extend('MeCms./Common/widget');
 $this->assign('title', __dn('me_youtube', 'Latest video', 'Latest {0} videos', count($videos), count($videos)));
 
 foreach ($videos as $video) {
-    echo $this->element('MeYoutube.views/video-preview', am(
+    echo $this->element('MeCmsYoutube.views/video-preview', am(
         ['truncate' => ['title' => false, 'text' => false]],
         compact('video')
     ));
