@@ -61,17 +61,17 @@ class YoutubeTest extends TestCase
      */
     public function testGetInfo()
     {
-        $this->Youtube = $this->getMockBuilder(Youtube::class)
+        $youtube = $this->getMockBuilder(Youtube::class)
             ->setMethods(['_getInfoResponse'])
             ->getMock();
 
-        $this->Youtube->expects($this->once())
+        $youtube->expects($this->once())
             ->method('_getInfoResponse')
             ->will($this->returnCallback(function () {
                 return file_get_contents(TEST_APP . 'examples' . DS . 'video.json');
             }));
 
-        $result = $this->Youtube->getInfo('vlSR8Wlmpac');
+        $result = $youtube->getInfo('vlSR8Wlmpac');
 
         $this->assertEquals([
             'preview' => 'https://i.ytimg.com/vi/vlSR8Wlmpac/hqdefault.jpg',
