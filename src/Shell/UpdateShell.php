@@ -107,7 +107,10 @@ class UpdateShell extends BaseUpdateShell
 
         //Renames the "description" field as "text"
         if ($this->_checkColumn('description', $this->Videos->table())) {
-            $this->connection->execute(sprintf('ALTER TABLE `%s` CHANGE `description` `text` TEXT null DEFAULT null;', $this->Videos->table()));
+            $this->connection->execute(sprintf(
+                'ALTER TABLE `%s` CHANGE `description` `text` TEXT null DEFAULT null;',
+                $this->Videos->table()
+            ));
         }
     }
 
@@ -123,13 +126,19 @@ class UpdateShell extends BaseUpdateShell
 
         //Adds "created" field to the videos categories table and sets the default value
         if (!$this->_checkColumn('created', $this->VideosCategories->table())) {
-            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME null AFTER `video_count`;', $this->VideosCategories->table()));
+            $this->connection->execute(sprintf(
+                'ALTER TABLE `%s` ADD `created` DATETIME null AFTER `video_count`;',
+                $this->VideosCategories->table()
+            ));
             $this->VideosCategories->query()->update()->set(['created' => $this->now])->execute();
         }
 
         //Adds "modified" field to the videos categories table and sets the default value
         if (!$this->_checkColumn('modified', $this->VideosCategories->table())) {
-            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME null AFTER `created`;', $this->VideosCategories->table()));
+            $this->connection->execute(sprintf(
+                'ALTER TABLE `%s` ADD `modified` DATETIME null AFTER `created`;',
+                $this->VideosCategories->table()
+            ));
             $this->VideosCategories->query()->update()->set(['modified' => $this->now])->execute();
         }
     }
