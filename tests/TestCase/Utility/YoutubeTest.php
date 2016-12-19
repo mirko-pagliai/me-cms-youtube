@@ -25,12 +25,36 @@ namespace MeCmsYoutube\Test\TestCase\Utility;
 
 use Cake\TestSuite\TestCase;
 use MeCmsYoutube\Utility\Youtube;
+use Reflection\ReflectionTrait;
 
 /**
  * YoutubeTest class
  */
 class YoutubeTest extends TestCase
 {
+    use ReflectionTrait;
+
+    /**
+     * Test for `_parseDuration()` method
+     * @test
+     */
+    public function testParseDuration()
+    {
+        $youtube = new Youtube;
+
+        $this->assertEquals([0, '00:00'], $this->invokeMethod($youtube, '_parseDuration', ['PT0S']));
+        $this->assertEquals([20, '00:20'], $this->invokeMethod($youtube, '_parseDuration', ['PT20S']));
+        $this->assertEquals([0, '00:00'], $this->invokeMethod($youtube, '_parseDuration', ['PT0M0S']));
+        $this->assertEquals([180, '03:00'], $this->invokeMethod($youtube, '_parseDuration', ['PT3M0S']));
+        $this->assertEquals([185, '03:05'], $this->invokeMethod($youtube, '_parseDuration', ['PT3M5S']));
+        $this->assertEquals([195, '03:15'], $this->invokeMethod($youtube, '_parseDuration', ['PT3M15S']));
+        $this->assertEquals([0, '00:00'], $this->invokeMethod($youtube, '_parseDuration', ['PT0H0M0S']));
+        $this->assertEquals([180, '03:00'], $this->invokeMethod($youtube, '_parseDuration', ['PT0H3M0S']));
+        $this->assertEquals([3600, '01:00:00'], $this->invokeMethod($youtube, '_parseDuration', ['PT1H0M0S']));
+        $this->assertEquals([3939, '01:05:39'], $this->invokeMethod($youtube, '_parseDuration', ['PT1H5M39S']));
+        $this->assertFalse($this->invokeMethod($youtube, '_parseDuration', ['invalid']));
+    }
+
     /**
      * Test for `getInfo()` method
      * @test

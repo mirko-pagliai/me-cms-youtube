@@ -51,6 +51,41 @@ class Youtube extends BaseYoutube
     }
 
     /**
+     * Internal method to parse the duration of a video.
+     *
+     * It gets the duration in YouTube format (eg. `PT3M5S`) and returns an
+     *  array with seconds and the duration in a readable format (eg. `03:05`).
+     * @param string $duration Duration in YouTube format
+     * @return bool|array Array with second and duration string or `false`
+     */
+    protected function _parseDuration($duration)
+    {
+        if (!preg_match('/^PT((\d+)H)?((\d+)M)?((\d+)S)$/', $duration, $matches)) {
+            return false;
+        }
+
+        $duration = '';
+        $hours = $minutes = 0;
+
+        if (!empty($matches[2])) {
+            $hours = $matches[2];
+            $duration = sprintf("%02d", $matches[2]) . ':';
+        }
+
+        if (!empty($matches[4])) {
+            $minutes = $matches[4];
+        }
+
+        $seconds = $matches[6];
+
+        $duration .= sprintf("%02d", $minutes) . ':' . sprintf("%02d", $seconds);
+
+        $seconds = $hours * 3600 + $minutes * 60 + $seconds;
+
+        return [$seconds, $duration];
+    }
+
+    /**
      * Internal method to get a info response
      * @param string $id Video ID
      * @return mixed The response body
@@ -69,6 +104,7 @@ class Youtube extends BaseYoutube
      * @return mixed Object or `false`
      * @see https://developers.google.com/youtube/v3/getting-started#partial
      * @uses _getInfoResponse()
+     * @uses _parseDuration()
      */
     public function getInfo($id)
     {
@@ -80,17 +116,14 @@ class Youtube extends BaseYoutube
 
         $info = $info->items[0];
 
-        preg_match('/PT(([0-9]+)M)?(([0-9]+)S)?/', $info->contentDetails->duration, $matches);
-
-        $mins = empty($matches[2]) ? "00" : sprintf("%02d", $matches[2]);
-        $secs = empty($matches[4]) ? "00" : sprintf("%02d", $matches[4]);
+        list($seconds, $duration) = $this->_parseDuration($info->contentDetails->duration);
 
         $object = new \stdClass;
         $object->preview = $info->snippet->thumbnails->high->url;
         $object->text = $info->snippet->description;
         $object->title = $info->snippet->title;
-        $object->seconds = (int)$mins * 60 + (int)$secs;
-        $object->duration = sprintf('%s:%s', $mins, $secs);
+        $object->seconds = $seconds;
+        $object->duration = $duration;
 
         return $object;
     }

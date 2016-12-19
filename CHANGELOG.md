@@ -3,6 +3,7 @@
 ### 2.7.0
 * `Youtube` class does not contain more static methods;
 * `Youtube::getInfo()` method returns an object;
+* fixed a bug with videos longer than an hour;
 * renamed repository and package. Now is `me-cms-youtube`;
 * added test for `Youtube` class.
 
