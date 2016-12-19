@@ -22,6 +22,7 @@
  */
 namespace MeCmsYoutube\Shell;
 
+use MeCmsYoutube\Utility\Youtube;
 use MeCms\Shell\BaseUpdateShell;
 
 /**
@@ -29,6 +30,72 @@ use MeCms\Shell\BaseUpdateShell;
  */
 class UpdateShell extends BaseUpdateShell
 {
+    /**
+     * Internal method. It updates all records, fixing those that have the
+     *  `duration` or `seconds` field empty
+     * @return void
+     * @throws \Exception
+     * @uses MeCmsYoutube\Utility\Youtube::getInfo()
+     */
+    protected function _updateAllRecordsDurationField()
+    {
+        $this->loadModel('MeCmsYoutube.Videos');
+
+        $videos = $this->Videos->find('all')
+            ->select(['id', 'youtube_id', 'duration', 'seconds'])
+            ->where(['OR' => [
+                ['duration' => '00:00'],
+                ['duration' => ''],
+                ['seconds' => 0],
+            ]])
+            ->toArray();
+
+        if (empty($videos)) {
+            $this->verbose('No record to update');
+
+            return;
+        }
+
+        $this->verbose(sprintf('%s records to be updated', count($videos)));
+
+        foreach ($videos as $video) {
+            try {
+                $data = (new Youtube)->getInfo($video->youtube_id);
+
+                if (empty($data->duration)) {
+                    throw new \Exception(sprintf('Can\'t find duration value for record %s', $video->id));
+                }
+
+                if (empty($data->seconds)) {
+                    throw new \Exception(sprintf('Can\'t find second value for record %s', $video->id));
+                }
+
+                $this->Videos->query()->update()
+                    ->set(['duration' => $data->duration, 'seconds' => $data->seconds])
+                    ->where(['id' => $video->id])
+                    ->execute();
+            } catch (\Exception $e) {
+                if (substr_count($e->getMessage(), 'fopen(): php_network_getaddresses')) {
+                    $this->err(sprintf('Temporary failure in name resolution for record %s', $video->id));
+                } elseif (substr_count($e->getMessage(), 'failed to open stream: Connection timed out')) {
+                    $this->err(sprintf('Connection timed out for record %s', $video->id));
+                } else {
+                    $this->err(sprintf('%s for record %s', $e->getMessage(), $video->id));
+                }
+            }
+        }
+    }
+
+    /**
+     * Updates to 2.7.0 version
+     * @return void
+     * @uses _updateAllRecordsDurationField()
+     */
+    public function to2v7v0()
+    {
+        $this->_updateAllRecordsDurationField();
+    }
+
     /**
      * Updates to 2.4.0 version
      * @return void
@@ -70,27 +137,10 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.0.4-RC4 version
      * @return void
-     * @uses MeCmsYoutube\Utility\Youtube::getInfo()
+     * @uses _updateAllRecordsDurationField()
      */
     public function to2v0v4vRC4()
     {
-        $this->loadModel('MeCmsYoutube.Videos');
-
-        $videos = $this->Videos->find('all')
-            ->select(['id', 'youtube_id', 'duration', 'seconds'])
-            ->where(['OR' => [
-                'duration' => '00:00',
-                'duration' => '',
-                'seconds' => 0,
-            ]]);
-
-        foreach ($videos as $video) {
-            $data = (new Youtube)->getInfo($video->youtube_id);
-
-            $this->Videos->query()->update()
-                ->set(['duration' => $data->duration, 'seconds' => $data->seconds])
-                ->where(['id' => $video->id])
-                ->execute();
-        }
+        $this->_updateAllRecordsDurationField();
     }
 }
