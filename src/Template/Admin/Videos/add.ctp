@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of MeYoutube.
+ * This file is part of me-cms-youtube.
  *
- * MeYoutube is free software: you can redistribute it and/or modify
+ * me-cms-youtube is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeYoutube is distributed in the hope that it will be useful,
+ * me-cms-youtube is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
+ * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
@@ -22,17 +22,17 @@
  */
 
 $this->extend('MeCms./Admin/Common/form');
-$this->assign('title', $title = __d('me_youtube', 'Add video'));
+$this->assign('title', $title = __d('me_cms_youtube', 'Add video'));
 $this->Library->datetimepicker();
 ?>
 
 <div class="well">
     <?php
         echo $this->Form->createInline(false, ['type' => 'get']);
-        echo $this->Form->label('url', __d('me_youtube', 'Video url'));
+        echo $this->Form->label('url', __d('me_cms_youtube', 'Video url'));
         echo $this->Form->input('url', [
             'default' => $this->request->query('url'),
-            'label' => __d('me_youtube', 'Video url'),
+            'label' => __d('me_cms_youtube', 'Video url'),
             'name' => 'url',
             'onchange' => 'send_form(this)',
             'size' => 100,
@@ -42,7 +42,7 @@ $this->Library->datetimepicker();
     ?>
 </div>
 
-<?php if ($this->request->data('youtubeId')) : ?>
+<?php if ($this->request->data('youtube_id')) : ?>
     <?= $this->Form->create($video); ?>
     <div class='float-form'>
         <?php
@@ -54,46 +54,46 @@ $this->Library->datetimepicker();
             ]);
         }
 
-            echo $this->Form->input('category_id', [
-                'default' => count($categories) < 2 ? firstValue($categories) : false,
-                'label' => __d('me_cms', 'Category'),
-            ]);
-            echo $this->Form->datetimepicker('created', [
-                'label' => __d('me_cms', 'Date'),
-                'help' => [
-                    __d('me_cms', 'If blank, the current date and time will be used'),
-                    __d('me_cms', 'You can delay the publication by entering a future date'),
-                ],
-            ]);
-            echo $this->Form->input('priority', [
-                'default' => '3',
-                'label' => __d('me_cms', 'Priority'),
-            ]);
-            echo $this->Form->input('is_spot', [
-                'label' => sprintf('%s?', __d('me_youtube', 'Is a spot')),
-                'help' => __d('me_youtube', 'Enable this option if this video is a spot'),
-            ]);
-            echo $this->Form->input('active', [
-                'checked' => true,
-                'label' => sprintf('%s?', __d('me_cms', 'Published')),
-                'help' => __d('me_cms', 'Disable this option to save as a draft'),
-            ]);
+        echo $this->Form->input('category_id', [
+            'default' => count($categories) < 2 ? firstValue($categories) : false,
+            'label' => __d('me_cms', 'Category'),
+        ]);
+        echo $this->Form->datetimepicker('created', [
+            'label' => __d('me_cms', 'Date'),
+            'help' => [
+                __d('me_cms', 'If blank, the current date and time will be used'),
+                __d('me_cms', 'You can delay the publication by entering a future date'),
+            ],
+        ]);
+        echo $this->Form->input('priority', [
+            'default' => '3',
+            'label' => __d('me_cms', 'Priority'),
+        ]);
+        echo $this->Form->input('is_spot', [
+            'label' => sprintf('%s?', __d('me_cms_youtube', 'Is a spot')),
+            'help' => __d('me_cms_youtube', 'Enable this option if this video is a spot'),
+        ]);
+        echo $this->Form->input('active', [
+            'checked' => true,
+            'label' => sprintf('%s?', __d('me_cms', 'Published')),
+            'help' => __d('me_cms', 'Disable this option to save as a draft'),
+        ]);
         ?>
     </div>
 
     <fieldset>
         <div class="row margin-20 text-center">
             <div class="col-sm-6">
-                <h4><?= __d('me_youtube', 'Video') ?></h4>
+                <h4><?= __d('me_cms_youtube', 'Video') ?></h4>
                 <?php
                     echo $this->Html->youtube(
-                        $this->request->data('youtubeId'),
+                        $this->request->data('youtube_id'),
                         ['class' => 'center-block', 'height' => 315, 'width' => 560]
                     );
                 ?>
             </div>
             <div class="col-sm-6">
-                <h4><?= __d('me_youtube', 'Thumbnail preview') ?></h4>
+                <h4><?= __d('me_cms_youtube', 'Thumbnail preview') ?></h4>
                 <?php
                     echo $this->Thumb->resize(
                         $this->request->data('preview'),
@@ -106,21 +106,21 @@ $this->Library->datetimepicker();
         <p>
             <?php
                 echo $this->Html->link(
-                    __d('me_youtube', 'Open on {0}', 'YouTube'),
-                    $this->request->data('youtubeUrl'),
+                    __d('me_cms_youtube', 'Open on {0}', 'YouTube'),
+                    $this->request->data('youtube_url'),
                     ['icon' => 'external-link', 'target' => '_blank']
                 );
             ?>
         </p>
         <?php
             echo $this->Form->input('youtube_id', [
-                'label' => __d('me_youtube', '{0} ID', 'YouTube'),
+                'label' => __d('me_cms_youtube', '{0} ID', 'YouTube'),
                 'readonly' => true,
                 'type' => 'text',
-                'value' => $this->request->data('youtubeId'),
+                'value' => $this->request->data('youtube_id'),
             ]);
             echo $this->Form->input('duration', [
-                'label' => __d('me_youtube', 'Duration'),
+                'label' => __d('me_cms_youtube', 'Duration'),
                 'readonly' => true,
             ]);
             echo $this->Form->input('title', [

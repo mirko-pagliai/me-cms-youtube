@@ -1,39 +1,39 @@
 <?php
 /**
- * This file is part of MeYoutube.
+ * This file is part of me-cms-youtube.
  *
- * MeYoutube is free software: you can redistribute it and/or modify
+ * me-cms-youtube is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeYoutube is distributed in the hope that it will be useful,
+ * me-cms-youtube is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
+ * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Model\Entity;
+namespace MeCmsYoutube\Model\Entity;
 
 use Cake\ORM\Entity;
-use MeYoutube\Utility\Youtube;
+use MeCmsYoutube\Utility\Youtube;
 
 /**
  * YoutubeVideo entity
  * @property int $id
  * @property int $user_id
- * @property \MeYoutube\Model\Entity\User $user
+ * @property \MeCmsYoutube\Model\Entity\User $user
  * @property string $youtube_id
- * @property \MeYoutube\Model\Entity\Youtube $youtube
+ * @property \MeCmsYoutube\Model\Entity\Youtube $youtube
  * @property int $category_id
- * @property \MeYoutube\Model\Entity\Category $category
+ * @property \MeCmsYoutube\Model\Entity\Category $category
  * @property string $title
  * @property string $subtitle
  * @property string $text
@@ -66,7 +66,7 @@ class Video extends Entity
     /**
      * Gets the image preview (virtual field)
      * @return string|null
-     * @uses MeYoutube\Utility\Youtube::getPreview()
+     * @uses MeCmsYoutube\Utility\Youtube::getPreview()
      */
     protected function _getPreview()
     {
@@ -74,13 +74,13 @@ class Video extends Entity
             return null;
         }
 
-        return Youtube::getPreview($this->_properties['youtube_id']);
+        return (new Youtube)->getPreview($this->_properties['youtube_id']);
     }
 
     /**
      * Gets the Youtube url (virtual field)
      * @return string|null
-     * @uses MeYoutube\Utility\Youtube::getUrl()
+     * @uses MeCmsYoutube\Utility\Youtube::getUrl()
      */
     protected function _getYoutubeUrl()
     {
@@ -88,6 +88,6 @@ class Video extends Entity
             return null;
         }
 
-        return Youtube::getUrl($this->_properties['youtube_id']);
+        return (new Youtube)->getUrl($this->_properties['youtube_id']);
     }
 }

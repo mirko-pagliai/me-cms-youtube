@@ -1,0 +1,18 @@
+{
+    "items": [
+        {
+            "snippet": {
+                "title": "Beethoven - Symphony No. 9 in D minor: Ode to Joy [HD]",
+                "description": "A video description",
+                "thumbnails": {
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/vlSR8Wlmpac/hqdefault.jpg"
+                    }
+                }
+            },
+            "contentDetails": {
+                "duration": "PT12M58S"
+            }
+        }
+    ]
+}

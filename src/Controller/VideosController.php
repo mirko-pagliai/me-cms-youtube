@@ -1,35 +1,35 @@
 <?php
 /**
- * This file is part of MeYoutube.
+ * This file is part of me-cms-youtube.
  *
- * MeYoutube is free software: you can redistribute it and/or modify
+ * me-cms-youtube is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeYoutube is distributed in the hope that it will be useful,
+ * me-cms-youtube is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
+ * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Controller;
+namespace MeCmsYoutube\Controller;
 
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\Network\Exception\ForbiddenException;
-use MeYoutube\Controller\AppController;
+use MeCmsYoutube\Controller\AppController;
 
 /**
  * Videos controller
- * @property \MeYoutube\Model\Table\VideosTable $Videos
+ * @property \MeCmsYoutube\Model\Table\VideosTable $Videos
  */
 class VideosController extends AppController
 {
@@ -297,7 +297,7 @@ class VideosController extends AppController
      * Views video
      * @param string $id Video ID
      * @return void
-     * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
+     * @uses MeCmsYoutube\Model\Table\VideosTable::getRandomSpots()
      */
     public function view($id = null)
     {
@@ -329,7 +329,7 @@ class VideosController extends AppController
      * It uses the `view` template.
      * @param string $id Video ID
      * @return void
-     * @uses MeYoutube\Model\Table\VideosTable::getRandomSpots()
+     * @uses MeCmsYoutube\Model\Table\VideosTable::getRandomSpots()
      */
     public function preview($id = null)
     {

@@ -1,26 +1,26 @@
 <?php
 /**
- * This file is part of MeYoutube.
+ * This file is part of me-cms-youtube.
  *
- * MeYoutube is free software: you can redistribute it and/or modify
+ * me-cms-youtube is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeYoutube is distributed in the hope that it will be useful,
+ * me-cms-youtube is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
+ * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Utility;
+namespace MeCmsYoutube\Utility;
 
 use Cake\Http\Client;
 use MeTools\Utility\Youtube as BaseYoutube;
@@ -31,37 +31,100 @@ use MeTools\Utility\Youtube as BaseYoutube;
 class Youtube extends BaseYoutube
 {
     /**
-     * Gets information about a video
-     * @param string $id Video ID
-     * @return mixed Array or `false`
-     * @see https://developers.google.com/youtube/v3/getting-started#partial
+     * API key
+     * @var string
      */
-    public static function getInfo($id)
+    protected $key;
+
+    /**
+     * Construct
+     * @param string $key API key
+     * @uses $key
+     */
+    public function __construct($key = null)
     {
-        $url = 'https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
-        $url = sprintf($url, $id, config('Youtube.key'));
+        if (empty($key)) {
+            $key = config('Youtube.key');
+        }
 
-        $response = (new Client())->get($url);
-        $info = json_decode($response->body(), true);
+        $this->key = $key;
+    }
 
-        if (empty($info['items'][0]['snippet']) || empty($info['items'][0]['contentDetails'])) {
+    /**
+     * Internal method to parse the duration of a video.
+     *
+     * It gets the duration in YouTube format (eg. `PT3M5S`) and returns an
+     *  array with seconds and the duration in a readable format (eg. `03:05`).
+     * @param string $duration Duration in YouTube format
+     * @return bool|array Array with second and duration string or `false`
+     */
+    protected function _parseDuration($duration)
+    {
+        if (!preg_match('/^PT((\d+)H)?((\d+)M)?((\d+)S)$/', $duration, $matches)) {
             return false;
         }
 
-        preg_match('/PT(([0-9]+)M)?(([0-9]+)S)?/', $info['items'][0]['contentDetails']['duration'], $matches);
+        $duration = '';
+        $hours = $minutes = 0;
 
-        $mins = empty($matches[2]) ? "00" : sprintf("%02d", $matches[2]);
-        $secs = empty($matches[4]) ? "00" : sprintf("%02d", $matches[4]);
+        if (!empty($matches[2])) {
+            $hours = $matches[2];
+            $duration = sprintf("%02d", $matches[2]) . ':';
+        }
 
-        $info = [
-            'preview' => $info['items'][0]['snippet']['thumbnails']['high']['url'],
-            'text' => $info['items'][0]['snippet']['description'],
-            'title' => $info['items'][0]['snippet']['title'],
-        ];
+        if (!empty($matches[4])) {
+            $minutes = $matches[4];
+        }
 
-        $info['seconds'] = (int)$mins * 60 + (int)$secs;
-        $info['duration'] = sprintf('%s:%s', $mins, $secs);
+        $seconds = $matches[6];
 
-        return $info;
+        $duration .= sprintf("%02d", $minutes) . ':' . sprintf("%02d", $seconds);
+
+        $seconds = $hours * 3600 + $minutes * 60 + $seconds;
+
+        return [$seconds, $duration];
+    }
+
+    /**
+     * Internal method to get a info response
+     * @param string $id Video ID
+     * @return mixed The response body
+     * @uses $key
+     */
+    protected function _getInfoResponse($id)
+    {
+        $url = 'https://www.googleapis.com/youtube/v3/videos?id=' . $id . '&key=' . $this->key . '&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
+
+        return (new Client())->get($url)->body();
+    }
+
+    /**
+     * Gets information about a video
+     * @param string $id Video ID
+     * @return mixed Object or `false`
+     * @see https://developers.google.com/youtube/v3/getting-started#partial
+     * @uses _getInfoResponse()
+     * @uses _parseDuration()
+     */
+    public function getInfo($id)
+    {
+        $info = json_decode($this->_getInfoResponse($id));
+
+        if (empty($info->items[0])) {
+            return false;
+        }
+
+        $info = $info->items[0];
+
+        list($seconds, $duration) = $this->_parseDuration($info->contentDetails->duration);
+
+        $object = new \stdClass;
+        $object->preview = $info->snippet->thumbnails->high->url;
+        $object->text = $info->snippet->description;
+        $object->title = $info->snippet->title;
+        $object->seconds = $seconds;
+        $object->duration = $duration;
+
+        return $object;
     }
 }

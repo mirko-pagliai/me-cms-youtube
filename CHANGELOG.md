@@ -1,4 +1,12 @@
 # 2.x branch
+## 2.7 branch
+### 2.7.0
+* `Youtube` class does not contain more static methods;
+* `Youtube::getInfo()` method returns an object;
+* fixed a bug with videos longer than an hour;
+* renamed repository and package. Now is `me-cms-youtube`;
+* added test for `Youtube` and `InstallShell` classes.
+
 ## 2.6 branch
 ### 2.6.7
 * updated for MeCms 2.14.10.

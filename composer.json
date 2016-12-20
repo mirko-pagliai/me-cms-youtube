@@ -1,7 +1,7 @@
 {
-    "name": "mirko-pagliai/me-youtube",
-    "description": "MeYoutube plugin for MeCms",
-    "homepage": "https://github.com/mirko-pagliai/me-youtube",
+    "name": "mirko-pagliai/me-cms-youtube",
+    "description": "Youtube plugin for MeCms",
+    "homepage": "https://github.com/mirko-pagliai/me-cms-youtube",
     "type": "cakephp-plugin",
     "license": "AGPL",
     "authors": [{
@@ -17,11 +17,17 @@
         "mirko-pagliai/me-cms": ">=2.14.10"
     },
     "require-dev": {
-        "cakephp/cakephp-codesniffer": "2.*"
+        "cakephp/cakephp-codesniffer": "2.*",
+        "mirko-pagliai/reflection": "*"
     },
     "autoload": {
         "psr-4": {
-            "MeYoutube\\": "src"
+            "MeCmsYoutube\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MeCmsYoutube\\Test\\": "tests"
         }
     },
     "minimum-stability": "dev"

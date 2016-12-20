@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of MeYoutube.
+ * This file is part of me-cms-youtube.
  *
- * MeYoutube is free software: you can redistribute it and/or modify
+ * me-cms-youtube is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeYoutube is distributed in the hope that it will be useful,
+ * me-cms-youtube is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
+ * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
@@ -22,7 +22,7 @@
  */
 
 $this->extend('MeCms./Admin/Common/index');
-$this->assign('title', $title = __d('me_youtube', 'Videos'));
+$this->assign('title', $title = __d('me_cms_youtube', 'Videos'));
 
 $this->append('actions', $this->Html->button(
     __d('me_cms', 'Add'),
@@ -84,7 +84,7 @@ $this->Library->datepicker(
             echo $this->Form->input('spot', [
                 'default' => $this->request->query('spot'),
                 'hiddenField' => false,
-                'label' => sprintf('%s?', __d('me_youtube', 'Spot')),
+                'label' => sprintf('%s?', __d('me_cms_youtube', 'Spot')),
                 'type' => 'checkbox',
             ]);
             echo $this->Form->submit(null, ['icon' => 'search']);
@@ -99,7 +99,7 @@ $this->Library->datepicker(
             <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Categories.title', __d('me_cms', 'Category')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Users.first_name', __d('me_cms', 'Author')) ?></th>
-            <th class="text-center hidden-xs"><?= $this->Paginator->sort('seconds', __d('me_youtube', 'Duration')) ?></th>
+            <th class="text-center hidden-xs"><?= $this->Paginator->sort('seconds', __d('me_cms_youtube', 'Duration')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
         </tr>
@@ -119,7 +119,7 @@ $this->Library->datepicker(
                     //If the video is a spot
                     if ($video->is_spot) {
                         echo $this->Html->span(
-                            __d('me_youtube', 'Spot'),
+                            __d('me_cms_youtube', 'Spot'),
                             ['class' => 'record-label record-label-primary']
                         );
                     }

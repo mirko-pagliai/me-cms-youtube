@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of MeYoutube.
+ * This file is part of me-cms-youtube.
  *
- * MeYoutube is free software: you can redistribute it and/or modify
+ * me-cms-youtube is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeYoutube is distributed in the hope that it will be useful,
+ * me-cms-youtube is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
+ * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
@@ -22,7 +22,7 @@
  */
 
 $this->extend('MeCms./Admin/Common/index');
-$this->assign('title', $title = __d('me_youtube', 'Videos categories'));
+$this->assign('title', $title = __d('me_cms_youtube', 'Videos categories'));
 
 $this->append('actions', $this->Html->button(
     __d('me_cms', 'Add'),
@@ -42,7 +42,7 @@ $this->append('actions', $this->Html->button(
             <th class="text-center"><?= __d('me_cms', 'ID') ?></th>
             <th><?= __d('me_cms', 'Title') ?></th>
             <th class="text-center"><?= __d('me_cms', 'Parent') ?></th>
-            <th class="min-width text-center"><?= __d('me_youtube', 'Videos') ?></th>
+            <th class="min-width text-center"><?= __d('me_cms_youtube', 'Videos') ?></th>
         </tr>
     </thead>
     <tbody>

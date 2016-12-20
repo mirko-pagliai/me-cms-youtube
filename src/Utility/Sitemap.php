@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of MeYoutube.
+ * This file is part of me-cms-youtube.
  *
- * MeYoutube is free software: you can redistribute it and/or modify
+ * me-cms-youtube is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeYoutube is distributed in the hope that it will be useful,
+ * me-cms-youtube is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
+ * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
@@ -21,7 +21,7 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  * @see         MeCms\Utility\SitemapBuilder
  */
-namespace MeYoutube\Utility;
+namespace MeCmsYoutube\Utility;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
@@ -44,7 +44,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function videos()
     {
-        $table = TableRegistry::get('MeYoutube.VideosCategories');
+        $table = TableRegistry::get('MeCmsYoutube.VideosCategories');
 
         $url = Cache::read('sitemap', $table->cache);
 

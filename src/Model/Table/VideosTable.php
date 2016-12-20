@@ -1,34 +1,32 @@
 <?php
 /**
- * This file is part of MeYoutube.
+ * This file is part of me-cms-youtube.
  *
- * MeYoutube is free software: you can redistribute it and/or modify
+ * me-cms-youtube is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeYoutube is distributed in the hope that it will be useful,
+ * me-cms-youtube is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
+ * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Model\Table;
+namespace MeCmsYoutube\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\Validation\Validator;
 use MeCms\Model\Table\AppTable;
-use MeYoutube\Model\Entity\Video;
 
 /**
  * Videos model
@@ -173,7 +171,7 @@ class VideosTable extends AppTable
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
             'joinType' => 'INNER',
-            'className' => 'MeYoutube.VideosCategories',
+            'className' => 'MeCmsYoutube.VideosCategories',
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
@@ -231,10 +229,10 @@ class VideosTable extends AppTable
     /**
      * Default validation rules
      * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeYoutube\Model\Validation\VideoValidator
+     * @return \MeCmsYoutube\Model\Validation\VideoValidator
      */
     public function validationDefault(\Cake\Validation\Validator $validator)
     {
-        return new \MeYoutube\Model\Validation\VideoValidator;
+        return new \MeCmsYoutube\Model\Validation\VideoValidator;
     }
 }

@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of MeYoutube.
+ * This file is part of me-cms-youtube.
  *
- * MeYoutube is free software: you can redistribute it and/or modify
+ * me-cms-youtube is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeYoutube is distributed in the hope that it will be useful,
+ * me-cms-youtube is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
+ * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
@@ -22,7 +22,7 @@
  */
 
 $this->extend('MeCms./Admin/Common/form');
-$this->assign('title', $title = __d('me_youtube', 'Edit video'));
+$this->assign('title', $title = __d('me_cms_youtube', 'Edit video'));
 $this->Library->datetimepicker();
 ?>
 
@@ -53,8 +53,8 @@ $this->Library->datetimepicker();
             'label' => __d('me_cms', 'Priority'),
         ]);
         echo $this->Form->input('is_spot', [
-            'label' => sprintf('%s?', __d('me_youtube', 'Is a spot')),
-            'help' => __d('me_youtube', 'Enable this option if this video is a spot'),
+            'label' => sprintf('%s?', __d('me_cms_youtube', 'Is a spot')),
+            'help' => __d('me_cms_youtube', 'Enable this option if this video is a spot'),
         ]);
         echo $this->Form->input('active', [
             'label' => sprintf('%s?', __d('me_cms', 'Published')),
@@ -66,7 +66,7 @@ $this->Library->datetimepicker();
 <fieldset>
     <div class="row margin-20 text-center">
         <div class="col-sm-6">
-            <h4><?= __d('me_youtube', 'Video') ?></h4>
+            <h4><?= __d('me_cms_youtube', 'Video') ?></h4>
             <?php
                 echo $this->Html->youtube(
                     $video->youtube_id,
@@ -75,7 +75,7 @@ $this->Library->datetimepicker();
             ?>
         </div>
         <div class="col-sm-6">
-            <h4><?= __d('me_youtube', 'Thumbnail preview') ?></h4>
+            <h4><?= __d('me_cms_youtube', 'Thumbnail preview') ?></h4>
             <?php
                 echo $this->Thumb->resize(
                     $video->preview,
@@ -88,7 +88,7 @@ $this->Library->datetimepicker();
     <p>
         <?php
             echo $this->Html->link(
-                __d('me_youtube', 'Open on {0}', 'YouTube'),
+                __d('me_cms_youtube', 'Open on {0}', 'YouTube'),
                 $video->youtube_url,
                 ['icon' => 'external-link', 'target' => '_blank']
             );
@@ -97,12 +97,12 @@ $this->Library->datetimepicker();
 
     <?php
         echo $this->Form->input('youtube_id', [
-            'label' => __d('me_youtube', '{0} ID', 'YouTube'),
+            'label' => __d('me_cms_youtube', '{0} ID', 'YouTube'),
             'readonly' => true,
             'type' => 'text',
         ]);
         echo $this->Form->input('duration', [
-            'label' => __d('me_youtube', 'Duration'),
+            'label' => __d('me_cms_youtube', 'Duration'),
             'readonly' => true,
         ]);
         echo $this->Form->input('title', [

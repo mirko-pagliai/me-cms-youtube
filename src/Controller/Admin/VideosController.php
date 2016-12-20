@@ -1,34 +1,34 @@
 <?php
 /**
- * This file is part of MeYoutube.
+ * This file is part of me-cms-youtube.
  *
- * MeYoutube is free software: you can redistribute it and/or modify
+ * me-cms-youtube is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeYoutube is distributed in the hope that it will be useful,
+ * me-cms-youtube is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeYoutube.  If not, see <http://www.gnu.org/licenses/>.
+ * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeYoutube\Controller\Admin;
+namespace MeCmsYoutube\Controller\Admin;
 
 use Cake\I18n\Time;
-use MeYoutube\Controller\AppController;
-use MeYoutube\Utility\Youtube;
+use MeCmsYoutube\Controller\AppController;
+use MeCmsYoutube\Utility\Youtube;
 
 /**
  * Videos controller
- * @property \MeYoutube\Model\Table\VideosTable $Videos
+ * @property \MeCmsYoutube\Model\Table\VideosTable $Videos
  */
 class VideosController extends AppController
 {
@@ -98,7 +98,7 @@ class VideosController extends AppController
     /**
      * Lists videos
      * @return void
-     * @uses MeYoutube\Model\Table\VideosTable::queryFromFilter()
+     * @uses MeCmsYoutube\Model\Table\VideosTable::queryFromFilter()
      */
     public function index()
     {
@@ -122,25 +122,30 @@ class VideosController extends AppController
     /**
      * Adds video
      * @return \Cake\Network\Response|null|void
-     * @uses MeYoutube\Utility\Youtube::getId()
-     * @uses MeYoutube\Utility\Youtube::getInfo()
-     * @uses MeYoutube\Utility\Youtube::getUrl()
+     * @uses MeCmsYoutube\Utility\Youtube::getId()
+     * @uses MeCmsYoutube\Utility\Youtube::getInfo()
+     * @uses MeCmsYoutube\Utility\Youtube::getUrl()
      */
     public function add()
     {
+        $youtube = new Youtube;
+
         //If the address of a YouTube video has been specified
         if ($this->request->query('url') && $this->request->is('get')) {
             //Gets video ID and information
-            $youtubeId = Youtube::getId($this->request->query('url'));
-            $youtubeInfo = Youtube::getInfo($youtubeId);
-            $youtubeUrl = Youtube::getUrl($youtubeId);
+            $youtubeId = $youtube->getId($this->request->query('url'));
+            $youtubeInfo = $youtube->getInfo($youtubeId);
+            $youtubeUrl = $youtube->getUrl($youtubeId);
 
             if (!$youtubeId) {
-                $this->Flash->error(__d('me_youtube', 'This is not a {0} video', 'YouTube'));
+                $this->Flash->error(__d('me_cms_youtube', 'This is not a {0} video', 'YouTube'));
             } elseif (!$youtubeInfo || !$youtubeUrl) {
-                $this->Flash->error(__d('me_youtube', 'Unable to retrieve video informations. Probably the video is private'));
+                $this->Flash->error(__d('me_cms_youtube', 'Unable to retrieve video informations. Probably the video is private'));
             } else {
-                $this->request->data = am(compact('youtubeId', 'youtubeUrl'), $youtubeInfo);
+                $this->request->data = am([
+                    'youtube_id' => $youtubeId,
+                    'youtube_url' => $youtubeUrl,
+                ], $youtubeInfo);
             }
         }
 
@@ -163,6 +168,16 @@ class VideosController extends AppController
             } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            //Gets video ID and information
+            $youtubeId = $youtube->getId($this->request->query('url'));
+            $youtubeInfo = $youtube->getInfo($youtubeId);
+            $youtubeUrl = $youtube->getUrl($youtubeId);
+
+            $this->request->data = am([
+                'youtube_id' => $youtubeId,
+                'youtube_url' => $youtubeUrl,
+            ], $youtubeInfo, $this->request->data);
         }
 
         $this->set(compact('video'));

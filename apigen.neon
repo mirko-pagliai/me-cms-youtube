@@ -3,7 +3,7 @@ destination: API
 download: false
 exclude: {*_old, *.old, *.old.*} 
 source: {src}
-main: MeYoutube
+main: MeCmsYoutube
 php: false
-title: MeYoutube API
+title: MeCmsYoutube API
 todo: true
