@@ -117,11 +117,9 @@ Configure::write('Session', [
 ]);
 
 Configure::write('Assets.target', TMP . 'assets');
-//Configure::write('Thumbs.target', TMP . 'thumbs');
-//
+
 //@codingStandardsIgnoreStart
 @mkdir(Configure::read('Assets.target'));
-//@mkdir(Configure::read('Thumbs.target'));
 //@codingStandardsIgnoreEnd
 
 /**
@@ -135,11 +133,6 @@ Plugin::load('MeTools', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
 ]);
-//Plugin::load('Thumber', [
-//    'bootstrap' => true,
-//    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-thumber' . DS,
-//    'routes' => true,
-//]);
 Plugin::load('MeCms', [
     'bootstrap' => false, //Doesn't load the bootstrap
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-cms' . DS,
