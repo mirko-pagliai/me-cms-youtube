@@ -56,13 +56,13 @@ class MenuHelper extends Helper
                 'controller' => 'Videos',
                 'action' => 'index',
                 'plugin' => ME_CMS_YOUTUBE,
-                'prefix' => 'admin',
+                'prefix' => ADMIN_PREFIX,
             ]),
             $this->Html->link(__d('me_cms_youtube', 'Add video'), [
                 'controller' => 'Videos',
                 'action' => 'add',
                 'plugin' => ME_CMS_YOUTUBE,
-                'prefix' => 'admin',
+                'prefix' => ADMIN_PREFIX,
             ]),
         ];
 
@@ -72,13 +72,13 @@ class MenuHelper extends Helper
                 'controller' => 'VideosCategories',
                 'action' => 'index',
                 'plugin' => ME_CMS_YOUTUBE,
-                'prefix' => 'admin',
+                'prefix' => ADMIN_PREFIX,
             ]);
             $menu[] = $this->Html->link(__d('me_cms', 'Add category'), [
                 'controller' => 'VideosCategories',
                 'action' => 'add',
                 'plugin' => ME_CMS_YOUTUBE,
-                'prefix' => 'admin',
+                'prefix' => ADMIN_PREFIX,
             ]);
         }
 
