@@ -23,7 +23,7 @@
 namespace MeCmsYoutube\Shell;
 
 use MeCmsYoutube\Utility\Youtube;
-use MeCms\Shell\BaseUpdateShell;
+use MeCms\Console\BaseUpdateShell;
 
 /**
  * Applies updates
@@ -99,7 +99,7 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.4.0 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::$connection
      */
     public function to2v4v0()
     {
@@ -117,8 +117,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.3.0 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
-     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
      */
     public function to2v3v0()
     {
