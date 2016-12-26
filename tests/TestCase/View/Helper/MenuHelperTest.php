@@ -63,7 +63,6 @@ class MenuHelperTest extends TestCase
 
     /**
      * Tests for `videos()` method
-     * @return void
      * @test
      */
     public function testVideos()
@@ -75,30 +74,25 @@ class MenuHelperTest extends TestCase
             '<a href="/me-cms-youtube/admin/videos/add" title="Add video">Add video</a>',
         ], $menu);
         $this->assertEquals('Videos', $title);
-        $this->assertEquals([
-            'icon' => 'film',
-        ], $options);
+        $this->assertEquals(['icon' => 'film'], $options);
 
-        //Menu for admin user
-        $this->Menu->Auth->initialize(['group' => ['name' => 'admin']]);
-        list($menu) = $this->Menu->videos();
-
-        $this->assertEquals([
+        $expected = [
             '<a href="/me-cms-youtube/admin/videos" title="List videos">List videos</a>',
             '<a href="/me-cms-youtube/admin/videos/add" title="Add video">Add video</a>',
             '<a href="/me-cms-youtube/admin/videos-categories" title="List categories">List categories</a>',
             '<a href="/me-cms-youtube/admin/videos-categories/add" title="Add category">Add category</a>',
-        ], $menu);
+        ];
 
-        //Menu for manager user
+        //Menu for manager users
         $this->Menu->Auth->initialize(['group' => ['name' => 'manager']]);
         list($menu) = $this->Menu->videos();
 
-        $this->assertEquals([
-            '<a href="/me-cms-youtube/admin/videos" title="List videos">List videos</a>',
-            '<a href="/me-cms-youtube/admin/videos/add" title="Add video">Add video</a>',
-            '<a href="/me-cms-youtube/admin/videos-categories" title="List categories">List categories</a>',
-            '<a href="/me-cms-youtube/admin/videos-categories/add" title="Add category">Add category</a>',
-        ], $menu);
+        $this->assertEquals($expected, $menu);
+
+        //Menu for admin users
+        $this->Menu->Auth->initialize(['group' => ['name' => 'admin']]);
+        list($menu) = $this->Menu->videos();
+
+        $this->assertEquals($expected, $menu);
     }
 }

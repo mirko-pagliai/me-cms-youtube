@@ -51,20 +51,18 @@ class MenuHelper extends Helper
      */
     public function videos()
     {
-        $menu = [
-            $this->Html->link(__d('me_cms_youtube', 'List videos'), [
-                'controller' => 'Videos',
-                'action' => 'index',
-                'plugin' => ME_CMS_YOUTUBE,
-                'prefix' => 'admin',
-            ]),
-            $this->Html->link(__d('me_cms_youtube', 'Add video'), [
-                'controller' => 'Videos',
-                'action' => 'add',
-                'plugin' => ME_CMS_YOUTUBE,
-                'prefix' => 'admin',
-            ]),
-        ];
+        $menu[] = $this->Html->link(__d('me_cms_youtube', 'List videos'), [
+            'controller' => 'Videos',
+            'action' => 'index',
+            'plugin' => ME_CMS_YOUTUBE,
+            'prefix' => ADMIN_PREFIX,
+        ]);
+        $menu[] = $this->Html->link(__d('me_cms_youtube', 'Add video'), [
+            'controller' => 'Videos',
+            'action' => 'add',
+            'plugin' => ME_CMS_YOUTUBE,
+            'prefix' => ADMIN_PREFIX,
+        ]);
 
         //Only admins and managers can access this controller
         if ($this->Auth->isGroup(['admin', 'manager'])) {
@@ -72,13 +70,13 @@ class MenuHelper extends Helper
                 'controller' => 'VideosCategories',
                 'action' => 'index',
                 'plugin' => ME_CMS_YOUTUBE,
-                'prefix' => 'admin',
+                'prefix' => ADMIN_PREFIX,
             ]);
             $menu[] = $this->Html->link(__d('me_cms', 'Add category'), [
                 'controller' => 'VideosCategories',
                 'action' => 'add',
                 'plugin' => ME_CMS_YOUTUBE,
-                'prefix' => 'admin',
+                'prefix' => ADMIN_PREFIX,
             ]);
         }
 

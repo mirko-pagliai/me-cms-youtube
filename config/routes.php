@@ -32,7 +32,7 @@ Router::scope('/', ['plugin' => ME_CMS_YOUTUBE], function ($routes) {
 
 Router::plugin(ME_CMS_YOUTUBE, ['path' => '/me-cms-youtube'], function ($routes) {
     //Admin routes
-    $routes->prefix('admin', function ($routes) {
+    $routes->prefix(ADMIN_PREFIX, function ($routes) {
         //All admin routes
         $routes->fallbacks('DashedRoute');
     });
