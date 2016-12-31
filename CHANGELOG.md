@@ -4,7 +4,7 @@
 * fixed bug: now seconds and duration of the video are always added by the 
     `beforeSave()` method;
 * some fixes for MeCms 2.14.12;
-* added tests for all entity classes.
+* added tests for all entity and all tables classes.
 
 ### 2.7.0
 * `Youtube` class does not contain more static methods;
