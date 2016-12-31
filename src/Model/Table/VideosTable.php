@@ -26,6 +26,7 @@ use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use MeCmsYoutube\Utility\Youtube;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -40,6 +41,17 @@ class VideosTable extends AppTable
      * @var string
      */
     public $cache = 'videos';
+
+    /**
+     * Internal method to get information about a video
+     * @param string $id Video ID
+     * @return mixed Object or `false`
+     * @uses MeCmsYoutube\Utility\Youtube::getInfo()
+     */
+    protected function _getInfo($id)
+    {
+        return (new Youtube)->getInfo($id);
+    }
 
     /**
      * Called after an entity has been deleted
@@ -73,6 +85,32 @@ class VideosTable extends AppTable
 
         //Sets the next video to be published
         $this->setNextToBePublished();
+    }
+
+    /**
+     * Called before each entity is saved.
+     * Stopping this event will abort the save operation.
+     * @param \Cake\Event\Event $event Event
+     * @param \Cake\ORM\Entity $entity Entity
+     * @param \ArrayObject $options Options
+     * @return bool
+     * @uses _getInfo()
+     */
+    public function beforeSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
+        if ((empty($entity->seconds) || empty($entity->duration)) && !empty($entity->youtube_id)) {
+            $info = $this->_getInfo($entity->youtube_id);
+
+            if (empty($entity->seconds)) {
+                $entity->seconds = $info->seconds;
+            }
+
+            if (empty($entity->duration)) {
+                $entity->duration = $info->duration;
+            }
+        }
+
+        return true;
     }
 
     /**

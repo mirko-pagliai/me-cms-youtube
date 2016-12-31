@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.7 branch
 ### 2.7.1
+* fixed bug: now seconds and duration of the video are always added by the 
+    `beforeSave()` method;
 * some fixes for MeCms 2.14.12;
 * added tests for all entity classes.
 
