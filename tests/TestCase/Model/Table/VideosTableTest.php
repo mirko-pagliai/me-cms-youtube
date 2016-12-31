@@ -26,12 +26,15 @@ namespace MeCmsYoutube\Test\TestCase\Model\Table;
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Reflection\ReflectionTrait;
 
 /**
  * VideosTableTest class
  */
 class VideosTableTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * @var \MeCmsYoutube\Model\Table\VideosTable
      */
@@ -80,6 +83,15 @@ class VideosTableTest extends TestCase
     public function testCacheProperty()
     {
         $this->assertEquals('videos', $this->Videos->cache);
+    }
+
+    /**
+     * Test for `_getInfo()` method
+     * @test
+     */
+    public function testGetInfo()
+    {
+        $this->assertFalse($this->invokeMethod($this->Videos, '_getInfo', ['vlSR8Wlmpac']));
     }
 
     /**
