@@ -48,7 +48,7 @@ class VideosTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses setNextToBePublished()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
     public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
     {
@@ -65,7 +65,7 @@ class VideosTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses setNextToBePublished()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
     public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
     {
@@ -93,7 +93,8 @@ class VideosTable extends AppTable
      * @param string $type The type of query to perform
      * @param array|ArrayAccess $options An array that will be passed to Query::applyOptions()
      * @return Cake\ORM\Query The query builder
-     * @uses setNextToBePublished()
+     * @uses MeCms\Model\Table\AppTable::getNextToBePublished()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
     public function find($type = 'all', $options = [])
     {
@@ -200,28 +201,6 @@ class VideosTable extends AppTable
         }
 
         return $query;
-    }
-
-    /**
-     * Sets to cache the timestamp of the next record to be published.
-     * This value can be used to check if the cache is valid
-     * @return void
-     * @uses $cache
-     */
-    public function setNextToBePublished()
-    {
-        $next = $this->find()
-            ->select('created')
-            ->where([
-                sprintf('%s.active', $this->alias()) => true,
-                sprintf('%s.created >', $this->alias()) => new Time,
-            ])
-            ->order([sprintf('%s.created', $this->alias()) => 'ASC'])
-            ->first();
-
-        $next = empty($next->created) ? false : $next->created->toUnixString();
-
-        Cache::write('next_to_be_published', $next, $this->cache);
     }
 
     /**
