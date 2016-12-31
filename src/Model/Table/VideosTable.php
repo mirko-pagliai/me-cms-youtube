@@ -205,7 +205,6 @@ class VideosTable extends AppTable
         $this->table('youtube_videos');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
