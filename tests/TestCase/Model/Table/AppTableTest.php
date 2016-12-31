@@ -77,7 +77,7 @@ class AppTableTest extends TestCase
 
         unset($this->Videos, $this->VideosCategories);
     }
-    
+
     /**
      * Test for `getList()` method
      * @test
