@@ -37,7 +37,7 @@ class VideosTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'videos';
 
@@ -122,7 +122,7 @@ class VideosTable extends AppTable
         $query->where([
             sprintf('%s.active', $this->alias()) => true,
             sprintf('%s.is_spot', $this->alias()) => false,
-            sprintf('%s.created <=', $this->alias()) => new Time(),
+            sprintf('%s.created <=', $this->alias()) => new Time,
         ]);
 
         return $query;
@@ -142,7 +142,7 @@ class VideosTable extends AppTable
             ->where([
                 sprintf('%s.active', $this->alias()) => true,
                 sprintf('%s.is_spot', $this->alias()) => true,
-                sprintf('%s.created <=', $this->alias()) => new Time(),
+                sprintf('%s.created <=', $this->alias()) => new Time,
             ])
             ->cache('all_spots', $this->cache)
             ->toArray();
@@ -196,9 +196,7 @@ class VideosTable extends AppTable
 
         //"Is spot?" field
         if (!empty($data['spot']) && $data['spot']) {
-            $query->where([
-                sprintf('%s.is_spot', $this->alias()) => true,
-            ]);
+            $query->where([sprintf('%s.is_spot', $this->alias()) => true]);
         }
 
         return $query;
@@ -216,7 +214,7 @@ class VideosTable extends AppTable
             ->select('created')
             ->where([
                 sprintf('%s.active', $this->alias()) => true,
-                sprintf('%s.created >', $this->alias()) => new Time(),
+                sprintf('%s.created >', $this->alias()) => new Time,
             ])
             ->order([sprintf('%s.created', $this->alias()) => 'ASC'])
             ->first();

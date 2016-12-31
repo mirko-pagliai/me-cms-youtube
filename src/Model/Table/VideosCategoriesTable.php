@@ -35,7 +35,7 @@ class VideosCategoriesTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'videos';
 
@@ -59,9 +59,7 @@ class VideosCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([
-            sprintf('%s.video_count >', $this->alias()) => 0,
-        ]);
+        $query->where([sprintf('%s.video_count >', $this->alias()) => 0]);
 
         return $query;
     }
