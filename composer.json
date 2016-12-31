@@ -27,7 +27,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "MeCmsYoutube\\Test\\": "tests"
+            "MeCmsYoutube\\Test\\": "tests",
+            "MeCms\\Test\\": "vendor/mirko-pagliai/me-cms/tests"
         }
     },
     "minimum-stability": "dev"
