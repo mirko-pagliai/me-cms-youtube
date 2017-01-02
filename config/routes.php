@@ -26,8 +26,8 @@ Router::defaultRouteClass('DashedRoute');
 Router::extensions('rss');
 
 Router::scope('/', ['plugin' => ME_CMS_YOUTUBE], function ($routes) {
-    //Includes routes
-    include_once 'routes/videos.php';
+    //Requires other routes
+    require 'routes' . DS . 'videos.php';
 });
 
 Router::plugin(ME_CMS_YOUTUBE, ['path' => '/me-cms-youtube'], function ($routes) {
