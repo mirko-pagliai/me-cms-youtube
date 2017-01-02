@@ -38,7 +38,7 @@ use MeCms\Utility\SitemapBuilder;
 class Sitemap extends SitemapBuilder
 {
     /**
-     * Method that returns videos urls
+     * Returns videos urls
      * @return array
      * @uses MeCms\Utility\SitemapBuilder::parse()
      */
@@ -54,10 +54,11 @@ class Sitemap extends SitemapBuilder
 
         $categories = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain(['Videos' => function ($q) use ($table) {
-                return $q
-                    ->select(['id', 'category_id', 'modified'])
-                    ->order([sprintf('%s.modified', $table->Videos->alias()) => 'DESC']);
+            ->contain(['Videos' => function ($query) use ($table) {
+                $query->select(['id', 'category_id', 'modified']);
+                $query->order([sprintf('%s.modified', $table->Videos->alias()) => 'DESC']);
+
+                return $query;
             }]);
 
         if ($categories->isEmpty()) {
@@ -70,11 +71,9 @@ class Sitemap extends SitemapBuilder
             ->firstOrFail();
 
         //Adds videos index, categories index and videos search
-        $url = [
-            self::parse(['_name' => 'videos'], ['lastmod' => $latest->modified]),
-            self::parse(['_name' => 'videosCategories']),
-            self::parse(['_name' => 'videosSearch'], ['priority' => '0.2']),
-        ];
+        $url[] = self::parse(['_name' => 'videos'], ['lastmod' => $latest->modified]);
+        $url[] = self::parse(['_name' => 'videosCategories']);
+        $url[] = self::parse(['_name' => 'videosSearch'], ['priority' => '0.2']);
 
         foreach ($categories as $category) {
             //Adds the category
@@ -83,13 +82,13 @@ class Sitemap extends SitemapBuilder
                 ['lastmod' => $category->videos[0]->modified]
             );
 
-            //Adds the videos
-            $url = am($url, array_map(function ($video) {
-                return self::parse(
+            //Adds each video
+            foreach ($category->videos as $video) {
+                $url[] = self::parse(
                     ['_name' => 'video', $video->id],
                     ['lastmod' => $video->modified]
                 );
-            }, $category->videos));
+            }
         }
 
         Cache::write('sitemap', $url, $table->cache);
