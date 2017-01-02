@@ -91,7 +91,7 @@ class YoutubeVideosCategoriesFixture extends TestFixture
             'title' => 'Sub video category',
             'slug' => 'sub-video-category',
             'description' => 'Description of sub category',
-            'video_count' => 1,
+            'video_count' => 0,
             'created' => '2016-12-26 21:26:32',
             'modified' => '2016-12-26 21:26:32',
         ],
