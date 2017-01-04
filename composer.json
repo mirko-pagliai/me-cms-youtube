@@ -30,6 +30,5 @@
             "MeCmsYoutube\\Test\\": "tests",
             "MeCms\\Test\\": "vendor/mirko-pagliai/me-cms/tests"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
