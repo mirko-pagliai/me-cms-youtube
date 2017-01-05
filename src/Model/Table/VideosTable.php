@@ -26,6 +26,7 @@ use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use MeCmsYoutube\Utility\Youtube;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -37,9 +38,20 @@ class VideosTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'videos';
+
+    /**
+     * Internal method to get information about a video
+     * @param string $id Video ID
+     * @return mixed Object or `false`
+     * @uses MeCmsYoutube\Utility\Youtube::getInfo()
+     */
+    protected function _getInfo($id)
+    {
+        return (new Youtube)->getInfo($id);
+    }
 
     /**
      * Called after an entity has been deleted
@@ -48,7 +60,7 @@ class VideosTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses setNextToBePublished()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
     public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
     {
@@ -65,7 +77,7 @@ class VideosTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses setNextToBePublished()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
     public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
     {
@@ -73,6 +85,32 @@ class VideosTable extends AppTable
 
         //Sets the next video to be published
         $this->setNextToBePublished();
+    }
+
+    /**
+     * Called before each entity is saved.
+     * Stopping this event will abort the save operation.
+     * @param \Cake\Event\Event $event Event
+     * @param \Cake\ORM\Entity $entity Entity
+     * @param \ArrayObject $options Options
+     * @return bool
+     * @uses _getInfo()
+     */
+    public function beforeSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
+        if ((empty($entity->seconds) || empty($entity->duration)) && !empty($entity->youtube_id)) {
+            $info = $this->_getInfo($entity->youtube_id);
+
+            if (empty($entity->seconds)) {
+                $entity->seconds = $info->seconds;
+            }
+
+            if (empty($entity->duration)) {
+                $entity->duration = $info->duration;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -93,7 +131,8 @@ class VideosTable extends AppTable
      * @param string $type The type of query to perform
      * @param array|ArrayAccess $options An array that will be passed to Query::applyOptions()
      * @return Cake\ORM\Query The query builder
-     * @uses setNextToBePublished()
+     * @uses MeCms\Model\Table\AppTable::getNextToBePublished()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
     public function find($type = 'all', $options = [])
     {
@@ -122,7 +161,7 @@ class VideosTable extends AppTable
         $query->where([
             sprintf('%s.active', $this->alias()) => true,
             sprintf('%s.is_spot', $this->alias()) => false,
-            sprintf('%s.created <=', $this->alias()) => new Time(),
+            sprintf('%s.created <=', $this->alias()) => new Time,
         ]);
 
         return $query;
@@ -142,7 +181,7 @@ class VideosTable extends AppTable
             ->where([
                 sprintf('%s.active', $this->alias()) => true,
                 sprintf('%s.is_spot', $this->alias()) => true,
-                sprintf('%s.created <=', $this->alias()) => new Time(),
+                sprintf('%s.created <=', $this->alias()) => new Time,
             ])
             ->cache('all_spots', $this->cache)
             ->toArray();
@@ -166,7 +205,6 @@ class VideosTable extends AppTable
         $this->table('youtube_videos');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
@@ -196,34 +234,10 @@ class VideosTable extends AppTable
 
         //"Is spot?" field
         if (!empty($data['spot']) && $data['spot']) {
-            $query->where([
-                sprintf('%s.is_spot', $this->alias()) => true,
-            ]);
+            $query->where([sprintf('%s.is_spot', $this->alias()) => true]);
         }
 
         return $query;
-    }
-
-    /**
-     * Sets to cache the timestamp of the next record to be published.
-     * This value can be used to check if the cache is valid
-     * @return void
-     * @uses $cache
-     */
-    public function setNextToBePublished()
-    {
-        $next = $this->find()
-            ->select('created')
-            ->where([
-                sprintf('%s.active', $this->alias()) => true,
-                sprintf('%s.created >', $this->alias()) => new Time(),
-            ])
-            ->order([sprintf('%s.created', $this->alias()) => 'ASC'])
-            ->first();
-
-        $next = empty($next->created) ? false : $next->created->toUnixString();
-
-        Cache::write('next_to_be_published', $next, $this->cache);
     }
 
     /**

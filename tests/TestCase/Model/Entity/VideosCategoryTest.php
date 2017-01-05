@@ -19,21 +19,38 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         MeCms\Utility\SitemapBuilder
  */
-use Cake\Routing\Router;
+namespace MeCmsYoutube\Test\TestCase\Model\Entity;
 
-Router::defaultRouteClass('DashedRoute');
-Router::extensions('rss');
+use Cake\TestSuite\TestCase;
+use MeCmsYoutube\Model\Entity\VideosCategory;
 
-Router::scope('/', ['plugin' => ME_CMS_YOUTUBE], function ($routes) {
-    //Requires other routes
-    require 'routes' . DS . 'videos.php';
-});
+/**
+ * VideosCategoryTest class
+ */
+class VideosCategoryTest extends TestCase
+{
+    /**
+     * Test for `__construct()` method
+     * @test
+     */
+    public function testConstruct()
+    {
+        $this->assertEquals('MeCmsYoutube\Model\Entity\VideosCategory', get_class(new VideosCategory));
+    }
 
-Router::plugin(ME_CMS_YOUTUBE, ['path' => '/me-cms-youtube'], function ($routes) {
-    //Admin routes
-    $routes->prefix(ADMIN_PREFIX, function ($routes) {
-        //All admin routes
-        $routes->fallbacks('DashedRoute');
-    });
-});
+    /**
+     * Test for fields that cannot be mass assigned using newEntity() or
+     *  patchEntity()
+     * @test
+     */
+    public function testNoAccessibleProperties()
+    {
+        $entity = new VideosCategory;
+
+        $this->assertFalse($entity->accessible('id'));
+        $this->assertFalse($entity->accessible('video_count'));
+        $this->assertFalse($entity->accessible('modified'));
+    }
+}

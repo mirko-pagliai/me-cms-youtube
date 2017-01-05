@@ -35,7 +35,7 @@ class VideosCategoriesTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'videos';
 
@@ -59,35 +59,9 @@ class VideosCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([
-            sprintf('%s.video_count >', $this->alias()) => 0,
-        ]);
+        $query->where([sprintf('%s.video_count >', $this->alias()) => 0]);
 
         return $query;
-    }
-
-    /**
-     * Gets the categories list
-     * @return array List
-     * @uses $cache
-     */
-    public function getList()
-    {
-        return $this->find('list')
-            ->cache('categories_list', $this->cache)
-            ->toArray();
-    }
-
-    /**
-     * Gets the categories tree list
-     * @return array List
-     * @uses $cache
-     */
-    public function getTreeList()
-    {
-        return $this->find('treeList')
-            ->cache('categories_tree_list', $this->cache)
-            ->toArray();
     }
 
     /**

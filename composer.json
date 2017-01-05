@@ -13,8 +13,8 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "cakephp/cakephp": ">=3.3.4 <4.0",
-        "mirko-pagliai/me-cms": ">=2.14.11"
+        "cakephp/cakephp": ">=3.3.4 <3.4",
+        "mirko-pagliai/me-cms": ">=2.14.12 <3"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "2.*",
@@ -27,8 +27,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "MeCmsYoutube\\Test\\": "tests"
+            "MeCmsYoutube\\Test\\": "tests",
+            "MeCms\\Test\\": "vendor/mirko-pagliai/me-cms/tests"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

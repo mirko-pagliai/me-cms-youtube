@@ -1,10 +1,17 @@
 # 2.x branch
 ## 2.7 branch
+### 2.7.1
+* fixed bug: now seconds and duration of the video are always added by the 
+    `beforeSave()` method;
+* some fixes for MeCms 2.14.12;
+* added tests for `Sitemap` class;
+* added tests for all entity and all tables classes.
+
 ### 2.7.0
 * `Youtube` class does not contain more static methods;
 * `Youtube::getInfo()` method returns an object;
 * fixed a bug with videos longer than an hour;
-* some fixes for MeCms 2.14.12;
+* some fixes for MeCms 2.14.11;
 * renamed repository and package. Now is `me-cms-youtube`;
 * added test for `Youtube` and `InstallShell` classes.
 
