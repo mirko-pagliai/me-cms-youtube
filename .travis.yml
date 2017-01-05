@@ -20,6 +20,8 @@ install:
   - printf "\n" | pecl install imagick
   - composer self-update
   - composer install --prefer-dist --no-interaction
+  - rm -r vendor/mirko-pagliai/me-cms/
+  - composer update mirko-pagliai/me-cms --prefer-source
 
 script:
   - if [[ $PHPCS != '1' && $COVERAGE != '1' ]]; then phpunit; fi
