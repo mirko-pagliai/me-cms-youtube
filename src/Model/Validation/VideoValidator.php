@@ -39,6 +39,9 @@ class VideoValidator extends AppValidator
     {
         parent::__construct();
 
+        //User (author)
+        $this->requirePresence('user_id', 'create');
+
         //Category
         $this->add('category_id', [
             'naturalNumber' => [
@@ -46,9 +49,6 @@ class VideoValidator extends AppValidator
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('category_id', 'create');
-
-        //User (author)
-        $this->requirePresence('user_id', 'create');
 
         //Title
         $this->requirePresence('title', 'create');
