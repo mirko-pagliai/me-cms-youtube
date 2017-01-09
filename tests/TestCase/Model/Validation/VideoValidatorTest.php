@@ -68,8 +68,6 @@ class VideoValidatorTest extends TestCase
             'category_id' => 1,
             'title' => 'Example of title',
             'text' => 'Example of text',
-            'seconds' => 200,
-            'duration' => '11:34',
         ];
     }
 

@@ -81,7 +81,7 @@ class VideoValidator extends AppValidator
                 'rule' => 'naturalNumber',
             ],
         ])
-        ->requirePresence('seconds', 'create');
+        ->allowEmpty('seconds');
 
         //Duration
         $this->add('duration', [
@@ -92,6 +92,6 @@ class VideoValidator extends AppValidator
                 },
             ],
         ])
-        ->requirePresence('duration', 'create');
+        ->allowEmpty('duration');
     }
 }
