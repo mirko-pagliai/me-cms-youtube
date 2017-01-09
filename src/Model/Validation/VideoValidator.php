@@ -39,6 +39,19 @@ class VideoValidator extends AppValidator
     {
         parent::__construct();
 
+        //User (author)
+        $this->requirePresence('user_id', 'create');
+
+        //YouTube ID
+        $this->add('youtube_id', [
+            'validYoutubeId' => [
+                'message' => __d('me_cms_youtube', 'You have to enter a valid {0} ID', 'YouTube'),
+                'rule' => function ($value, $context) {
+                    return (bool)preg_match('/^[A-z0-9\-_]{11}$/', $value);
+                },
+            ],
+        ])->requirePresence('youtube_id', 'create');
+
         //Category
         $this->add('category_id', [
             'naturalNumber' => [
@@ -46,9 +59,6 @@ class VideoValidator extends AppValidator
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('category_id', 'create');
-
-        //User (author)
-        $this->requirePresence('user_id', 'create');
 
         //Title
         $this->requirePresence('title', 'create');
@@ -63,5 +73,25 @@ class VideoValidator extends AppValidator
                 'rule' => 'boolean',
             ],
         ]);
+
+        //Seconds
+        $this->add('seconds', [
+            'naturalNumber' => [
+                'message' => __d('me_cms', 'You have to enter a valid value'),
+                'rule' => 'naturalNumber',
+            ],
+        ])
+        ->allowEmpty('seconds');
+
+        //Duration
+        $this->add('duration', [
+            'validDuration' => [
+                'message' => __d('me_cms', 'You have to enter a valid value'),
+                'rule' => function ($value, $context) {
+                    return (bool)preg_match('/^(\d{2}:){1,2}\d{2}$/', $value);
+                },
+            ],
+        ])
+        ->allowEmpty('duration');
     }
 }

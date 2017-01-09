@@ -82,6 +82,21 @@ class VideosCategoriesTableTest extends TestCase
     }
 
     /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $entity = $this->VideosCategories->newEntity([
+            'parent_id' => 999,
+            'title' => 'My title',
+            'slug' => 'my-slug',
+        ]);
+        $this->assertFalse($this->VideosCategories->save($entity));
+        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */

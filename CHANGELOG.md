@@ -1,5 +1,10 @@
 # 2.x branch
 ## 2.7 branch
+### 2.7.2
+* fixed bug for sorting records in the admin panel;
+* added missing validation rules;
+* added tests for all validation classes.
+
 ### 2.7.1
 * fixed bug: now seconds and duration of the video are always added by the 
     `beforeSave()` method;

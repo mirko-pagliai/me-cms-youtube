@@ -175,6 +175,26 @@ class VideosTableTest extends TestCase
     }
 
     /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $entity = $this->Videos->newEntity([
+            'youtube_id' => 'vlSR8Wlmpac',
+            'user_id' => 999,
+            'category_id' => 999,
+            'title' => 'My title',
+            'text' => 'My text',
+        ]);
+        $this->assertFalse($this->Videos->save($entity));
+        $this->assertEquals([
+            'category_id' => ['_existsIn' => 'You have to select a valid option'],
+            'user_id' => ['_existsIn' => 'You have to select a valid option'],
+        ], $entity->errors());
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */
