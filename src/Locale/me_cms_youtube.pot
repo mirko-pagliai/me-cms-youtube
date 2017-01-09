@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-12-18 17:25+0100\n"
+"POT-Creation-Date: 2017-01-09 15:31+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,12 +14,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:139
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:141
 msgid "This is not a {0} video"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:141
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Controller/Admin/VideosController.php:143
 msgid "Unable to retrieve video informations. Probably the video is private"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeYoutube/src/Model/Validation/VideoValidator.php:48
+msgid "You have to enter a valid {0} ID"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/add.ctp:25
@@ -74,7 +78,7 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/Videos/index.ctp:25
 #: /home/mirko/Libs/Plugins/MeYoutube/src/Template/Admin/VideosCategories/index.ctp:45
-#: /home/mirko/Libs/Plugins/MeYoutube/src/View/Helper/MenuHelper.php:81
+#: /home/mirko/Libs/Plugins/MeYoutube/src/View/Helper/MenuHelper.php:83
 msgid "Videos"
 msgstr ""
 
@@ -148,7 +152,7 @@ msgstr ""
 msgid "Latest videos"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeYoutube/src/View/Helper/MenuHelper.php:55
+#: /home/mirko/Libs/Plugins/MeYoutube/src/View/Helper/MenuHelper.php:54
 msgid "List videos"
 msgstr ""
 
