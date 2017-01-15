@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.7 branch
+### 2.7.3
+* fixed (perhaps forever...) bug for sorting records in the admin panel.
+
 ### 2.7.2
 * fixed bug for sorting records in the admin panel;
 * added missing validation rules;
