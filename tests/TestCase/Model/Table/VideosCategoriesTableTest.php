@@ -19,7 +19,6 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
- * @see         MeCms\Utility\SitemapBuilder
  */
 namespace MeCmsYoutube\Test\TestCase\Model\Table;
 
@@ -192,7 +191,7 @@ class VideosCategoriesTableTest extends TestCase
 
         $query = $this->VideosCategories->find('active');
         $this->assertEquals('Cake\ORM\Query', get_class($query));
-        $this->assertEquals('SELECT VideosCategories.id AS "VideosCategories__id", VideosCategories.parent_id AS "VideosCategories__parent_id", VideosCategories.lft AS "VideosCategories__lft", VideosCategories.rght AS "VideosCategories__rght", VideosCategories.title AS "VideosCategories__title", VideosCategories.slug AS "VideosCategories__slug", VideosCategories.description AS "VideosCategories__description", VideosCategories.video_count AS "VideosCategories__video_count", VideosCategories.created AS "VideosCategories__created", VideosCategories.modified AS "VideosCategories__modified" FROM youtube_videos_categories VideosCategories WHERE VideosCategories.video_count > :c0', $query->sql());
+        $this->assertEquals('SELECT VideosCategories.id AS `VideosCategories__id`, VideosCategories.parent_id AS `VideosCategories__parent_id`, VideosCategories.lft AS `VideosCategories__lft`, VideosCategories.rght AS `VideosCategories__rght`, VideosCategories.title AS `VideosCategories__title`, VideosCategories.slug AS `VideosCategories__slug`, VideosCategories.description AS `VideosCategories__description`, VideosCategories.video_count AS `VideosCategories__video_count`, VideosCategories.created AS `VideosCategories__created`, VideosCategories.modified AS `VideosCategories__modified` FROM youtube_videos_categories VideosCategories WHERE VideosCategories.video_count > :c0', $query->sql());
 
         $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
 
