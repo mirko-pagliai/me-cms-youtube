@@ -20,42 +20,41 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+if (!isset($truncate['title'])) {
+    $truncate['title'] = 40;
+}
+
+$title = $video->title;
+
+if (isset($truncate['title']) && $truncate['title']) {
+    $title = $this->Text->truncate($title, $truncate['title'], ['exact' => false]);
+}
+
+if (!empty($video->text)) {
+    if (!isset($truncate['text'])) {
+        $truncate['text'] = 80;
+    }
+
+    $text = strip_tags($video->text);
+
+    if (isset($truncate['text']) && $truncate['text']) {
+        $text = $this->Text->truncate($text, $truncate['text'], ['exact' => false]);
+    }
+}
+
 ?>
 
 <div class="content-preview">
     <a href="<?= $this->Url->build(['_name' => 'video', $video->id]) ?>">
         <div>
             <div>
-                <div class="content-title">
-                    <?php
-                    if (isset($truncate['title']) && !$truncate['title']) {
-                        echo $video->title;
-                    } else {
-                        echo $this->Text->truncate(
-                            $video->title,
-                            empty($truncate['title']) ? 40 : $truncate['title'],
-                            ['exact' => false]
-                        );
-                    }
-                    ?>
-                </div>
-                <?php if (!empty($video->text)) : ?>
-                    <div class="content-text">
-                        <?php
-                        if (isset($truncate['text']) && !$truncate['text']) {
-                            echo strip_tags($video->text);
-                        } else {
-                            echo $this->Text->truncate(
-                                strip_tags($video->text),
-                                empty($truncate['text']) ? 80 : $truncate['text'],
-                                ['exact' => false]
-                            );
-                        }
-                        ?>
-                    </div>
+                <div class="content-title"><?= $title ?></div>
+                <?php if (!empty($text)) : ?>
+                    <div class="content-text"><?= $text ?></div>
                 <?php endif; ?>
             </div>
         </div>
-        <?= $this->Thumb->fit($video->preview, ['width' => 205]) ?>
+        <?= $this->Thumb->fit($video->preview, ['width' => 205], ['alt' => $title]) . PHP_EOL ?>
     </a>
 </div>
