@@ -29,9 +29,9 @@ use Cake\TestSuite\TestCase;
 use MeCmsYoutube\View\View\AppView as View;
 
 /**
- * PostsCellTest class
+ * VideosCellTest class
  */
-class PostsCellTest extends TestCase
+class VideosCellTest extends TestCase
 {
     /**
      * @var \MeCmsYoutube\View\View\AppView
