@@ -97,7 +97,7 @@ class SitemapTest extends TestCase
             ],
             [
                 'loc' => 'http://localhost/video/1',
-                'lastmod' => '2016-12-31T15:05:40+00:00',
+                'lastmod' => '2016-11-30T15:05:40+00:00',
                 'priority' => '0.5',
             ],
         ];

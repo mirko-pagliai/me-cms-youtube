@@ -78,8 +78,8 @@ class YoutubeVideosFixture extends TestFixture
             'is_spot' => 0,
             'seconds' => 3939,
             'duration' => '01:05:39',
-            'created' => '2016-12-31 15:05:40',
-            'modified' => '2016-12-31 15:05:40',
+            'created' => '2016-11-30 15:05:40',
+            'modified' => '2016-11-30 15:05:40',
         ],
         [
             'id' => 2,
