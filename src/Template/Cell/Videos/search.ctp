@@ -31,8 +31,12 @@ $this->assign('title', __d('me_cms_youtube', 'Search videos'));
 
 echo $this->Form->createInline(false, [
     'type' => 'get',
-    'url' => ['_name' => 'videosSearch']
+    'url' => ['_name' => 'videosSearch'],
 ]);
-echo $this->Form->input('p', ['placeholder' => sprintf('%s...', __d('me_cms', 'Search'))]);
-echo $this->Form->submit(null, ['class' => 'btn-primary visible-lg-inline', 'icon' => 'search']);
+echo $this->Form->input('p', [
+    'button' => $this->Form->button(null, ['class' => 'btn-primary', 'icon' => 'search']),
+    'id' => false,
+    'label' => false,
+    'placeholder' => sprintf('%s...', __d('me_cms', 'Search')),
+]);
 echo $this->Form->end();

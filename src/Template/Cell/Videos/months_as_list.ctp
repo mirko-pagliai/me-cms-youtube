@@ -31,11 +31,7 @@ $this->assign('title', __d('me_cms_youtube', 'Videos by month'));
 $months = array_map(function ($month) {
     return $this->Html->link($month->month->i18nFormat('MMMM Y'), [
         '_name' => 'videosByDate',
-        sprintf(
-            '%s/%s',
-            $month->month->i18nFormat('YYYY'),
-            $month->month->i18nFormat('MM')
-        ),
+        sprintf('%s/%s', $month->month->i18nFormat('YYYY'), $month->month->i18nFormat('MM')),
     ]);
 }, $months);
 

@@ -22,7 +22,6 @@
  */
 namespace MeCmsYoutube\View\Cell;
 
-use Cake\Cache\Cache;
 use Cake\I18n\FrozenDate;
 use Cake\View\Cell;
 
@@ -76,7 +75,7 @@ class VideosCell extends Cell
 
         $this->set(compact('categories'));
 
-        if ($render !== 'form') {
+        if ($render === 'list') {
             $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
         }
     }
@@ -88,8 +87,8 @@ class VideosCell extends Cell
      */
     public function latest($limit = 1)
     {
-        //Returns on index, except for category
-        if ($this->request->isAction('index', 'Videos') && !$this->request->param('slug')) {
+        //Returns on posts index
+        if ($this->request->isUrl(['_name' => 'videos'])) {
             return;
         }
 
@@ -110,8 +109,8 @@ class VideosCell extends Cell
      */
     public function months($render = 'form')
     {
-        //Returns on index
-        if ($this->request->isAction('index', 'Videos')) {
+        //Returns on posts index
+        if ($this->request->isUrl(['_name' => 'videos'])) {
             return;
         }
 
@@ -125,18 +124,18 @@ class VideosCell extends Cell
             ->cache('widget_months', $this->Videos->cache)
             ->toArray();
 
-        foreach ($months as $oldKey => $month) {
+        foreach ($months as $key => $month) {
             $exploded = explode('-', $month->month);
             $newKey = sprintf('%s/%s', $exploded[1], $exploded[0]);
 
             $months[$newKey] = $month;
             $months[$newKey]->month = (new FrozenDate())->year($exploded[1])->month($exploded[0]);
-            unset($months[$oldKey]);
+            unset($months[$key]);
         }
 
         $this->set(compact('months'));
 
-        if ($render !== 'form') {
+        if ($render === 'list') {
             $this->viewBuilder()->template(sprintf('months_as_%s', $render));
         }
     }
