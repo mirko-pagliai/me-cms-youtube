@@ -1,4 +1,9 @@
 # 2.x branch
+## 2.8 branch
+### 2.8.0
+* the cells that act as widgets now have "Widgets" in the name, for the classes
+    and the template directory.
+
 ## 2.7 branch
 ### 2.7.4
 * the whole of the widget code has been rewritten and improved, making it more
