@@ -36,7 +36,7 @@ class VideosCategoryTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCmsYoutube\Model\Entity\VideosCategory', get_class(new VideosCategory));
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', new VideosCategory);
     }
 
     /**

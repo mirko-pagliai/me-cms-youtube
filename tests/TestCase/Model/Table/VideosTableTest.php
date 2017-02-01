@@ -203,12 +203,12 @@ class VideosTableTest extends TestCase
         $this->assertEquals('title', $this->Videos->displayField());
         $this->assertEquals('id', $this->Videos->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->Videos->Categories));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Videos->Categories);
         $this->assertEquals('category_id', $this->Videos->Categories->foreignKey());
         $this->assertEquals('INNER', $this->Videos->Categories->joinType());
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->Videos->Categories->className());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->Videos->Users));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Videos->Users);
         $this->assertEquals('user_id', $this->Videos->Users->foreignKey());
         $this->assertEquals('INNER', $this->Videos->Users->joinType());
         $this->assertEquals('MeCms.Users', $this->Videos->Users->className());
@@ -227,7 +227,7 @@ class VideosTableTest extends TestCase
 
         $this->assertNotEmpty($entity->category);
 
-        $this->assertEquals('MeCmsYoutube\Model\Entity\VideosCategory', get_class($entity->category));
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $entity->category);
         $this->assertEquals(4, $entity->category->id);
     }
 
@@ -241,7 +241,7 @@ class VideosTableTest extends TestCase
 
         $this->assertNotEmpty($entity->user);
 
-        $this->assertEquals('MeCms\Model\Entity\User', get_class($entity->user));
+        $this->assertInstanceOf('MeCms\Model\Entity\User', $entity->user);
         $this->assertEquals(3, $entity->user->id);
     }
 
@@ -252,7 +252,7 @@ class VideosTableTest extends TestCase
     public function testFind()
     {
         $query = $this->Videos->find();
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
 
         //Writes `next_to_be_published` and some data on cache
         Cache::write('next_to_be_published', time() - 3600, $this->Videos->cache);
@@ -263,7 +263,7 @@ class VideosTableTest extends TestCase
 
         //The cache will now be cleared
         $query = $this->Videos->find();
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
 
         $this->assertEmpty(Cache::read('next_to_be_published', $this->Videos->cache));
         $this->assertEmpty(Cache::read('someData', $this->Videos->cache));
@@ -278,12 +278,12 @@ class VideosTableTest extends TestCase
         $this->assertTrue($this->Videos->hasFinder('active'));
 
         $query = $this->Videos->find('active');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Videos.id AS `Videos__id`, Videos.user_id AS `Videos__user_id`, Videos.youtube_id AS `Videos__youtube_id`, Videos.category_id AS `Videos__category_id`, Videos.title AS `Videos__title`, Videos.subtitle AS `Videos__subtitle`, Videos.text AS `Videos__text`, Videos.priority AS `Videos__priority`, Videos.active AS `Videos__active`, Videos.is_spot AS `Videos__is_spot`, Videos.seconds AS `Videos__seconds`, Videos.duration AS `Videos__duration`, Videos.created AS `Videos__created`, Videos.modified AS `Videos__modified` FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
-        $this->assertEquals('Cake\I18n\Time', get_class($query->valueBinder()->bindings()[':c2']['value']));
+        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c2']['value']);
 
         $this->assertNotEmpty($query->count());
 
@@ -312,7 +312,7 @@ class VideosTableTest extends TestCase
         $data = ['spot' => true];
 
         $query = $this->Videos->queryFromFilter($this->Videos->find(), $data);
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Videos.id AS `Videos__id`, Videos.user_id AS `Videos__user_id`, Videos.youtube_id AS `Videos__youtube_id`, Videos.category_id AS `Videos__category_id`, Videos.title AS `Videos__title`, Videos.subtitle AS `Videos__subtitle`, Videos.text AS `Videos__text`, Videos.priority AS `Videos__priority`, Videos.active AS `Videos__active`, Videos.is_spot AS `Videos__is_spot`, Videos.seconds AS `Videos__seconds`, Videos.duration AS `Videos__duration`, Videos.created AS `Videos__created`, Videos.modified AS `Videos__modified` FROM youtube_videos Videos WHERE Videos.is_spot = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
@@ -324,9 +324,9 @@ class VideosTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCmsYoutube\Model\Validation\VideoValidator',
-            get_class($this->Videos->validationDefault(new \Cake\Validation\Validator))
+            $this->Videos->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }
