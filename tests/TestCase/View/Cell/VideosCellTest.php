@@ -62,7 +62,7 @@ class VideosCellTest extends TestCase
      */
     public function setUp()
     {
-        Cache::disable();
+        Cache::clearAll();
 
         $this->Videos = TableRegistry::get('MeCmsYoutube.Videos');
 
@@ -152,6 +152,14 @@ class VideosCellTest extends TestCase
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_categories', $this->Videos->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            'first-video-category',
+            'sub-sub-video-category',
+        ], array_keys($fromCache->toArray()));
     }
 
     /**
@@ -240,6 +248,13 @@ class VideosCellTest extends TestCase
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_latest_1', $this->Videos->cache);
+        $this->assertEquals(1, $fromCache->count());
+
+        $fromCache = Cache::read('widget_latest_2', $this->Videos->cache);
+        $this->assertEquals(2, $fromCache->count());
     }
 
     /**
@@ -314,6 +329,19 @@ class VideosCellTest extends TestCase
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_months', $this->Videos->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            '2016/12',
+            '2016/11',
+        ], array_keys($fromCache->toArray()));
+
+        foreach ($fromCache as $key => $entity) {
+            $this->assertInstanceOf('Cake\I18n\FrozenDate', $entity->month);
+            $this->assertEquals($key, $entity->month->i18nFormat('yyyy/MM'));
+        }
     }
 
     /**

@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.7 branch
 ### 2.7.4
+* the whole of the widget code has been rewritten and improved, making it more
+    uniform and consistent;
 * removed `Videos::random()` widget, it did not make much sense;
 * added tests for `VideosCell` class.
 
