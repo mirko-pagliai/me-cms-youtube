@@ -249,7 +249,7 @@ class VideosCellTest extends TestCase
             'Videos by month',
             '/h4',
             ['div' => ['class' => 'widget-content']],
-            'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/videos/2017/01'],
+            'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/videos/' . date('Y/m')],
             ['div' => ['class' => 'form-group input select']],
             'select' => ['name' => 'q', 'onchange' => 'send_form(this)', 'class' => 'form-control'],
             ['option' => ['value' => '']],
