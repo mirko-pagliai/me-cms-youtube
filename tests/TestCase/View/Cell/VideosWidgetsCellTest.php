@@ -31,9 +31,9 @@ use MeCms\View\Helper\WidgetHelper;
 use MeCmsYoutube\View\View\AppView as View;
 
 /**
- * VideosCellTest class
+ * VideosWidgetsCellTest class
  */
-class VideosCellTest extends TestCase
+class VideosWidgetsCellTest extends TestCase
 {
     /**
      * @var \MeCmsYoutube\Model\Table\VideosTable

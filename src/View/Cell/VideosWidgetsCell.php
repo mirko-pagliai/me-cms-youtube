@@ -26,9 +26,9 @@ use Cake\I18n\FrozenDate;
 use Cake\View\Cell;
 
 /**
- * Videos cell
+ * VideosWidgets cell
  */
-class VideosCell extends Cell
+class VideosWidgetsCell extends Cell
 {
     /**
      * Constructor. It loads the model
