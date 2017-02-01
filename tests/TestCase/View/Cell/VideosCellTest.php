@@ -26,6 +26,7 @@ use Cake\Cache\Cache;
 use Cake\Network\Request;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
+use MeCms\View\Helper\WidgetHelper;
 use MeCmsYoutube\View\View\AppView as View;
 
 /**
@@ -33,6 +34,11 @@ use MeCmsYoutube\View\View\AppView as View;
  */
 class VideosCellTest extends TestCase
 {
+    /**
+     * @var \MeCmsYoutube\Model\Table\VideosTable
+     */
+    protected $Videos;
+
     /**
      * @var \MeCmsYoutube\View\View\AppView
      */
@@ -57,6 +63,8 @@ class VideosCellTest extends TestCase
     {
         Cache::disable();
 
+        $this->Videos = TableRegistry::get('MeCmsYoutube.Videos');
+
         $this->View = new View;
     }
 
@@ -68,7 +76,7 @@ class VideosCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->View);
+        unset($this->Videos, $this->View);
     }
 
     /**

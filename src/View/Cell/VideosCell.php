@@ -46,7 +46,6 @@ class VideosCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        //Loads the Videos model
         $this->loadModel('MeCmsYoutube.Videos');
     }
 
