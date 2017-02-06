@@ -27,8 +27,8 @@ use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
-use MeCms\View\Helper\WidgetHelper;
 use MeCmsYoutube\View\View\AppView as View;
+use MeCms\View\Helper\WidgetHelper;
 
 /**
  * VideosCellTest class
