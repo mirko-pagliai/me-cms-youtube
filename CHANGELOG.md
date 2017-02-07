@@ -4,7 +4,7 @@
 * the whole of the widget code has been rewritten and improved, making it more
     uniform and consistent;
 * removed `Videos::random()` widget, it did not make much sense;
-* added tests for `VideosCell` class.
+* added tests for `AppView` and `VideosCell` classes.
 
 ### 2.7.3
 * fixed (perhaps forever...) bug for sorting records in the admin panel.
