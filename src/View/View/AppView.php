@@ -22,12 +22,12 @@
  */
 namespace MeCmsYoutube\View\View;
 
-use MeCms\View\View\AppView as BaseView;
+use MeCms\View\View\AppView as View;
 
 /**
  * Application view class
  */
-class AppView extends BaseView
+class AppView extends View
 {
     /**
      * Renders a layout. Returns output from _render(). Returns false on
