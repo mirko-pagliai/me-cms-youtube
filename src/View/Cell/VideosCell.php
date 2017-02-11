@@ -125,7 +125,7 @@ class VideosCell extends Cell
                     return $row;
                 });
             })
-            ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+            ->order(['month' => 'DESC'])
             ->cache('widget_months', $this->Videos->cache)
             ->toArray();
 
