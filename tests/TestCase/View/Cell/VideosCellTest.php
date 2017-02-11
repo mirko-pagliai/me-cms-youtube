@@ -24,9 +24,11 @@ namespace MeCmsYoutube\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
 use Cake\Network\Request;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use MeCmsYoutube\View\View\AppView as View;
+use MeCms\View\Helper\WidgetHelper;
 
 /**
  * VideosCellTest class
@@ -34,9 +36,14 @@ use MeCmsYoutube\View\View\AppView as View;
 class VideosCellTest extends TestCase
 {
     /**
-     * @var \MeCmsYoutube\View\View\AppView
+     * @var \MeCmsYoutube\Model\Table\VideosTable
      */
-    protected $View;
+    protected $Videos;
+
+    /**
+     * @var \MeCms\View\Helper\WidgetHelper
+     */
+    protected $Widget;
 
     /**
      * Fixtures
@@ -55,9 +62,11 @@ class VideosCellTest extends TestCase
      */
     public function setUp()
     {
-        Cache::disable();
+        Cache::clearAll();
 
-        $this->View = new View;
+        $this->Videos = TableRegistry::get('MeCmsYoutube.Videos');
+
+        $this->Widget = new WidgetHelper(new View);
     }
 
     /**
@@ -68,7 +77,7 @@ class VideosCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->View);
+        unset($this->Videos, $this->Widget);
     }
 
     /**
@@ -79,7 +88,7 @@ class VideosCellTest extends TestCase
     {
         $widget = ME_CMS_YOUTUBE . '.Videos::categories';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -107,7 +116,7 @@ class VideosCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->View->cell($widget, ['render' => 'list'])->render();
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -140,9 +149,17 @@ class VideosCellTest extends TestCase
 
         //Empty on categories index
         $request = new Request(Router::url(['_name' => 'videosCategories']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_categories', $this->Videos->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            'first-video-category',
+            'sub-sub-video-category',
+        ], array_keys($fromCache->toArray()));
     }
 
     /**
@@ -154,7 +171,7 @@ class VideosCellTest extends TestCase
         $widget = ME_CMS_YOUTUBE . '.Videos::latest';
 
         //Tries with a limit of 1
-        $result = $this->View->cell($widget, ['limit' => 1])->render();
+        $result = $this->Widget->widget($widget, ['limit' => 1])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -183,7 +200,7 @@ class VideosCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with a limit of 2
-        $result = $this->View->cell($widget, ['limit' => 2])->render();
+        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -228,9 +245,16 @@ class VideosCellTest extends TestCase
 
         //Empty on videos index
         $request = new Request(Router::url(['_name' => 'videos']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_latest_1', $this->Videos->cache);
+        $this->assertEquals(1, $fromCache->count());
+
+        $fromCache = Cache::read('widget_latest_2', $this->Videos->cache);
+        $this->assertEquals(2, $fromCache->count());
     }
 
     /**
@@ -241,7 +265,7 @@ class VideosCellTest extends TestCase
     {
         $widget = ME_CMS_YOUTUBE . '.Videos::months';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -249,7 +273,7 @@ class VideosCellTest extends TestCase
             'Videos by month',
             '/h4',
             ['div' => ['class' => 'widget-content']],
-            'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/videos/2017/01'],
+            'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/videos/' . date('Y/m')],
             ['div' => ['class' => 'form-group input select']],
             'select' => ['name' => 'q', 'onchange' => 'send_form(this)', 'class' => 'form-control'],
             ['option' => ['value' => '']],
@@ -269,7 +293,7 @@ class VideosCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->View->cell($widget, ['render' => 'list'])->render();
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -302,9 +326,22 @@ class VideosCellTest extends TestCase
 
         //Empty on videos index
         $request = new Request(Router::url(['_name' => 'videos']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_months', $this->Videos->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            '2016/12',
+            '2016/11',
+        ], array_keys($fromCache->toArray()));
+
+        foreach ($fromCache as $key => $entity) {
+            $this->assertInstanceOf('Cake\I18n\FrozenDate', $entity->month);
+            $this->assertEquals($key, $entity->month->i18nFormat('yyyy/MM'));
+        }
     }
 
     /**
@@ -315,7 +352,7 @@ class VideosCellTest extends TestCase
     {
         $widget = ME_CMS_YOUTUBE . '.Videos::search';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -344,8 +381,8 @@ class VideosCellTest extends TestCase
 
         //Empty on search
         $request = new Request(Router::url(['_name' => 'videosSearch']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
     }
 }

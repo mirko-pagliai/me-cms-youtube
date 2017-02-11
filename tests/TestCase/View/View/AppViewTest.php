@@ -20,36 +20,53 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCmsYoutube\Test\TestCase\Model\Entity;
+namespace MeCmsYoutube\Test\TestCase\View\View;
 
+use Cake\Core\Configure;
+use Cake\Network\Request;
 use Cake\TestSuite\TestCase;
-use MeCmsYoutube\Model\Entity\VideosCategory;
+use MeCmsYoutube\View\View\AppView as View;
 
 /**
- * VideosCategoryTest class
+ * AppViewTest class
  */
-class VideosCategoryTest extends TestCase
+class AppViewTest extends TestCase
 {
     /**
-     * Test for `__construct()` method
-     * @test
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
      */
-    public function testConstruct()
+    public function setUp()
     {
-        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', new VideosCategory);
+        parent::setUp();
+
+        //Disable widgets
+        Configure::write('Widgets.general', []);
+
+        $this->View = new View(new Request);
     }
 
     /**
-     * Test for fields that cannot be mass assigned using newEntity() or
-     *  patchEntity()
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->View);
+    }
+
+    /**
+     * Tests for `_setBlocks()` method
      * @test
      */
-    public function testNoAccessibleProperties()
+    public function testSetBlocks()
     {
-        $entity = new VideosCategory;
+        $result = $this->View->render(false);
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('video_count'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertRegExp('/' . preg_quote('<link href="/videos/rss" type="application/rss+xml" rel="alternate" title="Latest videos"/>', '/') . '/', $result);
     }
 }

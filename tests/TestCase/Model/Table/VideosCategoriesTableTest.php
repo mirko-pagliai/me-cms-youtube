@@ -105,15 +105,15 @@ class VideosCategoriesTableTest extends TestCase
         $this->assertEquals('title', $this->VideosCategories->displayField());
         $this->assertEquals('id', $this->VideosCategories->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->VideosCategories->Parents));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->VideosCategories->Parents);
         $this->assertEquals('parent_id', $this->VideosCategories->Parents->foreignKey());
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->VideosCategories->Parents->className());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->VideosCategories->Childs));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->VideosCategories->Childs);
         $this->assertEquals('parent_id', $this->VideosCategories->Childs->foreignKey());
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->VideosCategories->Childs->className());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->VideosCategories->Videos));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->VideosCategories->Videos);
         $this->assertEquals('category_id', $this->VideosCategories->Videos->foreignKey());
         $this->assertEquals('MeCmsYoutube.Videos', $this->VideosCategories->Videos->className());
 
@@ -131,12 +131,12 @@ class VideosCategoriesTableTest extends TestCase
 
         $this->assertNotEmpty($category->parent);
 
-        $this->assertEquals('MeCmsYoutube\Model\Entity\VideosCategory', get_class($category->parent));
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
 
         $category = $this->VideosCategories->findById($category->parent->id)->contain(['Parents'])->first();
 
-        $this->assertEquals('MeCmsYoutube\Model\Entity\VideosCategory', get_class($category->parent));
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $category->parent);
         $this->assertEquals(1, $category->parent->id);
     }
 
@@ -151,7 +151,7 @@ class VideosCategoriesTableTest extends TestCase
         $this->assertNotEmpty($category->childs);
 
         foreach ($category->childs as $children) {
-            $this->assertEquals('MeCmsYoutube\Model\Entity\VideosCategory', get_class($children));
+            $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $children);
             $this->assertEquals(1, $children->parent_id);
 
             $category = $this->VideosCategories->findById($children->id)->contain(['Childs'])->first();
@@ -159,7 +159,7 @@ class VideosCategoriesTableTest extends TestCase
             $this->assertNotEmpty($category->childs);
 
             foreach ($category->childs as $children) {
-                $this->assertEquals('MeCmsYoutube\Model\Entity\VideosCategory', get_class($children));
+                $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $children);
                 $this->assertEquals(3, $children->parent_id);
             }
         }
@@ -176,7 +176,7 @@ class VideosCategoriesTableTest extends TestCase
         $this->assertNotEmpty($category->videos);
 
         foreach ($category->videos as $video) {
-            $this->assertEquals('MeCmsYoutube\Model\Entity\Video', get_class($video));
+            $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $video);
             $this->assertEquals(4, $video->category_id);
         }
     }
@@ -190,7 +190,7 @@ class VideosCategoriesTableTest extends TestCase
         $this->assertTrue($this->VideosCategories->hasFinder('active'));
 
         $query = $this->VideosCategories->find('active');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT VideosCategories.id AS `VideosCategories__id`, VideosCategories.parent_id AS `VideosCategories__parent_id`, VideosCategories.lft AS `VideosCategories__lft`, VideosCategories.rght AS `VideosCategories__rght`, VideosCategories.title AS `VideosCategories__title`, VideosCategories.slug AS `VideosCategories__slug`, VideosCategories.description AS `VideosCategories__description`, VideosCategories.video_count AS `VideosCategories__video_count`, VideosCategories.created AS `VideosCategories__created`, VideosCategories.modified AS `VideosCategories__modified` FROM youtube_videos_categories VideosCategories WHERE VideosCategories.video_count > :c0', $query->sql());
 
         $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
@@ -208,9 +208,9 @@ class VideosCategoriesTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCmsYoutube\Model\Validation\VideosCategoryValidator',
-            get_class($this->VideosCategories->validationDefault(new \Cake\Validation\Validator))
+            $this->VideosCategories->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

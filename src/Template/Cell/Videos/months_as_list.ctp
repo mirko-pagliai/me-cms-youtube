@@ -29,9 +29,9 @@ $this->extend('MeCms./Common/widget');
 $this->assign('title', __d('me_cms_youtube', 'Videos by month'));
 
 $months = array_map(function ($month) {
-    return $this->Html->link($month->month->i18nFormat('MMMM Y'), [
+    return $this->Html->link($month->month->i18nFormat('MMMM yyyy'), [
         '_name' => 'videosByDate',
-        sprintf('%s/%s', $month->month->i18nFormat('YYYY'), $month->month->i18nFormat('MM')),
+        sprintf('%s/%s', $month->month->i18nFormat('yyyy'), $month->month->i18nFormat('MM')),
     ]);
 }, $months);
 

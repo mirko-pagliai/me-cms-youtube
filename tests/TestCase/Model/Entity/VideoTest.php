@@ -36,7 +36,7 @@ class VideoTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCmsYoutube\Model\Entity\Video', get_class(new Video));
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', new Video);
     }
 
     /**

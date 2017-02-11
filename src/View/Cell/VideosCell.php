@@ -46,7 +46,6 @@ class VideosCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        //Loads the Videos model
         $this->loadModel('MeCmsYoutube.Videos');
     }
 
@@ -64,14 +63,12 @@ class VideosCell extends Cell
 
         $categories = $this->Videos->Categories->find('active')
             ->select(['title', 'slug', 'video_count'])
-            ->order(['title' => 'ASC'])
+            ->order([sprintf('%s.title', $this->Videos->Categories->alias()) => 'ASC'])
+            ->formatResults(function ($results) {
+                return $results->indexBy('slug');
+            })
             ->cache('widget_categories', $this->Videos->cache)
             ->toArray();
-
-        foreach ($categories as $k => $category) {
-            $categories[$category->slug] = $category;
-            unset($categories[$k]);
-        }
 
         $this->set(compact('categories'));
 
@@ -95,7 +92,7 @@ class VideosCell extends Cell
         $videos = $this->Videos->find('active')
             ->select(['id', 'youtube_id', 'title', 'text'])
             ->limit($limit)
-            ->order(['created' => 'DESC'])
+            ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
             ->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache)
             ->toArray();
 
@@ -113,25 +110,24 @@ class VideosCell extends Cell
         if ($this->request->isUrl(['_name' => 'videos'])) {
             return;
         }
-
-        $months = $this->Videos->find('active')
-            ->select([
-                'month' => 'DATE_FORMAT(created, "%m-%Y")',
-                'video_count' => 'COUNT(DATE_FORMAT(created, "%m-%Y"))',
+        $query = $this->Videos->find('active');
+        $time = $query->func()->date_format(['created' => 'identifier', "'%Y/%m'" => 'literal']);
+        $months = $query->select([
+                'month' => $time,
+                'video_count' => $query->func()->count($time),
             ])
             ->distinct(['month'])
-            ->order(['created' => 'DESC'])
+            ->formatResults(function ($results) {
+                return $results->indexBy('month')->map(function ($row) {
+                    list($year, $month) = explode('/', $row->month);
+                    $row->month = (new FrozenDate())->day(1)->month($month)->year($year);
+
+                    return $row;
+                });
+            })
+            ->order(['month' => 'DESC'])
             ->cache('widget_months', $this->Videos->cache)
             ->toArray();
-
-        foreach ($months as $key => $month) {
-            $exploded = explode('-', $month->month);
-            $newKey = sprintf('%s/%s', $exploded[1], $exploded[0]);
-
-            $months[$newKey] = $month;
-            $months[$newKey]->month = (new FrozenDate())->day(1)->month($exploded[0])->year($exploded[1]);
-            unset($months[$key]);
-        }
 
         $this->set(compact('months'));
 

@@ -1,8 +1,10 @@
 # 2.x branch
 ## 2.7 branch
 ### 2.7.4
-* removed `Videos::random` widget, it did not make much sense;
-* added tests for `VideosCell` class.
+* the whole of the widget code has been rewritten and improved, making it more
+    uniform and consistent;
+* removed `Videos::random()` widget, it did not make much sense;
+* added tests for `AppView` and `VideosCell` classes.
 
 ### 2.7.3
 * fixed (perhaps forever...) bug for sorting records in the admin panel.
