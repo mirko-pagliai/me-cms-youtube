@@ -69,4 +69,17 @@ class AppViewTest extends TestCase
 
         $this->assertRegExp('/' . preg_quote('<link href="/videos/rss" type="application/rss+xml" rel="alternate" title="Latest videos"/>', '/') . '/', $result);
     }
+
+    /**
+     * Tests for `renderLayout()` method
+     * @test
+     */
+    public function testRenderLayout()
+    {
+        $result = $this->View->render(false);
+        $this->assertNotEmpty($result);
+        $this->assertEquals('default', $this->View->layout());
+        $this->assertEquals(null, $this->View->theme());
+        $this->assertEquals(ME_CMS, $this->View->plugin);
+    }
 }
