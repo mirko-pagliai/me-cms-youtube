@@ -77,16 +77,16 @@ class VideoValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $errors = $this->Videos->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
 
         foreach ($this->example as $key => $value) {
             //Create a copy of the example data and removes the current value
             $copy = $this->example;
             unset($copy[$key]);
 
-            $errors = $this->Videos->newEntity($copy)->errors();
-            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+            $this->assertEquals([
+                $key => ['_required' => 'This field is required'],
+            ], $this->Videos->newEntity($copy)->errors());
         }
     }
 
@@ -104,8 +104,7 @@ class VideoValidatorTest extends TestCase
             str_repeat('a', 10) . '_',
         ] as $value) {
             $this->example['youtube_id'] = $value;
-            $errors = $this->Videos->newEntity($this->example)->errors();
-            $this->assertEmpty($errors);
+            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
         }
 
         foreach ([
@@ -115,8 +114,9 @@ class VideoValidatorTest extends TestCase
             str_repeat('a', 10) . '$',
         ] as $value) {
             $this->example['youtube_id'] = $value;
-            $errors = $this->Videos->newEntity($this->example)->errors();
-            $this->assertEquals(['youtube_id' => ['validYoutubeId' => 'You have to enter a valid YouTube ID']], $errors);
+            $this->assertEquals([
+                'youtube_id' => ['validYoutubeId' => 'You have to enter a valid YouTube ID'],
+            ], $this->Videos->newEntity($this->example)->errors());
         }
     }
 
@@ -127,8 +127,9 @@ class VideoValidatorTest extends TestCase
     public function testValidationForCategoryId()
     {
         $this->example['category_id'] = 'string';
-        $errors = $this->Videos->newEntity($this->example)->errors();
-        $this->assertEquals(['category_id' => ['naturalNumber' => 'You have to select a valid option']], $errors);
+        $this->assertEquals([
+            'category_id' => ['naturalNumber' => 'You have to select a valid option'],
+        ], $this->Videos->newEntity($this->example)->errors());
     }
 
     /**
@@ -139,13 +140,13 @@ class VideoValidatorTest extends TestCase
     {
         foreach ([true, false] as $value) {
             $this->example['is_spot'] = $value;
-            $errors = $this->Videos->newEntity($this->example)->errors();
-            $this->assertEmpty($errors);
+            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
         }
 
         $this->example['is_spot'] = 'string';
-        $errors = $this->Videos->newEntity($this->example)->errors();
-        $this->assertEquals(['is_spot' => ['boolean' => 'You have to select a valid option']], $errors);
+        $this->assertEquals([
+            'is_spot' => ['boolean' => 'You have to select a valid option'],
+        ], $this->Videos->newEntity($this->example)->errors());
     }
 
     /**
@@ -156,14 +157,14 @@ class VideoValidatorTest extends TestCase
     {
         foreach ([1, 100, 1000] as $value) {
             $this->example['seconds'] = $value;
-            $errors = $this->Videos->newEntity($this->example)->errors();
-            $this->assertEmpty($errors);
+            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
         }
 
         foreach ([0, 'string'] as $value) {
             $this->example['seconds'] = $value;
-            $errors = $this->Videos->newEntity($this->example)->errors();
-            $this->assertEquals(['seconds' => ['naturalNumber' => 'You have to enter a valid value']], $errors);
+            $this->assertEquals([
+                'seconds' => ['naturalNumber' => 'You have to enter a valid value'],
+            ], $this->Videos->newEntity($this->example)->errors());
         }
     }
 
@@ -175,14 +176,14 @@ class VideoValidatorTest extends TestCase
     {
         foreach (['00:00', '11:34', '00:00:00', '06:54:34'] as $value) {
             $this->example['duration'] = $value;
-            $errors = $this->Videos->newEntity($this->example)->errors();
-            $this->assertEmpty($errors);
+            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
         }
 
         foreach (['00', '1234', '12:3456', 'string'] as $value) {
             $this->example['duration'] = $value;
-            $errors = $this->Videos->newEntity($this->example)->errors();
-            $this->assertEquals(['duration' => ['validDuration' => 'You have to enter a valid value']], $errors);
+            $this->assertEquals([
+                'duration' => ['validDuration' => 'You have to enter a valid value'],
+            ], $this->Videos->newEntity($this->example)->errors());
         }
     }
 }
