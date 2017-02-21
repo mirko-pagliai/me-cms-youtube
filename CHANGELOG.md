@@ -2,7 +2,8 @@
 ## 2.8 branch
 ### 2.8.0
 * the cells that act as widgets now have "Widgets" in the name, for the classes
-    and the template directory.
+    and the template directory;
+* updated for CakePHP 3.4.
 
 ## 2.7 branch
 ### 2.7.4
