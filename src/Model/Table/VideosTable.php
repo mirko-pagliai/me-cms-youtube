@@ -219,6 +219,8 @@ class VideosTable extends AppTable
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Categories' => ['video_count']]);
+
+        $this->_validatorClass = '\MeCmsYoutube\Model\Validation\VideoValidator';
     }
 
     /**
@@ -238,15 +240,5 @@ class VideosTable extends AppTable
         }
 
         return $query;
-    }
-
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCmsYoutube\Model\Validation\VideoValidator
-     */
-    public function validationDefault(\Cake\Validation\Validator $validator)
-    {
-        return new \MeCmsYoutube\Model\Validation\VideoValidator;
     }
 }

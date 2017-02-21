@@ -119,6 +119,8 @@ class VideosCategoriesTableTest extends TestCase
 
         $this->assertTrue($this->VideosCategories->hasBehavior('Timestamp'));
         $this->assertTrue($this->VideosCategories->hasBehavior('Tree'));
+
+        $this->assertInstanceOf('MeCmsYoutube\Model\Validation\VideosCategoryValidator', $this->VideosCategories->validator());
     }
 
     /**
@@ -200,17 +202,5 @@ class VideosCategoriesTableTest extends TestCase
         foreach ($query->toArray() as $category) {
             $this->assertNotEquals(0, $category->video_count);
         }
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCmsYoutube\Model\Validation\VideosCategoryValidator',
-            $this->VideosCategories->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }
