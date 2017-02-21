@@ -112,5 +112,21 @@ class YoutubeVideosFixture extends TestFixture
             'created' => '2016-12-31 15:07:40',
             'modified' => '2016-12-31 15:07:40',
         ],
+        [
+            'id' => 4,
+            'user_id' => 3,
+            'youtube_id' => 'GRxofEmo3HA',
+            'category_id' => 4,
+            'title' => 'Fourth video title',
+            'subtitle' => 'Fourth video subtitle',
+            'text' => 'Fourth video text',
+            'priority' => 1,
+            'active' => 1,
+            'is_spot' => 1,
+            'seconds' => 339,
+            'duration' => '05:39',
+            'created' => '2016-12-31 15:08:40',
+            'modified' => '2016-12-31 15:08:40',
+        ],
     ];
 }

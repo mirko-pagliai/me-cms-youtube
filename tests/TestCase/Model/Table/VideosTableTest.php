@@ -302,7 +302,20 @@ class VideosTableTest extends TestCase
      */
     public function testGetRandomSpots()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $spots = $this->Videos->getRandomSpots();
+
+        $this->assertCount(1, $spots);
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $spots[0]);
+        $this->assertNotEmpty($spots[0]->youtube_id);
+
+        $spots = $this->Videos->getRandomSpots(2);
+
+        $this->assertCount(2, $spots);
+
+        foreach ($spots as $spot) {
+            $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $spot);
+            $this->assertNotEmpty($spot->youtube_id);
+        }
     }
 
     /**
