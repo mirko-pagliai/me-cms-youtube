@@ -175,8 +175,7 @@ class VideosTable extends AppTable
      */
     public function getRandomSpots($limit = 1)
     {
-        //Gets all spots
-        $spots = $this->find()
+        return $this->find()
             ->select('youtube_id')
             ->where([
                 sprintf('%s.active', $this->alias()) => true,
@@ -184,13 +183,8 @@ class VideosTable extends AppTable
                 sprintf('%s.created <=', $this->alias()) => new Time,
             ])
             ->cache('all_spots', $this->cache)
+            ->sample($limit)
             ->toArray();
-
-        //Shuffles
-        shuffle($spots);
-
-        //If the records are less than the limit, it returns all records
-        return array_slice($spots, 0, count($spots) < $limit ? count($spots) : $limit);
     }
 
     /**
