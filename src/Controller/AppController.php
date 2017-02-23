@@ -33,7 +33,7 @@ class AppController extends BaseController
      *  are required on every request.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @see http://api.cakephp.org/3.3/class-Cake.Controller.Controller.html#_beforeRender
+     * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeRender
      */
     public function beforeRender(\Cake\Event\Event $event)
     {
