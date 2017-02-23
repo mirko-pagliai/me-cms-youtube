@@ -92,15 +92,7 @@ class VideosCategoriesTable extends AppTable
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('MeCms.Tree');
-    }
 
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCmsYoutube\Model\Validation\VideosCategoryValidator
-     */
-    public function validationDefault(\Cake\Validation\Validator $validator)
-    {
-        return new \MeCmsYoutube\Model\Validation\VideosCategoryValidator;
+        $this->_validatorClass = '\MeCmsYoutube\Model\Validation\VideosCategoryValidator';
     }
 }

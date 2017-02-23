@@ -175,8 +175,7 @@ class VideosTable extends AppTable
      */
     public function getRandomSpots($limit = 1)
     {
-        //Gets all spots
-        $spots = $this->find()
+        return $this->find()
             ->select('youtube_id')
             ->where([
                 sprintf('%s.active', $this->alias()) => true,
@@ -184,13 +183,8 @@ class VideosTable extends AppTable
                 sprintf('%s.created <=', $this->alias()) => new Time,
             ])
             ->cache('all_spots', $this->cache)
+            ->sample($limit)
             ->toArray();
-
-        //Shuffles
-        shuffle($spots);
-
-        //If the records are less than the limit, it returns all records
-        return array_slice($spots, 0, count($spots) < $limit ? count($spots) : $limit);
     }
 
     /**
@@ -219,6 +213,8 @@ class VideosTable extends AppTable
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Categories' => ['video_count']]);
+
+        $this->_validatorClass = '\MeCmsYoutube\Model\Validation\VideoValidator';
     }
 
     /**
@@ -238,15 +234,5 @@ class VideosTable extends AppTable
         }
 
         return $query;
-    }
-
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCmsYoutube\Model\Validation\VideoValidator
-     */
-    public function validationDefault(\Cake\Validation\Validator $validator)
-    {
-        return new \MeCmsYoutube\Model\Validation\VideoValidator;
     }
 }

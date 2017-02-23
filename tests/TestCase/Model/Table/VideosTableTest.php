@@ -215,6 +215,8 @@ class VideosTableTest extends TestCase
 
         $this->assertTrue($this->Videos->hasBehavior('Timestamp'));
         $this->assertTrue($this->Videos->hasBehavior('CounterCache'));
+
+        $this->assertInstanceOf('MeCmsYoutube\Model\Validation\VideoValidator', $this->Videos->validator());
     }
 
     /**
@@ -300,7 +302,20 @@ class VideosTableTest extends TestCase
      */
     public function testGetRandomSpots()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $spots = $this->Videos->getRandomSpots();
+
+        $this->assertCount(1, $spots);
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $spots[0]);
+        $this->assertNotEmpty($spots[0]->youtube_id);
+
+        $spots = $this->Videos->getRandomSpots(2);
+
+        $this->assertCount(2, $spots);
+
+        foreach ($spots as $spot) {
+            $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $spot);
+            $this->assertNotEmpty($spot->youtube_id);
+        }
     }
 
     /**
@@ -316,17 +331,5 @@ class VideosTableTest extends TestCase
         $this->assertEquals('SELECT Videos.id AS `Videos__id`, Videos.user_id AS `Videos__user_id`, Videos.youtube_id AS `Videos__youtube_id`, Videos.category_id AS `Videos__category_id`, Videos.title AS `Videos__title`, Videos.subtitle AS `Videos__subtitle`, Videos.text AS `Videos__text`, Videos.priority AS `Videos__priority`, Videos.active AS `Videos__active`, Videos.is_spot AS `Videos__is_spot`, Videos.seconds AS `Videos__seconds`, Videos.duration AS `Videos__duration`, Videos.created AS `Videos__created`, Videos.modified AS `Videos__modified` FROM youtube_videos Videos WHERE Videos.is_spot = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCmsYoutube\Model\Validation\VideoValidator',
-            $this->Videos->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }
