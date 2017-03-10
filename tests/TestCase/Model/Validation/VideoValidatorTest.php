@@ -79,7 +79,7 @@ class VideoValidatorTest extends TestCase
     {
         $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
 
-        foreach ($this->example as $key => $value) {
+        foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
             $copy = $this->example;
             unset($copy[$key]);
@@ -97,17 +97,6 @@ class VideoValidatorTest extends TestCase
     public function testValidationForYoutubeId()
     {
         foreach ([
-            str_repeat('a', 11),
-            str_repeat('A', 11),
-            str_repeat('1', 11),
-            str_repeat('a', 10) . '-',
-            str_repeat('a', 10) . '_',
-        ] as $value) {
-            $this->example['youtube_id'] = $value;
-            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
-        }
-
-        foreach ([
             str_repeat('a', 10),
             str_repeat('a', 12),
             str_repeat('a', 10) . '?',
@@ -117,6 +106,17 @@ class VideoValidatorTest extends TestCase
             $this->assertEquals([
                 'youtube_id' => ['validYoutubeId' => 'You have to enter a valid YouTube ID'],
             ], $this->Videos->newEntity($this->example)->errors());
+        }
+
+        foreach ([
+            str_repeat('a', 11),
+            str_repeat('A', 11),
+            str_repeat('1', 11),
+            str_repeat('a', 10) . '-',
+            str_repeat('a', 10) . '_',
+        ] as $value) {
+            $this->example['youtube_id'] = $value;
+            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
         }
     }
 
@@ -138,15 +138,15 @@ class VideoValidatorTest extends TestCase
      */
     public function testValidationForIsSpot()
     {
-        foreach ([true, false] as $value) {
-            $this->example['is_spot'] = $value;
-            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
-        }
-
         $this->example['is_spot'] = 'string';
         $this->assertEquals([
             'is_spot' => ['boolean' => 'You have to select a valid option'],
         ], $this->Videos->newEntity($this->example)->errors());
+
+        foreach ([true, false] as $value) {
+            $this->example['is_spot'] = $value;
+            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
+        }
     }
 
     /**
@@ -155,16 +155,16 @@ class VideoValidatorTest extends TestCase
      */
     public function testForSeconds()
     {
-        foreach ([1, 100, 1000] as $value) {
-            $this->example['seconds'] = $value;
-            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
-        }
-
         foreach ([0, 'string'] as $value) {
             $this->example['seconds'] = $value;
             $this->assertEquals([
                 'seconds' => ['naturalNumber' => 'You have to enter a valid value'],
             ], $this->Videos->newEntity($this->example)->errors());
+        }
+
+        foreach ([1, 100, 1000] as $value) {
+            $this->example['seconds'] = $value;
+            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
         }
     }
 
@@ -174,16 +174,16 @@ class VideoValidatorTest extends TestCase
      */
     public function testForDuration()
     {
-        foreach (['00:00', '11:34', '00:00:00', '06:54:34'] as $value) {
-            $this->example['duration'] = $value;
-            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
-        }
-
         foreach (['00', '1234', '12:3456', 'string'] as $value) {
             $this->example['duration'] = $value;
             $this->assertEquals([
                 'duration' => ['validDuration' => 'You have to enter a valid value'],
             ], $this->Videos->newEntity($this->example)->errors());
+        }
+
+        foreach (['00:00', '11:34', '00:00:00', '06:54:34'] as $value) {
+            $this->example['duration'] = $value;
+            $this->assertEmpty($this->Videos->newEntity($this->example)->errors());
         }
     }
 }
