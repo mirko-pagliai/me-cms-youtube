@@ -55,7 +55,7 @@ $this->Library->datetimepicker();
         }
 
         echo $this->Form->input('category_id', [
-            'default' => count($categories) < 2 ? firstValue($categories) : false,
+            'default' => count($categories) < 2 ? collection($categories)->first() : false,
             'label' => __d('me_cms', 'Category'),
         ]);
         echo $this->Form->datetimepicker('created', [
