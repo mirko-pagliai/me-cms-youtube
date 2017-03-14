@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.8 branch
+### 2.8.1
+* updated for MeCms 2.16.1.
+
 ### 2.8.0
 * the cells that act as widgets now have "Widgets" in the name, for the classes
     and the template directory;

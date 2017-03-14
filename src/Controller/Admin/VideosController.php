@@ -156,8 +156,6 @@ class VideosController extends AppController
                 $this->request->data('user_id', $this->Auth->user('id'));
             }
 
-            $this->request->data['created'] = new Time($this->request->data('created'));
-
             $video = $this->Videos->patchEntity($video, $this->request->data);
 
             if ($this->Videos->save($video)) {
@@ -196,8 +194,6 @@ class VideosController extends AppController
             if (!$this->Auth->isGroup(['admin', 'manager'])) {
                 $this->request->data('user_id', $this->Auth->user('id'));
             }
-
-            $this->request->data['created'] = new Time($this->request->data('created'));
 
             $video = $this->Videos->patchEntity($video, $this->request->data);
 
