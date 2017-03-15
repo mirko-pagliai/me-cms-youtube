@@ -20,6 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+use Cake\I18n\I18n;
 
 $this->set([
     'documentData' => ['xmlns:dc' => 'http://purl.org/dc/elements/1.1/'],
@@ -27,7 +28,7 @@ $this->set([
         'title' => __d('me_cms_youtube', 'Latest videos'),
         'link' => $this->Url->build('/', true),
         'description' => __d('me_cms_youtube', 'Latest videos'),
-        'language' => \Cake\I18n\I18n::locale(),
+        'language' => I18n::locale(),
     ],
 ]);
 

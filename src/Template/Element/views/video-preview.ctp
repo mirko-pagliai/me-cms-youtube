@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 if (!isset($truncate['title'])) {
     $truncate['title'] = 40;
 }
@@ -42,7 +41,6 @@ if (!empty($video->text)) {
         $text = $this->Text->truncate($text, $truncate['text'], ['exact' => false]);
     }
 }
-
 ?>
 
 <div class="content-preview">

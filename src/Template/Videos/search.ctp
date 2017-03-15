@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('MeCms./Common/index');
 $this->assign('title', $title = __d('me_cms_youtube', 'Search videos'));
 
@@ -55,7 +54,7 @@ echo $this->Form->end();
     <div class="as-table">
         <?php foreach ($videos as $video) : ?>
             <div class="margin-10 padding-10">
-                <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?> 
+                <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?>
                 <span class="small text-muted">
                     (<?= $video->created->i18nFormat(config('main.datetime.short')) ?>)
                 </span>
