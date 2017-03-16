@@ -48,8 +48,8 @@ class VideosCategoryTest extends TestCase
     {
         $entity = new VideosCategory;
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('video_count'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertFalse($entity->isAccessible('id'));
+        $this->assertFalse($entity->isAccessible('video_count'));
+        $this->assertFalse($entity->isAccessible('modified'));
     }
 }
