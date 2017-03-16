@@ -32,6 +32,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCmsYoutube\Utility\Youtube;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
  * Videos model
@@ -40,6 +41,8 @@ use MeCms\Model\Table\AppTable;
  */
 class VideosTable extends AppTable
 {
+    use NextToBePublishedTrait;
+
     /**
      * Name of the configuration to use for this table
      * @var string
