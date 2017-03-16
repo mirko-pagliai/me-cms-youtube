@@ -22,8 +22,11 @@
  */
 namespace MeCmsYoutube\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Event\Event;
 use Cake\I18n\Time;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCmsYoutube\Utility\Youtube;
@@ -62,7 +65,7 @@ class VideosTable extends AppTable
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
-    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterDelete($event, $entity, $options);
 
@@ -79,7 +82,7 @@ class VideosTable extends AppTable
      * @uses MeCms\Model\Table\AppTable::afterSave()
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
-    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterSave($event, $entity, $options);
 
@@ -96,7 +99,7 @@ class VideosTable extends AppTable
      * @return bool
      * @uses _getInfo()
      */
-    public function beforeSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
     {
         if ((empty($entity->seconds) || empty($entity->duration)) && !empty($entity->youtube_id)) {
             $info = $this->_getInfo($entity->youtube_id);
