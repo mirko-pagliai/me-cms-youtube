@@ -24,6 +24,7 @@ namespace MeCmsYoutube\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
@@ -94,12 +95,12 @@ class VideosTable extends AppTable
      * Called before each entity is saved.
      * Stopping this event will abort the save operation.
      * @param \Cake\Event\Event $event Event
-     * @param \Cake\ORM\Entity $entity Entity
+     * @param \Cake\Datasource\EntityInterface $entity Entity
      * @param \ArrayObject $options Options
      * @return bool
      * @uses _getInfo()
      */
-    public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
         if ((empty($entity->seconds) || empty($entity->duration)) && !empty($entity->youtube_id)) {
             $info = $this->_getInfo($entity->youtube_id);
