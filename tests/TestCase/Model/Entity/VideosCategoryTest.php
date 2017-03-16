@@ -31,12 +31,41 @@ use MeCmsYoutube\Model\Entity\VideosCategory;
 class VideosCategoryTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\VideosCategory
+     */
+    protected $VideosCategory;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->VideosCategory = new VideosCategory;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->VideosCategory);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', new VideosCategory);
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $this->VideosCategory);
     }
 
     /**
@@ -46,10 +75,8 @@ class VideosCategoryTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new VideosCategory;
-
-        $this->assertFalse($entity->isAccessible('id'));
-        $this->assertFalse($entity->isAccessible('video_count'));
-        $this->assertFalse($entity->isAccessible('modified'));
+        $this->assertFalse($this->VideosCategory->isAccessible('id'));
+        $this->assertFalse($this->VideosCategory->isAccessible('video_count'));
+        $this->assertFalse($this->VideosCategory->isAccessible('modified'));
     }
 }

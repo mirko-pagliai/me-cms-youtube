@@ -31,12 +31,41 @@ use MeCmsYoutube\Model\Entity\Video;
 class VideoTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\Video
+     */
+    protected $Video;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Video = new Video;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Video);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', new Video);
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $this->Video);
     }
 
     /**
@@ -46,10 +75,17 @@ class VideoTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new Video;
+        $this->assertFalse($this->Video->isAccessible('id'));
+        $this->assertFalse($this->Video->isAccessible('modified'));
+    }
 
-        $this->assertFalse($entity->isAccessible('id'));
-        $this->assertFalse($entity->isAccessible('modified'));
+    /**
+     * Test for virtual fields
+     * @test
+     */
+    public function testVirtualFields()
+    {
+        $this->assertEquals(['preview', 'youtube_url'], $this->Video->getVirtual());
     }
 
     /**
@@ -58,13 +94,10 @@ class VideoTest extends TestCase
      */
     public function testPreviewGetMutator()
     {
-        $entity = new Video;
+        $this->assertNull($this->Video->preview);
 
-        $this->assertNull($entity->preview);
-
-        $entity->youtube_id = 't3217H8JppI';
-
-        $this->assertEquals('http://img.youtube.com/vi/t3217H8JppI/0.jpg', $entity->preview);
+        $this->Video->youtube_id = 't3217H8JppI';
+        $this->assertEquals('http://img.youtube.com/vi/t3217H8JppI/0.jpg', $this->Video->preview);
     }
 
     /**
@@ -73,12 +106,9 @@ class VideoTest extends TestCase
      */
     public function testYoutubeUrlGetMutator()
     {
-        $entity = new Video;
+        $this->assertNull($this->Video->youtube_url);
 
-        $this->assertNull($entity->youtube_url);
-
-        $entity->youtube_id = 't3217H8JppI';
-
-        $this->assertEquals('http://youtu.be/t3217H8JppI', $entity->youtube_url);
+        $this->Video->youtube_id = 't3217H8JppI';
+        $this->assertEquals('http://youtu.be/t3217H8JppI', $this->Video->youtube_url);
     }
 }
