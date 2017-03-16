@@ -28,7 +28,7 @@ use Cake\ORM\Entity;
  * YoutubeVideosCategory entity
  * @property int $id
  * @property int $parent_id
- * @property \MeCmsYoutube\Model\Entity\ParentYoutubeVideosCategory $parent_youtube_videos_category
+ * @property \MeCmsYoutube\Model\Entity\ParentVideosCategory $parent_videos_category
  * @property int $lft
  * @property int $rght
  * @property string $title
@@ -37,7 +37,7 @@ use Cake\ORM\Entity;
  * @property int $video_count
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
- * @property \MeCmsYoutube\Model\Entity\ChildYoutubeVideosCategory[] $child_youtube_videos_categories
+ * @property \MeCmsYoutube\Model\Entity\ChildVideosCategory[] $child_videos_categories
  */
 class VideosCategory extends Entity
 {
