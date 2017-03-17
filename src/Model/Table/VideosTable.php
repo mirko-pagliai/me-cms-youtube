@@ -67,13 +67,13 @@ class VideosTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterDelete($event, $entity, $options);
 
-        //Sets the next video to be published
+        //Sets the next record to be published
         $this->setNextToBePublished();
     }
 
@@ -84,13 +84,13 @@ class VideosTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterSave($event, $entity, $options);
 
-        //Sets the next video to be published
+        //Sets the next record to be published
         $this->setNextToBePublished();
     }
 
@@ -138,8 +138,8 @@ class VideosTable extends AppTable
      * @param string $type The type of query to perform
      * @param array|ArrayAccess $options An array that will be passed to Query::applyOptions()
      * @return Cake\ORM\Query The query builder
-     * @uses MeCms\Model\Table\AppTable::getNextToBePublished()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function find($type = 'all', $options = [])
     {
