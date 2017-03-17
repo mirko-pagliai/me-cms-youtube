@@ -26,6 +26,7 @@ use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\Network\Exception\ForbiddenException;
 use MeCmsYoutube\Controller\AppController;
+use MeCms\Controller\Traits\CheckLastSearchTrait;
 
 /**
  * Videos controller
@@ -33,6 +34,8 @@ use MeCmsYoutube\Controller\AppController;
  */
 class VideosController extends AppController
 {
+    use CheckLastSearchTrait;
+
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
@@ -231,7 +234,7 @@ class VideosController extends AppController
     /**
      * Searches videos
      * @return void
-     * @uses MeCms\Controller\AppController::_checkLastSearch()
+     * @uses MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      */
     public function search()
     {
@@ -240,7 +243,7 @@ class VideosController extends AppController
         if ($pattern) {
             //Checks if the pattern is at least 4 characters long
             if (strlen($pattern) >= 4) {
-                if ($this->_checkLastSearch($pattern)) {
+                if ($this->checkLastSearch($pattern)) {
                     $this->paginate['limit'] = config('default.records_for_searches');
 
                     $page = $this->request->query('page') ? $this->request->query('page') : 1;
