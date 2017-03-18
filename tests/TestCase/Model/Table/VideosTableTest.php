@@ -22,7 +22,10 @@
  */
 namespace MeCmsYoutube\Test\TestCase\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Reflection\ReflectionTrait;
@@ -103,14 +106,14 @@ class VideosTableTest extends TestCase
             ->setMethods(['setNextToBePublished'])
             ->setConstructorArgs([[
                 'table' => $this->Videos->table(),
-                'connection' => $this->Videos->connection(),
+                'connection' => $this->Videos->getConnection(),
             ]])
             ->getMock();
 
         $this->Videos->expects($this->once())
             ->method('setNextToBePublished');
 
-        $this->Videos->afterDelete(new \Cake\Event\Event(null), new \Cake\ORM\Entity, new \ArrayObject);
+        $this->Videos->afterDelete(new Event(null), new Entity, new ArrayObject);
     }
 
     /**
@@ -123,14 +126,14 @@ class VideosTableTest extends TestCase
             ->setMethods(['setNextToBePublished'])
             ->setConstructorArgs([[
                 'table' => $this->Videos->table(),
-                'connection' => $this->Videos->connection(),
+                'connection' => $this->Videos->getConnection(),
             ]])
             ->getMock();
 
         $this->Videos->expects($this->once())
             ->method('setNextToBePublished');
 
-        $this->Videos->afterSave(new \Cake\Event\Event(null), new \Cake\ORM\Entity, new \ArrayObject);
+        $this->Videos->afterSave(new Event(null), new Entity, new ArrayObject);
     }
 
     /**
@@ -143,7 +146,7 @@ class VideosTableTest extends TestCase
             ->setMethods(['_getInfo'])
             ->setConstructorArgs([[
                 'table' => $this->Videos->table(),
-                'connection' => $this->Videos->connection(),
+                'connection' => $this->Videos->getConnection(),
             ]])
             ->getMock();
 
