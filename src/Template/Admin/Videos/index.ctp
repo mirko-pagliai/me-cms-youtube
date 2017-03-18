@@ -45,17 +45,17 @@ $this->Library->datepicker(
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
-            echo $this->Form->input('id', [
+            echo $this->Form->control('id', [
                 'default' => $this->request->query('id'),
                 'placeholder' => __d('me_cms', 'ID'),
                 'size' => 2,
             ]);
-            echo $this->Form->input('title', [
+            echo $this->Form->control('title', [
                 'default' => $this->request->query('title'),
                 'placeholder' => __d('me_cms', 'title'),
                 'size' => 16,
             ]);
-            echo $this->Form->input('active', [
+            echo $this->Form->control('active', [
                 'default' => $this->request->query('active'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
                 'options' => [
@@ -63,15 +63,15 @@ $this->Library->datepicker(
                     'no' => __d('me_cms', 'Only drafts'),
                 ],
             ]);
-            echo $this->Form->input('user', [
+            echo $this->Form->control('user', [
                 'default' => $this->request->query('user'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all users')),
             ]);
-            echo $this->Form->input('category', [
+            echo $this->Form->control('category', [
                 'default' => $this->request->query('category'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all categories')),
             ]);
-            echo $this->Form->input('priority', [
+            echo $this->Form->control('priority', [
                 'default' => $this->request->query('priority'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all priorities')),
             ]);
@@ -81,7 +81,7 @@ $this->Library->datepicker(
                 'placeholder' => __d('me_cms', 'month'),
                 'size' => 5,
             ]);
-            echo $this->Form->input('spot', [
+            echo $this->Form->control('spot', [
                 'default' => $this->request->query('spot'),
                 'hiddenField' => false,
                 'label' => sprintf('%s?', __d('me_cms_youtube', 'Spot')),

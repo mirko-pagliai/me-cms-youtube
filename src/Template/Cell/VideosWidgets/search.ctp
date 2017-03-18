@@ -32,7 +32,7 @@ echo $this->Form->createInline(false, [
     'type' => 'get',
     'url' => ['_name' => 'videosSearch'],
 ]);
-echo $this->Form->input('p', [
+echo $this->Form->control('p', [
     'button' => $this->Form->button(null, ['class' => 'btn-primary', 'icon' => 'search']),
     'id' => false,
     'label' => false,

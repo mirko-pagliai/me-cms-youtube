@@ -30,7 +30,7 @@ $this->Library->datetimepicker();
     <?php
         echo $this->Form->createInline(false, ['type' => 'get']);
         echo $this->Form->label('url', __d('me_cms_youtube', 'Video url'));
-        echo $this->Form->input('url', [
+        echo $this->Form->control('url', [
             'default' => $this->request->query('url'),
             'label' => __d('me_cms_youtube', 'Video url'),
             'name' => 'url',
@@ -48,13 +48,13 @@ $this->Library->datetimepicker();
         <?php
         //Only admins and managers can add videos on behalf of other users
         if ($this->Auth->isGroup(['admin', 'manager'])) {
-            echo $this->Form->input('user_id', [
+            echo $this->Form->control('user_id', [
                 'default' => $this->Auth->user('id'),
                 'label' => __d('me_cms', 'Author'),
             ]);
         }
 
-        echo $this->Form->input('category_id', [
+        echo $this->Form->control('category_id', [
             'default' => count($categories) < 2 ? collection($categories)->first() : false,
             'label' => __d('me_cms', 'Category'),
         ]);
@@ -65,15 +65,15 @@ $this->Library->datetimepicker();
                 __d('me_cms', 'You can delay the publication by entering a future date'),
             ],
         ]);
-        echo $this->Form->input('priority', [
+        echo $this->Form->control('priority', [
             'default' => '3',
             'label' => __d('me_cms', 'Priority'),
         ]);
-        echo $this->Form->input('is_spot', [
+        echo $this->Form->control('is_spot', [
             'label' => sprintf('%s?', __d('me_cms_youtube', 'Is a spot')),
             'help' => __d('me_cms_youtube', 'Enable this option if this video is a spot'),
         ]);
-        echo $this->Form->input('active', [
+        echo $this->Form->control('active', [
             'checked' => true,
             'label' => sprintf('%s?', __d('me_cms', 'Published')),
             'help' => __d('me_cms', 'Disable this option to save as a draft'),
@@ -113,23 +113,23 @@ $this->Library->datetimepicker();
             ?>
         </p>
         <?php
-            echo $this->Form->input('youtube_id', [
+            echo $this->Form->control('youtube_id', [
                 'label' => __d('me_cms_youtube', '{0} ID', 'YouTube'),
                 'readonly' => true,
                 'type' => 'text',
                 'value' => $this->request->data('youtube_id'),
             ]);
-            echo $this->Form->input('duration', [
+            echo $this->Form->control('duration', [
                 'label' => __d('me_cms_youtube', 'Duration'),
                 'readonly' => true,
             ]);
-            echo $this->Form->input('title', [
+            echo $this->Form->control('title', [
                 'label' => __d('me_cms', 'Title'),
             ]);
-            echo $this->Form->input('subtitle', [
+            echo $this->Form->control('subtitle', [
                 'label' => __d('me_cms', 'Subtitle'),
             ]);
-            echo $this->Form->input('text', [
+            echo $this->Form->control('text', [
                 'label' => __d('me_cms', 'Text'),
                 'rows' => 8,
             ]);
