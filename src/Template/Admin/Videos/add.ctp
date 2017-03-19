@@ -31,7 +31,7 @@ $this->Library->datetimepicker();
         echo $this->Form->createInline(false, ['type' => 'get']);
         echo $this->Form->label('url', __d('me_cms_youtube', 'Video url'));
         echo $this->Form->control('url', [
-            'default' => $this->request->query('url'),
+            'default' => $this->request->getQuery('url'),
             'label' => __d('me_cms_youtube', 'Video url'),
             'name' => 'url',
             'onchange' => 'send_form(this)',

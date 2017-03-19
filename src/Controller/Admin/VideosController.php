@@ -130,9 +130,9 @@ class VideosController extends AppController
         $youtube = new Youtube;
 
         //If the address of a YouTube video has been specified
-        if ($this->request->query('url') && $this->request->is('get')) {
+        if ($this->request->getQuery('url') && $this->request->is('get')) {
             //Gets video ID and information
-            $youtubeId = $youtube->getId($this->request->query('url'));
+            $youtubeId = $youtube->getId($this->request->getQuery('url'));
             $youtubeInfo = $youtube->getInfo($youtubeId);
             $youtubeUrl = $youtube->getUrl($youtubeId);
 
@@ -167,7 +167,7 @@ class VideosController extends AppController
             }
 
             //Gets video ID and information
-            $youtubeId = $youtube->getId($this->request->query('url'));
+            $youtubeId = $youtube->getId($this->request->getQuery('url'));
             $youtubeInfo = $youtube->getInfo($youtubeId);
             $youtubeUrl = $youtube->getUrl($youtubeId);
 
