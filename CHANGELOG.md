@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.8 branch
 ### 2.8.1
+* improved the recovery of the information during the addition of a video;
 * updated for MeCms 2.16.1.
 
 ### 2.8.0
