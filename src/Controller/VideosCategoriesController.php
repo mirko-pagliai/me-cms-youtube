@@ -98,7 +98,7 @@ class VideosCategoriesController extends AppController
             ], $this->VideosCategories->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(am(['category' => $videos[0]->category], compact('videos')));

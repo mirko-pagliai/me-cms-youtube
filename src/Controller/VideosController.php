@@ -93,7 +93,7 @@ class VideosController extends AppController
             ], $this->Videos->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(compact('videos'));
@@ -187,7 +187,7 @@ class VideosController extends AppController
             ], $this->Videos->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(compact('videos', 'year', 'month', 'day'));
@@ -281,7 +281,7 @@ class VideosController extends AppController
                         ], $this->Videos->cache);
                     //Else, sets the paging parameter
                     } else {
-                        $this->request->params['paging'] = $paging;
+                        $this->request = $this->request->withParam('paging', $paging);
                     }
 
                     $this->set(compact('videos'));

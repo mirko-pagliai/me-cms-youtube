@@ -101,7 +101,7 @@ class VideosCategoriesController extends AppController
         $category = $this->VideosCategories->newEntity();
 
         if ($this->request->is('post')) {
-            $category = $this->VideosCategories->patchEntity($category, $this->request->data);
+            $category = $this->VideosCategories->patchEntity($category, $this->request->getData());
 
             if ($this->VideosCategories->save($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -125,7 +125,7 @@ class VideosCategoriesController extends AppController
         $category = $this->VideosCategories->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $category = $this->VideosCategories->patchEntity($category, $this->request->data);
+            $category = $this->VideosCategories->patchEntity($category, $this->request->getData());
 
             if ($this->VideosCategories->save($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

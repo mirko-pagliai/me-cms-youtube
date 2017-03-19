@@ -42,7 +42,7 @@ $this->Library->datetimepicker();
     ?>
 </div>
 
-<?php if ($this->request->data('youtube_id')) : ?>
+<?php if ($this->request->getData('youtube_id')) : ?>
     <?= $this->Form->create($video); ?>
     <div class='float-form'>
         <?php
@@ -85,39 +85,33 @@ $this->Library->datetimepicker();
         <div class="row margin-20 text-center">
             <div class="col-sm-6">
                 <h4><?= __d('me_cms_youtube', 'Video') ?></h4>
-                <?php
-                    echo $this->Html->youtube(
-                        $this->request->data('youtube_id'),
-                        ['class' => 'center-block', 'height' => 315, 'width' => 560]
-                    );
-                ?>
+                <?= $this->Html->youtube(
+                    $this->request->getData('youtube_id'),
+                    ['class' => 'center-block', 'height' => 315, 'width' => 560]
+                ) ?>
             </div>
             <div class="col-sm-6">
                 <h4><?= __d('me_cms_youtube', 'Thumbnail preview') ?></h4>
-                <?php
-                    echo $this->Thumb->resize(
-                        $this->request->data('preview'),
-                        ['height' => 315],
-                        ['class' => 'center-block']
-                    );
-                ?>
+                <?= $this->Thumb->resize(
+                    $this->request->getData('preview'),
+                    ['height' => 315],
+                    ['class' => 'center-block']
+                ) ?>
             </div>
         </div>
         <p>
-            <?php
-                echo $this->Html->link(
-                    __d('me_cms_youtube', 'Open on {0}', 'YouTube'),
-                    $this->request->data('youtube_url'),
-                    ['icon' => 'external-link', 'target' => '_blank']
-                );
-            ?>
+            <?= $this->Html->link(
+                __d('me_cms_youtube', 'Open on {0}', 'YouTube'),
+                $this->request->getData('youtube_url'),
+                ['icon' => 'external-link', 'target' => '_blank']
+            ) ?>
         </p>
         <?php
             echo $this->Form->control('youtube_id', [
                 'label' => __d('me_cms_youtube', '{0} ID', 'YouTube'),
                 'readonly' => true,
                 'type' => 'text',
-                'value' => $this->request->data('youtube_id'),
+                'value' => $this->request->getData('youtube_id'),
             ]);
             echo $this->Form->control('duration', [
                 'label' => __d('me_cms_youtube', 'Duration'),
