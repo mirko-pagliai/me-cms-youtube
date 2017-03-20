@@ -166,9 +166,9 @@ class VideosTable extends AppTable
     public function findActive(Query $query, array $options)
     {
         $query->where([
-            sprintf('%s.active', $this->alias()) => true,
-            sprintf('%s.is_spot', $this->alias()) => false,
-            sprintf('%s.created <=', $this->alias()) => new Time,
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.is_spot', $this->getAlias()) => false,
+            sprintf('%s.created <=', $this->getAlias()) => new Time,
         ]);
 
         return $query;
@@ -185,9 +185,9 @@ class VideosTable extends AppTable
         return $this->find()
             ->select('youtube_id')
             ->where([
-                sprintf('%s.active', $this->alias()) => true,
-                sprintf('%s.is_spot', $this->alias()) => true,
-                sprintf('%s.created <=', $this->alias()) => new Time,
+                sprintf('%s.active', $this->getAlias()) => true,
+                sprintf('%s.is_spot', $this->getAlias()) => true,
+                sprintf('%s.created <=', $this->getAlias()) => new Time,
             ])
             ->cache('all_spots', $this->cache)
             ->sample($limit)
@@ -234,7 +234,7 @@ class VideosTable extends AppTable
 
         //"Is spot?" field
         if (!empty($data['spot']) && $data['spot']) {
-            $query->where([sprintf('%s.is_spot', $this->alias()) => true]);
+            $query->where([sprintf('%s.is_spot', $this->getAlias()) => true]);
         }
 
         return $query;

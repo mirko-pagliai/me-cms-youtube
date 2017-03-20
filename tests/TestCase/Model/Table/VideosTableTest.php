@@ -105,7 +105,7 @@ class VideosTableTest extends TestCase
         $this->Videos = $this->getMockBuilder(get_class($this->Videos))
             ->setMethods(['setNextToBePublished'])
             ->setConstructorArgs([[
-                'table' => $this->Videos->table(),
+                'table' => $this->Videos->getTable(),
                 'connection' => $this->Videos->getConnection(),
             ]])
             ->getMock();
@@ -125,7 +125,7 @@ class VideosTableTest extends TestCase
         $this->Videos = $this->getMockBuilder(get_class($this->Videos))
             ->setMethods(['setNextToBePublished'])
             ->setConstructorArgs([[
-                'table' => $this->Videos->table(),
+                'table' => $this->Videos->getTable(),
                 'connection' => $this->Videos->getConnection(),
             ]])
             ->getMock();
@@ -145,7 +145,7 @@ class VideosTableTest extends TestCase
         $this->Videos = $this->getMockBuilder(get_class($this->Videos))
             ->setMethods(['_getInfo'])
             ->setConstructorArgs([[
-                'table' => $this->Videos->table(),
+                'table' => $this->Videos->getTable(),
                 'connection' => $this->Videos->getConnection(),
             ]])
             ->getMock();

@@ -83,7 +83,7 @@ class VideosCategoriesController extends AppController
                     },
                 ])
                 ->where(['Categories.slug' => $category, 'is_spot' => false])
-                ->order([sprintf('%s.created', $this->VideosCategories->Videos->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->VideosCategories->Videos->getAlias()) => 'DESC']);
 
             if ($query->isEmpty()) {
                 throw new RecordNotFoundException(__d('me_cms', 'Record not found'));

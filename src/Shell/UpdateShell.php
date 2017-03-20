@@ -106,10 +106,10 @@ class UpdateShell extends BaseUpdateShell
         $this->loadModel('MeCmsYoutube.Videos');
 
         //Renames the "description" field as "text"
-        if ($this->_checkColumn('description', $this->Videos->table())) {
+        if ($this->_checkColumn('description', $this->Videos->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` CHANGE `description` `text` TEXT null DEFAULT null;',
-                $this->Videos->table()
+                $this->Videos->getTable()
             ));
         }
     }
@@ -125,19 +125,19 @@ class UpdateShell extends BaseUpdateShell
         $this->loadModel('MeCmsYoutube.VideosCategories');
 
         //Adds "created" field to the videos categories table and sets the default value
-        if (!$this->_checkColumn('created', $this->VideosCategories->table())) {
+        if (!$this->_checkColumn('created', $this->VideosCategories->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `created` DATETIME null AFTER `video_count`;',
-                $this->VideosCategories->table()
+                $this->VideosCategories->getTable()
             ));
             $this->VideosCategories->query()->update()->set(['created' => $this->now])->execute();
         }
 
         //Adds "modified" field to the videos categories table and sets the default value
-        if (!$this->_checkColumn('modified', $this->VideosCategories->table())) {
+        if (!$this->_checkColumn('modified', $this->VideosCategories->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `modified` DATETIME null AFTER `created`;',
-                $this->VideosCategories->table()
+                $this->VideosCategories->getTable()
             ));
             $this->VideosCategories->query()->update()->set(['modified' => $this->now])->execute();
         }

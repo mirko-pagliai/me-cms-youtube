@@ -83,7 +83,7 @@ class AppTableTest extends TestCase
      */
     public function testGetList()
     {
-        $cacheKey = sprintf('%s_list', $this->VideosCategories->table());
+        $cacheKey = sprintf('%s_list', $this->VideosCategories->getTable());
         $this->assertEquals($cacheKey, 'youtube_videos_categories_list');
         $this->assertFalse(Cache::read($cacheKey, $this->VideosCategories->cache));
 
@@ -103,7 +103,7 @@ class AppTableTest extends TestCase
      */
     public function testGetTreeList()
     {
-        $cacheKey = sprintf('%s_tree_list', $this->VideosCategories->table());
+        $cacheKey = sprintf('%s_tree_list', $this->VideosCategories->getTable());
         $this->assertEquals($cacheKey, 'youtube_videos_categories_tree_list');
         $this->assertFalse(Cache::read($cacheKey, $this->VideosCategories->cache));
 

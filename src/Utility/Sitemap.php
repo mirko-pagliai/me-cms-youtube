@@ -56,7 +56,7 @@ class Sitemap extends SitemapBuilder
             ->select(['id', 'slug'])
             ->contain(['Videos' => function ($query) use ($table) {
                 $query->select(['id', 'category_id', 'modified']);
-                $query->order([sprintf('%s.modified', $table->Videos->alias()) => 'DESC']);
+                $query->order([sprintf('%s.modified', $table->Videos->getAlias()) => 'DESC']);
 
                 return $query;
             }]);
@@ -67,7 +67,7 @@ class Sitemap extends SitemapBuilder
 
         $latest = $table->Videos->find()
             ->select(['modified'])
-            ->order([sprintf('%s.modified', $table->Videos->alias()) => 'DESC'])
+            ->order([sprintf('%s.modified', $table->Videos->getAlias()) => 'DESC'])
             ->firstOrFail();
 
         //Adds videos index, categories index and videos search

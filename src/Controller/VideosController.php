@@ -82,7 +82,7 @@ class VideosController extends AppController
                     },
                 ])
                 ->where(['is_spot' => false])
-                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
 
             $videos = $this->paginate($query)->toArray();
 
@@ -170,13 +170,13 @@ class VideosController extends AppController
                         return $q->select(['first_name', 'last_name']);
                     },
                 ])
-                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+                ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
                 ->where([
                     'is_spot' => false,
-                    sprintf('%s.created >=', $this->Videos->alias()) => $start,
-                    sprintf('%s.created <', $this->Videos->alias()) => $end,
+                    sprintf('%s.created >=', $this->Videos->getAlias()) => $start,
+                    sprintf('%s.created <', $this->Videos->getAlias()) => $end,
                 ])
-                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
 
             $videos = $this->paginate($query)->toArray();
 
@@ -223,7 +223,7 @@ class VideosController extends AppController
             ->select(['id', 'youtube_id', 'title', 'text', 'created'])
             ->where(['is_spot' => false])
             ->limit(config('default.records_for_rss'))
-            ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+            ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
             ->cache('rss', $this->Videos->cache);
 
         $this->set(compact('videos'));
@@ -270,7 +270,7 @@ class VideosController extends AppController
                                 'subtitle LIKE' => sprintf('%%%s%%', $pattern),
                                 'text LIKE' => sprintf('%%%s%%', $pattern),
                             ]])
-                            ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+                            ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
 
                         $videos = $this->paginate($query)->toArray();
 
@@ -314,7 +314,7 @@ class VideosController extends AppController
                     return $q->select(['first_name', 'last_name']);
                 },
             ])
-            ->where([sprintf('%s.id', $this->Videos->alias()) => $id])
+            ->where([sprintf('%s.id', $this->Videos->getAlias()) => $id])
             ->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
             ->firstOrFail();
 
@@ -346,7 +346,7 @@ class VideosController extends AppController
                     return $q->select(['first_name', 'last_name']);
                 },
             ])
-            ->where([sprintf('%s.id', $this->Videos->alias()) => $id])
+            ->where([sprintf('%s.id', $this->Videos->getAlias()) => $id])
             ->firstOrFail();
 
         //If requested, gets the ID of a spot and adds it to the video

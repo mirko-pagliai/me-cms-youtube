@@ -65,7 +65,7 @@ class VideosWidgetsCell extends Cell
 
         $categories = $this->Videos->Categories->find('active')
             ->select(['title', 'slug', 'video_count'])
-            ->order([sprintf('%s.title', $this->Videos->Categories->alias()) => 'ASC'])
+            ->order([sprintf('%s.title', $this->Videos->Categories->getAlias()) => 'ASC'])
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
@@ -90,7 +90,7 @@ class VideosWidgetsCell extends Cell
         $videos = $this->Videos->find('active')
             ->select(['id', 'youtube_id', 'title', 'text'])
             ->limit($limit)
-            ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+            ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
             ->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache)
             ->toArray();
 
