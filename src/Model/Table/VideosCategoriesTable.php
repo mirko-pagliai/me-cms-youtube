@@ -73,22 +73,18 @@ class VideosCategoriesTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('youtube_videos_categories');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('youtube_videos_categories');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Parents', [
-            'className' => 'MeCmsYoutube.VideosCategories',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->hasMany('Childs', [
-            'className' => 'MeCmsYoutube.VideosCategories',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->hasMany('Videos', [
-            'className' => 'MeCmsYoutube.Videos',
-            'foreignKey' => 'category_id',
-        ]);
+        $this->belongsTo('Parents', ['className' => 'MeCmsYoutube.VideosCategories'])
+            ->setForeignKey('parent_id');
+
+        $this->hasMany('Childs', ['className' => 'MeCmsYoutube.VideosCategories'])
+            ->setForeignKey('parent_id');
+
+        $this->hasMany('Videos', ['className' => 'MeCmsYoutube.Videos'])
+            ->setForeignKey('category_id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('MeCms.Tree');

@@ -203,20 +203,17 @@ class VideosTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('youtube_videos');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('youtube_videos');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCmsYoutube.VideosCategories',
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.Users',
-        ]);
+        $this->belongsTo('Categories', ['className' => 'MeCmsYoutube.VideosCategories'])
+            ->setForeignKey('category_id')
+            ->setJoinType('INNER');
+
+        $this->belongsTo('Users', ['className' => 'MeCms.Users'])
+            ->setForeignKey('user_id')
+            ->setJoinType('INNER');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Categories' => ['video_count']]);

@@ -202,18 +202,18 @@ class VideosTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('youtube_videos', $this->Videos->table());
-        $this->assertEquals('title', $this->Videos->displayField());
-        $this->assertEquals('id', $this->Videos->primaryKey());
+        $this->assertEquals('youtube_videos', $this->Videos->getTable());
+        $this->assertEquals('title', $this->Videos->getDisplayField());
+        $this->assertEquals('id', $this->Videos->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Videos->Categories);
-        $this->assertEquals('category_id', $this->Videos->Categories->foreignKey());
-        $this->assertEquals('INNER', $this->Videos->Categories->joinType());
+        $this->assertEquals('category_id', $this->Videos->Categories->getForeignKey());
+        $this->assertEquals('INNER', $this->Videos->Categories->getJoinType());
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->Videos->Categories->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Videos->Users);
-        $this->assertEquals('user_id', $this->Videos->Users->foreignKey());
-        $this->assertEquals('INNER', $this->Videos->Users->joinType());
+        $this->assertEquals('user_id', $this->Videos->Users->getForeignKey());
+        $this->assertEquals('INNER', $this->Videos->Users->getJoinType());
         $this->assertEquals('MeCms.Users', $this->Videos->Users->className());
 
         $this->assertTrue($this->Videos->hasBehavior('Timestamp'));

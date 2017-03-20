@@ -101,20 +101,20 @@ class VideosCategoriesTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('youtube_videos_categories', $this->VideosCategories->table());
-        $this->assertEquals('title', $this->VideosCategories->displayField());
-        $this->assertEquals('id', $this->VideosCategories->primaryKey());
+        $this->assertEquals('youtube_videos_categories', $this->VideosCategories->getTable());
+        $this->assertEquals('title', $this->VideosCategories->getDisplayField());
+        $this->assertEquals('id', $this->VideosCategories->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->VideosCategories->Parents);
-        $this->assertEquals('parent_id', $this->VideosCategories->Parents->foreignKey());
+        $this->assertEquals('parent_id', $this->VideosCategories->Parents->getForeignKey());
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->VideosCategories->Parents->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->VideosCategories->Childs);
-        $this->assertEquals('parent_id', $this->VideosCategories->Childs->foreignKey());
+        $this->assertEquals('parent_id', $this->VideosCategories->Childs->getForeignKey());
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->VideosCategories->Childs->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->VideosCategories->Videos);
-        $this->assertEquals('category_id', $this->VideosCategories->Videos->foreignKey());
+        $this->assertEquals('category_id', $this->VideosCategories->Videos->getForeignKey());
         $this->assertEquals('MeCmsYoutube.Videos', $this->VideosCategories->Videos->className());
 
         $this->assertTrue($this->VideosCategories->hasBehavior('Timestamp'));
