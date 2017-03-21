@@ -41,9 +41,11 @@ class AppController extends BaseController
 
         //Uses a custom View class (`MeCmsYoutube.AppView` or `MeCms.AdminView`)
         if ($this->request->isAdmin()) {
-            $this->viewBuilder()->className('MeCms.View/Admin');
+            $className = 'MeCms.View/Admin';
         } else {
-            $this->viewBuilder()->className('MeCmsYoutube.View/App');
+            $className = 'MeCmsYoutube.View/App';
         }
+
+        $this->viewBuilder()->setClassName('MeCmsYoutube.View/App');
     }
 }

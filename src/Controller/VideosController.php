@@ -228,7 +228,7 @@ class VideosController extends AppController
 
         $this->set(compact('videos'));
 
-        $this->viewBuilder()->layout('MeCms.default');
+        $this->viewBuilder()->setLayout('MeCms.default');
     }
 
     /**

@@ -56,7 +56,7 @@ class VideosWidgetsCell extends Cell
      */
     public function categories($render = 'form')
     {
-        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+        $this->viewBuilder()->setTemplate(sprintf('categories_as_%s', $render));
 
         //Returns on categories index
         if ($this->request->isUrl(['_name' => 'videosCategories'])) {
@@ -104,7 +104,7 @@ class VideosWidgetsCell extends Cell
      */
     public function months($render = 'form')
     {
-        $this->viewBuilder()->template(sprintf('months_as_%s', $render));
+        $this->viewBuilder()->setTemplate(sprintf('months_as_%s', $render));
 
         //Returns on posts index
         if ($this->request->isUrl(['_name' => 'videos'])) {
