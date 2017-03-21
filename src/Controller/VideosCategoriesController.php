@@ -59,7 +59,7 @@ class VideosCategoriesController extends AppController
             return $this->redirect([$this->request->getQuery('q')]);
         }
 
-        $page = $this->request->getQuery('page') ?: 1;
+        $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $page);

@@ -58,7 +58,7 @@ class VideosController extends AppController
      */
     public function index()
     {
-        $page = $this->request->getQuery('page') ?: 1;
+        $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
@@ -147,7 +147,7 @@ class VideosController extends AppController
             $end = (new Time($start))->addYear(1);
         }
 
-        $page = $this->request->getQuery('page') ?: 1;
+        $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $page);
@@ -246,7 +246,7 @@ class VideosController extends AppController
                 if ($this->checkLastSearch($pattern)) {
                     $this->paginate['limit'] = config('default.records_for_searches');
 
-                    $page = $this->request->getQuery('page') ?: 1;
+                    $page = $this->request->getQuery('page', 1);
 
                     //Sets the initial cache name
                     $cache = sprintf('search_%s', md5($pattern));
