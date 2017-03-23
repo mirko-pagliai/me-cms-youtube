@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('MeCms./Admin/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Edit videos category'));
 $this->Library->slugify();

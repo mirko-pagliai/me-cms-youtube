@@ -68,12 +68,12 @@ if ($this->request->isAction('view', 'Videos')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
     $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
 
-    if (!empty($video->preview)) {
+    if ($video->preview) {
         $this->Html->meta(['href' => $video->preview, 'rel' => 'image_src']);
         $this->Html->meta(['content' => $video->preview, 'property' => 'og:image']);
     }
 
-    if (!empty($video->text)) {
+    if ($video->text) {
         $this->Html->meta([
             'content' => $this->Text->truncate($video->text, 100, ['html' => true]),
             'property' => 'og:description',

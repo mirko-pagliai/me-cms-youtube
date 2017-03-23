@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('MeCms./Admin/Common/index');
 $this->assign('title', $title = __d('me_cms_youtube', 'Videos'));
 
@@ -186,22 +185,18 @@ $this->Library->datepicker(
                     ?>
                 </td>
                 <td class="text-center">
-                    <?php
-                        echo $this->Html->link(
-                            $video->category->title,
-                            ['?' => ['category' => $video->category->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
-                    ?>
+                    <?= $this->Html->link(
+                        $video->category->title,
+                        ['?' => ['category' => $video->category->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                    ) ?>
                 </td>
                 <td class="text-center">
-                    <?php
-                        echo $this->Html->link(
-                            $video->user->full_name,
-                            ['?' => ['user' => $video->user->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this user')]
-                        );
-                    ?>
+                    <?= $this->Html->link(
+                        $video->user->full_name,
+                        ['?' => ['user' => $video->user->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this user')]
+                    ) ?>
                 </td>
                 <td class="min-width text-center hidden-xs">
                     <?= empty($video->duration) ? '00:00' : $video->duration ?>

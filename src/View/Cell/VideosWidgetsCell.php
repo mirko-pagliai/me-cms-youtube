@@ -22,7 +22,10 @@
  */
 namespace MeCmsYoutube\View\Cell;
 
+use Cake\Event\EventManager;
 use Cake\I18n\FrozenDate;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\View\Cell;
 
 /**
@@ -39,9 +42,9 @@ class VideosWidgetsCell extends Cell
      * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
-        \Cake\Network\Request $request = null,
-        \Cake\Network\Response $response = null,
-        \Cake\Event\EventManager $eventManager = null,
+        Request $request = null,
+        Response $response = null,
+        EventManager $eventManager = null,
         array $cellOptions = []
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
