@@ -76,7 +76,7 @@ class VideosController extends AppController
      * the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-     * @uses MeCms\Model\Table\AppTable::isOwnedBy()
+     * @uses MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
     public function isAuthorized($user = null)
     {

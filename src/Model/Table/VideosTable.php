@@ -32,6 +32,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCmsYoutube\Utility\Youtube;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\Traits\IsOwnedByTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
@@ -41,6 +42,7 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  */
 class VideosTable extends AppTable
 {
+    use IsOwnedByTrait;
     use NextToBePublishedTrait;
 
     /**
