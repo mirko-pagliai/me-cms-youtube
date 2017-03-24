@@ -23,9 +23,9 @@
 namespace MeCmsYoutube\Controller;
 
 use Cake\Event\Event;
-use MeCms\Controller\AppController as BaseController;
+use MeCms\Controller\AppController as MeCmsController;
 
-class AppController extends BaseController
+class AppController extends MeCmsController
 {
     /**
      * Called after the controller action is run, but before the view is
@@ -47,6 +47,6 @@ class AppController extends BaseController
             $className = 'MeCmsYoutube.View/App';
         }
 
-        $this->viewBuilder()->setClassName('MeCmsYoutube.View/App');
+        $this->viewBuilder()->setClassName($className);
     }
 }
