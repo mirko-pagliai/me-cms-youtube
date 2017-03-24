@@ -247,7 +247,7 @@ class VideosTableTest extends TestCase
         $this->assertNotEmpty($entity->user);
 
         $this->assertInstanceOf('MeCms\Model\Entity\User', $entity->user);
-        $this->assertEquals(3, $entity->user->id);
+        $this->assertEquals(4, $entity->user->id);
     }
 
     /**

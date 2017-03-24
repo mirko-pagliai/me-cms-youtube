@@ -82,7 +82,7 @@ class YoutubeVideosFixture extends TestFixture
         ],
         [
             'id' => 2,
-            'user_id' => 3,
+            'user_id' => 4,
             'youtube_id' => 'g65oWFMSoK0',
             'category_id' => 1,
             'title' => 'Second video title',
