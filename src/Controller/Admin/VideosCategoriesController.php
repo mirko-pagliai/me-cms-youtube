@@ -22,6 +22,7 @@
  */
 namespace MeCmsYoutube\Controller\Admin;
 
+use Cake\Event\Event;
 use MeCmsYoutube\Controller\AppController;
 
 /**
@@ -39,7 +40,7 @@ class VideosCategoriesController extends AppController
      * @uses MeCms\Controller\AppController::beforeFilter()
      * @uses MeCmsYoutube\Model\Table\VideosCategoriesTable::getTreeList()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 

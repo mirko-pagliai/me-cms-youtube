@@ -22,6 +22,7 @@
  */
 namespace MeCmsYoutube\Controller;
 
+use Cake\Event\Event;
 use MeCms\Controller\AppController as BaseController;
 
 class AppController extends BaseController
@@ -35,7 +36,7 @@ class AppController extends BaseController
      * @return void
      * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeRender
      */
-    public function beforeRender(\Cake\Event\Event $event)
+    public function beforeRender(Event $event)
     {
         parent::beforeRender($event);
 

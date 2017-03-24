@@ -22,6 +22,7 @@
  */
 namespace MeCmsYoutube\Controller\Admin;
 
+use Cake\Event\Event;
 use MeCmsYoutube\Controller\AppController;
 use MeCmsYoutube\Utility\Youtube;
 
@@ -43,7 +44,7 @@ class VideosController extends AppController
      * @uses MeCms\Model\Table\UsersTable::getActiveList()
      * @uses MeCms\Model\Table\UsersTable::getList()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
@@ -82,8 +83,9 @@ class VideosController extends AppController
     {
         //Only admins and managers can edit all videos.
         //Users can edit only their own videos
-        if ($this->request->isEdit() && !$this->Auth->isGroup(['admin', 'manager'])) {
-            return $this->Videos->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
+        if ($this->request->isEdit()) {
+            return $this->Auth->isGroup(['admin', 'manager']) ||
+                $this->Videos->isOwnedBy($this->request->getParam('pass.0'), $this->Auth->user('id'));
         }
 
         //Only admins and managers can delete videos
