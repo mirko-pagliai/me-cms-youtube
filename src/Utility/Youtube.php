@@ -68,12 +68,12 @@ class Youtube extends BaseYoutube
      */
     protected function _parseDuration($duration)
     {
-        if (!preg_match('/^PT((\d+)H)?((\d+)M)?((\d+)S)$/', $duration, $matches)) {
+        if (!preg_match('/^PT((\d+)H)?((\d+)M)?((\d+)S)?$/', $duration, $matches)) {
             return false;
         }
 
         $duration = '';
-        $hours = $minutes = 0;
+        $hours = $minutes = $seconds = 0;
 
         if (!empty($matches[2])) {
             $hours = $matches[2];
@@ -84,7 +84,9 @@ class Youtube extends BaseYoutube
             $minutes = $matches[4];
         }
 
-        $seconds = $matches[6];
+        if (!empty($matches[6])) {
+            $seconds = $matches[6];
+        }
 
         $duration .= sprintf("%02d", $minutes) . ':' . sprintf("%02d", $seconds);
 
