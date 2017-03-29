@@ -22,6 +22,7 @@
  */
 namespace MeCmsYoutube\Controller\Admin;
 
+use Cake\Event\Event;
 use MeCmsYoutube\Controller\AppController;
 
 /**
@@ -39,7 +40,7 @@ class VideosCategoriesController extends AppController
      * @uses MeCms\Controller\AppController::beforeFilter()
      * @uses MeCmsYoutube\Model\Table\VideosCategoriesTable::getTreeList()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
@@ -101,7 +102,7 @@ class VideosCategoriesController extends AppController
         $category = $this->VideosCategories->newEntity();
 
         if ($this->request->is('post')) {
-            $category = $this->VideosCategories->patchEntity($category, $this->request->data);
+            $category = $this->VideosCategories->patchEntity($category, $this->request->getData());
 
             if ($this->VideosCategories->save($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -125,7 +126,7 @@ class VideosCategoriesController extends AppController
         $category = $this->VideosCategories->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $category = $this->VideosCategories->patchEntity($category, $this->request->data);
+            $category = $this->VideosCategories->patchEntity($category, $this->request->getData());
 
             if ($this->VideosCategories->save($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

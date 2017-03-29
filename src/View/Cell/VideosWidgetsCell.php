@@ -22,7 +22,10 @@
  */
 namespace MeCmsYoutube\View\Cell;
 
+use Cake\Event\EventManager;
 use Cake\I18n\FrozenDate;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\View\Cell;
 
 /**
@@ -39,9 +42,9 @@ class VideosWidgetsCell extends Cell
      * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
-        \Cake\Network\Request $request = null,
-        \Cake\Network\Response $response = null,
-        \Cake\Event\EventManager $eventManager = null,
+        Request $request = null,
+        Response $response = null,
+        EventManager $eventManager = null,
         array $cellOptions = []
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
@@ -56,7 +59,7 @@ class VideosWidgetsCell extends Cell
      */
     public function categories($render = 'form')
     {
-        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+        $this->viewBuilder()->setTemplate(sprintf('categories_as_%s', $render));
 
         //Returns on categories index
         if ($this->request->isUrl(['_name' => 'videosCategories'])) {
@@ -65,7 +68,7 @@ class VideosWidgetsCell extends Cell
 
         $categories = $this->Videos->Categories->find('active')
             ->select(['title', 'slug', 'video_count'])
-            ->order([sprintf('%s.title', $this->Videos->Categories->alias()) => 'ASC'])
+            ->order([sprintf('%s.title', $this->Videos->Categories->getAlias()) => 'ASC'])
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
@@ -90,7 +93,7 @@ class VideosWidgetsCell extends Cell
         $videos = $this->Videos->find('active')
             ->select(['id', 'youtube_id', 'title', 'text'])
             ->limit($limit)
-            ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+            ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
             ->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache)
             ->toArray();
 
@@ -104,7 +107,7 @@ class VideosWidgetsCell extends Cell
      */
     public function months($render = 'form')
     {
-        $this->viewBuilder()->template(sprintf('months_as_%s', $render));
+        $this->viewBuilder()->setTemplate(sprintf('months_as_%s', $render));
 
         //Returns on posts index
         if ($this->request->isUrl(['_name' => 'videos'])) {

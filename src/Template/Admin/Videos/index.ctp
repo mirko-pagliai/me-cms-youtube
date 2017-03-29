@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('MeCms./Admin/Common/index');
 $this->assign('title', $title = __d('me_cms_youtube', 'Videos'));
 
@@ -45,44 +44,44 @@ $this->Library->datepicker(
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
-            echo $this->Form->input('id', [
-                'default' => $this->request->query('id'),
+            echo $this->Form->control('id', [
+                'default' => $this->request->getQuery('id'),
                 'placeholder' => __d('me_cms', 'ID'),
                 'size' => 2,
             ]);
-            echo $this->Form->input('title', [
-                'default' => $this->request->query('title'),
+            echo $this->Form->control('title', [
+                'default' => $this->request->getQuery('title'),
                 'placeholder' => __d('me_cms', 'title'),
                 'size' => 16,
             ]);
-            echo $this->Form->input('active', [
-                'default' => $this->request->query('active'),
+            echo $this->Form->control('active', [
+                'default' => $this->request->getQuery('active'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
                 'options' => [
                     'yes' => __d('me_cms', 'Only published'),
                     'no' => __d('me_cms', 'Only drafts'),
                 ],
             ]);
-            echo $this->Form->input('user', [
-                'default' => $this->request->query('user'),
+            echo $this->Form->control('user', [
+                'default' => $this->request->getQuery('user'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all users')),
             ]);
-            echo $this->Form->input('category', [
-                'default' => $this->request->query('category'),
+            echo $this->Form->control('category', [
+                'default' => $this->request->getQuery('category'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all categories')),
             ]);
-            echo $this->Form->input('priority', [
-                'default' => $this->request->query('priority'),
+            echo $this->Form->control('priority', [
+                'default' => $this->request->getQuery('priority'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all priorities')),
             ]);
             echo $this->Form->datepicker('created', [
                 'data-date-format' => 'YYYY-MM',
-                'default' => $this->request->query('created'),
+                'default' => $this->request->getQuery('created'),
                 'placeholder' => __d('me_cms', 'month'),
                 'size' => 5,
             ]);
-            echo $this->Form->input('spot', [
-                'default' => $this->request->query('spot'),
+            echo $this->Form->control('spot', [
+                'default' => $this->request->getQuery('spot'),
                 'hiddenField' => false,
                 'label' => sprintf('%s?', __d('me_cms_youtube', 'Spot')),
                 'type' => 'checkbox',
@@ -186,22 +185,18 @@ $this->Library->datepicker(
                     ?>
                 </td>
                 <td class="text-center">
-                    <?php
-                        echo $this->Html->link(
-                            $video->category->title,
-                            ['?' => ['category' => $video->category->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
-                    ?>
+                    <?= $this->Html->link(
+                        $video->category->title,
+                        ['?' => ['category' => $video->category->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                    ) ?>
                 </td>
                 <td class="text-center">
-                    <?php
-                        echo $this->Html->link(
-                            $video->user->full_name,
-                            ['?' => ['user' => $video->user->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this user')]
-                        );
-                    ?>
+                    <?= $this->Html->link(
+                        $video->user->full_name,
+                        ['?' => ['user' => $video->user->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this user')]
+                    ) ?>
                 </td>
                 <td class="min-width text-center hidden-xs">
                     <?= empty($video->duration) ? '00:00' : $video->duration ?>

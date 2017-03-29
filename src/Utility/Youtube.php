@@ -31,6 +31,11 @@ use MeTools\Utility\Youtube as BaseYoutube;
 class Youtube extends BaseYoutube
 {
     /**
+     * @var Cake\Http\Client
+     */
+    protected $Client;
+
+    /**
      * API key
      * @var string
      */
@@ -39,10 +44,13 @@ class Youtube extends BaseYoutube
     /**
      * Construct
      * @param string $key API key
+     * @uses $Client
      * @uses $key
      */
     public function __construct($key = null)
     {
+        $this->Client = new Client;
+
         if (empty($key)) {
             $key = config('Youtube.key');
         }
@@ -60,12 +68,12 @@ class Youtube extends BaseYoutube
      */
     protected function _parseDuration($duration)
     {
-        if (!preg_match('/^PT((\d+)H)?((\d+)M)?((\d+)S)$/', $duration, $matches)) {
+        if (!preg_match('/^PT((\d+)H)?((\d+)M)?((\d+)S)?$/', $duration, $matches)) {
             return false;
         }
 
         $duration = '';
-        $hours = $minutes = 0;
+        $hours = $minutes = $seconds = 0;
 
         if (!empty($matches[2])) {
             $hours = $matches[2];
@@ -76,7 +84,9 @@ class Youtube extends BaseYoutube
             $minutes = $matches[4];
         }
 
-        $seconds = $matches[6];
+        if (!empty($matches[6])) {
+            $seconds = $matches[6];
+        }
 
         $duration .= sprintf("%02d", $minutes) . ':' . sprintf("%02d", $seconds);
 
@@ -89,13 +99,15 @@ class Youtube extends BaseYoutube
      * Internal method to get a info response
      * @param string $id Video ID
      * @return mixed The response body
+     * @uses $Client
      * @uses $key
      */
     protected function _getInfoResponse($id)
     {
-        $url = 'https://www.googleapis.com/youtube/v3/videos?id=' . $id . '&key=' . $this->key . '&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
+        $url = 'https://www.googleapis.com/youtube/v3/videos?id=' . $id . '&key=' . $this->key .
+            '&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
 
-        return (new Client())->get($url)->body();
+        return $this->Client->get($url)->body;
     }
 
     /**

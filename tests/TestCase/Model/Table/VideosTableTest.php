@@ -22,7 +22,10 @@
  */
 namespace MeCmsYoutube\Test\TestCase\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Reflection\ReflectionTrait;
@@ -102,15 +105,15 @@ class VideosTableTest extends TestCase
         $this->Videos = $this->getMockBuilder(get_class($this->Videos))
             ->setMethods(['setNextToBePublished'])
             ->setConstructorArgs([[
-                'table' => $this->Videos->table(),
-                'connection' => $this->Videos->connection(),
+                'table' => $this->Videos->getTable(),
+                'connection' => $this->Videos->getConnection(),
             ]])
             ->getMock();
 
         $this->Videos->expects($this->once())
             ->method('setNextToBePublished');
 
-        $this->Videos->afterDelete(new \Cake\Event\Event(null), new \Cake\ORM\Entity, new \ArrayObject);
+        $this->Videos->afterDelete(new Event(null), new Entity, new ArrayObject);
     }
 
     /**
@@ -122,15 +125,15 @@ class VideosTableTest extends TestCase
         $this->Videos = $this->getMockBuilder(get_class($this->Videos))
             ->setMethods(['setNextToBePublished'])
             ->setConstructorArgs([[
-                'table' => $this->Videos->table(),
-                'connection' => $this->Videos->connection(),
+                'table' => $this->Videos->getTable(),
+                'connection' => $this->Videos->getConnection(),
             ]])
             ->getMock();
 
         $this->Videos->expects($this->once())
             ->method('setNextToBePublished');
 
-        $this->Videos->afterSave(new \Cake\Event\Event(null), new \Cake\ORM\Entity, new \ArrayObject);
+        $this->Videos->afterSave(new Event(null), new Entity, new ArrayObject);
     }
 
     /**
@@ -142,8 +145,8 @@ class VideosTableTest extends TestCase
         $this->Videos = $this->getMockBuilder(get_class($this->Videos))
             ->setMethods(['_getInfo'])
             ->setConstructorArgs([[
-                'table' => $this->Videos->table(),
-                'connection' => $this->Videos->connection(),
+                'table' => $this->Videos->getTable(),
+                'connection' => $this->Videos->getConnection(),
             ]])
             ->getMock();
 
@@ -199,18 +202,20 @@ class VideosTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('youtube_videos', $this->Videos->table());
-        $this->assertEquals('title', $this->Videos->displayField());
-        $this->assertEquals('id', $this->Videos->primaryKey());
+        $this->assertEquals('youtube_videos', $this->Videos->getTable());
+        $this->assertEquals('title', $this->Videos->getDisplayField());
+        $this->assertEquals('id', $this->Videos->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Videos->Categories);
-        $this->assertEquals('category_id', $this->Videos->Categories->foreignKey());
-        $this->assertEquals('INNER', $this->Videos->Categories->joinType());
+        $this->assertEquals('category_id', $this->Videos->Categories->getForeignKey());
+        $this->assertEquals('INNER', $this->Videos->Categories->getJoinType());
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->Videos->Categories->className());
+        $this->assertInstanceOf('MeCmsYoutube\Model\Table\VideosCategoriesTable', $this->Videos->Categories->getTarget());
+        $this->assertEquals('MeCmsYoutube.VideosCategories', $this->Videos->Categories->getTarget()->getRegistryAlias());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Videos->Users);
-        $this->assertEquals('user_id', $this->Videos->Users->foreignKey());
-        $this->assertEquals('INNER', $this->Videos->Users->joinType());
+        $this->assertEquals('user_id', $this->Videos->Users->getForeignKey());
+        $this->assertEquals('INNER', $this->Videos->Users->getJoinType());
         $this->assertEquals('MeCms.Users', $this->Videos->Users->className());
 
         $this->assertTrue($this->Videos->hasBehavior('Timestamp'));
@@ -244,7 +249,7 @@ class VideosTableTest extends TestCase
         $this->assertNotEmpty($entity->user);
 
         $this->assertInstanceOf('MeCms\Model\Entity\User', $entity->user);
-        $this->assertEquals(3, $entity->user->id);
+        $this->assertEquals(4, $entity->user->id);
     }
 
     /**

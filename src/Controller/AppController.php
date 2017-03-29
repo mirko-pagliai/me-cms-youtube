@@ -22,9 +22,10 @@
  */
 namespace MeCmsYoutube\Controller;
 
-use MeCms\Controller\AppController as BaseController;
+use Cake\Event\Event;
+use MeCms\Controller\AppController as MeCmsController;
 
-class AppController extends BaseController
+class AppController extends MeCmsController
 {
     /**
      * Called after the controller action is run, but before the view is
@@ -35,15 +36,17 @@ class AppController extends BaseController
      * @return void
      * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeRender
      */
-    public function beforeRender(\Cake\Event\Event $event)
+    public function beforeRender(Event $event)
     {
         parent::beforeRender($event);
 
         //Uses a custom View class (`MeCmsYoutube.AppView` or `MeCms.AdminView`)
         if ($this->request->isAdmin()) {
-            $this->viewBuilder()->className('MeCms.View/Admin');
+            $className = 'MeCms.View/Admin';
         } else {
-            $this->viewBuilder()->className('MeCmsYoutube.View/App');
+            $className = 'MeCmsYoutube.View/App';
         }
+
+        $this->viewBuilder()->setClassName($className);
     }
 }

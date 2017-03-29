@@ -22,7 +22,7 @@
  */
 namespace MeCmsYoutube\Controller\Admin;
 
-use Cake\I18n\Time;
+use Cake\Event\Event;
 use MeCmsYoutube\Controller\AppController;
 use MeCmsYoutube\Utility\Youtube;
 
@@ -44,7 +44,7 @@ class VideosController extends AppController
      * @uses MeCms\Model\Table\UsersTable::getActiveList()
      * @uses MeCms\Model\Table\UsersTable::getList()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
@@ -77,14 +77,15 @@ class VideosController extends AppController
      * the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-     * @uses MeCms\Model\Table\AppTable::isOwnedBy()
+     * @uses MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
     public function isAuthorized($user = null)
     {
         //Only admins and managers can edit all videos.
         //Users can edit only their own videos
-        if ($this->request->isEdit() && !$this->Auth->isGroup(['admin', 'manager'])) {
-            return $this->Videos->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
+        if ($this->request->isEdit()) {
+            return $this->Auth->isGroup(['admin', 'manager']) ||
+                $this->Videos->isOwnedBy($this->request->getParam('pass.0'), $this->Auth->user('id'));
         }
 
         //Only admins and managers can delete videos
@@ -113,7 +114,7 @@ class VideosController extends AppController
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
-        $videos = $this->paginate($this->Videos->queryFromFilter($query, $this->request->query));
+        $videos = $this->paginate($this->Videos->queryFromFilter($query, $this->request->getQuery()));
 
         $this->set(compact('videos'));
     }
@@ -129,22 +130,36 @@ class VideosController extends AppController
     {
         $youtube = new Youtube;
 
-        //If the address of a YouTube video has been specified
-        if ($this->request->query('url') && $this->request->is('get')) {
-            //Gets video ID and information
-            $youtubeId = $youtube->getId($this->request->query('url'));
-            $youtubeInfo = $youtube->getInfo($youtubeId);
-            $youtubeUrl = $youtube->getUrl($youtubeId);
+        //Gets and sets (as request data) the YouTube ID and url
+        if ($this->request->getQuery('url')) {
+            $youtubeId = $youtube->getId($this->request->getQuery('url'));
 
             if (!$youtubeId) {
                 $this->Flash->error(__d('me_cms_youtube', 'This is not a {0} video', 'YouTube'));
-            } elseif (!$youtubeInfo || !$youtubeUrl) {
-                $this->Flash->error(__d('me_cms_youtube', 'Unable to retrieve video informations. Probably the video is private'));
+
+                return $this->redirect([]);
+            }
+
+            $youtubeUrl = $youtube->getUrl($youtubeId);
+
+            $this->request = $this->request->withData('youtube_id', $youtubeId)
+                ->withData('youtube_url', $youtubeUrl);
+        }
+
+        //Gets and sets (as request data) information about the video. This only
+        //  happens with a `GET` request, so if the form has not yet been sended
+        if (!empty($youtubeId) && $this->request->is('get')) {
+            //Gets video ID and information
+            $youtubeInfo = $youtube->getInfo($youtubeId);
+
+            if ($youtubeInfo) {
+                foreach ($youtubeInfo as $key => $value) {
+                    $this->request = $this->request->withData($key, $value);
+                }
             } else {
-                $this->request->data = am([
-                    'youtube_id' => $youtubeId,
-                    'youtube_url' => $youtubeUrl,
-                ], $youtubeInfo);
+                $this->Flash->error(__d('me_cms_youtube', 'Unable to retrieve video informations. Probably the video is private'));
+
+                return $this->redirect([]);
             }
         }
 
@@ -153,30 +168,28 @@ class VideosController extends AppController
         if ($this->request->is('post')) {
             //Only admins and managers can add videos on behalf of other users
             if (!$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->request->data('user_id', $this->Auth->user('id'));
+                $this->request = $this->request->withData('user_id', $this->Auth->user('id'));
             }
 
-            $this->request->data['created'] = new Time($this->request->data('created'));
-
-            $video = $this->Videos->patchEntity($video, $this->request->data);
+            $video = $this->Videos->patchEntity($video, $this->request->getData());
 
             if ($this->Videos->save($video)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
 
-            //Gets video ID and information
-            $youtubeId = $youtube->getId($this->request->query('url'));
-            $youtubeInfo = $youtube->getInfo($youtubeId);
-            $youtubeUrl = $youtube->getUrl($youtubeId);
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
 
-            $this->request->data = am([
-                'youtube_id' => $youtubeId,
-                'youtube_url' => $youtubeUrl,
-            ], $youtubeInfo, $this->request->data);
+            //Gets and sets (as request data) again information about the video,
+            // if these are no longer present in the request data
+            $youtubeInfo = $youtube->getInfo($youtubeId);
+
+            foreach ($youtubeInfo as $key => $value) {
+                if (!$this->request->getData($key)) {
+                    $this->request = $this->request->withData($key, $value);
+                }
+            }
         }
 
         $this->set(compact('video'));
@@ -194,12 +207,10 @@ class VideosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             //Only admins and managers can edit videos on behalf of other users
             if (!$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->request->data('user_id', $this->Auth->user('id'));
+                $this->request = $this->request->withData('user_id', $this->Auth->user('id'));
             }
 
-            $this->request->data['created'] = new Time($this->request->data('created'));
-
-            $video = $this->Videos->patchEntity($video, $this->request->data);
+            $video = $this->Videos->patchEntity($video, $this->request->getData());
 
             if ($this->Videos->save($video)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

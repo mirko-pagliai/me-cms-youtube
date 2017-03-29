@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('MeCms./Admin/Common/index');
 $this->assign('title', $title = __d('me_cms_youtube', 'Videos categories'));
 
@@ -55,10 +54,14 @@ $this->append('actions', $this->Html->button(
                     <strong>
                         <?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?>
                     </strong>
-                    
+
                     <?php
                         $actions = [
-                            $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $category->id], ['icon' => 'pencil']),
+                            $this->Html->link(
+                                __d('me_cms', 'Edit'),
+                                ['action' => 'edit', $category->id],
+                                ['icon' => 'pencil']
+                            ),
                         ];
 
                         //Only admins can delete videos categories
@@ -66,7 +69,11 @@ $this->append('actions', $this->Html->button(
                             $actions[] = $this->Form->postLink(
                                 __d('me_cms', 'Delete'),
                                 ['action' => 'delete', $category->id],
-                                ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]
+                                [
+                                    'class' => 'text-danger',
+                                    'icon' => 'trash-o',
+                                    'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                                ]
                             );
                         }
 

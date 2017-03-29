@@ -20,34 +20,23 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCmsYoutube\Test\TestCase\Model\Validation;
+namespace MeCmsYoutube\Test\TestCase\Controller;
 
-use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use Cake\TestSuite\IntegrationTestCase;
+use MeCmsYoutube\Controller\Admin\VideosCategoriesController;
+use MeCms\TestSuite\Traits\AuthMethodsTrait;
 
 /**
- * VideosCategoryValidatorTest class
+ * VideosCategoriesControllerTest class
  */
-class VideosCategoryValidatorTest extends TestCase
+class VideosCategoriesControllerTest extends IntegrationTestCase
 {
-    /**
-     * @var \MeCmsYoutube\Model\Table\VideosCategoriesTable
-     */
-    protected $VideosCategories;
+    use AuthMethodsTrait;
 
     /**
-     * Example data
-     * @var array
+     * @var \MeCmsYoutube\Controller\Admin\VideosCategoriesController
      */
-    protected $example;
-
-    /**
-     * Fixtures
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.me_cms_youtube.youtube_videos_categories',
-    ];
+    protected $Controller;
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -59,31 +48,42 @@ class VideosCategoryValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->VideosCategories = TableRegistry::get('MeCmsYoutube.VideosCategories');
-
-        $this->example = [
-            'title' => 'My title',
-            'slug' => 'my-slug',
-        ];
+        $this->Controller = new VideosCategoriesController;
     }
 
     /**
-     * Test validation.
-     * It tests the proper functioning of the example data.
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Controller);
+    }
+
+    /**
+     * Tests for `isAuthorized()` method
      * @test
      */
-    public function testValidationExampleData()
+    public function testIsAuthorized()
     {
-        $this->assertEmpty($this->VideosCategories->newEntity($this->example)->errors());
+        $this->assertGroupsAreAuthorized([
+            null => false,
+            'admin' => true,
+            'manager' => true,
+            'user' => false,
+        ]);
 
-        foreach (array_keys($this->example) as $key) {
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
+        //`delete` action
+        $this->Controller = new VideosCategoriesController;
+        $this->Controller->request = $this->Controller->request->withParam('action', 'delete');
 
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->VideosCategories->newEntity($copy)->errors());
-        }
+        $this->assertGroupsAreAuthorized([
+            null => false,
+            'admin' => true,
+            'manager' => false,
+            'user' => false,
+        ]);
     }
 }

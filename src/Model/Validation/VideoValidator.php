@@ -46,7 +46,7 @@ class VideoValidator extends AppValidator
         $this->add('youtube_id', [
             'validYoutubeId' => [
                 'message' => __d('me_cms_youtube', 'You have to enter a valid {0} ID', 'YouTube'),
-                'rule' => function ($value, $context) {
+                'rule' => function ($value) {
                     return (bool)preg_match('/^[A-z0-9\-_]{11}$/', $value);
                 },
             ],
@@ -87,7 +87,7 @@ class VideoValidator extends AppValidator
         $this->add('duration', [
             'validDuration' => [
                 'message' => __d('me_cms', 'You have to enter a valid value'),
-                'rule' => function ($value, $context) {
+                'rule' => function ($value) {
                     return (bool)preg_match('/^(\d{2}:){1,2}\d{2}$/', $value);
                 },
             ],

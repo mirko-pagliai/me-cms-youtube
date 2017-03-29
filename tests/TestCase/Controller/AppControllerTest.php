@@ -20,34 +20,26 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCmsYoutube\Test\TestCase\Model\Validation;
+namespace MeCmsYoutube\Test\TestCase\Controller;
 
-use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
 use Cake\TestSuite\TestCase;
+use MeCmsYoutube\Controller\AppController;
 
 /**
- * VideosCategoryValidatorTest class
+ * AppControllerTest class
  */
-class VideosCategoryValidatorTest extends TestCase
+class AppControllerTest extends TestCase
 {
     /**
-     * @var \MeCmsYoutube\Model\Table\VideosCategoriesTable
+     * @var \MeCmsYoutube\Controller\AppController
      */
-    protected $VideosCategories;
+    protected $Controller;
 
     /**
-     * Example data
-     * @var array
+     * @var \Cake\Event\Event
      */
-    protected $example;
-
-    /**
-     * Fixtures
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.me_cms_youtube.youtube_videos_categories',
-    ];
+    protected $Event;
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -59,31 +51,36 @@ class VideosCategoryValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->VideosCategories = TableRegistry::get('MeCmsYoutube.VideosCategories');
+        $this->Controller = new AppController;
 
-        $this->example = [
-            'title' => 'My title',
-            'slug' => 'my-slug',
-        ];
+        $this->Event = new Event('myEvent');
     }
 
     /**
-     * Test validation.
-     * It tests the proper functioning of the example data.
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Controller, $this->Event);
+    }
+
+    /**
+     * Tests for `beforeRender()` method
      * @test
      */
-    public function testValidationExampleData()
+    public function testBeforeRender()
     {
-        $this->assertEmpty($this->VideosCategories->newEntity($this->example)->errors());
+        $this->Controller->beforeRender($this->Event);
+        $this->assertEquals('MeCmsYoutube.View/App', $this->Controller->viewBuilder()->getClassName());
 
-        foreach (array_keys($this->example) as $key) {
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
+        //Admin request
+        $this->Controller = new AppController;
+        $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
 
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->VideosCategories->newEntity($copy)->errors());
-        }
+        $this->Controller->beforeRender($this->Event);
+        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
     }
 }

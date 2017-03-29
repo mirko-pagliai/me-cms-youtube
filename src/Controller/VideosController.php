@@ -26,6 +26,7 @@ use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\Network\Exception\ForbiddenException;
 use MeCmsYoutube\Controller\AppController;
+use MeCms\Controller\Traits\CheckLastSearchTrait;
 
 /**
  * Videos controller
@@ -33,6 +34,8 @@ use MeCmsYoutube\Controller\AppController;
  */
 class VideosController extends AppController
 {
+    use CheckLastSearchTrait;
+
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
@@ -55,7 +58,7 @@ class VideosController extends AppController
      */
     public function index()
     {
-        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
@@ -79,18 +82,18 @@ class VideosController extends AppController
                     },
                 ])
                 ->where(['is_spot' => false])
-                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
 
             $videos = $this->paginate($query)->toArray();
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $videos,
-                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
             ], $this->Videos->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(compact('videos'));
@@ -116,8 +119,8 @@ class VideosController extends AppController
     public function indexByDate($date = null)
     {
         //Data can be passed as query string, from a widget
-        if ($this->request->query('q')) {
-            return $this->redirect([$this->request->query('q')]);
+        if ($this->request->getQuery('q')) {
+            return $this->redirect([$this->request->getQuery('q')]);
         }
 
         //Sets `$year`, `$month` and `$day`
@@ -144,7 +147,7 @@ class VideosController extends AppController
             $end = (new Time($start))->addYear(1);
         }
 
-        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $page);
@@ -167,24 +170,24 @@ class VideosController extends AppController
                         return $q->select(['first_name', 'last_name']);
                     },
                 ])
-                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+                ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
                 ->where([
                     'is_spot' => false,
-                    sprintf('%s.created >=', $this->Videos->alias()) => $start,
-                    sprintf('%s.created <', $this->Videos->alias()) => $end,
+                    sprintf('%s.created >=', $this->Videos->getAlias()) => $start,
+                    sprintf('%s.created <', $this->Videos->getAlias()) => $end,
                 ])
-                ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
 
             $videos = $this->paginate($query)->toArray();
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $videos,
-                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
             ], $this->Videos->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(compact('videos', 'year', 'month', 'day'));
@@ -220,30 +223,30 @@ class VideosController extends AppController
             ->select(['id', 'youtube_id', 'title', 'text', 'created'])
             ->where(['is_spot' => false])
             ->limit(config('default.records_for_rss'))
-            ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC'])
+            ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
             ->cache('rss', $this->Videos->cache);
 
         $this->set(compact('videos'));
 
-        $this->viewBuilder()->layout('MeCms.default');
+        $this->viewBuilder()->setLayout('MeCms.default');
     }
 
     /**
      * Searches videos
      * @return void
-     * @uses MeCms\Controller\AppController::_checkLastSearch()
+     * @uses MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      */
     public function search()
     {
-        $pattern = $this->request->query('p');
+        $pattern = $this->request->getQuery('p');
 
         if ($pattern) {
             //Checks if the pattern is at least 4 characters long
             if (strlen($pattern) >= 4) {
-                if ($this->_checkLastSearch($pattern)) {
+                if ($this->checkLastSearch($pattern)) {
                     $this->paginate['limit'] = config('default.records_for_searches');
 
-                    $page = $this->request->query('page') ? $this->request->query('page') : 1;
+                    $page = $this->request->getQuery('page', 1);
 
                     //Sets the initial cache name
                     $cache = sprintf('search_%s', md5($pattern));
@@ -267,18 +270,18 @@ class VideosController extends AppController
                                 'subtitle LIKE' => sprintf('%%%s%%', $pattern),
                                 'text LIKE' => sprintf('%%%s%%', $pattern),
                             ]])
-                            ->order([sprintf('%s.created', $this->Videos->alias()) => 'DESC']);
+                            ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
 
                         $videos = $this->paginate($query)->toArray();
 
                         //Writes on cache
                         Cache::writeMany([
                             $cache => $videos,
-                            sprintf('%s_paging', $cache) => $this->request->param('paging')
+                            sprintf('%s_paging', $cache) => $this->request->getParam('paging')
                         ], $this->Videos->cache);
                     //Else, sets the paging parameter
                     } else {
-                        $this->request->params['paging'] = $paging;
+                        $this->request = $this->request->withParam('paging', $paging);
                     }
 
                     $this->set(compact('videos'));
@@ -311,7 +314,7 @@ class VideosController extends AppController
                     return $q->select(['first_name', 'last_name']);
                 },
             ])
-            ->where([sprintf('%s.id', $this->Videos->alias()) => $id])
+            ->where([sprintf('%s.id', $this->Videos->getAlias()) => $id])
             ->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
             ->firstOrFail();
 
@@ -343,7 +346,7 @@ class VideosController extends AppController
                     return $q->select(['first_name', 'last_name']);
                 },
             ])
-            ->where([sprintf('%s.id', $this->Videos->alias()) => $id])
+            ->where([sprintf('%s.id', $this->Videos->getAlias()) => $id])
             ->firstOrFail();
 
         //If requested, gets the ID of a spot and adds it to the video

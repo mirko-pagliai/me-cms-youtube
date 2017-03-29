@@ -21,7 +21,6 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-
 <div class="video-container content-container clearfix">
     <div class="content-header">
         <?php if (config('video.category') && $video->category && $video->category->title && $video->category->slug) : ?>
@@ -89,10 +88,8 @@
     </div>
 
     <?php
-    if (config('video.shareaholic') &&
-        config('shareaholic.app_id') &&
-        $this->request->isAction('view', 'Videos') &&
-        !$this->request->isAjax()
+    if (config('video.shareaholic') && config('shareaholic.app_id') &&
+        $this->request->isAction('view', 'Videos') && !$this->request->isAjax()
     ) {
         echo $this->Html->shareaholic(config('shareaholic.app_id'));
     }

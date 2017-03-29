@@ -1,5 +1,13 @@
 # 2.x branch
 ## 2.8 branch
+### 2.8.1
+* fixed bug for the duration of video with 0 seconds (eg. `PT4M`);
+* fixed bug https://github.com/cakephp/cakephp/pull/10417;
+* improved the recovery of the information during the addition of a video;
+* updated for MeCms 2.16.1;
+* added tests for `AppController` class;
+* added tests for `isAuthorized()` method of all admin controllers.
+
 ### 2.8.0
 * the cells that act as widgets now have "Widgets" in the name, for the classes
     and the template directory;

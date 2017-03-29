@@ -43,6 +43,7 @@ class YoutubeTest extends TestCase
 
         $this->assertEquals([0, '00:00'], $this->invokeMethod($youtube, '_parseDuration', ['PT0S']));
         $this->assertEquals([20, '00:20'], $this->invokeMethod($youtube, '_parseDuration', ['PT20S']));
+        $this->assertEquals([240, '04:00'], $this->invokeMethod($youtube, '_parseDuration', ['PT4M']));
         $this->assertEquals([0, '00:00'], $this->invokeMethod($youtube, '_parseDuration', ['PT0M0S']));
         $this->assertEquals([180, '03:00'], $this->invokeMethod($youtube, '_parseDuration', ['PT3M0S']));
         $this->assertEquals([185, '03:05'], $this->invokeMethod($youtube, '_parseDuration', ['PT3M5S']));

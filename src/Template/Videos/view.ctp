@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('MeCms./Common/view');
 $this->assign('title', $video->title);
 
@@ -30,31 +29,26 @@ $this->assign('title', $video->title);
 if ($video->is_spot) {
     $this->userbar($this->Html->span(__d('me_cms_youtube', 'Spot'), ['class' => 'label label-primary']));
 }
-
 if (!$video->active) {
     $this->userbar($this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']));
 }
-
 if ($video->created->isFuture()) {
     $this->userbar($this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']));
 }
-
-$this->userbar([
-    $this->Html->link(
-        __d('me_cms_youtube', 'Edit video'),
-        ['action' => 'edit', $video->id, 'prefix' => ADMIN_PREFIX],
-        ['icon' => 'pencil', 'target' => '_blank']
-    ),
-    $this->Form->postLink(
-        __d('me_cms_youtube', 'Delete video'),
-        ['action' => 'delete', $video->id, 'prefix' => ADMIN_PREFIX],
-        [
-            'icon' => 'trash-o',
-            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-            'target' => '_blank',
-        ]
-    ),
-]);
+$this->userbar($this->Html->link(
+    __d('me_cms_youtube', 'Edit video'),
+    ['action' => 'edit', $video->id, 'prefix' => ADMIN_PREFIX],
+    ['icon' => 'pencil', 'target' => '_blank']
+));
+$this->userbar($this->Form->postLink(
+    __d('me_cms_youtube', 'Delete video'),
+    ['action' => 'delete', $video->id, 'prefix' => ADMIN_PREFIX],
+    [
+        'icon' => 'trash-o',
+        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+        'target' => '_blank',
+    ]
+));
 
 /**
  * Breadcrumb
@@ -74,12 +68,12 @@ if ($this->request->isAction('view', 'Videos')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
     $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
 
-    if (!empty($video->preview)) {
+    if ($video->preview) {
         $this->Html->meta(['href' => $video->preview, 'rel' => 'image_src']);
         $this->Html->meta(['content' => $video->preview, 'property' => 'og:image']);
     }
 
-    if (!empty($video->text)) {
+    if ($video->text) {
         $this->Html->meta([
             'content' => $this->Text->truncate($video->text, 100, ['html' => true]),
             'property' => 'og:description',

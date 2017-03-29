@@ -20,32 +20,34 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCmsYoutube\Test\TestCase\Model\Table;
+namespace MeCmsYoutube\Model\Table\Others;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * AppTableTest class
+ * AssociationsSameAliasesTest class
  */
-class AppTableTest extends TestCase
+class AssociationsSameAliasesTest extends TestCase
 {
+    /**
+     * @var \MeCms\Model\Table\PostsTable
+     */
+    protected $Posts;
+
     /**
      * @var \MeCmsYoutube\Model\Table\VideosTable
      */
     protected $Videos;
 
     /**
-     * @var \MeCmsYoutube\Model\Table\VideosCategoriesTable
-     */
-    protected $VideosCategories;
-
-    /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
+        'plugin.me_cms.posts',
+        'plugin.me_cms.posts_categories',
         'plugin.me_cms_youtube.youtube_videos',
         'plugin.me_cms_youtube.youtube_videos_categories',
     ];
@@ -60,9 +62,11 @@ class AppTableTest extends TestCase
     {
         parent::setUp();
 
+        $this->Posts = TableRegistry::get('MeCms.Posts');
         $this->Videos = TableRegistry::get('MeCmsYoutube.Videos');
-        $this->VideosCategories = TableRegistry::get('MeCmsYoutube.VideosCategories');
 
+        Cache::clearAll();
+        Cache::clear(false, $this->Posts->cache);
         Cache::clear(false, $this->Videos->cache);
     }
 
@@ -74,46 +78,35 @@ class AppTableTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->Videos, $this->VideosCategories);
+        unset($this->Posts, $this->Videos);
     }
 
     /**
-     * Test for `getList()` method
+     * Test for associations with the same alias
      * @test
      */
-    public function testGetList()
+    public function testAssociationsSameAliases()
     {
-        $cacheKey = sprintf('%s_list', $this->VideosCategories->getTable());
-        $this->assertEquals($cacheKey, 'youtube_videos_categories_list');
-        $this->assertFalse(Cache::read($cacheKey, $this->VideosCategories->cache));
+        foreach (['Posts', 'Videos'] as $table) {
+            $categories = $this->$table->Categories;
 
-        $list = $this->VideosCategories->getList();
-        $this->assertEquals([
-            2 => 'Another video category',
-            1 => 'First video category',
-            4 => 'Sub sub video category',
-            3 => 'Sub video category',
-        ], $list);
-        $this->assertEquals($list, Cache::read($cacheKey, $this->VideosCategories->cache)->toArray());
-    }
+            $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $categories);
+            $this->assertEquals('Categories', $categories->getName());
 
-    /**
-     * Test for `getTreeList()` method
-     * @test
-     */
-    public function testGetTreeList()
-    {
-        $cacheKey = sprintf('%s_tree_list', $this->VideosCategories->getTable());
-        $this->assertEquals($cacheKey, 'youtube_videos_categories_tree_list');
-        $this->assertFalse(Cache::read($cacheKey, $this->VideosCategories->cache));
+            if ($table === 'Posts') {
+                $this->assertEquals('MeCms.' . $table . 'Categories', $categories->className());
+            } else {
+                $this->assertEquals('MeCmsYoutube.' . $table . 'Categories', $categories->className());
+            }
 
-        $list = $this->VideosCategories->getTreeList();
-        $this->assertEquals([
-            1 => 'First video category',
-            3 => '—Sub video category',
-            4 => '——Sub sub video category',
-            2 => 'Another video category',
-        ], $list);
-        $this->assertEquals($list, Cache::read($cacheKey, $this->VideosCategories->cache)->toArray());
+            $category = $categories->find()->first();
+            $this->assertNotEmpty($category);
+
+            if ($table === 'Posts') {
+                $this->assertInstanceof('MeCms\Model\Entity\\' . $table . 'Category', $category);
+            } else {
+                $this->assertInstanceof('MeCmsYoutube\Model\Entity\\' . $table . 'Category', $category);
+            }
+        }
     }
 }
