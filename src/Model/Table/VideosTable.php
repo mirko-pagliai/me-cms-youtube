@@ -28,6 +28,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCmsYoutube\Utility\Youtube;
@@ -43,6 +44,7 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 class VideosTable extends AppTable
 {
     use IsOwnedByTrait;
+    use LocatorAwareTrait;
     use NextToBePublishedTrait;
 
     /**
@@ -211,7 +213,8 @@ class VideosTable extends AppTable
 
         $this->belongsTo('Categories', ['className' => 'MeCmsYoutube.VideosCategories'])
             ->setForeignKey('category_id')
-            ->setJoinType('INNER');
+            ->setJoinType('INNER')
+            ->setTarget($this->tableLocator()->get('MeCmsYoutube.VideosCategories'));
 
         $this->belongsTo('Users', ['className' => 'MeCms.Users'])
             ->setForeignKey('user_id')
