@@ -81,6 +81,10 @@ class AssociationsSameAliasesTest extends TestCase
         unset($this->Posts, $this->Videos);
     }
 
+    /**
+     * Test for associations with the same alias
+     * @test
+     */
     public function testAssociationsSameAliases()
     {
         foreach (['Posts', 'Videos'] as $table) {
