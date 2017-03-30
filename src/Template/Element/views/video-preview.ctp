@@ -53,6 +53,6 @@ if (!empty($video->text)) {
                 <?php endif; ?>
             </div>
         </div>
-        <?= $this->Thumb->fit($video->preview, ['width' => 205], ['alt' => $title]) . PHP_EOL ?>
+        <?= $this->Thumb->fit($video->preview->preview, ['width' => 205], ['alt' => $title]) . PHP_EOL ?>
     </a>
 </div>

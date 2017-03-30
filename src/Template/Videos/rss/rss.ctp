@@ -44,12 +44,8 @@ foreach ($videos as $video) {
     ]);
 
     //Adds the preview image
-    if (!empty($video->preview)) {
-        $text = sprintf(
-            '%s%s',
-            $this->Thumb->resize($video->preview, ['width' => 400]),
-            '<br />' . PHP_EOL . $text
-        );
+    if ($video->preview) {
+        $text = $this->Thumb->resize($video->preview->preview, ['width' => 400]) . '<br />' . PHP_EOL . $text;
     }
 
     echo $this->Rss->item([], [

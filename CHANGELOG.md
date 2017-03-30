@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.9 branch
 ### 2.9.0
+* the `preview` property now contains url, width and height of the preview;
 * updated for MeCms 2.17.0.
 
 ## 2.8 branch

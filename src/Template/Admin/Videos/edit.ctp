@@ -74,7 +74,7 @@ $this->Library->datetimepicker();
         <div class="col-sm-6">
             <h4><?= __d('me_cms_youtube', 'Thumbnail preview') ?></h4>
             <?= $this->Thumb->resize(
-                $video->preview,
+                $video->preview->preview,
                 ['height' => 315],
                 ['class' => 'center-block']
             ) ?>
