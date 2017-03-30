@@ -23,12 +23,12 @@
 namespace MeCmsYoutube\Shell;
 
 use MeCmsYoutube\Utility\Youtube;
-use MeCms\Console\BaseUpdateShell;
+use MeCms\Console\BaseUpdateConsole;
 
 /**
  * Applies updates
  */
-class UpdateShell extends BaseUpdateShell
+class UpdateShell extends BaseUpdateConsole
 {
     /**
      * Internal method. It updates all records, fixing those that have the
@@ -99,7 +99,7 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.4.0 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
      */
     public function to2v4v0()
     {
@@ -117,8 +117,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.3.0 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
-     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::_checkColumn()
      */
     public function to2v3v0()
     {
