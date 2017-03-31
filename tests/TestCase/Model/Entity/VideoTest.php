@@ -98,10 +98,11 @@ class VideoTest extends TestCase
         $this->assertNull($this->Video->preview);
 
         $this->Video->youtube_id = 't3217H8JppI';
-        $this->assertInstanceof('stdClass', $this->Video->preview);
-        $this->assertEquals(Youtube::getPreview('t3217H8JppI'), $this->Video->preview->preview);
-        $this->assertEquals(480, $this->Video->preview->width);
-        $this->assertEquals(360, $this->Video->preview->height);
+        $this->assertEquals([
+            'preview' => Youtube::getPreview('t3217H8JppI'),
+            'width' => 480,
+            'height' => 360,
+        ], $this->Video->preview);
     }
 
     /**

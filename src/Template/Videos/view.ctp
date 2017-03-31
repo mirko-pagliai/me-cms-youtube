@@ -69,8 +69,8 @@ if ($this->request->isAction('view', 'Videos')) {
     $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
 
     if ($video->preview) {
-        $this->Html->meta(['href' => $video->preview->preview, 'rel' => 'image_src']);
-        $this->Html->meta(['content' => $video->preview->preview, 'property' => 'og:image']);
+        $this->Html->meta(['href' => $video->preview['preview'], 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $video->preview['preview'], 'property' => 'og:image']);
     }
 
     if ($video->text) {

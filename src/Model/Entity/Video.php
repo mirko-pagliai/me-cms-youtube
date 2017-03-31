@@ -74,7 +74,7 @@ class Video extends Entity
             return null;
         }
 
-        return (object)[
+        return [
             'preview' => Youtube::getPreview($this->_properties['youtube_id']),
             'width' => 480,
             'height' => 360,
