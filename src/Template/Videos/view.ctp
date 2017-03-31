@@ -71,6 +71,8 @@ if ($this->request->isAction('view', 'Videos')) {
     if ($video->preview) {
         $this->Html->meta(['href' => $video->preview['preview'], 'rel' => 'image_src']);
         $this->Html->meta(['content' => $video->preview['preview'], 'property' => 'og:image']);
+        $this->Html->meta(['content' => $video->preview['width'], 'property' => 'og:image:width']);
+        $this->Html->meta(['content' => $video->preview['height'], 'property' => 'og:image:height']);
     }
 
     if ($video->text) {

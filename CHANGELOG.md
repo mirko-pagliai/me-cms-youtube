@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.9 branch
 ### 2.9.0
+* added `og:image:width` and `og:image:height` meta tags for previews;
 * the `preview` property now contains url, width and height of the preview;
 * updated for MeCms 2.17.0.
 
