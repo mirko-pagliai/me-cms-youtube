@@ -24,6 +24,7 @@ namespace MeCmsYoutube\Test\TestCase\Model\Entity;
 
 use Cake\TestSuite\TestCase;
 use MeCmsYoutube\Model\Entity\Video;
+use MeCmsYoutube\Utility\Youtube;
 
 /**
  * VideoTest class
@@ -97,7 +98,11 @@ class VideoTest extends TestCase
         $this->assertNull($this->Video->preview);
 
         $this->Video->youtube_id = 't3217H8JppI';
-        $this->assertEquals('http://img.youtube.com/vi/t3217H8JppI/0.jpg', $this->Video->preview);
+        $this->assertEquals([
+            'preview' => Youtube::getPreview('t3217H8JppI'),
+            'width' => 480,
+            'height' => 360,
+        ], $this->Video->preview);
     }
 
     /**

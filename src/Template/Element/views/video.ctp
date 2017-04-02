@@ -81,7 +81,7 @@
             </div>
         <?php else : ?>
             <a class="video-fake" href="<?= $this->Url->build(['_name' => 'video', $video->id]) ?>">
-                <?= $this->Html->img($video->preview) ?>
+                <?= $this->Html->img($video->preview['preview']) ?>
                 <?= $this->Html->icon('youtube-play') ?>
             </a>
         <?php endif; ?>
