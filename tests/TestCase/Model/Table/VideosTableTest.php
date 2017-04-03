@@ -286,7 +286,7 @@ class VideosTableTest extends TestCase
 
         $query = $this->Videos->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Videos.id AS `Videos__id`, Videos.user_id AS `Videos__user_id`, Videos.youtube_id AS `Videos__youtube_id`, Videos.category_id AS `Videos__category_id`, Videos.title AS `Videos__title`, Videos.subtitle AS `Videos__subtitle`, Videos.text AS `Videos__text`, Videos.priority AS `Videos__priority`, Videos.active AS `Videos__active`, Videos.is_spot AS `Videos__is_spot`, Videos.seconds AS `Videos__seconds`, Videos.duration AS `Videos__duration`, Videos.created AS `Videos__created`, Videos.modified AS `Videos__modified` FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)', $query->sql());
+        $this->assertStringEndsWith('FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
@@ -333,7 +333,7 @@ class VideosTableTest extends TestCase
 
         $query = $this->Videos->queryFromFilter($this->Videos->find(), $data);
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Videos.id AS `Videos__id`, Videos.user_id AS `Videos__user_id`, Videos.youtube_id AS `Videos__youtube_id`, Videos.category_id AS `Videos__category_id`, Videos.title AS `Videos__title`, Videos.subtitle AS `Videos__subtitle`, Videos.text AS `Videos__text`, Videos.priority AS `Videos__priority`, Videos.active AS `Videos__active`, Videos.is_spot AS `Videos__is_spot`, Videos.seconds AS `Videos__seconds`, Videos.duration AS `Videos__duration`, Videos.created AS `Videos__created`, Videos.modified AS `Videos__modified` FROM youtube_videos Videos WHERE Videos.is_spot = :c0', $query->sql());
+        $this->assertStringEndsWith('FROM youtube_videos Videos WHERE Videos.is_spot = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
     }
