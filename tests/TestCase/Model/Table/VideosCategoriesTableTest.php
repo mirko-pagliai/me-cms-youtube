@@ -193,7 +193,7 @@ class VideosCategoriesTableTest extends TestCase
 
         $query = $this->VideosCategories->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT VideosCategories.id AS `VideosCategories__id`, VideosCategories.parent_id AS `VideosCategories__parent_id`, VideosCategories.lft AS `VideosCategories__lft`, VideosCategories.rght AS `VideosCategories__rght`, VideosCategories.title AS `VideosCategories__title`, VideosCategories.slug AS `VideosCategories__slug`, VideosCategories.description AS `VideosCategories__description`, VideosCategories.video_count AS `VideosCategories__video_count`, VideosCategories.created AS `VideosCategories__created`, VideosCategories.modified AS `VideosCategories__modified` FROM youtube_videos_categories VideosCategories WHERE VideosCategories.video_count > :c0', $query->sql());
+        $this->assertStringEndsWith('FROM youtube_videos_categories VideosCategories WHERE VideosCategories.video_count > :c0', $query->sql());
 
         $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
 

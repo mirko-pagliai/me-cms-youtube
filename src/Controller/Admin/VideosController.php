@@ -202,7 +202,15 @@ class VideosController extends AppController
      */
     public function edit($id = null)
     {
-        $video = $this->Videos->get($id);
+        $video = $this->Videos->findById($id)
+            ->formatResults(function ($results) {
+                return $results->map(function ($row) {
+                    $row->created = $row->created->i18nFormat(FORMAT_FOR_MYSQL);
+
+                    return $row;
+                });
+            })
+            ->firstOrFail();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             //Only admins and managers can edit videos on behalf of other users
