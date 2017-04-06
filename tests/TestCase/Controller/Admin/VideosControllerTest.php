@@ -48,6 +48,15 @@ class VideosControllerTest extends IntegrationTestCase
     ];
 
     /**
+     * Internal method to set a `VideosController` instance
+     */
+    protected function setVideosControllerInstance()
+    {
+        $this->Controller = new VideosController;
+        $this->Controller->Videos = TableRegistry::get('MeCmsYoutube.Videos');
+    }
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -57,7 +66,7 @@ class VideosControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->Controller = new VideosController;
+        $this->setVideosControllerInstance();
     }
 
     /**
@@ -78,7 +87,6 @@ class VideosControllerTest extends IntegrationTestCase
     public function testIsAuthorized()
     {
         $this->assertGroupsAreAuthorized([
-            null => true,
             'admin' => true,
             'manager' => true,
             'user' => true,
@@ -86,12 +94,10 @@ class VideosControllerTest extends IntegrationTestCase
 
         //`edit` and `delete` actions
         foreach (['edit', 'delete'] as $action) {
-            $this->Controller = new VideosController;
-            $this->Controller->Videos = TableRegistry::get('MeCmsYoutube.Videos');
+            $this->setVideosControllerInstance();
             $this->Controller->request = $this->Controller->request->withParam('action', $action);
 
             $this->assertGroupsAreAuthorized([
-                null => false,
                 'admin' => true,
                 'manager' => true,
                 'user' => false,
@@ -99,8 +105,7 @@ class VideosControllerTest extends IntegrationTestCase
         }
 
         //`edit` action, with an user who owns the record
-        $this->Controller = new VideosController;
-        $this->Controller->Videos = TableRegistry::get('MeCmsYoutube.Videos');
+        $this->setVideosControllerInstance();
         $this->Controller->request = $this->Controller->request
             ->withParam('action', 'edit')
             ->withParam('pass.0', 1);

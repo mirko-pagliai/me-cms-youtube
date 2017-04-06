@@ -49,7 +49,7 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
         parent::setUp();
 
         $this->Controller = new VideosCategoriesController;
-        $this->Controller->request = $this->Controller->request->withParam('prefix', 'admin');
+        $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
     }
 
     /**
