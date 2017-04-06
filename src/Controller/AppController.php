@@ -23,9 +23,12 @@
 namespace MeCmsYoutube\Controller;
 
 use Cake\Event\Event;
-use MeCms\Controller\AppController as MeCmsController;
+use MeCms\Controller\AppController as MeCmsAppController;
 
-class AppController extends MeCmsController
+/**
+ * Application controller class
+ */
+class AppController extends MeCmsAppController
 {
     /**
      * Called after the controller action is run, but before the view is
