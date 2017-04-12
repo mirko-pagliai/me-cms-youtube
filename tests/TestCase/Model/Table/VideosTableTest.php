@@ -282,8 +282,6 @@ class VideosTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $this->assertTrue($this->Videos->hasFinder('active'));
-
         $query = $this->Videos->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)', $query->sql());
@@ -291,14 +289,6 @@ class VideosTableTest extends TestCase
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c2']['value']);
-
-        $this->assertNotEmpty($query->count());
-
-        foreach ($query->toArray() as $entity) {
-            $this->assertTrue($entity->active);
-            $this->assertTrue(!$entity->is_spot);
-            $this->assertTrue(!$entity->created->isFuture());
-        }
     }
 
     /**
