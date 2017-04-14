@@ -169,11 +169,9 @@ class VideosTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([
-            sprintf('%s.active', $this->getAlias()) => true,
-            sprintf('%s.is_spot', $this->getAlias()) => false,
-            sprintf('%s.created <=', $this->getAlias()) => new Time,
-        ]);
+        $query->where([sprintf('%s.active', $this->getAlias()) => true])
+            ->where([sprintf('%s.is_spot', $this->getAlias()) => false])
+            ->where([sprintf('%s.created <=', $this->getAlias()) => new Time]);
 
         return $query;
     }

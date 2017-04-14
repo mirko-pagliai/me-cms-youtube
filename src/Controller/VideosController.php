@@ -74,12 +74,8 @@ class VideosController extends AppController
             $query = $this->Videos->find('active')
                 ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->contain([
-                    'Categories' => function ($q) {
-                        return $q->select(['title', 'slug']);
-                    },
-                    'Users' => function ($q) {
-                        return $q->select(['first_name', 'last_name']);
-                    },
+                    'Categories' => ['fields' => ['title', 'slug']],
+                    'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
                 ->where(['is_spot' => false])
                 ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
@@ -163,12 +159,8 @@ class VideosController extends AppController
             $query = $this->Videos->find('active')
                 ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->contain([
-                    'Categories' => function ($q) {
-                        return $q->select(['title', 'slug']);
-                    },
-                    'Users' => function ($q) {
-                        return $q->select(['first_name', 'last_name']);
-                    },
+                    'Categories' => ['fields' => ['title', 'slug']],
+                    'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
                 ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
                 ->where([
@@ -307,12 +299,8 @@ class VideosController extends AppController
         $video = $this->Videos->find('active')
             ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
             ->contain([
-                'Categories' => function ($q) {
-                    return $q->select(['title', 'slug']);
-                },
-                'Users' => function ($q) {
-                    return $q->select(['first_name', 'last_name']);
-                },
+                'Categories' => ['fields' => ['title', 'slug']],
+                'Users' => ['fields' => ['first_name', 'last_name']],
             ])
             ->where([sprintf('%s.id', $this->Videos->getAlias()) => $id])
             ->cache(sprintf('view_%s', md5($id)), $this->Videos->cache)
@@ -339,12 +327,8 @@ class VideosController extends AppController
         $video = $this->Videos->find()
             ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'active', 'is_spot', 'created', 'modified'])
             ->contain([
-                'Categories' => function ($q) {
-                    return $q->select(['title', 'slug']);
-                },
-                'Users' => function ($q) {
-                    return $q->select(['first_name', 'last_name']);
-                },
+                'Categories' => ['fields' => ['title', 'slug']],
+                'Users' => ['fields' => ['first_name', 'last_name']],
             ])
             ->where([sprintf('%s.id', $this->Videos->getAlias()) => $id])
             ->firstOrFail();
