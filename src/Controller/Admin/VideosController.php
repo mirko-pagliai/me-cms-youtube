@@ -103,14 +103,11 @@ class VideosController extends AppController
      */
     public function index()
     {
-        $query = $this->Videos->find()->contain([
-            'Categories' => function ($q) {
-                return $q->select(['id', 'title']);
-            },
-            'Users' => function ($q) {
-                return $q->select(['id', 'first_name', 'last_name']);
-            },
-        ]);
+        $query = $this->Videos->find()
+            ->contain([
+                'Categories' => ['fields' => ['id', 'title']],
+                'Users' => ['fields' => ['id', 'first_name', 'last_name']],
+            ]);
 
         $this->paginate['order'] = ['created' => 'DESC'];
 

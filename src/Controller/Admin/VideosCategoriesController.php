@@ -77,11 +77,7 @@ class VideosCategoriesController extends AppController
     public function index()
     {
         $categories = $this->VideosCategories->find('all')
-            ->contain([
-                'Parents' => function ($q) {
-                    return $q->select(['title']);
-                },
-            ])
+            ->contain(['Parents' => ['fields' => ['title']]])
             ->order(['VideosCategories.lft' => 'ASC'])
             ->toArray();
 

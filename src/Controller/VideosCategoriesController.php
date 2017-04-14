@@ -75,12 +75,8 @@ class VideosCategoriesController extends AppController
             $query = $this->VideosCategories->Videos->find('active')
                 ->select(['id', 'youtube_id', 'title', 'subtitle', 'text', 'created'])
                 ->contain([
-                    'Categories' => function ($q) {
-                        return $q->select(['id', 'title', 'slug']);
-                    },
-                    'Users' => function ($q) {
-                        return $q->select(['first_name', 'last_name']);
-                    },
+                    'Categories' => ['fields' => ['id', 'title', 'slug']],
+                    'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
                 ->where(['Categories.slug' => $category, 'is_spot' => false])
                 ->order([sprintf('%s.created', $this->VideosCategories->Videos->getAlias()) => 'DESC']);

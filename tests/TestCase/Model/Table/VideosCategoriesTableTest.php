@@ -189,18 +189,10 @@ class VideosCategoriesTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $this->assertTrue($this->VideosCategories->hasFinder('active'));
-
         $query = $this->VideosCategories->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM youtube_videos_categories VideosCategories WHERE VideosCategories.video_count > :c0', $query->sql());
 
         $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
-
-        $this->assertNotEmpty($query->count());
-
-        foreach ($query->toArray() as $category) {
-            $this->assertNotEquals(0, $category->video_count);
-        }
     }
 }

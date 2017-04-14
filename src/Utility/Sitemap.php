@@ -54,11 +54,9 @@ class Sitemap extends SitemapBuilder
 
         $categories = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain(['Videos' => function ($query) use ($table) {
-                $query->select(['id', 'category_id', 'modified']);
-                $query->order([sprintf('%s.modified', $table->Videos->getAlias()) => 'DESC']);
-
-                return $query;
+            ->contain(['Videos' => function ($q) use ($table) {
+                return $q->select(['id', 'category_id', 'modified'])
+                    ->order([sprintf('%s.modified', $table->Videos->getAlias()) => 'DESC']);
             }]);
 
         if ($categories->isEmpty()) {
