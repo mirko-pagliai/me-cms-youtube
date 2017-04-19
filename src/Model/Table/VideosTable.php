@@ -212,7 +212,8 @@ class VideosTable extends AppTable
         $this->belongsTo('Categories', ['className' => 'MeCmsYoutube.VideosCategories'])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
-            ->setTarget($this->tableLocator()->get('MeCmsYoutube.VideosCategories'));
+            ->setTarget($this->tableLocator()->get('MeCmsYoutube.VideosCategories'))
+            ->setAlias('Categories');
 
         $this->belongsTo('Users', ['className' => 'MeCms.Users'])
             ->setForeignKey('user_id')

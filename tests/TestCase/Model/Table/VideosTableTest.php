@@ -212,6 +212,7 @@ class VideosTableTest extends TestCase
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->Videos->Categories->className());
         $this->assertInstanceOf('MeCmsYoutube\Model\Table\VideosCategoriesTable', $this->Videos->Categories->getTarget());
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->Videos->Categories->getTarget()->getRegistryAlias());
+        $this->assertEquals('Categories', $this->Videos->Categories->getAlias());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Videos->Users);
         $this->assertEquals('user_id', $this->Videos->Users->getForeignKey());
