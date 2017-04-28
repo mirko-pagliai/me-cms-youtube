@@ -166,12 +166,13 @@ class VideosTable extends AppTable
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
+     * @uses MeCms\Model\Table\AppTable::findActive()
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => true])
-            ->where([sprintf('%s.is_spot', $this->getAlias()) => false])
-            ->where([sprintf('%s.created <=', $this->getAlias()) => new Time]);
+        $query = parent::findActive($query, $options);
+
+        $query->where([sprintf('%s.is_spot', $this->getAlias()) => false]);
 
         return $query;
     }
