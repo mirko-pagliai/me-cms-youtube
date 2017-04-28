@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.9 branch
+### 2.9.2
+* fixed the `findActive()` method for `VideosCategoriesTable`.
+
 ### 2.9.1
 * fixed the `Categories` alias for `Videos` table;
 * fixed bug, the `created` field is formatted correctly in `edit` templates.
