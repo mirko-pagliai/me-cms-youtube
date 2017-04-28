@@ -86,17 +86,7 @@ class SitemapTest extends TestCase
             ],
             [
                 'loc' => 'http://localhost/videos/category/sub-sub-video-category',
-                'lastmod' => '2016-12-31T15:08:40+00:00',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/video/4',
-                'lastmod' => '2016-12-31T15:08:40+00:00',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/video/3',
-                'lastmod' => '2016-12-31T15:07:40+00:00',
+                'lastmod' => '2016-11-30T15:05:40+00:00',
                 'priority' => '0.5',
             ],
             [
