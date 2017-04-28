@@ -59,7 +59,7 @@ class Sitemap extends SitemapBuilder
                     ->select(['id', 'category_id', 'modified'])
                     ->order([sprintf('%s.modified', $table->Videos->getAlias()) => 'DESC']);
             }])
-            ->order(['lft' => 'ASC']);;
+            ->order(['lft' => 'ASC']);
 
         if ($categories->isEmpty()) {
             return [];
