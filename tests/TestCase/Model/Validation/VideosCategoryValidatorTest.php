@@ -74,7 +74,7 @@ class VideosCategoryValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->VideosCategories->newEntity($this->example)->errors());
+        $this->assertEmpty($this->VideosCategories->newEntity($this->example)->getErrors());
 
         foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
@@ -83,7 +83,7 @@ class VideosCategoryValidatorTest extends TestCase
 
             $this->assertEquals([
                 $key => ['_required' => 'This field is required'],
-            ], $this->VideosCategories->newEntity($copy)->errors());
+            ], $this->VideosCategories->newEntity($copy)->getErrors());
         }
     }
 }
