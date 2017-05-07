@@ -59,7 +59,9 @@ class VideosCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.video_count >', $this->getAlias()) => 0]);
+        $query->matching($this->Videos->getAlias(), function ($q) {
+            return $q->find('active');
+        })->distinct();
 
         return $query;
     }

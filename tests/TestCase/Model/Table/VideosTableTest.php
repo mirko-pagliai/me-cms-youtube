@@ -193,7 +193,7 @@ class VideosTableTest extends TestCase
         $this->assertEquals([
             'category_id' => ['_existsIn' => 'You have to select a valid option'],
             'user_id' => ['_existsIn' => 'You have to select a valid option'],
-        ], $entity->errors());
+        ], $entity->getErrors());
     }
 
     /**
@@ -212,6 +212,7 @@ class VideosTableTest extends TestCase
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->Videos->Categories->className());
         $this->assertInstanceOf('MeCmsYoutube\Model\Table\VideosCategoriesTable', $this->Videos->Categories->getTarget());
         $this->assertEquals('MeCmsYoutube.VideosCategories', $this->Videos->Categories->getTarget()->getRegistryAlias());
+        $this->assertEquals('Categories', $this->Videos->Categories->getAlias());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Videos->Users);
         $this->assertEquals('user_id', $this->Videos->Users->getForeignKey());
@@ -284,11 +285,11 @@ class VideosTableTest extends TestCase
     {
         $query = $this->Videos->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)', $query->sql());
+        $this->assertStringEndsWith('FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.created <= :c1 AND Videos.is_spot = :c2)', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c2']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertFalse($query->valueBinder()->bindings()[':c2']['value']);
     }
 
     /**

@@ -92,7 +92,7 @@ class VideosCategoriesTableTest extends TestCase
             'slug' => 'my-slug',
         ]);
         $this->assertFalse($this->VideosCategories->save($entity));
-        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
     }
 
     /**
@@ -173,13 +173,13 @@ class VideosCategoriesTableTest extends TestCase
      */
     public function testHasManyPages()
     {
-        $category = $this->VideosCategories->findById(4)->contain(['Videos'])->first();
+        $category = $this->VideosCategories->find()->contain(['Videos'])->first();
 
         $this->assertNotEmpty($category->videos);
 
         foreach ($category->videos as $video) {
             $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $video);
-            $this->assertEquals(4, $video->category_id);
+            $this->assertEquals($category->id, $video->category_id);
         }
     }
 
@@ -191,8 +191,10 @@ class VideosCategoriesTableTest extends TestCase
     {
         $query = $this->VideosCategories->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM youtube_videos_categories VideosCategories WHERE VideosCategories.video_count > :c0', $query->sql());
+        $this->assertStringEndsWith('FROM youtube_videos_categories Categories INNER JOIN youtube_videos Videos ON (Videos.active = :c0 AND Videos.created <= :c1 AND Videos.is_spot = :c2 AND Categories.id = (Videos.category_id))', $query->sql());
 
-        $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertFalse($query->valueBinder()->bindings()[':c2']['value']);
     }
 }
