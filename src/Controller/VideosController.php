@@ -205,7 +205,7 @@ class VideosController extends AppController
 
     /**
      * Searches videos
-     * @return void
+     * @return Cake\Network\Response|null
      * @uses MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      */
     public function search()
