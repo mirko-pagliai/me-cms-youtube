@@ -40,19 +40,18 @@ class VideosCategoriesController extends AppController
     {
         $categories = $this->VideosCategories->find('active')
             ->select(['title', 'slug'])
-            ->order(['title' => 'ASC'])
-            ->cache('categories_index', $this->VideosCategories->cache)
-            ->all();
+            ->order([sprintf('%s.title', $this->VideosCategories->getAlias()) => 'ASC'])
+            ->cache('categories_index', $this->VideosCategories->cache);
 
         $this->set(compact('categories'));
     }
 
     /**
      * Lists videos for a category
+     * @param string $slug Category slug
      * @return \Cake\Network\Response|null|void
-     * @param string $category Category slug
      */
-    public function view($category = null)
+    public function view($slug = null)
     {
         //The category can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {
@@ -62,7 +61,7 @@ class VideosCategoriesController extends AppController
         $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
-        $cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $page);
+        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
         list($videos, $paging) = array_values(Cache::readMany(
@@ -78,14 +77,17 @@ class VideosCategoriesController extends AppController
                     'Categories' => ['fields' => ['id', 'title', 'slug']],
                     'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
-                ->where(['Categories.slug' => $category, 'is_spot' => false])
+                ->where([
+                    sprintf('%s.slug', $this->VideosCategories->getAlias()) => $slug,
+                    'is_spot' => false,
+                ])
                 ->order([sprintf('%s.created', $this->VideosCategories->Videos->getAlias()) => 'DESC']);
 
             if ($query->isEmpty()) {
                 throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
             }
 
-            $videos = $this->paginate($query)->toArray();
+            $videos = $this->paginate($query);
 
             //Writes on cache
             Cache::writeMany([
@@ -97,6 +99,7 @@ class VideosCategoriesController extends AppController
             $this->request = $this->request->withParam('paging', $paging);
         }
 
-        $this->set(am(['category' => $videos[0]->category], compact('videos')));
+        $this->set('category', $videos->extract('category')->first());
+        $this->set(compact('videos'));
     }
 }
