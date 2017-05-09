@@ -72,9 +72,9 @@
                 }
 
                 echo $this->Html->div(null, null, [
-                    'data-autoplay' => empty($autoplay) && empty($video->spot_id) ? '0' : '1',
+                    'data-autoplay' => empty($autoplay) && empty($spot) ? '0' : '1',
                     'data-id' => $video->youtube_id,
-                    'data-spot' => empty($video->spot_id) ? null : $video->spot_id,
+                    'data-spot' => empty($spot) ? null : $spot,
                     'id' => 'player',
                 ]);
                 ?>
