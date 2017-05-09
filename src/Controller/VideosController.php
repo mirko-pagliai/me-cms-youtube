@@ -23,10 +23,11 @@
 namespace MeCmsYoutube\Controller;
 
 use Cake\Cache\Cache;
-use Cake\I18n\Time;
+use Cake\Event\Event;
 use Cake\Network\Exception\ForbiddenException;
 use MeCmsYoutube\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
+use MeCms\Controller\Traits\GetStartAndEndDateTrait;
 
 /**
  * Videos controller
@@ -35,6 +36,7 @@ use MeCms\Controller\Traits\CheckLastSearchTrait;
 class VideosController extends AppController
 {
     use CheckLastSearchTrait;
+    use GetStartAndEndDateTrait;
 
     /**
      * Called before the controller action.
@@ -45,7 +47,7 @@ class VideosController extends AppController
      * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses MeCms\Controller\AppController::beforeFilter()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
@@ -80,7 +82,7 @@ class VideosController extends AppController
                 ->where(['is_spot' => false])
                 ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
 
-            $videos = $this->paginate($query)->toArray();
+            $videos = $this->paginate($query);
 
             //Writes on cache
             Cache::writeMany([
@@ -96,12 +98,10 @@ class VideosController extends AppController
     }
 
     /**
-     * List videos for a specific date:
+     * Lists videos for a specific date.
      *
-     * The date must be passed in the format:
-     * <pre>YYYY/MM/dd</pre>
-     * The month and day are optional.
-     * You can also use the special keywords "today" and "yesterday".
+     * Month and day are optional and you can also use special keywords `today`
+     *  or `yesterday`.
      *
      * Examples:
      * <pre>/videos/2016/06/11</pre>
@@ -109,39 +109,19 @@ class VideosController extends AppController
      * <pre>/videos/2016</pre>
      * <pre>/videos/today</pre>
      * <pre>/videos/yesterday</pre>
-     * @param string $date Date as `YYYY/MM/dd`
+     * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`,
+     *  `YYYY/MM` or `YYYY`
      * @return \Cake\Network\Response|null|void
+     * @use \MeCms\Controller\Traits\GetStartAndEndDateTrait\getStartAndEndDate()
      */
-    public function indexByDate($date = null)
+    public function indexByDate($date)
     {
         //Data can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {
             return $this->redirect([$this->request->getQuery('q')]);
         }
 
-        //Sets `$year`, `$month` and `$day`
-        //`$month` and `$day` may be `null`
-        if ($date === 'today' || $date === 'yesterday') {
-            $date = new Time($date === 'today' ? 'now' : '1 days ago');
-
-            list($year, $month, $day) = explode('/', $date->i18nFormat('YYYY/MM/dd'));
-        } else {
-            list($year, $month, $day) = am(explode('/', $date), [null, null, null]);
-        }
-
-        //Sets the start date
-        $start = (new Time())
-            ->setDate($year, empty($month) ? 1 : $month, empty($day) ? 1 : $day)
-            ->setTime(0, 0, 0);
-
-        //Sets the end date
-        if ($year && $month && $day) {
-            $end = (new Time($start))->addDay(1);
-        } elseif ($year && $month) {
-            $end = (new Time($start))->addMonth(1);
-        } else {
-            $end = (new Time($start))->addYear(1);
-        }
+        list($start, $end) = $this->getStartAndEndDate($date);
 
         $page = $this->request->getQuery('page', 1);
 
@@ -170,7 +150,7 @@ class VideosController extends AppController
                 ])
                 ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
 
-            $videos = $this->paginate($query)->toArray();
+            $videos = $this->paginate($query);
 
             //Writes on cache
             Cache::writeMany([
@@ -182,21 +162,7 @@ class VideosController extends AppController
             $this->request = $this->request->withParam('paging', $paging);
         }
 
-        $this->set(compact('videos', 'year', 'month', 'day'));
-    }
-
-    /**
-     * This allows backward compatibility for URLs like:
-     * <pre>/videos/page:3</pre>
-     * <pre>/videos/page:3/sort:Video.created/direction:desc</pre>
-     * These URLs will become:
-     * <pre>/videos?page=3</pre>
-     * @param int $page Page number
-     * @return \Cake\Network\Response|null
-     */
-    public function indexCompatibility($page)
-    {
-        return $this->redirect(['_name' => 'videos', '?' => ['page' => $page]], 301);
+        $this->set(compact('date', 'start', 'videos'));
     }
 
     /**
@@ -225,64 +191,69 @@ class VideosController extends AppController
 
     /**
      * Searches videos
-     * @return void
+     * @return Cake\Network\Response|null
      * @uses MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      */
     public function search()
     {
         $pattern = $this->request->getQuery('p');
 
+        //Checks if the pattern is at least 4 characters long
+        if ($pattern && strlen($pattern) < 4) {
+            $this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
+
+            return $this->redirect([]);
+        }
+
+        //Checks the last search
+        if ($pattern && !$this->checkLastSearch($pattern)) {
+            $this->Flash->alert(__d(
+                'me_cms',
+                'You have to wait {0} seconds to perform a new search',
+                config('security.search_interval')
+            ));
+
+            return $this->redirect([]);
+        }
+
         if ($pattern) {
-            //Checks if the pattern is at least 4 characters long
-            if (strlen($pattern) >= 4) {
-                if ($this->checkLastSearch($pattern)) {
-                    $this->paginate['limit'] = config('default.records_for_searches');
+            $this->paginate['limit'] = config('default.records_for_searches');
 
-                    $page = $this->request->getQuery('page', 1);
+            $page = $this->request->getQuery('page', 1);
 
-                    //Sets the initial cache name
-                    $cache = sprintf('search_%s', md5($pattern));
+            //Sets the cache name
+            $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), $this->paginate['limit'], $page);
 
-                    //Updates the cache name with the query limit and the number of the page
-                    $cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
-                    $cache = sprintf('%s_page_%s', $cache, $page);
+            //Tries to get data from the cache
+            list($videos, $paging) = array_values(Cache::readMany(
+                [$cache, sprintf('%s_paging', $cache)],
+                $this->Videos->cache
+            ));
 
-                    //Tries to get data from the cache
-                    list($videos, $paging) = array_values(Cache::readMany(
-                        [$cache, sprintf('%s_paging', $cache)],
-                        $this->Videos->cache
-                    ));
+            //If the data are not available from the cache
+            if (empty($videos) || empty($paging)) {
+                $query = $this->Videos->find('active')
+                    ->select(['id', 'title', 'text', 'created'])
+                    ->where(['OR' => [
+                        'title LIKE' => sprintf('%%%s%%', $pattern),
+                        'subtitle LIKE' => sprintf('%%%s%%', $pattern),
+                        'text LIKE' => sprintf('%%%s%%', $pattern),
+                    ]])
+                    ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
 
-                    //If the data are not available from the cache
-                    if (empty($videos) || empty($paging)) {
-                        $query = $this->Videos->find('active')
-                            ->select(['id', 'title', 'text', 'created'])
-                            ->where(['OR' => [
-                                'title LIKE' => sprintf('%%%s%%', $pattern),
-                                'subtitle LIKE' => sprintf('%%%s%%', $pattern),
-                                'text LIKE' => sprintf('%%%s%%', $pattern),
-                            ]])
-                            ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
+                $videos = $this->paginate($query);
 
-                        $videos = $this->paginate($query)->toArray();
-
-                        //Writes on cache
-                        Cache::writeMany([
-                            $cache => $videos,
-                            sprintf('%s_paging', $cache) => $this->request->getParam('paging')
-                        ], $this->Videos->cache);
-                    //Else, sets the paging parameter
-                    } else {
-                        $this->request = $this->request->withParam('paging', $paging);
-                    }
-
-                    $this->set(compact('videos'));
-                } else {
-                    $this->Flash->alert(__d('me_cms', 'You have to wait {0} seconds to perform a new search', config('security.search_interval')));
-                }
+                //Writes on cache
+                Cache::writeMany([
+                    $cache => $videos,
+                    sprintf('%s_paging', $cache) => $this->request->getParam('paging')
+                ], $this->Videos->cache);
+            //Else, sets the paging parameter
             } else {
-                $this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
+                $this->request = $this->request->withParam('paging', $paging);
             }
+
+            $this->set(compact('videos'));
         }
 
         $this->set(compact('pattern'));
@@ -308,8 +279,8 @@ class VideosController extends AppController
 
         //If requested, gets the ID of a spot and adds it to the video
         if (!$video->is_spot && config('video.spot')) {
-            $spot = $this->Videos->getRandomSpots();
-            $video->spot_id = $spot[0]->youtube_id;
+            $spot = $this->Videos->getRandomSpots()[0]->youtube_id;
+            $this->set(compact('spot'));
         }
 
         $this->set(compact('video'));
@@ -335,8 +306,8 @@ class VideosController extends AppController
 
         //If requested, gets the ID of a spot and adds it to the video
         if (!$video->is_spot && config('video.spot')) {
-            $spot = $this->Videos->getRandomSpots();
-            $video->spot_id = $spot[0]->youtube_id;
+            $spot = $this->Videos->getRandomSpots()[0]->youtube_id;
+            $this->set(compact('spot'));
         }
 
         $this->set(compact('video'));

@@ -52,6 +52,19 @@ if (!$routes->nameExists('videos')) {
     );
 }
 
+//Videos by date
+if (!$routes->nameExists('videosByDate')) {
+    $routes->connect(
+        '/videos/:date',
+        ['controller' => 'Videos', 'action' => 'indexByDate'],
+        [
+            '_name' => 'videosByDate',
+            'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
+            'pass' => ['date'],
+        ]
+    );
+}
+
 //Videos (RSS)
 if (!$routes->nameExists('videosRss')) {
     $routes->connect(
@@ -67,19 +80,6 @@ if (!$routes->nameExists('videosSearch')) {
         '/videos/search',
         ['controller' => 'Videos', 'action' => 'search'],
         ['_name' => 'videosSearch']
-    );
-}
-
-//Videos by date
-if (!$routes->nameExists('videosByDate')) {
-    $routes->connect(
-        '/videos/:date',
-        ['controller' => 'Videos', 'action' => 'indexByDate'],
-        [
-            '_name' => 'videosByDate',
-            'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
-            'pass' => ['date'],
-        ]
     );
 }
 
@@ -100,16 +100,3 @@ if (!$routes->nameExists('videosPreview')) {
         ['_name' => 'videosPreview', 'id' => '\d+', 'pass' => ['id']]
     );
 }
-
-/**
- * This allows backward compatibility for URLs like:
- * /videos/page:3
- * /videos/page:3/sort:Video.created/direction:desc
- * These URLs will become:
- * /videos?page=3
- */
-$routes->connect(
-    '/videos/page::page/*',
-    ['controller' => 'Videos', 'action' => 'indexCompatibility'],
-    ['page' => '\d+', 'pass' => ['page']]
-);

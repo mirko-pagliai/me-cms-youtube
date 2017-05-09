@@ -20,26 +20,27 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-use Cake\I18n\Time;
-
 $this->extend('/Videos/index');
 
-$date = new Time;
-$date->year($year)->month(empty($month) ? 1 : $month)->day(empty($day) ? 1 : $day);
-
-if ($year && $month && $day) {
-    if ($date->isToday()) {
-        $title = __d('me_cms_youtube', 'Videos of today');
-    } elseif ($date->isYesterday()) {
-        $title = __d('me_cms_youtube', 'Videos of yesterday');
-    } else {
-        $title = __dx('me_cms_youtube', 'videos of day', 'Videos of {0}', $date->i18nFormat(config('main.date.long')));
-    }
-} elseif ($year && $month) {
-    $title = __dx('me_cms_youtube', 'videos of month', 'Videos of {0}', $date->i18nFormat('MMMM y'));
+if ($date === 'today') {
+    $title = __d('me_cms_youtube', 'Videos of today');
+} elseif ($date === 'yesterday') {
+    $title = __d('me_cms_youtube', 'Videos of yesterday');
 } else {
-    $title = __dx('me_cms_youtube', 'videos of year', 'Videos of {0}', $date->i18nFormat('y'));
+    list($year, $month, $day) = array_replace([null, null, null], explode('/', $date));
+
+    if ($year && $month && $day) {
+        $title = __dx('me_cms_youtube', 'videos of day', 'Videos of {0}', $start->i18nFormat(config('main.date.long')));
+    } elseif ($year && $month) {
+        $title = __dx('me_cms_youtube', 'videos of month', 'Videos of {0}', $start->i18nFormat('MMMM y'));
+    } else {
+        $title = __dx('me_cms_youtube', 'videos of year', 'Videos of {0}', $start->i18nFormat('y'));
+    }
 }
 
 $this->assign('title', $title);
+
+/**
+ * Breadcrumb
+ */
 $this->Breadcrumbs->add($title);
