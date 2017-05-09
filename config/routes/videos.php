@@ -100,16 +100,3 @@ if (!$routes->nameExists('videosPreview')) {
         ['_name' => 'videosPreview', 'id' => '\d+', 'pass' => ['id']]
     );
 }
-
-/**
- * This allows backward compatibility for URLs like:
- * /videos/page:3
- * /videos/page:3/sort:Video.created/direction:desc
- * These URLs will become:
- * /videos?page=3
- */
-$routes->connect(
-    '/videos/page::page/*',
-    ['controller' => 'Videos', 'action' => 'indexCompatibility'],
-    ['page' => '\d+', 'pass' => ['page']]
-);

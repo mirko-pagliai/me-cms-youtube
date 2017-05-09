@@ -166,20 +166,6 @@ class VideosController extends AppController
     }
 
     /**
-     * This allows backward compatibility for URLs like:
-     * <pre>/videos/page:3</pre>
-     * <pre>/videos/page:3/sort:Video.created/direction:desc</pre>
-     * These URLs will become:
-     * <pre>/videos?page=3</pre>
-     * @param int $page Page number
-     * @return \Cake\Network\Response|null
-     */
-    public function indexCompatibility($page)
-    {
-        return $this->redirect(['_name' => 'videos', '?' => ['page' => $page]], 301);
-    }
-
-    /**
      * Lists videos as RSS
      * @return void
      * @throws \Cake\Network\Exception\ForbiddenException
