@@ -2,7 +2,8 @@
 ## 2.9 branch
 ### 2.9.2
 * fixed `VideosController::indexByDate()` method;
-* fixed the `findActive()` method for `VideosCategoriesTable`.
+* fixed the `findActive()` method for `VideosCategoriesTable`;
+* added tests for `VideosController` class.
 
 ### 2.9.1
 * fixed the `Categories` alias for `Videos` table;

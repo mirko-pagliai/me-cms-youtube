@@ -128,5 +128,21 @@ class YoutubeVideosFixture extends TestFixture
             'created' => '2016-12-31 15:08:40',
             'modified' => '2016-12-31 15:08:40',
         ],
+        [
+            'id' => 5,
+            'user_id' => 3,
+            'youtube_id' => 'rrVDATvUitA',
+            'category_id' => 4,
+            'title' => 'Pending video title',
+            'subtitle' => 'Pending video subtitle',
+            'text' => 'Pending video text',
+            'priority' => 1,
+            'active' => 0,
+            'is_spot' => 0,
+            'seconds' => 339,
+            'duration' => '05:39',
+            'created' => '2016-12-31 15:09:40',
+            'modified' => '2016-12-31 15:09:40',
+        ],
     ];
 }

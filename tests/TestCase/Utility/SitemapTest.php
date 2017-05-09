@@ -63,7 +63,7 @@ class SitemapTest extends TestCase
         $expected = [
             [
                 'loc' => 'http://localhost/videos',
-                'lastmod' => '2016-12-31T15:08:40+00:00',
+                'lastmod' => '2016-12-31T15:09:40+00:00',
                 'priority' => '0.5',
             ],
             [
