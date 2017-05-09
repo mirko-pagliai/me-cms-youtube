@@ -28,8 +28,8 @@ $this->assign('title', $title = __d('me_cms_youtube', 'Videos categories'));
  */
 $this->Breadcrumbs->add($title, ['_name' => 'videosCategories']);
 
-$categories = array_map(function ($category) {
+$categories = $categories->map(function ($category) {
     return $this->Html->link($category->title, ['_name' => 'videosCategory', $category->slug]);
-}, $categories->toArray());
+})->toList();
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);
