@@ -23,10 +23,11 @@
 namespace MeCmsYoutube\Controller;
 
 use Cake\Cache\Cache;
-use Cake\I18n\Time;
+use Cake\Event\Event;
 use Cake\Network\Exception\ForbiddenException;
 use MeCmsYoutube\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
+use MeCms\Controller\Traits\GetStartAndEndDateTrait;
 
 /**
  * Videos controller
@@ -35,6 +36,7 @@ use MeCms\Controller\Traits\CheckLastSearchTrait;
 class VideosController extends AppController
 {
     use CheckLastSearchTrait;
+    use GetStartAndEndDateTrait;
 
     /**
      * Called before the controller action.
@@ -45,7 +47,7 @@ class VideosController extends AppController
      * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses MeCms\Controller\AppController::beforeFilter()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
@@ -96,12 +98,10 @@ class VideosController extends AppController
     }
 
     /**
-     * List videos for a specific date:
+     * Lists videos for a specific date.
      *
-     * The date must be passed in the format:
-     * <pre>YYYY/MM/dd</pre>
-     * The month and day are optional.
-     * You can also use the special keywords "today" and "yesterday".
+     * Month and day are optional and you can also use special keywords `today`
+     *  or `yesterday`.
      *
      * Examples:
      * <pre>/videos/2016/06/11</pre>
@@ -109,39 +109,19 @@ class VideosController extends AppController
      * <pre>/videos/2016</pre>
      * <pre>/videos/today</pre>
      * <pre>/videos/yesterday</pre>
-     * @param string $date Date as `YYYY/MM/dd`
+     * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`,
+     *  `YYYY/MM` or `YYYY`
      * @return \Cake\Network\Response|null|void
+     * @use \MeCms\Controller\Traits\GetStartAndEndDateTrait\getStartAndEndDate()
      */
-    public function indexByDate($date = null)
+    public function indexByDate($date)
     {
         //Data can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {
             return $this->redirect([$this->request->getQuery('q')]);
         }
 
-        //Sets `$year`, `$month` and `$day`
-        //`$month` and `$day` may be `null`
-        if ($date === 'today' || $date === 'yesterday') {
-            $date = new Time($date === 'today' ? 'now' : '1 days ago');
-
-            list($year, $month, $day) = explode('/', $date->i18nFormat('YYYY/MM/dd'));
-        } else {
-            list($year, $month, $day) = am(explode('/', $date), [null, null, null]);
-        }
-
-        //Sets the start date
-        $start = (new Time())
-            ->setDate($year, empty($month) ? 1 : $month, empty($day) ? 1 : $day)
-            ->setTime(0, 0, 0);
-
-        //Sets the end date
-        if ($year && $month && $day) {
-            $end = (new Time($start))->addDay(1);
-        } elseif ($year && $month) {
-            $end = (new Time($start))->addMonth(1);
-        } else {
-            $end = (new Time($start))->addYear(1);
-        }
+        list($start, $end) = $this->getStartAndEndDate($date);
 
         $page = $this->request->getQuery('page', 1);
 
@@ -170,7 +150,7 @@ class VideosController extends AppController
                 ])
                 ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC']);
 
-            $videos = $this->paginate($query)->toArray();
+            $videos = $this->paginate($query);
 
             //Writes on cache
             Cache::writeMany([
@@ -182,7 +162,7 @@ class VideosController extends AppController
             $this->request = $this->request->withParam('paging', $paging);
         }
 
-        $this->set(compact('videos', 'year', 'month', 'day'));
+        $this->set(compact('date', 'start', 'videos'));
     }
 
     /**
