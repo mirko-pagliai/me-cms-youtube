@@ -92,6 +92,21 @@ class VideosControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
+        $controller->Videos->Youtube = $this->getMockBuilder(get_class($controller->Videos->Youtube))
+            ->setMethods(['_getInfoResponse'])
+            ->getMock();
+
+        $controller->Videos->Youtube->method('_getInfoResponse')
+            ->will($this->returnCallback(function () {
+                $content = file_get_contents(TEST_APP . 'examples' . DS . 'video.json');
+                $content = json_decode($content, true);
+
+                $content['items'][0]['snippet']['thumbnails']['high']['url'] = TEST_APP . 'examples' . DS . 'thumbnail.jpg';
+
+                return json_encode($content);
+            }));
+
+
         $controller->viewBuilder()->setLayout(false);
 
         parent::controllerSpy($event, $controller);
