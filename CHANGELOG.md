@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.9 branch
 ### 2.9.3
+* widgets (cells) use collections;
 * tests that require a network connection have been marked with the
     `requireNetwork` group.
 

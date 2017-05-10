@@ -72,8 +72,7 @@ class VideosWidgetsCell extends Cell
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_categories', $this->Videos->cache)
-            ->toArray();
+            ->cache('widget_categories', $this->Videos->cache);
 
         $this->set(compact('categories'));
     }
@@ -94,8 +93,7 @@ class VideosWidgetsCell extends Cell
             ->select(['id', 'youtube_id', 'title', 'text'])
             ->limit($limit)
             ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
-            ->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache)
-            ->toArray();
+            ->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache);
 
         $this->set(compact('videos'));
     }
@@ -129,8 +127,7 @@ class VideosWidgetsCell extends Cell
                 });
             })
             ->order(['month' => 'DESC'])
-            ->cache('widget_months', $this->Videos->cache)
-            ->toArray();
+            ->cache('widget_months', $this->Videos->cache);
 
         $this->set(compact('months'));
     }
