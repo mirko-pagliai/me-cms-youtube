@@ -55,6 +55,30 @@ class VideosWidgetsCellTest extends TestCase
     ];
 
     /**
+     * Internal method to get a mock instance of `Youtube` class
+     * @param \MeCmsYoutube\View\Cell\VideosWidgetsCell $cell
+     * @return \MeCmsYoutube\Utility\Youtube
+     */
+    protected function getYoutubeMock($cell)
+    {
+        $cell->Videos->Youtube = $this->getMockBuilder(get_class($cell->Videos->Youtube))
+            ->setMethods(['_getInfoResponse'])
+            ->getMock();
+
+        $cell->Videos->Youtube->method('_getInfoResponse')
+            ->will($this->returnCallback(function () {
+                $content = file_get_contents(TEST_APP . 'examples' . DS . 'video.json');
+                $content = json_decode($content, true);
+
+                $content['items'][0]['snippet']['thumbnails']['high']['url'] = TEST_APP . 'examples' . DS . 'thumbnail.jpg';
+
+                return json_encode($content);
+            }));
+
+        return $cell->Videos->Youtube;
+    }
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -171,7 +195,9 @@ class VideosWidgetsCellTest extends TestCase
         $widget = ME_CMS_YOUTUBE . '.Videos::latest';
 
         //Tries with a limit of 1
-        $result = $this->Widget->widget($widget, ['limit' => 1])->render();
+        $cell = $this->Widget->widget($widget, ['limit' => 1]);
+        $cell->Videos->Youtube = $this->getYoutubeMock($cell);
+        $result = $cell->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -200,7 +226,9 @@ class VideosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with a limit of 2
-        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
+        $cell = $this->Widget->widget($widget, ['limit' => 2]);
+        $cell->Videos->Youtube = $this->getYoutubeMock($cell);
+        $result = $cell->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
