@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.9 branch
+### 2.9.3
+* tests that require a network connection have been marked with the
+    `requireNetwork` group.
+
 ### 2.9.2
 * fixed `VideosController::indexByDate()` method;
 * fixed the `findActive()` method for `VideosCategoriesTable`;

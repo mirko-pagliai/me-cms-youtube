@@ -84,6 +84,7 @@ class YoutubeTest extends TestCase
 
     /**
      * Test for `getInfo()` method, with no data
+     * @group requireNetwork
      * @test
      */
     public function testGetInfoNoData()
