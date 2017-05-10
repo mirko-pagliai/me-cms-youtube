@@ -106,7 +106,6 @@ class VideosControllerTest extends IntegrationTestCase
                 return json_encode($content);
             }));
 
-
         $controller->viewBuilder()->setLayout(false);
 
         parent::controllerSpy($event, $controller);
