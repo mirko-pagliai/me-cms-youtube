@@ -45,8 +45,7 @@ class VideosCategoriesController extends AppController
         parent::beforeFilter($event);
 
         if ($this->request->isAction(['add', 'edit'])) {
-            //Gets and sets categories
-            $this->set('categories', $categories = $this->VideosCategories->getTreeList());
+            $this->set('categories', $this->VideosCategories->getTreeList());
         }
     }
 

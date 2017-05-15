@@ -3,7 +3,9 @@
 ### 2.9.3
 * widgets (cells) use collections;
 * tests that require a network connection have been marked with the
-    `requireNetwork` group.
+    `requireNetwork` group;
+* added tests for `beforeFilter()` and `initialize()` methods of all admin
+    controllers.
 
 ### 2.9.2
 * fixed `VideosController::indexByDate()` method;

@@ -22,6 +22,8 @@
  */
 namespace MeCmsYoutube\Test\TestCase\Admin\Controller;
 
+use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCmsYoutube\Controller\Admin\VideosCategoriesController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -39,6 +41,24 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * @var \MeCmsYoutube\Model\Table\PostsCategoriesTable
+     */
+    protected $VideosCategories;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms_youtube.youtube_videos_categories',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $url;
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -48,8 +68,15 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
+        $this->setUserGroup('admin');
+
         $this->Controller = new VideosCategoriesController;
-        $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
+
+        $this->VideosCategories = TableRegistry::get('MeCmsYoutube.VideosCategories');
+
+        Cache::clear(false, $this->VideosCategories->cache);
+
+        $this->url = ['controller' => 'VideosCategories', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS_YOUTUBE];
     }
 
     /**
@@ -60,7 +87,33 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Controller);
+        unset($this->Controller, $this->VideosCategories);
+    }
+
+    /**
+     * Adds additional event spies to the controller/view event manager
+     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Controller\Controller|null $controller Controller instance
+     * @return void
+     */
+    public function controllerSpy($event, $controller = null)
+    {
+        $controller->viewBuilder()->setLayout(false);
+
+        parent::controllerSpy($event, $controller);
+    }
+
+    /**
+     * Tests for `beforeFilter()` method
+     * @test
+     */
+    public function testBeforeFilter()
+    {
+        foreach (['add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertResponseOk();
+            $this->assertNotEmpty($this->viewVariable('categories'));
+        }
     }
 
     /**
@@ -69,6 +122,8 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
      */
     public function testIsAuthorized()
     {
+        $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
+
         $this->assertGroupsAreAuthorized([
             'admin' => true,
             'manager' => true,
@@ -77,6 +132,7 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
 
         //`delete` action
         $this->Controller = new VideosCategoriesController;
+        $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
         $this->Controller->request = $this->Controller->request->withParam('action', 'delete');
 
         $this->assertGroupsAreAuthorized([

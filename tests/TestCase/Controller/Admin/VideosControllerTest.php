@@ -22,6 +22,7 @@
  */
 namespace MeCmsYoutube\Test\TestCase\Admin\Controller;
 
+use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCmsYoutube\Controller\Admin\VideosController;
@@ -40,21 +41,24 @@ class VideosControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * @var \MeCmsYoutube\Model\Table\VideosTable
+     */
+    protected $Videos;
+
+    /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
+        'plugin.me_cms.users',
         'plugin.me_cms_youtube.youtube_videos',
+        'plugin.me_cms_youtube.youtube_videos_categories',
     ];
 
     /**
-     * Internal method to set a `VideosController` instance
+     * @var array
      */
-    protected function setVideosControllerInstance()
-    {
-        $this->Controller = new VideosController;
-        $this->Controller->Videos = TableRegistry::get('MeCmsYoutube.Videos');
-    }
+    protected $url;
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -66,7 +70,16 @@ class VideosControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->setVideosControllerInstance();
+        $this->setUserGroup('admin');
+
+        $this->Controller = new VideosController;
+
+        $this->Videos = TableRegistry::get('MeCmsYoutube.Videos');
+
+        Cache::clear(false, $this->Videos->cache);
+        Cache::clear(false, $this->Videos->Users->cache);
+
+        $this->url = ['controller' => 'Videos', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS_YOUTUBE];
     }
 
     /**
@@ -77,7 +90,58 @@ class VideosControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Controller);
+        unset($this->Controller, $this->Videos);
+    }
+
+    /**
+     * Tests for `beforeFilter()` method
+     * @test
+     */
+    public function testBeforeFilter()
+    {
+        foreach (['add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertResponseOk();
+            $this->assertNotEmpty($this->viewVariable('categories'));
+            $this->assertNotEmpty($this->viewVariable('users'));
+        }
+
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->viewVariable('categories'));
+        $this->assertNotEmpty($this->viewVariable('users'));
+    }
+
+    /**
+     * Tests for `beforeFilter()` method, with no categories
+     * @test
+     */
+    public function testBeforeFilterNoCategories()
+    {
+        //Deletes all categories
+        $this->Videos->Categories->deleteAll(['id IS NOT' => null]);
+
+        foreach (['index', 'add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertRedirect(['controller' => 'VideosCategories', 'action' => 'index']);
+            $this->assertSession('You must first create a category', 'Flash.flash.0.message');
+        }
+    }
+
+    /**
+     * Tests for `beforeFilter()` method, with no users
+     * @test
+     */
+    public function testBeforeFilterNoUsers()
+    {
+        //Deletes all users
+        $this->Videos->Users->deleteAll(['id IS NOT' => null]);
+
+        foreach (['index', 'add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertRedirect(['controller' => 'Users', 'action' => 'index']);
+            $this->assertSession('You must first create an user', 'Flash.flash.0.message');
+        }
     }
 
     /**
@@ -94,7 +158,8 @@ class VideosControllerTest extends IntegrationTestCase
 
         //`edit` and `delete` actions
         foreach (['edit', 'delete'] as $action) {
-            $this->setVideosControllerInstance();
+            $this->Controller = new VideosController;
+            $this->Controller->Videos = $this->Videos;
             $this->Controller->request = $this->Controller->request->withParam('action', $action);
 
             $this->assertGroupsAreAuthorized([
@@ -105,7 +170,8 @@ class VideosControllerTest extends IntegrationTestCase
         }
 
         //`edit` action, with an user who owns the record
-        $this->setVideosControllerInstance();
+        $this->Controller = new VideosController;
+        $this->Controller->Videos = $this->Videos;
         $this->Controller->request = $this->Controller->request
             ->withParam('action', 'edit')
             ->withParam('pass.0', 1);

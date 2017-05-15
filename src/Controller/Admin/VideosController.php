@@ -37,38 +37,38 @@ class VideosController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
-     * @return void
+     * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\VideosCategoriesTable::getList()
-     * @uses MeCms\Model\Table\VideosCategoriesTable::getTreeList()
      * @uses MeCms\Model\Table\UsersTable::getActiveList()
      * @uses MeCms\Model\Table\UsersTable::getList()
+     * @uses MeCmsYoutube\Model\Table\VideosCategoriesTable::getList()
+     * @uses MeCmsYoutube\Model\Table\VideosCategoriesTable::getTreeList()
      */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isIndex()) {
-            $categories = $this->Videos->Categories->getList();
-            $users = $this->Videos->Users->getList();
-        } elseif ($this->request->isAction(['add', 'edit'])) {
+        if ($this->request->isAction(['add', 'edit'])) {
             $categories = $this->Videos->Categories->getTreeList();
             $users = $this->Videos->Users->getActiveList();
+        } else {
+            $categories = $this->Videos->Categories->getList();
+            $users = $this->Videos->Users->getList();
         }
 
-        //Checks for categories
-        if (isset($categories) && empty($categories)) {
+        if (!$users) {
+            $this->Flash->alert(__d('me_cms', 'You must first create an user'));
+
+            return $this->redirect(['controller' => 'Users', 'action' => 'index']);
+        }
+
+        if (!$categories) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
-            $this->redirect(['controller' => 'VideosCategories', 'action' => 'index']);
+
+            return $this->redirect(['controller' => 'VideosCategories', 'action' => 'index']);
         }
 
-        if (!empty($categories)) {
-            $this->set(compact('categories'));
-        }
-
-        if (!empty($users)) {
-            $this->set(compact('users'));
-        }
+        $this->set(compact('categories', 'users'));
     }
 
     /**
