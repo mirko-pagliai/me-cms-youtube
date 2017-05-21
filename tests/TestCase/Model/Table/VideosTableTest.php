@@ -299,19 +299,19 @@ class VideosTableTest extends TestCase
      */
     public function testGetRandomSpots()
     {
-        $spots = $this->Videos->getRandomSpots();
+        $collection = $this->Videos->getRandomSpots();
+        $this->assertInstanceof('Cake\Collection\Collection', $collection);
 
-        $this->assertCount(1, $spots);
-        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $spots[0]);
-        $this->assertNotEmpty($spots[0]->youtube_id);
+        $this->assertEquals(1, count($collection->toArray()));
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $collection->first());
 
-        $spots = $this->Videos->getRandomSpots(2);
+        $collection = $this->Videos->getRandomSpots(2);
+        $this->assertInstanceof('Cake\Collection\Collection', $collection);
 
-        $this->assertCount(2, $spots);
+        $this->assertEquals(2, count($collection->toArray()));
 
-        foreach ($spots as $spot) {
-            $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $spot);
-            $this->assertNotEmpty($spot->youtube_id);
+        foreach ($collection->toArray() as $video) {
+            $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $video);
         }
     }
 

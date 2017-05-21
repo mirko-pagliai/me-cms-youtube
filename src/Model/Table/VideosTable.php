@@ -199,7 +199,7 @@ class VideosTable extends AppTable
     /**
      * Gets random spots
      * @param int $limit Limit
-     * @return array Spots
+     * @return \Cake\Collection\Collection Collection
      * @uses $cache
      */
     public function getRandomSpots($limit = 1)
@@ -212,8 +212,7 @@ class VideosTable extends AppTable
                 sprintf('%s.created <=', $this->getAlias()) => new Time,
             ])
             ->cache('all_spots', $this->cache)
-            ->sample($limit)
-            ->toArray();
+            ->sample($limit);
     }
 
     /**
