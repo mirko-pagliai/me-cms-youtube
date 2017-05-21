@@ -56,13 +56,13 @@ class VideosController extends AppController
             $users = $this->Videos->Users->getList();
         }
 
-        if (!$users) {
+        if ($users->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an user'));
 
             return $this->redirect(['controller' => 'Users', 'action' => 'index']);
         }
 
-        if (!$categories) {
+        if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
             return $this->redirect(['controller' => 'VideosCategories', 'action' => 'index']);
