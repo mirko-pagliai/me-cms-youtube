@@ -81,14 +81,4 @@ class YoutubeTest extends TestCase
             'duration' => '12:58',
         ], (array)$result);
     }
-
-    /**
-     * Test for `getInfo()` method, with no data
-     * @group requireNetwork
-     * @test
-     */
-    public function testGetInfoNoData()
-    {
-        $this->assertFalse((new Youtube)->getInfo('vlSR8Wlmpac'));
-    }
 }

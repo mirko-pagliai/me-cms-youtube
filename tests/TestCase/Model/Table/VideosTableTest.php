@@ -88,16 +88,6 @@ class VideosTableTest extends TestCase
     }
 
     /**
-     * Test for `_getInfo()` method
-     * @group requireNetwork
-     * @test
-     */
-    public function testGetInfo()
-    {
-        $this->assertFalse($this->invokeMethod($this->Videos, '_getInfo', ['vlSR8Wlmpac']));
-    }
-
-    /**
      * Test for `afterDelete()` method
      * @test
      */
