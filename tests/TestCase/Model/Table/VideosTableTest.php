@@ -294,6 +294,25 @@ class VideosTableTest extends TestCase
     }
 
     /**
+     * Test for `_getRandomSpots()` method
+     * @test
+     */
+    public function testInternalGetRandomSpots()
+    {
+        $query = $this->invokeMethod($this->Videos, '_getRandomSpots');
+
+        $this->assertInstanceof('Cake\ORM\Query', $query);
+        $this->assertStringEndsWith(
+            'FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)',
+            $query->sql()
+        );
+
+        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceof('Cake\I18n\Time', $query->valueBinder()->bindings()[':c2']['value']);
+    }
+
+    /**
      * Test for `getRandomSpots()` method
      * @test
      */
