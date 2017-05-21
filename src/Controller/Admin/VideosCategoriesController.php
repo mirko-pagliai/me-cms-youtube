@@ -75,15 +75,19 @@ class VideosCategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->VideosCategories->find('all')
+        $categories = $this->VideosCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
-            ->order(['VideosCategories.lft' => 'ASC'])
-            ->toArray();
+            ->order([sprintf('%s.lft', $this->VideosCategories->alias()) => 'ASC'])
+            ->formatResults(function ($categories) {
+                //Gets categories as tree list
+                $treeList = $this->VideosCategories->getTreeList()->toArray();
 
-        //Changes the category titles, replacing them with the titles of the tree list
-        array_walk($categories, function (&$category, $k, $treeList) {
-            $category->title = $treeList[$category->id];
-        }, $this->VideosCategories->getTreeList());
+                return $categories->map(function ($category) use ($treeList) {
+                    $category->title = $treeList[$category->id];
+
+                    return $category;
+                });
+            });
 
         $this->set(compact('categories'));
     }
@@ -103,9 +107,9 @@ class VideosCategoriesController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('category'));
@@ -127,9 +131,9 @@ class VideosCategoriesController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('category'));
@@ -148,11 +152,9 @@ class VideosCategoriesController extends AppController
 
         //Before deleting, it checks if the category has some videos
         if (!$category->video_count) {
-            if ($this->VideosCategories->delete($category)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-            }
+            $this->VideosCategories->deleteOrFail($category);
+
+            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         } else {
             $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         }

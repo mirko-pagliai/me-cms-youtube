@@ -221,9 +221,9 @@ class VideosController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('video'));
@@ -237,13 +237,9 @@ class VideosController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $video = $this->Videos->get($id);
+        $this->Videos->deleteOrFail($this->Videos->get($id));
 
-        if ($this->Videos->delete($video)) {
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-        } else {
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-        }
+        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
         return $this->redirect(['action' => 'index']);
     }
