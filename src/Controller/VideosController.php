@@ -279,7 +279,7 @@ class VideosController extends AppController
 
         //If requested, gets the ID of a spot and adds it to the video
         if (!$video->is_spot && config('video.spot')) {
-            $spot = $this->Videos->getRandomSpots()[0]->youtube_id;
+            $spot = $this->Videos->getRandomSpots()->first()->youtube_id;
             $this->set(compact('spot'));
         }
 
@@ -306,7 +306,7 @@ class VideosController extends AppController
 
         //If requested, gets the ID of a spot and adds it to the video
         if (!$video->is_spot && config('video.spot')) {
-            $spot = $this->Videos->getRandomSpots()[0]->youtube_id;
+            $spot = $this->Videos->getRandomSpots()->first()->youtube_id;
             $this->set(compact('spot'));
         }
 

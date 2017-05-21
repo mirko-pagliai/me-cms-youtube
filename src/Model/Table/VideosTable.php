@@ -48,20 +48,39 @@ class VideosTable extends AppTable
     use NextToBePublishedTrait;
 
     /**
+     * Instance of Youtube class
+     * @var \MeCmsYoutube\Utility\Youtube
+     */
+    public $Youtube;
+
+    /**
      * Name of the configuration to use for this table
      * @var string
      */
     public $cache = 'videos';
 
     /**
+     * Initializes a new instance
+     * @param array $config List of options for this table
+     * @uses $Youtube
+     */
+    public function __construct(array $config = [])
+    {
+        parent::__construct($config);
+
+        $this->Youtube = new Youtube;
+    }
+
+    /**
      * Internal method to get information about a video
      * @param string $id Video ID
      * @return mixed Object or `false`
+     * @uses $Youtube
      * @uses MeCmsYoutube\Utility\Youtube::getInfo()
      */
     protected function _getInfo($id)
     {
-        return (new Youtube)->getInfo($id);
+        return $this->Youtube->getInfo($id);
     }
 
     /**
@@ -178,12 +197,11 @@ class VideosTable extends AppTable
     }
 
     /**
-     * Gets random spots
-     * @param int $limit Limit
-     * @return array Spots
+     * Internal method to get the query for the random spots
+     * @return Query $query Query object
      * @uses $cache
      */
-    public function getRandomSpots($limit = 1)
+    protected function _getRandomSpots()
     {
         return $this->find()
             ->select('youtube_id')
@@ -192,9 +210,18 @@ class VideosTable extends AppTable
                 sprintf('%s.is_spot', $this->getAlias()) => true,
                 sprintf('%s.created <=', $this->getAlias()) => new Time,
             ])
-            ->cache('all_spots', $this->cache)
-            ->sample($limit)
-            ->toArray();
+            ->cache('all_spots', $this->cache);
+    }
+
+    /**
+     * Gets random spots
+     * @param int $limit Limit
+     * @return \Cake\Collection\Collection Collection
+     * @uses _getRandomSpots()
+     */
+    public function getRandomSpots($limit = 1)
+    {
+        return $this->_getRandomSpots()->sample($limit);
     }
 
     /**

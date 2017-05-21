@@ -83,18 +83,20 @@ class AppTableTest extends TestCase
      */
     public function testGetList()
     {
-        $cacheKey = sprintf('%s_list', $this->VideosCategories->getTable());
-        $this->assertEquals($cacheKey, 'youtube_videos_categories_list');
-        $this->assertFalse(Cache::read($cacheKey, $this->VideosCategories->cache));
+        $query = $this->VideosCategories->getList();
+        $this->assertInstanceof('Cake\ORM\Query', $query);
+        $this->assertContains('ORDER BY ' . $this->VideosCategories->getDisplayField() . ' ASC', $query->sql());
 
-        $list = $this->VideosCategories->getList();
+        $list = $query->toArray();
         $this->assertEquals([
             2 => 'Another video category',
             1 => 'First video category',
             4 => 'Sub sub video category',
             3 => 'Sub video category',
         ], $list);
-        $this->assertEquals($list, Cache::read($cacheKey, $this->VideosCategories->cache)->toArray());
+
+        $fromCache = Cache::read('youtube_videos_categories_list', $this->VideosCategories->cache)->toArray();
+        $this->assertEquals($list, $fromCache);
     }
 
     /**
@@ -103,17 +105,18 @@ class AppTableTest extends TestCase
      */
     public function testGetTreeList()
     {
-        $cacheKey = sprintf('%s_tree_list', $this->VideosCategories->getTable());
-        $this->assertEquals($cacheKey, 'youtube_videos_categories_tree_list');
-        $this->assertFalse(Cache::read($cacheKey, $this->VideosCategories->cache));
+        $query = $this->VideosCategories->getTreeList();
+        $this->assertInstanceof('Cake\ORM\Query', $query);
 
-        $list = $this->VideosCategories->getTreeList();
+        $list = $query->toArray();
         $this->assertEquals([
             1 => 'First video category',
             3 => '—Sub video category',
             4 => '——Sub sub video category',
             2 => 'Another video category',
         ], $list);
-        $this->assertEquals($list, Cache::read($cacheKey, $this->VideosCategories->cache)->toArray());
+
+        $fromCache = Cache::read('youtube_videos_categories_tree_list', $this->VideosCategories->cache)->toArray();
+        $this->assertEquals($list, $fromCache);
     }
 }

@@ -29,6 +29,6 @@ return [
     ],
     'Youtube' => [
         //API key
-        'key' => '000000',
+        'key' => 'AIzaSyChOLLslL-cQ-IoqYAMaMAF1lyRcsGCt7k',
     ],
 ];

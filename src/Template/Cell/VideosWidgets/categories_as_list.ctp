@@ -20,15 +20,15 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-if (empty($categories) || count($categories) < 2) {
+if (empty($categories) || $categories->count() < 2) {
     return;
 }
 
 $this->extend('MeCms./Common/widget');
 $this->assign('title', __d('me_cms_youtube', 'Videos categories'));
 
-$categories = array_map(function ($category) {
+$categories = $categories->map(function ($category) {
     return $this->Html->link($category->title, ['_name' => 'videosCategory', $category->slug]);
-}, $categories);
+})->toArray();
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);
