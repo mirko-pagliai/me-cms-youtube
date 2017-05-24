@@ -155,5 +155,9 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
         //GET request with query string
         $this->get(array_merge($url, ['?' => ['q' => $slug]]));
         $this->assertRedirect($url);
+
+        //GET request with a no existing category
+        $this->get(['_name' => 'videosCategory', 'no-existing']);
+        $this->assertResponseError();
     }
 }
