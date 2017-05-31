@@ -41,7 +41,7 @@ class UpdateShell extends BaseUpdateConsole
     {
         $this->loadModel('MeCmsYoutube.Videos');
 
-        $videos = $this->Videos->find('all')
+        $videos = $this->Videos->find()
             ->select(['id', 'youtube_id', 'duration', 'seconds'])
             ->where(['OR' => [
                 ['duration' => '00:00'],
