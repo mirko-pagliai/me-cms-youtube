@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.10 branch
+### 2.10.1
+* updated for MeCms 2.19.
+
 ### 2.10.0
 * `VideosTable::getRandomSpots()` now returns a `Collection` instance;
 * updated for MeCms 2.18.0;
