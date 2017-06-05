@@ -79,7 +79,7 @@ Configure::write('App', [
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
         'templates' => [APP . 'Template' . DS],
-    ]
+    ],
 ]);
 
 Cache::setConfig([
@@ -108,27 +108,15 @@ if (!getenv('db_dsn')) {
 ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
 ConnectionManager::setConfig('test_custom_i18n_datasource', ['url' => getenv('db_dsn')]);
 
-Configure::write('Session', [
-    'defaults' => 'php'
-]);
+Configure::write('Session', ['defaults' => 'php']);
 
 /**
  * Loads plugins
  */
-Configure::write('Assets.target', TMP . 'assets');
-
-//@codingStandardsIgnoreLine
-@mkdir(Configure::read('Assets.target'));
-
 Plugin::load('Assets', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
 ]);
-
-Configure::write('Thumbs.target', TMP . 'thumbs');
-
-//@codingStandardsIgnoreLine
-@mkdir(Configure::read('Thumbs.target'));
 
 Plugin::load('Thumber', [
     'bootstrap' => true,
@@ -140,14 +128,6 @@ Plugin::load('MeTools', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
 ]);
-
-define('LOGIN_RECORDS', TMP . 'login' . DS);
-//@codingStandardsIgnoreLine
-@mkdir(LOGIN_RECORDS);
-
-define('UPLOADED', WWW_ROOT . 'files' . DS);
-//@codingStandardsIgnoreLine
-@mkdir(UPLOADED);
 
 Plugin::load('MeCms', [
     'bootstrap' => false, //Doesn't load the bootstrap
