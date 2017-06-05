@@ -80,7 +80,7 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
-        $controller->viewBuilder()->setLayout(false);
+        $controller->viewBuilder()->setLayout('with_flash');
 
         parent::controllerSpy($event, $controller);
     }

@@ -106,6 +106,19 @@ class VideosControllerTest extends IntegrationTestCase
     }
 
     /**
+     * Adds additional event spies to the controller/view event manager
+     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Controller\Controller|null $controller Controller instance
+     * @return void
+     */
+    public function controllerSpy($event, $controller = null)
+    {
+        $controller->viewBuilder()->setLayout('with_flash');
+
+        parent::controllerSpy($event, $controller);
+    }
+
+    /**
      * Tests for `beforeFilter()` method
      * @test
      */
