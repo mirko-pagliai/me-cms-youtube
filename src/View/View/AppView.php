@@ -39,7 +39,7 @@ class AppView extends MeCmsAppView
         parent::_setBlocks();
 
         //Sets the meta tag for RSS posts
-        if (config('default.rss_meta')) {
+        if (getConfig('default.rss_meta')) {
             $this->Html->meta(__d('me_cms_youtube', 'Latest videos'), '/videos/rss', ['type' => 'rss']);
         }
     }

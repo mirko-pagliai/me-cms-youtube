@@ -180,7 +180,7 @@ class VideosController extends AppController
         $videos = $this->Videos->find('active')
             ->select(['id', 'youtube_id', 'title', 'text', 'created'])
             ->where(['is_spot' => false])
-            ->limit(config('default.records_for_rss'))
+            ->limit(getConfig('default.records_for_rss'))
             ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
             ->cache('rss', $this->Videos->cache);
 
@@ -210,14 +210,14 @@ class VideosController extends AppController
             $this->Flash->alert(__d(
                 'me_cms',
                 'You have to wait {0} seconds to perform a new search',
-                config('security.search_interval')
+                getConfig('security.search_interval')
             ));
 
             return $this->redirect([]);
         }
 
         if ($pattern) {
-            $this->paginate['limit'] = config('default.records_for_searches');
+            $this->paginate['limit'] = getConfig('default.records_for_searches');
 
             $page = $this->request->getQuery('page', 1);
 
@@ -278,7 +278,7 @@ class VideosController extends AppController
             ->firstOrFail();
 
         //If requested, gets the ID of a spot and adds it to the video
-        if (!$video->is_spot && config('video.spot')) {
+        if (!$video->is_spot && getConfig('video.spot')) {
             $spot = $this->Videos->getRandomSpots()->first()->youtube_id;
             $this->set(compact('spot'));
         }
@@ -305,7 +305,7 @@ class VideosController extends AppController
             ->firstOrFail();
 
         //If requested, gets the ID of a spot and adds it to the video
-        if (!$video->is_spot && config('video.spot')) {
+        if (!$video->is_spot && getConfig('video.spot')) {
             $spot = $this->Videos->getRandomSpots()->first()->youtube_id;
             $this->set(compact('spot'));
         }

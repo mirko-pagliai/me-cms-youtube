@@ -23,7 +23,7 @@
 ?>
 <div class="video-container content-container clearfix">
     <div class="content-header">
-        <?php if (config('video.category') && $video->category && $video->category->title && $video->category->slug) : ?>
+        <?php if (getConfig('video.category') && $video->category && $video->category->title && $video->category->slug) : ?>
             <h5 class="content-category">
                 <?= $this->Html->link($video->category->title, ['_name' => 'videosCategory', $video->category->slug]) ?>
             </h5>
@@ -41,7 +41,7 @@
 
         <div class="content-info">
             <?php
-            if (config('video.author')) {
+            if (getConfig('video.author')) {
                 echo $this->Html->div(
                     'content-author',
                     __d('me_cms', 'Posted by {0}', $video->user->full_name),
@@ -49,10 +49,10 @@
                 );
             }
 
-            if (config('video.created')) {
+            if (getConfig('video.created')) {
                 echo $this->Html->div(
                     'content-date',
-                    __d('me_cms', 'Posted on {0}', $video->created->i18nFormat(config('main.datetime.long'))),
+                    __d('me_cms', 'Posted on {0}', $video->created->i18nFormat(getConfig('main.datetime.long'))),
                     ['icon' => 'clock-o']
                 );
             }
@@ -64,9 +64,9 @@
             <?= $this->Asset->script('MeCmsYoutube.video', ['block' => 'script_bottom']) ?>
             <div class="embed-responsive embed-responsive-16by9 margin-20 relative">
                 <?php
-                if (config('video.skip_button')) {
+                if (getConfig('video.skip_button')) {
                     echo $this->Html->div(null, __d('me_cms_youtube', 'Skip to the video'), [
-                        'data-secs' => config('video.skip_seconds'),
+                        'data-secs' => getConfig('video.skip_seconds'),
                         'id' => 'skip-to-video',
                     ]);
                 }
@@ -88,10 +88,10 @@
     </div>
 
     <?php
-    if (config('video.shareaholic') && config('shareaholic.app_id') &&
+    if (getConfig('video.shareaholic') && getConfig('shareaholic.app_id') &&
         $this->request->isAction('view', 'Videos') && !$this->request->isAjax()
     ) {
-        echo $this->Html->shareaholic(config('shareaholic.app_id'));
+        echo $this->Html->shareaholic(getConfig('shareaholic.app_id'));
     }
     ?>
 </div>

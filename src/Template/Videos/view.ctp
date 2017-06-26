@@ -53,7 +53,7 @@ $this->userbar($this->Form->postLink(
 /**
  * Breadcrumb
  */
-if (config('video.category')) {
+if (getConfig('video.category')) {
     $this->Breadcrumbs->add($video->category->title, [
         '_name' => 'videosCategory',
         $video->category->slug,

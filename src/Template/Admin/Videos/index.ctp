@@ -239,11 +239,11 @@ $this->Library->datepicker(
                 </td>
                 <td class="min-width text-center">
                     <div class="hidden-xs">
-                        <?= $video->created->i18nFormat(config('main.datetime.long')) ?>
+                        <?= $video->created->i18nFormat(getConfig('main.datetime.long')) ?>
                     </div>
                     <div class="visible-xs">
-                        <div><?= $video->created->i18nFormat(config('main.date.short')) ?></div>
-                        <div><?= $video->created->i18nFormat(config('main.time.short')) ?></div>
+                        <div><?= $video->created->i18nFormat(getConfig('main.date.short')) ?></div>
+                        <div><?= $video->created->i18nFormat(getConfig('main.time.short')) ?></div>
                     </div>
                 </td>
             </tr>

@@ -52,7 +52,7 @@ class Youtube extends BaseYoutube
         $this->Client = new Client;
 
         if (empty($key)) {
-            $key = config('Youtube.key');
+            $key = getConfig('Youtube.key');
         }
 
         $this->key = $key;
