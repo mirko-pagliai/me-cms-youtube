@@ -65,11 +65,8 @@ class YoutubeTest extends TestCase
             ->setMethods(['_getInfoResponse'])
             ->getMock();
 
-        $youtube->expects($this->once())
-            ->method('_getInfoResponse')
-            ->will($this->returnCallback(function () {
-                return file_get_contents(TEST_APP . 'examples' . DS . 'video.json');
-            }));
+        $youtube->method('_getInfoResponse')
+            ->will($this->returnValue(file_get_contents(TEST_APP . 'examples' . DS . 'video.json')));
 
         $result = $youtube->getInfo('vlSR8Wlmpac');
 
