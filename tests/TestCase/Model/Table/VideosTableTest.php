@@ -93,13 +93,7 @@ class VideosTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $this->Videos = $this->getMockBuilder(get_class($this->Videos))
-            ->setMethods(['setNextToBePublished'])
-            ->setConstructorArgs([[
-                'table' => $this->Videos->getTable(),
-                'connection' => $this->Videos->getConnection(),
-            ]])
-            ->getMock();
+        $this->Videos = $this->getMockForModel(get_class($this->Videos), ['setNextToBePublished']);
 
         $this->Videos->expects($this->once())
             ->method('setNextToBePublished');
@@ -113,13 +107,7 @@ class VideosTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        $this->Videos = $this->getMockBuilder(get_class($this->Videos))
-            ->setMethods(['setNextToBePublished'])
-            ->setConstructorArgs([[
-                'table' => $this->Videos->getTable(),
-                'connection' => $this->Videos->getConnection(),
-            ]])
-            ->getMock();
+        $this->Videos = $this->getMockForModel(get_class($this->Videos), ['setNextToBePublished']);
 
         $this->Videos->expects($this->once())
             ->method('setNextToBePublished');
@@ -141,27 +129,22 @@ class VideosTableTest extends TestCase
             ]])
             ->getMock();
 
-        $this->Videos->expects($this->once())
-            ->method('_getInfo')
-            ->will($this->returnCallback(function () {
-                return (object)[
-                    'preview' => 'https://i.ytimg.com/vi/vlSR8Wlmpac/hqdefault.jpg',
-                    'text' => 'Example test',
-                    'title' => 'Beethoven - Symphony No. 9 in D minor: Ode to Joy [HD]',
-                    'seconds' => 778,
-                    'duration' => '12:58',
-                ];
-            }));
+        $this->Videos->method('_getInfo')
+            ->will($this->returnValue((object)[
+                'preview' => 'https://i.ytimg.com/vi/vlSR8Wlmpac/hqdefault.jpg',
+                'text' => 'Example test',
+                'title' => 'Beethoven - Symphony No. 9 in D minor: Ode to Joy [HD]',
+                'seconds' => 778,
+                'duration' => '12:58',
+            ]));
 
-        $entity = $this->Videos->newEntity([
+        $saved = $this->Videos->save($this->Videos->newEntity([
             'youtube_id' => 'vlSR8Wlmpac',
             'user_id' => 1,
             'category_id' => 1,
             'title' => 'Example of title',
             'text' => 'Example of text',
-        ]);
-
-        $saved = $this->Videos->save($entity);
+        ]));
 
         $this->assertEquals(778, $saved->seconds);
         $this->assertEquals('12:58', $saved->duration);
