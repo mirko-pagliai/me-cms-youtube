@@ -172,7 +172,8 @@ class VideosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on categories index
-        $request = new Request(Router::url(['_name' => 'videosCategories']));
+        $request = new Request;
+        $request->env('REQUEST_URI', Router::url(['_name' => 'videosCategories']));
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
@@ -272,7 +273,8 @@ class VideosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on videos index
-        $request = new Request(Router::url(['_name' => 'videos']));
+        $request = new Request;
+        $request->env('REQUEST_URI', Router::url(['_name' => 'videos']));
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
@@ -353,7 +355,8 @@ class VideosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on videos index
-        $request = new Request(Router::url(['_name' => 'videos']));
+        $request = new Request;
+        $request->env('REQUEST_URI', Router::url(['_name' => 'videos']));
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
@@ -408,7 +411,8 @@ class VideosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on search
-        $request = new Request(Router::url(['_name' => 'videosSearch']));
+        $request = new Request;
+        $request->env('REQUEST_URI', Router::url(['_name' => 'videosSearch']));
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
