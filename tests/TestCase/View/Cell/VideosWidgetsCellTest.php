@@ -172,11 +172,9 @@ class VideosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on categories index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'videosCategories']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'videosCategories']));
+        $this->assertEmpty($widget->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_categories', $this->Videos->cache);
@@ -185,6 +183,20 @@ class VideosWidgetsCellTest extends TestCase
             'first-video-category',
             'sub-sub-video-category',
         ], array_keys($fromCache->toArray()));
+    }
+
+    /**
+     * Test for `categories()` method, with no videos
+     * @test
+     */
+    public function testCategoriesNoVideos()
+    {
+        $widget = ME_CMS_YOUTUBE . '.Videos::categories';
+
+        $this->Videos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
 
     /**
@@ -273,11 +285,9 @@ class VideosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on videos index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'videos']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'videos']));
+        $this->assertEmpty($widget->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_latest_1', $this->Videos->cache);
@@ -285,6 +295,17 @@ class VideosWidgetsCellTest extends TestCase
 
         $fromCache = Cache::read('widget_latest_2', $this->Videos->cache);
         $this->assertEquals(2, $fromCache->count());
+    }
+
+    /**
+     * Test for `latest()` method, with no videos
+     * @test
+     */
+    public function testLatestNoVideos()
+    {
+        $this->Videos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget(ME_CMS_YOUTUBE . '.Videos::latest')->render());
     }
 
     /**
@@ -355,11 +376,9 @@ class VideosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on videos index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'videos']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'videos']));
+        $this->assertEmpty($widget->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_months', $this->Videos->cache);
@@ -373,6 +392,20 @@ class VideosWidgetsCellTest extends TestCase
             $this->assertInstanceOf('Cake\I18n\FrozenDate', $entity->month);
             $this->assertEquals($key, $entity->month->i18nFormat('yyyy/MM'));
         }
+    }
+
+    /**
+     * Test for `months()` method, with no videos
+     * @test
+     */
+    public function testMonthsNoVideos()
+    {
+        $widget = ME_CMS_YOUTUBE . '.Videos::months';
+
+        $this->Videos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
 
     /**
@@ -411,10 +444,8 @@ class VideosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on search
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'videosSearch']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'videosSearch']));
+        $this->assertEmpty($widget->render());
     }
 }
