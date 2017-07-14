@@ -188,6 +188,20 @@ class VideosWidgetsCellTest extends TestCase
     }
 
     /**
+     * Test for `categories()` method, with no videos
+     * @test
+     */
+    public function testCategoriesNoVideos()
+    {
+        $widget = ME_CMS_YOUTUBE . '.Videos::categories';
+
+        $this->Videos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
+    }
+
+    /**
      * Test for `latest()` method
      * @test
      */
@@ -288,6 +302,17 @@ class VideosWidgetsCellTest extends TestCase
     }
 
     /**
+     * Test for `latest()` method, with no videos
+     * @test
+     */
+    public function testLatestNoVideos()
+    {
+        $this->Videos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget(ME_CMS_YOUTUBE . '.Videos::latest')->render());
+    }
+
+    /**
      * Test for `months()` method
      * @test
      */
@@ -373,6 +398,20 @@ class VideosWidgetsCellTest extends TestCase
             $this->assertInstanceOf('Cake\I18n\FrozenDate', $entity->month);
             $this->assertEquals($key, $entity->month->i18nFormat('yyyy/MM'));
         }
+    }
+
+    /**
+     * Test for `months()` method, with no videos
+     * @test
+     */
+    public function testMonthsNoVideos()
+    {
+        $widget = ME_CMS_YOUTUBE . '.Videos::months';
+
+        $this->Videos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
 
     /**

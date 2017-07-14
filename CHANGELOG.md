@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.10 branch
+### 2.10.4
+* fixed bug for widgets: they do not show anything if there are no records.
+
 ### 2.10.3
 * updated for MeCms 2.19.1.
 

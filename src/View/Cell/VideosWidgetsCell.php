@@ -39,7 +39,6 @@ class VideosWidgetsCell extends Cell
      * @param \Cake\Network\Response $response The request to use in the cell
      * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
      * @param array $cellOptions Cell options to apply
-     * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
         Request $request = null,
@@ -72,7 +71,8 @@ class VideosWidgetsCell extends Cell
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_categories', $this->Videos->cache);
+            ->cache('widget_categories', $this->Videos->cache)
+            ->all();
 
         $this->set(compact('categories'));
     }
@@ -93,7 +93,8 @@ class VideosWidgetsCell extends Cell
             ->select(['id', 'youtube_id', 'title', 'text'])
             ->limit($limit)
             ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
-            ->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache);
+            ->cache(sprintf('widget_latest_%d', $limit), $this->Videos->cache)
+            ->all();
 
         $this->set(compact('videos'));
     }
@@ -127,7 +128,8 @@ class VideosWidgetsCell extends Cell
                 });
             })
             ->order(['month' => 'DESC'])
-            ->cache('widget_months', $this->Videos->cache);
+            ->cache('widget_months', $this->Videos->cache)
+            ->all();
 
         $this->set(compact('months'));
     }
