@@ -138,7 +138,7 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
         }
 
         //Sets the cache name
-        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfig('default.records'), 1);
+        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
         list($videosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->VideosCategories->cache

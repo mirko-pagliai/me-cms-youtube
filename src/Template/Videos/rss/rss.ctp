@@ -37,7 +37,7 @@ foreach ($videos as $video) {
     $link = ['_name' => 'video', $video->id];
 
     //Sets text
-    $text = $this->Text->truncate(strip_tags($video->text), getConfig('default.truncate_to'), [
+    $text = $this->Text->truncate(strip_tags($video->text), getConfigOrFail('default.truncate_to'), [
         'ending' => '...',
         'exact' => false,
         'html' => true,

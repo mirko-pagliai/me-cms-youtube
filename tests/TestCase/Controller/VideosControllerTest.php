@@ -133,7 +133,7 @@ class VideosControllerTest extends IntegrationTestCase
         }
 
         //Sets the cache name
-        $cache = sprintf('index_limit_%s_page_%s', getConfig('default.records'), 1);
+        $cache = sprintf('index_limit_%s_page_%s', getConfigOrFail('default.records'), 1);
         list($videosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Videos->cache
@@ -179,7 +179,7 @@ class VideosControllerTest extends IntegrationTestCase
 
         //Sets the cache name
         $end = Time::parse($startFromView)->addDay(1);
-        $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$startFromView, $end])), getConfig('default.records'), 1);
+        $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$startFromView, $end])), getConfigOrFail('default.records'), 1);
         list($videosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Videos->cache
@@ -280,7 +280,7 @@ class VideosControllerTest extends IntegrationTestCase
         $this->assertEquals($this->viewVariable('pattern'), $pattern);
 
         //Sets the cache name
-        $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), getConfig('default.records_for_searches'), 1);
+        $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), getConfigOrFail('default.records_for_searches'), 1);
         list($videosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Videos->cache

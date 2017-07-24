@@ -52,7 +52,7 @@
             if (getConfig('video.created')) {
                 echo $this->Html->div(
                     'content-date',
-                    __d('me_cms', 'Posted on {0}', $video->created->i18nFormat(getConfig('main.datetime.long'))),
+                    __d('me_cms', 'Posted on {0}', $video->created->i18nFormat(getConfigOrFail('main.datetime.long'))),
                     ['icon' => 'clock-o']
                 );
             }
@@ -66,7 +66,7 @@
                 <?php
                 if (getConfig('video.skip_button')) {
                     echo $this->Html->div(null, __d('me_cms_youtube', 'Skip to the video'), [
-                        'data-secs' => getConfig('video.skip_seconds'),
+                        'data-secs' => getConfigOrFail('video.skip_seconds'),
                         'id' => 'skip-to-video',
                     ]);
                 }
@@ -88,10 +88,8 @@
     </div>
 
     <?php
-    if (getConfig('video.shareaholic') && getConfig('shareaholic.app_id') &&
-        $this->request->isAction('view', 'Videos') && !$this->request->isAjax()
-    ) {
-        echo $this->Html->shareaholic(getConfig('shareaholic.app_id'));
+    if (getConfig('video.shareaholic') && $this->request->isAction('view', 'Videos') && !$this->request->isAjax()) {
+        echo $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id'));
     }
     ?>
 </div>

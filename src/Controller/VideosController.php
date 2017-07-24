@@ -180,7 +180,7 @@ class VideosController extends AppController
         $videos = $this->Videos->find('active')
             ->select(['id', 'youtube_id', 'title', 'text', 'created'])
             ->where(['is_spot' => false])
-            ->limit(getConfig('default.records_for_rss'))
+            ->limit(getConfigOrFail('default.records_for_rss'))
             ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
             ->cache('rss', $this->Videos->cache);
 
@@ -210,14 +210,14 @@ class VideosController extends AppController
             $this->Flash->alert(__d(
                 'me_cms',
                 'You have to wait {0} seconds to perform a new search',
-                getConfig('security.search_interval')
+                getConfigOrFail('security.search_interval')
             ));
 
             return $this->redirect([]);
         }
 
         if ($pattern) {
-            $this->paginate['limit'] = getConfig('default.records_for_searches');
+            $this->paginate['limit'] = getConfigOrFail('default.records_for_searches');
 
             $page = $this->request->getQuery('page', 1);
 
