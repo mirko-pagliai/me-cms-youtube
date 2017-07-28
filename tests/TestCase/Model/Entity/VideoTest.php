@@ -22,9 +22,9 @@
  */
 namespace MeCmsYoutube\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCmsYoutube\Model\Entity\Video;
 use MeCmsYoutube\Utility\Youtube;
+use MeTools\TestSuite\TestCase;
 
 /**
  * VideoTest class
@@ -47,17 +47,6 @@ class VideoTest extends TestCase
         parent::setUp();
 
         $this->Video = new Video;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Video);
     }
 
     /**

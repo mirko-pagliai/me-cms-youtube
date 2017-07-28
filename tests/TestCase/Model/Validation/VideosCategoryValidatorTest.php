@@ -23,12 +23,12 @@
 namespace MeCmsYoutube\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeCms\TestSuite\ValidationTestCase;
 
 /**
  * VideosCategoryValidatorTest class
  */
-class VideosCategoryValidatorTest extends TestCase
+class VideosCategoryValidatorTest extends ValidationTestCase
 {
     /**
      * @var \MeCmsYoutube\Model\Table\VideosCategoriesTable
@@ -74,16 +74,6 @@ class VideosCategoryValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->VideosCategories->newEntity($this->example)->getErrors());
-
-        foreach (array_keys($this->example) as $key) {
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
-
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->VideosCategories->newEntity($copy)->getErrors());
-        }
+        $this->assertAllDataAreRequired($this->VideosCategories, $this->example);
     }
 }

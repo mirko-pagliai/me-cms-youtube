@@ -27,16 +27,13 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * VideosTableTest class
  */
 class VideosTableTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCmsYoutube\Model\Table\VideosTable
      */
@@ -68,17 +65,6 @@ class VideosTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Videos);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -93,7 +79,7 @@ class VideosTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $this->Videos = $this->getMockForModel(get_class($this->Videos), ['setNextToBePublished']);
+        $this->Videos = $this->getMockForModel($this->Videos->getRegistryAlias(), ['setNextToBePublished']);
 
         $this->Videos->expects($this->once())
             ->method('setNextToBePublished');
@@ -107,7 +93,7 @@ class VideosTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        $this->Videos = $this->getMockForModel(get_class($this->Videos), ['setNextToBePublished']);
+        $this->Videos = $this->getMockForModel($this->Videos->getRegistryAlias(), ['setNextToBePublished']);
 
         $this->Videos->expects($this->once())
             ->method('setNextToBePublished');
@@ -121,13 +107,7 @@ class VideosTableTest extends TestCase
      */
     public function testBeforeSave()
     {
-        $this->Videos = $this->getMockBuilder(get_class($this->Videos))
-            ->setMethods(['_getInfo'])
-            ->setConstructorArgs([[
-                'table' => $this->Videos->getTable(),
-                'connection' => $this->Videos->getConnection(),
-            ]])
-            ->getMock();
+        $this->Videos = $this->getMockForModel($this->Videos->getRegistryAlias(), ['_getInfo']);
 
         $this->Videos->method('_getInfo')
             ->will($this->returnValue((object)[
@@ -207,8 +187,6 @@ class VideosTableTest extends TestCase
     {
         $entity = $this->Videos->findById(3)->contain(['Categories'])->first();
 
-        $this->assertNotEmpty($entity->category);
-
         $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $entity->category);
         $this->assertEquals(4, $entity->category->id);
     }
@@ -221,8 +199,6 @@ class VideosTableTest extends TestCase
     {
         $entity = $this->Videos->findById(2)->contain(['Users'])->first();
 
-        $this->assertNotEmpty($entity->user);
-
         $this->assertInstanceOf('MeCms\Model\Entity\User', $entity->user);
         $this->assertEquals(4, $entity->user->id);
     }
@@ -233,8 +209,7 @@ class VideosTableTest extends TestCase
      */
     public function testFind()
     {
-        $query = $this->Videos->find();
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
+        $this->Videos->find();
 
         //Writes `next_to_be_published` and some data on cache
         Cache::write('next_to_be_published', time() - 3600, $this->Videos->cache);
@@ -244,8 +219,7 @@ class VideosTableTest extends TestCase
         $this->assertNotEmpty(Cache::read('someData', $this->Videos->cache));
 
         //The cache will now be cleared
-        $query = $this->Videos->find();
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
+        $this->Videos->find();
 
         $this->assertEmpty(Cache::read('next_to_be_published', $this->Videos->cache));
         $this->assertEmpty(Cache::read('someData', $this->Videos->cache));
@@ -258,7 +232,6 @@ class VideosTableTest extends TestCase
     public function testFindActive()
     {
         $query = $this->Videos->find('active');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.created <= :c1 AND Videos.is_spot = :c2)', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
@@ -273,8 +246,6 @@ class VideosTableTest extends TestCase
     public function testInternalGetRandomSpots()
     {
         $query = $this->invokeMethod($this->Videos, '_getRandomSpots');
-
-        $this->assertInstanceof('Cake\ORM\Query', $query);
         $this->assertStringEndsWith(
             'FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)',
             $query->sql()
@@ -291,20 +262,13 @@ class VideosTableTest extends TestCase
      */
     public function testGetRandomSpots()
     {
-        $collection = $this->Videos->getRandomSpots();
-        $this->assertInstanceof('Cake\Collection\Collection', $collection);
+        $videos = $this->Videos->getRandomSpots();
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $videos);
+        $this->assertEquals(1, count($videos->toArray()));
 
-        $this->assertEquals(1, count($collection->toArray()));
-        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $collection->first());
-
-        $collection = $this->Videos->getRandomSpots(2);
-        $this->assertInstanceof('Cake\Collection\Collection', $collection);
-
-        $this->assertEquals(2, count($collection->toArray()));
-
-        foreach ($collection->toArray() as $video) {
-            $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $video);
-        }
+        $videos = $this->Videos->getRandomSpots(2);
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $videos);
+        $this->assertEquals(2, count($videos->toArray()));
     }
 
     /**
@@ -316,7 +280,6 @@ class VideosTableTest extends TestCase
         $data = ['spot' => true];
 
         $query = $this->Videos->queryFromFilter($this->Videos->find(), $data);
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM youtube_videos Videos WHERE Videos.is_spot = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);

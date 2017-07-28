@@ -24,17 +24,14 @@ namespace MeCmsYoutube\Test\TestCase\Shell;
 
 use Cake\Console\ConsoleIo;
 use Cake\TestSuite\Stub\ConsoleOutput;
-use Cake\TestSuite\TestCase;
 use MeCmsYoutube\Shell\InstallShell;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * InstallShellTest class
  */
 class InstallShellTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCmsInstagram\Shell\InstallShell
      */
@@ -60,8 +57,8 @@ class InstallShellTest extends TestCase
     {
         parent::setUp();
 
-        $this->out = new ConsoleOutput();
-        $this->err = new ConsoleOutput();
+        $this->out = new ConsoleOutput;
+        $this->err = new ConsoleOutput;
         $io = new ConsoleIo($this->out, $this->err);
         $io->level(2);
 
@@ -69,17 +66,6 @@ class InstallShellTest extends TestCase
             ->setMethods(['_stop', 'copyConfig'])
             ->setConstructorArgs([$io])
             ->getMock();
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->InstallShell, $this->err, $this->out);
     }
 
     /**
@@ -129,9 +115,9 @@ class InstallShellTest extends TestCase
         $parser = $this->InstallShell->getOptionParser();
 
         $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'all',
             'copyConfig',
-        ], array_keys($parser->subcommands()));
+        ], $parser->subcommands());
     }
 }

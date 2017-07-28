@@ -24,7 +24,7 @@ namespace MeCmsYoutube\Model\Table\Others;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AssociationsSameAliasesTest class
@@ -68,17 +68,6 @@ class AssociationsSameAliasesTest extends TestCase
         Cache::clearAll();
         Cache::clear(false, $this->Posts->cache);
         Cache::clear(false, $this->Videos->cache);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Posts, $this->Videos);
     }
 
     /**

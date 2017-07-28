@@ -24,17 +24,14 @@ namespace MeCmsYoutube\Test\TestCase\Admin\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCmsYoutube\Controller\Admin\VideosController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * VideosControllerTest class
  */
 class VideosControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCmsYoutube\Controller\Admin\VideosController
      */
@@ -95,17 +92,6 @@ class VideosControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->Videos);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -124,17 +110,11 @@ class VideosControllerTest extends IntegrationTestCase
      */
     public function testBeforeFilter()
     {
-        foreach (['add', 'edit'] as $action) {
+        foreach (['add', 'edit', 'index'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [1]));
-            $this->assertResponseOk();
             $this->assertNotEmpty($this->viewVariable('categories'));
             $this->assertNotEmpty($this->viewVariable('users'));
         }
-
-        $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertNotEmpty($this->viewVariable('categories'));
-        $this->assertNotEmpty($this->viewVariable('users'));
     }
 
     /**
@@ -146,10 +126,10 @@ class VideosControllerTest extends IntegrationTestCase
         //Deletes all categories
         $this->Videos->Categories->deleteAll(['id IS NOT' => null]);
 
-        foreach (['index', 'add', 'edit'] as $action) {
+        foreach (['add', 'edit', 'index'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [1]));
             $this->assertRedirect(['controller' => 'VideosCategories', 'action' => 'index']);
-            $this->assertSession('You must first create a category', 'Flash.flash.0.message');
+            $this->assertFlashMessage('You must first create a category');
         }
     }
 
@@ -162,10 +142,10 @@ class VideosControllerTest extends IntegrationTestCase
         //Deletes all users
         $this->Videos->Users->deleteAll(['id IS NOT' => null]);
 
-        foreach (['index', 'add', 'edit'] as $action) {
+        foreach (['add', 'edit', 'index'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [1]));
             $this->assertRedirect(['controller' => 'Users', 'action' => 'index']);
-            $this->assertSession('You must first create an user', 'Flash.flash.0.message');
+            $this->assertFlashMessage('You must first create an user');
         }
     }
 
@@ -226,17 +206,12 @@ class VideosControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Videos/index.ctp');
 
         $videosFromView = $this->viewVariable('videos');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $videosFromView);
         $this->assertNotEmpty($videosFromView);
-
-        foreach ($videosFromView as $video) {
-            $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $video);
-        }
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videosFromView);
     }
 
     /**
@@ -248,8 +223,7 @@ class VideosControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'add']);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Videos/add.ctp');
 
         $url = array_merge($url, ['?' => ['url' => 'invalidUrl']]);
@@ -257,40 +231,38 @@ class VideosControllerTest extends IntegrationTestCase
         //GET request. Invalid url
         $this->get($url);
         $this->assertRedirect([]);
-        $this->assertSession('This is not a YouTube video', 'Flash.flash.0.message');
+        $this->assertFlashMessage('This is not a YouTube video');
 
         $url = array_merge($url, ['?' => ['url' => 'https://www.youtube.com/watch?v=aaa']]);
 
         //GET request. Invalid Youtube ID
         $this->get($url);
         $this->assertRedirect([]);
-        $this->assertSession('Unable to retrieve video informations. Probably the video is private', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Unable to retrieve video informations. Probably the video is private');
 
         $url = array_merge($url, ['?' => ['url' => 'https://www.youtube.com/watch?v=6z4KK7RWjmk']]);
 
         //GET request. Now the url and Youtube ID are valid
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
 
         $videoFromView = $this->viewVariable('video');
-        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videoFromView);
         $this->assertNotEmpty($videoFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videoFromView);
 
         //POST request. Data are valid
         $this->post($url, $this->example);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $videoFromView = $this->viewVariable('video');
-        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videoFromView);
         $this->assertNotEmpty($videoFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videoFromView);
     }
 
     /**
@@ -302,13 +274,12 @@ class VideosControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 1]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Videos/edit.ctp');
 
         $videoFromView = $this->viewVariable('video');
-        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videoFromView);
         $this->assertNotEmpty($videoFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videoFromView);
 
         //Checks if the `created` field has been properly formatted
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $videoFromView->created);
@@ -316,17 +287,16 @@ class VideosControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $videoFromView = $this->viewVariable('video');
-        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videoFromView);
         $this->assertNotEmpty($videoFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videoFromView);
     }
 
     /**
@@ -337,7 +307,7 @@ class VideosControllerTest extends IntegrationTestCase
     {
         $this->post(array_merge($this->url, ['action' => 'delete', 1]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
     }
 
     /**
@@ -356,7 +326,7 @@ class VideosControllerTest extends IntegrationTestCase
                     array_merge($this->example, ['user_id' => $userId])
                 );
                 $this->assertRedirect(['action' => 'index']);
-                $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+                $this->assertFlashMessage('The operation has been performed correctly');
 
                 $video = $this->Videos->find()->last();
                 $this->assertEquals($userId, $video->user_id);
@@ -367,7 +337,7 @@ class VideosControllerTest extends IntegrationTestCase
                     array_merge($this->example, ['user_id' => $userId + 1])
                 );
                 $this->assertRedirect(['action' => 'index']);
-                $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+                $this->assertFlashMessage('The operation has been performed correctly');
 
                 $video = $this->Videos->findById($video->id)->first();
                 $this->assertEquals($userId + 1, $video->user_id);
@@ -393,7 +363,7 @@ class VideosControllerTest extends IntegrationTestCase
                 array_merge($this->example, ['user_id' => $userId])
             );
             $this->assertRedirect(['action' => 'index']);
-            $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+            $this->assertFlashMessage('The operation has been performed correctly');
 
             $video = $this->Videos->find()->last();
             $this->assertEquals(3, $video->user_id);
@@ -404,7 +374,7 @@ class VideosControllerTest extends IntegrationTestCase
                 array_merge($this->example, ['user_id' => $userId + 1])
             );
             $this->assertRedirect(['action' => 'index']);
-            $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+            $this->assertFlashMessage('The operation has been performed correctly');
 
             $video = $this->Videos->findById($video->id)->first();
             $this->assertEquals(3, $video->user_id);

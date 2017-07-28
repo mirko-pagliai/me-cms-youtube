@@ -23,12 +23,11 @@
 namespace MeCmsYoutube\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
-use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use Cake\TestSuite\TestCase;
 use MeCmsYoutube\View\View\AppView as View;
 use MeCms\View\Helper\WidgetHelper;
+use MeTools\TestSuite\TestCase;
 
 /**
  * VideosWidgetsCellTest class
@@ -91,17 +90,6 @@ class VideosWidgetsCellTest extends TestCase
         $this->Videos = TableRegistry::get('MeCmsYoutube.Videos');
 
         $this->Widget = new WidgetHelper(new View);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Videos, $this->Widget);
     }
 
     /**
@@ -179,10 +167,10 @@ class VideosWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_categories', $this->Videos->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'first-video-category',
             'sub-sub-video-category',
-        ], array_keys($fromCache->toArray()));
+        ], $fromCache->toArray());
     }
 
     /**
@@ -383,10 +371,7 @@ class VideosWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_months', $this->Videos->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertEquals([
-            '2016/12',
-            '2016/11',
-        ], array_keys($fromCache->toArray()));
+        $this->assertArrayKeysEqual(['2016/12', '2016/11'], $fromCache->toArray());
 
         foreach ($fromCache as $key => $entity) {
             $this->assertInstanceOf('Cake\I18n\FrozenDate', $entity->month);

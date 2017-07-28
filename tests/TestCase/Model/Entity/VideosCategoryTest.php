@@ -22,8 +22,8 @@
  */
 namespace MeCmsYoutube\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCmsYoutube\Model\Entity\VideosCategory;
+use MeTools\TestSuite\TestCase;
 
 /**
  * VideosCategoryTest class
@@ -46,17 +46,6 @@ class VideosCategoryTest extends TestCase
         parent::setUp();
 
         $this->VideosCategory = new VideosCategory;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->VideosCategory);
     }
 
     /**

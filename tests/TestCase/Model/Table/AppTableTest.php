@@ -24,7 +24,7 @@ namespace MeCmsYoutube\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AppTableTest class
@@ -67,24 +67,12 @@ class AppTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Videos, $this->VideosCategories);
-    }
-
-    /**
      * Test for `getList()` method
      * @test
      */
     public function testGetList()
     {
         $query = $this->VideosCategories->getList();
-        $this->assertInstanceof('Cake\ORM\Query', $query);
         $this->assertContains('ORDER BY ' . $this->VideosCategories->getDisplayField() . ' ASC', $query->sql());
 
         $list = $query->toArray();
@@ -106,7 +94,6 @@ class AppTableTest extends TestCase
     public function testGetTreeList()
     {
         $query = $this->VideosCategories->getTreeList();
-        $this->assertInstanceof('Cake\ORM\Query', $query);
 
         $list = $query->toArray();
         $this->assertEquals([

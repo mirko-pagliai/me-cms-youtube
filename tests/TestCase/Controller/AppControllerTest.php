@@ -23,8 +23,8 @@
 namespace MeCmsYoutube\Test\TestCase\Controller;
 
 use Cake\Event\Event;
-use Cake\TestSuite\TestCase;
 use MeCmsYoutube\Controller\AppController;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AppControllerTest class
@@ -52,19 +52,6 @@ class AppControllerTest extends TestCase
         parent::setUp();
 
         $this->Controller = new AppController;
-
-        $this->Event = new Event('myEvent');
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->Event);
     }
 
     /**
@@ -73,14 +60,14 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeRender()
     {
-        $this->Controller->beforeRender($this->Event);
+        $this->Controller->beforeRender(new Event('myEvent'));
         $this->assertEquals('MeCmsYoutube.View/App', $this->Controller->viewBuilder()->getClassName());
 
         //Admin request
         $this->Controller = new AppController;
         $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
 
-        $this->Controller->beforeRender($this->Event);
+        $this->Controller->beforeRender(new Event('myEvent'));
         $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
     }
 }
