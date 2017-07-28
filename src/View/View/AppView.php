@@ -34,9 +34,9 @@ class AppView extends MeCmsAppView
      * @return void
      * @uses MeTools\View\Helper\HtmlHelper::meta()
      */
-    protected function _setBlocks()
+    protected function setBlocks()
     {
-        parent::_setBlocks();
+        parent::setBlocks();
 
         //Sets the meta tag for RSS posts
         if (getConfig('default.rss_meta')) {
