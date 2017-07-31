@@ -3,7 +3,7 @@
     "description": "Youtube plugin for MeCms",
     "homepage": "https://github.com/mirko-pagliai/me-cms-youtube",
     "type": "cakephp-plugin",
-    "license": "AGPL-3.0",
+    "license": "MIT",
     "authors": [{
         "name": "Mirko Pagliai",
         "email": "mirko.pagliai@gmail.com"

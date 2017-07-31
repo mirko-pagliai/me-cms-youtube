@@ -2,6 +2,7 @@
 ## 2.10 branch
 ### 2.10.5
 * added initial schema of the plugin database. Removed `UpdateShell` class;
+* the MIT license has been applied;
 * significantly improved all tests.
 
 ### 2.10.4
