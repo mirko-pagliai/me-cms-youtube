@@ -31,7 +31,7 @@ use MeTools\TestSuite\TestCase;
 class YoutubeTest extends TestCase
 {
     /**
-     * Test for `_parseDuration()` method
+     * Test for `parseDuration()` method
      * @test
      */
     public function testParseDuration()
@@ -39,7 +39,7 @@ class YoutubeTest extends TestCase
         $youtube = new Youtube;
 
         $parseDurationMethod = function ($duration) use ($youtube) {
-            return $this->invokeMethod($youtube, '_parseDuration', [$duration]);
+            return $this->invokeMethod($youtube, 'parseDuration', [$duration]);
         };
 
         $this->assertEquals([0, '00:00'], $parseDurationMethod('PT0S'));
@@ -63,10 +63,10 @@ class YoutubeTest extends TestCase
     public function testGetInfo()
     {
         $youtube = $this->getMockBuilder(Youtube::class)
-            ->setMethods(['_getInfoResponse'])
+            ->setMethods(['getInfoResponse'])
             ->getMock();
 
-        $youtube->method('_getInfoResponse')
+        $youtube->method('getInfoResponse')
             ->will($this->returnValue(file_get_contents(TEST_APP . 'examples' . DS . 'video.json')));
 
         $result = $youtube->getInfo('vlSR8Wlmpac');

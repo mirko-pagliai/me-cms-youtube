@@ -57,7 +57,7 @@ class Youtube extends BaseYoutube
      * @param string $duration Duration in YouTube format
      * @return bool|array Array with second and duration string or `false`
      */
-    protected function _parseDuration($duration)
+    protected function parseDuration($duration)
     {
         if (!preg_match('/^PT((\d+)H)?((\d+)M)?((\d+)S)?$/', $duration, $matches)) {
             return false;
@@ -93,7 +93,7 @@ class Youtube extends BaseYoutube
      * @uses $Client
      * @uses $key
      */
-    protected function _getInfoResponse($id)
+    protected function getInfoResponse($id)
     {
         $url = 'https://www.googleapis.com/youtube/v3/videos?id=' . $id . '&key=' . $this->key .
             '&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
@@ -106,12 +106,12 @@ class Youtube extends BaseYoutube
      * @param string $id Video ID
      * @return mixed Object or `false`
      * @see https://developers.google.com/youtube/v3/getting-started#partial
-     * @uses _getInfoResponse()
-     * @uses _parseDuration()
+     * @uses getInfoResponse()
+     * @uses parseDuration()
      */
     public function getInfo($id)
     {
-        $info = json_decode($this->_getInfoResponse($id));
+        $info = json_decode($this->getInfoResponse($id));
 
         if (empty($info->items[0])) {
             return false;
@@ -119,7 +119,7 @@ class Youtube extends BaseYoutube
 
         $info = $info->items[0];
 
-        list($seconds, $duration) = $this->_parseDuration($info->contentDetails->duration);
+        list($seconds, $duration) = $this->parseDuration($info->contentDetails->duration);
 
         $object = new \stdClass;
         $object->preview = $info->snippet->thumbnails->high->url;

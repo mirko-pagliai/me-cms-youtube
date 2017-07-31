@@ -68,7 +68,7 @@ class VideosTable extends AppTable
      * @uses $Youtube
      * @uses MeCmsYoutube\Utility\Youtube::getInfo()
      */
-    protected function _getInfo($id)
+    protected function getInfo($id)
     {
         return $this->Youtube->getInfo($id);
     }
@@ -114,12 +114,12 @@ class VideosTable extends AppTable
      * @param \Cake\Datasource\EntityInterface $entity Entity
      * @param \ArrayObject $options Options
      * @return bool
-     * @uses _getInfo()
+     * @uses getInfo()
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
         if ((empty($entity->seconds) || empty($entity->duration)) && !empty($entity->youtube_id)) {
-            $info = $this->_getInfo($entity->youtube_id);
+            $info = $this->getInfo($entity->youtube_id);
 
             if (empty($entity->seconds)) {
                 $entity->seconds = $info->seconds;
@@ -191,7 +191,7 @@ class VideosTable extends AppTable
      * @return Query $query Query object
      * @uses $cache
      */
-    protected function _getRandomSpots()
+    protected function getRandomSpotsQuery()
     {
         return $this->find()
             ->select('youtube_id')
@@ -207,11 +207,11 @@ class VideosTable extends AppTable
      * Gets random spots
      * @param int $limit Limit
      * @return \Cake\Collection\Collection Collection
-     * @uses _getRandomSpots()
+     * @uses getRandomSpotsQuery()
      */
     public function getRandomSpots($limit = 1)
     {
-        return $this->_getRandomSpots()->sample($limit);
+        return $this->getRandomSpotsQuery()->sample($limit);
     }
 
     /**

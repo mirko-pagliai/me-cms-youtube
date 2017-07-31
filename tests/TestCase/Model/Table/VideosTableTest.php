@@ -107,9 +107,9 @@ class VideosTableTest extends TestCase
      */
     public function testBeforeSave()
     {
-        $this->Videos = $this->getMockForModel($this->Videos->getRegistryAlias(), ['_getInfo']);
+        $this->Videos = $this->getMockForModel($this->Videos->getRegistryAlias(), ['getInfo']);
 
-        $this->Videos->method('_getInfo')
+        $this->Videos->method('getInfo')
             ->will($this->returnValue((object)[
                 'preview' => 'https://i.ytimg.com/vi/vlSR8Wlmpac/hqdefault.jpg',
                 'text' => 'Example test',
@@ -240,12 +240,12 @@ class VideosTableTest extends TestCase
     }
 
     /**
-     * Test for `_getRandomSpots()` method
+     * Test for `getRandomSpotsQuery()` method
      * @test
      */
-    public function testInternalGetRandomSpots()
+    public function testGetRandomSpotsQuery()
     {
-        $query = $this->invokeMethod($this->Videos, '_getRandomSpots');
+        $query = $this->invokeMethod($this->Videos, 'getRandomSpotsQuery');
         $this->assertStringEndsWith(
             'FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)',
             $query->sql()
