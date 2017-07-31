@@ -190,6 +190,7 @@ class VideosTable extends AppTable
      * "Active spot" find method
      * @param Query $query Query object
      * @return Query Query object
+     * @since 2.10.5
      */
     public function findActiveSpot(Query $query)
     {
