@@ -240,20 +240,17 @@ class VideosTableTest extends TestCase
     }
 
     /**
-     * Test for `getRandomSpotsQuery()` method
+     * Test for `findActiveSpot()` method
      * @test
      */
-    public function testGetRandomSpotsQuery()
+    public function testFindActiveSpot()
     {
-        $query = $this->invokeMethod($this->Videos, 'getRandomSpotsQuery');
-        $this->assertStringEndsWith(
-            'FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)',
-            $query->sql()
-        );
+        $query = $this->Videos->find('activeSpot');
+        $this->assertStringEndsWith('FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertTrue($query->valueBinder()->bindings()[':c1']['value']);
-        $this->assertInstanceof('Cake\I18n\Time', $query->valueBinder()->bindings()[':c2']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c2']['value']);
     }
 
     /**
@@ -266,9 +263,18 @@ class VideosTableTest extends TestCase
         $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $videos);
         $this->assertEquals(1, count($videos->toArray()));
 
+        $videosFromCache = Cache::read('all_spots', $this->Videos->cache);
+        $this->assertNotEmpty($videosFromCache);
+        $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $videosFromCache);
+
         $videos = $this->Videos->getRandomSpots(2);
         $this->assertInstanceOf('MeCmsYoutube\Model\Entity\Video', $videos);
         $this->assertEquals(2, count($videos->toArray()));
+
+        $this->assertEquals(
+            Cache::read('all_spots', $this->Videos->cache)->toArray(),
+            $videosFromCache->toArray()
+        );
     }
 
     /**
