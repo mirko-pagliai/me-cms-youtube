@@ -2,23 +2,13 @@
 /**
  * This file is part of me-cms-youtube.
  *
- * me-cms-youtube is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * me-cms-youtube is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms-youtube
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 ?>
 <div class="video-container content-container clearfix">
@@ -52,7 +42,7 @@
             if (getConfig('video.created')) {
                 echo $this->Html->div(
                     'content-date',
-                    __d('me_cms', 'Posted on {0}', $video->created->i18nFormat(getConfig('main.datetime.long'))),
+                    __d('me_cms', 'Posted on {0}', $video->created->i18nFormat(getConfigOrFail('main.datetime.long'))),
                     ['icon' => 'clock-o']
                 );
             }
@@ -66,7 +56,7 @@
                 <?php
                 if (getConfig('video.skip_button')) {
                     echo $this->Html->div(null, __d('me_cms_youtube', 'Skip to the video'), [
-                        'data-secs' => getConfig('video.skip_seconds'),
+                        'data-secs' => getConfigOrFail('video.skip_seconds'),
                         'id' => 'skip-to-video',
                     ]);
                 }
@@ -88,10 +78,8 @@
     </div>
 
     <?php
-    if (getConfig('video.shareaholic') && getConfig('shareaholic.app_id') &&
-        $this->request->isAction('view', 'Videos') && !$this->request->isAjax()
-    ) {
-        echo $this->Html->shareaholic(getConfig('shareaholic.app_id'));
+    if (getConfig('video.shareaholic') && $this->request->isAction('view', 'Videos') && !$this->request->isAjax()) {
+        echo $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id'));
     }
     ?>
 </div>

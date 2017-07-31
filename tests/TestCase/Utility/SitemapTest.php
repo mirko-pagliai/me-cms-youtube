@@ -24,8 +24,8 @@ namespace MeCmsYoutube\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
 use MeCmsYoutube\Utility\Sitemap;
+use MeTools\TestSuite\TestCase;
 
 /**
  * SitemapTest class

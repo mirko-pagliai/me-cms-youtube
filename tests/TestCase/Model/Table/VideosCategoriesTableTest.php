@@ -24,7 +24,7 @@ namespace MeCmsYoutube\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * VideosCategoriesTableTest class
@@ -61,17 +61,6 @@ class VideosCategoriesTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->VideosCategories);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -92,7 +81,9 @@ class VideosCategoriesTableTest extends TestCase
             'slug' => 'my-slug',
         ]);
         $this->assertFalse($this->VideosCategories->save($entity));
-        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
+        $this->assertEquals([
+            'parent_id' => ['_existsIn' => 'You have to select a valid option'],
+        ], $entity->getErrors());
     }
 
     /**
@@ -130,8 +121,6 @@ class VideosCategoriesTableTest extends TestCase
     public function testBelongsToParents()
     {
         $category = $this->VideosCategories->findById(4)->contain(['Parents'])->first();
-
-        $this->assertNotEmpty($category->parent);
 
         $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
@@ -190,7 +179,6 @@ class VideosCategoriesTableTest extends TestCase
     public function testFindActive()
     {
         $query = $this->VideosCategories->find('active');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM youtube_videos_categories Categories INNER JOIN youtube_videos Videos ON (Videos.active = :c0 AND Videos.created <= :c1 AND Videos.is_spot = :c2 AND Categories.id = (Videos.category_id))', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);

@@ -2,23 +2,13 @@
 /**
  * This file is part of me-cms-youtube.
  *
- * me-cms-youtube is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * me-cms-youtube is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms-youtube
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCmsYoutube\Controller;
 
@@ -180,7 +170,7 @@ class VideosController extends AppController
         $videos = $this->Videos->find('active')
             ->select(['id', 'youtube_id', 'title', 'text', 'created'])
             ->where(['is_spot' => false])
-            ->limit(getConfig('default.records_for_rss'))
+            ->limit(getConfigOrFail('default.records_for_rss'))
             ->order([sprintf('%s.created', $this->Videos->getAlias()) => 'DESC'])
             ->cache('rss', $this->Videos->cache);
 
@@ -210,14 +200,14 @@ class VideosController extends AppController
             $this->Flash->alert(__d(
                 'me_cms',
                 'You have to wait {0} seconds to perform a new search',
-                getConfig('security.search_interval')
+                getConfigOrFail('security.search_interval')
             ));
 
             return $this->redirect([]);
         }
 
         if ($pattern) {
-            $this->paginate['limit'] = getConfig('default.records_for_searches');
+            $this->paginate['limit'] = getConfigOrFail('default.records_for_searches');
 
             $page = $this->request->getQuery('page', 1);
 

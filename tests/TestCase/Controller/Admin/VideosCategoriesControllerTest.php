@@ -24,17 +24,14 @@ namespace MeCmsYoutube\Test\TestCase\Admin\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCmsYoutube\Controller\Admin\VideosCategoriesController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * VideosCategoriesControllerTest class
  */
 class VideosCategoriesControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCmsYoutube\Controller\Admin\VideosCategoriesController
      */
@@ -80,17 +77,6 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->VideosCategories);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -111,7 +97,6 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
     {
         foreach (['add', 'edit'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [1]));
-            $this->assertResponseOk();
             $this->assertNotEmpty($this->viewVariable('categories'));
         }
     }
@@ -149,17 +134,12 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/VideosCategories/index.ctp');
 
         $categoriesFromView = $this->viewVariable('categories');
-        $this->assertInstanceof('Cake\ORM\Query', $categoriesFromView);
         $this->assertNotEmpty($categoriesFromView);
-
-        foreach ($categoriesFromView as $category) {
-            $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $category);
-        }
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoriesFromView);
     }
 
     /**
@@ -171,31 +151,26 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'add']);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/VideosCategories/add.ctp');
 
         $categoryFromView = $this->viewVariable('category');
-        $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoryFromView);
         $this->assertNotEmpty($categoryFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoryFromView);
 
         //POST request. Data are valid
-        $this->post($url, [
-            'title' => 'new category',
-            'slug' => 'new-category-slug',
-        ]);
+        $this->post($url, ['title' => 'new category', 'slug' => 'new-category-slug']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $categoryFromView = $this->viewVariable('category');
-        $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoryFromView);
         $this->assertNotEmpty($categoryFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoryFromView);
     }
 
     /**
@@ -207,28 +182,26 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 1]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/VideosCategories/edit.ctp');
 
         $categoryFromView = $this->viewVariable('category');
-        $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoryFromView);
         $this->assertNotEmpty($categoryFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoryFromView);
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $categoryFromView = $this->viewVariable('category');
-        $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoryFromView);
         $this->assertNotEmpty($categoryFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoryFromView);
     }
 
     /**
@@ -242,16 +215,13 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
         //POST request. This category has no pages
         $this->post(array_merge($this->url, ['action' => 'delete', $id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         $id = $this->VideosCategories->find()->where(['video_count >=' => 1])->extract('id')->first();
 
         //POST request. This category has some pages, so it cannot be deleted
         $this->post(array_merge($this->url, ['action' => 'delete', $id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession(
-            'Before deleting this, you must delete or reassign all items that belong to this element',
-            'Flash.flash.0.message'
-        );
+        $this->assertFlashMessage('Before deleting this, you must delete or reassign all items that belong to this element');
     }
 }

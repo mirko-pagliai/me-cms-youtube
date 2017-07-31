@@ -24,7 +24,7 @@ namespace MeCmsYoutube\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * VideosCategoriesControllerTest class
@@ -62,17 +62,6 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->VideosCategories);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -92,17 +81,12 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(['_name' => 'videosCategories']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/VideosCategories/index.ctp');
 
         $categoriesFromView = $this->viewVariable('categories');
-        $this->assertInstanceof('Cake\ORM\Query', $categoriesFromView);
-        $this->assertNotEmpty($categoriesFromView->toArray());
-
-        foreach ($categoriesFromView as $category) {
-            $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $category);
-        }
+        $this->assertNotEmpty($categoriesFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoriesFromView);
 
         $cache = Cache::read('categories_index', $this->VideosCategories->cache);
         $this->assertEquals($categoriesFromView->toArray(), $cache->toArray());
@@ -122,23 +106,19 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
         $url = ['_name' => 'videosCategory', $slug];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/VideosCategories/view.ctp');
 
         $categoryFromView = $this->viewVariable('category');
+        $this->assertNotEmpty($categoryFromView);
         $this->assertInstanceof('MeCmsYoutube\Model\Entity\VideosCategory', $categoryFromView);
 
         $videosFromView = $this->viewVariable('videos');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $videosFromView);
         $this->assertNotEmpty($videosFromView);
-
-        foreach ($videosFromView as $video) {
-            $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $video);
-        }
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videosFromView);
 
         //Sets the cache name
-        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfig('default.records'), 1);
+        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
         list($videosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->VideosCategories->cache
@@ -149,7 +129,7 @@ class VideosCategoriesControllerTest extends IntegrationTestCase
 
         //GET request again. Now the data is in cache
         $this->get($url);
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Videos']);
 
         //GET request with query string

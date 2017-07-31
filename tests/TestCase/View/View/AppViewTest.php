@@ -24,8 +24,8 @@ namespace MeCmsYoutube\Test\TestCase\View\View;
 
 use Cake\Core\Configure;
 use Cake\Network\Request;
-use Cake\TestSuite\TestCase;
 use MeCmsYoutube\View\View\AppView as View;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AppViewTest class
@@ -46,17 +46,6 @@ class AppViewTest extends TestCase
         Configure::write('Widgets.general', []);
 
         $this->View = new View(new Request);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->View);
     }
 
     /**

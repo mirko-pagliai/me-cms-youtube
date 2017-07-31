@@ -25,18 +25,15 @@ namespace MeCmsYoutube\Test\TestCase\Controller;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCmsYoutube\Controller\VideosController;
 use MeCms\Core\Plugin;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * VideosControllerTest class
  */
 class VideosControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCmsYoutube\Controller\VideosController
      */
@@ -71,17 +68,6 @@ class VideosControllerTest extends IntegrationTestCase
         $this->Videos = TableRegistry::get('MeCmsYoutube.Videos');
 
         Cache::clear(false, $this->Videos->cache);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->Videos);
     }
 
     /**
@@ -120,20 +106,15 @@ class VideosControllerTest extends IntegrationTestCase
         $url = ['_name' => 'videos'];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Videos/index.ctp');
 
         $videosFromView = $this->viewVariable('videos');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $videosFromView);
         $this->assertNotEmpty($videosFromView);
-
-        foreach ($videosFromView as $video) {
-            $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $video);
-        }
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videosFromView);
 
         //Sets the cache name
-        $cache = sprintf('index_limit_%s_page_%s', getConfig('default.records'), 1);
+        $cache = sprintf('index_limit_%s_page_%s', getConfigOrFail('default.records'), 1);
         list($videosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Videos->cache
@@ -144,7 +125,7 @@ class VideosControllerTest extends IntegrationTestCase
 
         //GET request again. Now the data is in cache
         $this->get($url);
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Videos']);
     }
 
@@ -158,20 +139,15 @@ class VideosControllerTest extends IntegrationTestCase
         $url = ['_name' => 'videosByDate', $date];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Videos/index_by_date.ctp');
 
         $dateFromView = $this->viewVariable('date');
         $this->assertEquals($date, $dateFromView);
 
         $videosFromView = $this->viewVariable('videos');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $videosFromView);
-        $this->assertNotEmpty($videosFromView->toArray());
-
-        foreach ($videosFromView as $video) {
-            $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $video);
-        }
+        $this->assertNotEmpty($videosFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videosFromView);
 
         $startFromView = $this->viewVariable('start');
         $this->assertInstanceof('Cake\I18n\Time', $startFromView);
@@ -179,7 +155,7 @@ class VideosControllerTest extends IntegrationTestCase
 
         //Sets the cache name
         $end = Time::parse($startFromView)->addDay(1);
-        $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$startFromView, $end])), getConfig('default.records'), 1);
+        $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$startFromView, $end])), getConfigOrFail('default.records'), 1);
         list($videosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Videos->cache
@@ -190,7 +166,7 @@ class VideosControllerTest extends IntegrationTestCase
 
         //GET request again. Now the data is in cache
         $this->get($url);
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Videos']);
 
         //Tries with various possible dates
@@ -202,8 +178,7 @@ class VideosControllerTest extends IntegrationTestCase
             '2016/12/31',
         ] as $date) {
             $this->get(['_name' => 'videosByDate', $date]);
-            $this->assertResponseOk();
-            $this->assertResponseNotEmpty();
+            $this->assertResponseOkAndNotEmpty();
             $this->assertTemplate(ROOT . 'src/Template/Videos/index_by_date.ctp');
         }
 
@@ -219,21 +194,14 @@ class VideosControllerTest extends IntegrationTestCase
     public function testRss()
     {
         $this->get('/videos/rss');
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Videos/rss/rss.ctp');
-
-        $videosFromView = $this->viewVariable('videos');
-        $this->assertInstanceof('Cake\ORM\Query', $videosFromView);
-        $this->assertNotEmpty($videosFromView->toArray());
-
-        foreach ($videosFromView as $video) {
-            $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $video);
-        }
-
+        $this->assertLayout(Plugin::path(ME_CMS, 'src/Template/Layout/rss/default.ctp'));
         $this->assertHeaderContains('Content-Type', 'application/rss+xml');
 
-        $this->assertLayout(Plugin::path(ME_CMS, 'src/Template/Layout/rss/default.ctp'));
+        $videosFromView = $this->viewVariable('videos');
+        $this->assertNotEmpty($videosFromView);
+        $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videosFromView);
     }
 
     /**
@@ -257,19 +225,16 @@ class VideosControllerTest extends IntegrationTestCase
         $url = ['_name' => 'videosSearch'];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Videos/search.ctp');
 
         $this->assertEmpty($this->viewVariable('videos'));
         $this->assertEmpty($this->viewVariable('pattern'));
 
         $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
 
         $videosFromView = $this->viewVariable('videos');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $videosFromView);
         $this->assertNotEmpty($videosFromView->toArray());
 
         foreach ($videosFromView as $video) {
@@ -280,7 +245,7 @@ class VideosControllerTest extends IntegrationTestCase
         $this->assertEquals($this->viewVariable('pattern'), $pattern);
 
         //Sets the cache name
-        $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), getConfig('default.records_for_searches'), 1);
+        $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), getConfigOrFail('default.records_for_searches'), 1);
         list($videosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Videos->cache
@@ -291,21 +256,18 @@ class VideosControllerTest extends IntegrationTestCase
 
         //GET request again. Now the data is in cache
         $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Videos']);
 
         $this->get(array_merge($url, ['?' => ['p' => 'a']]));
         $this->assertRedirect($url);
-        $this->assertSession('You have to search at least a word of 4 characters', 'Flash.flash.0.message');
+        $this->assertFlashMessage('You have to search at least a word of 4 characters');
 
-        $this->session(['last_search' => [
-            'id' => md5(time()),
-            'time' => time(),
-        ]]);
+        $this->session(['last_search' => ['id' => md5(time()), 'time' => time()]]);
 
         $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
         $this->assertRedirect($url);
-        $this->assertSession('You have to wait 10 seconds to perform a new search', 'Flash.flash.0.message');
+        $this->assertFlashMessage('You have to wait 10 seconds to perform a new search');
     }
 
     /**
@@ -317,11 +279,11 @@ class VideosControllerTest extends IntegrationTestCase
         $id = $this->Videos->find('active')->extract('id')->first();
 
         $this->get(['_name' => 'video', $id]);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Videos/view.ctp');
 
         $videoFromView = $this->viewVariable('video');
+        $this->assertNotEmpty($videoFromView);
         $this->assertInstanceof('MeCmsYoutube\Model\Entity\Video', $videoFromView);
 
         $cache = Cache::read(sprintf('view_%s', md5($id)), $this->Videos->cache);

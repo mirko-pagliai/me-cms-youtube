@@ -1,9 +1,14 @@
 /*!
  * This file is part of me-cms-youtube.
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @see			https://developers.google.com/youtube/iframe_api_reference
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms-youtube
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ * @see         MeCms\View\Helper\MenuBuilderHelper
  */
 //If there's a spot, then the first video is the spot
 if ($('#player').data('spot') !== undefined) {

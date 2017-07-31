@@ -26,11 +26,11 @@ install:
   - composer update mirko-pagliai/me-cms --prefer-source
 
 before_script:
-  - mysql -e 'create database test;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
 
 script:
   - if [[ $PHPCS != '1' && $COVERAGE != '1' ]]; then vendor/bin/phpunit; fi
-  - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --extensions=php,ctp,js,css --standard=vendor/cakephp/cakephp-codesniffer/CakePHP --ignore=*.min.css,*.min.js ./config ./src ./tests ./webroot; fi
+  - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --extensions=php,ctp,js,css --standard=vendor/cakephp/cakephp-codesniffer/CakePHP --ignore=*.min.css,*.min.js,./config/Migrations ./config ./src ./tests ./webroot; fi
   - if [[ $COVERAGE = 1 ]]; then vendor/bin/phpunit --coverage-clover=clover.xml; fi
   
 after_success:

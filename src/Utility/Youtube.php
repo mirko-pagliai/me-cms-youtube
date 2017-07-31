@@ -2,23 +2,14 @@
 /**
  * This file is part of me-cms-youtube.
  *
- * me-cms-youtube is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * me-cms-youtube is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with me-cms-youtube.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms-youtube
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ * @see         MeTools\Utility\Youtube
  */
 namespace MeCmsYoutube\Utility;
 
@@ -52,7 +43,7 @@ class Youtube extends BaseYoutube
         $this->Client = new Client;
 
         if (empty($key)) {
-            $key = getConfig('Youtube.key');
+            $key = getConfigOrFail('Youtube.key');
         }
 
         $this->key = $key;
@@ -66,7 +57,7 @@ class Youtube extends BaseYoutube
      * @param string $duration Duration in YouTube format
      * @return bool|array Array with second and duration string or `false`
      */
-    protected function _parseDuration($duration)
+    protected function parseDuration($duration)
     {
         if (!preg_match('/^PT((\d+)H)?((\d+)M)?((\d+)S)?$/', $duration, $matches)) {
             return false;
@@ -97,14 +88,14 @@ class Youtube extends BaseYoutube
 
     /**
      * Internal method to get a info response
-     * @param string $id Video ID
+     * @param string $videoId Video ID
      * @return mixed The response body
      * @uses $Client
      * @uses $key
      */
-    protected function _getInfoResponse($id)
+    protected function getInfoResponse($videoId)
     {
-        $url = 'https://www.googleapis.com/youtube/v3/videos?id=' . $id . '&key=' . $this->key .
+        $url = 'https://www.googleapis.com/youtube/v3/videos?id=' . $videoId . '&key=' . $this->key .
             '&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
 
         return $this->Client->get($url)->body;
@@ -112,15 +103,15 @@ class Youtube extends BaseYoutube
 
     /**
      * Gets information about a video
-     * @param string $id Video ID
+     * @param string $videoId Video ID
      * @return mixed Object or `false`
      * @see https://developers.google.com/youtube/v3/getting-started#partial
-     * @uses _getInfoResponse()
-     * @uses _parseDuration()
+     * @uses getInfoResponse()
+     * @uses parseDuration()
      */
-    public function getInfo($id)
+    public function getInfo($videoId)
     {
-        $info = json_decode($this->_getInfoResponse($id));
+        $info = json_decode($this->getInfoResponse($videoId));
 
         if (empty($info->items[0])) {
             return false;
@@ -128,7 +119,7 @@ class Youtube extends BaseYoutube
 
         $info = $info->items[0];
 
-        list($seconds, $duration) = $this->_parseDuration($info->contentDetails->duration);
+        list($seconds, $duration) = $this->parseDuration($info->contentDetails->duration);
 
         $object = new \stdClass;
         $object->preview = $info->snippet->thumbnails->high->url;
