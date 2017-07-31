@@ -88,14 +88,14 @@ class Youtube extends BaseYoutube
 
     /**
      * Internal method to get a info response
-     * @param string $id Video ID
+     * @param string $videoId Video ID
      * @return mixed The response body
      * @uses $Client
      * @uses $key
      */
-    protected function getInfoResponse($id)
+    protected function getInfoResponse($videoId)
     {
-        $url = 'https://www.googleapis.com/youtube/v3/videos?id=' . $id . '&key=' . $this->key .
+        $url = 'https://www.googleapis.com/youtube/v3/videos?id=' . $videoId . '&key=' . $this->key .
             '&part=snippet,contentDetails&fields=items(snippet(title,description,thumbnails(high(url))),contentDetails(duration))';
 
         return $this->Client->get($url)->body;
@@ -109,9 +109,9 @@ class Youtube extends BaseYoutube
      * @uses getInfoResponse()
      * @uses parseDuration()
      */
-    public function getInfo($id)
+    public function getInfo($videoId)
     {
-        $info = json_decode($this->getInfoResponse($id));
+        $info = json_decode($this->getInfoResponse($videoId));
 
         if (empty($info->items[0])) {
             return false;
