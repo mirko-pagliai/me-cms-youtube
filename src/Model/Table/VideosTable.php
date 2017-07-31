@@ -187,31 +187,32 @@ class VideosTable extends AppTable
     }
 
     /**
-     * Internal method to get the query for the random spots
-     * @return Query $query Query object
-     * @uses $cache
+     * "Active spot" find method
+     * @param Query $query Query object
+     * @return Query Query object
      */
-    protected function getRandomSpotsQuery()
+    public function findActiveSpot(Query $query)
     {
-        return $this->find()
-            ->select('youtube_id')
-            ->where([
-                sprintf('%s.active', $this->getAlias()) => true,
-                sprintf('%s.is_spot', $this->getAlias()) => true,
-                sprintf('%s.created <=', $this->getAlias()) => new Time,
-            ])
-            ->cache('all_spots', $this->cache);
+        $query->where([
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.is_spot', $this->getAlias()) => true,
+            sprintf('%s.created <=', $this->getAlias()) => new Time,
+        ]);
+
+        return $query;
     }
 
     /**
      * Gets random spots
      * @param int $limit Limit
      * @return \Cake\Collection\Collection Collection
-     * @uses getRandomSpotsQuery()
      */
     public function getRandomSpots($limit = 1)
     {
-        return $this->getRandomSpotsQuery()->sample($limit);
+        return $this->find('activeSpot')
+            ->select('youtube_id')
+            ->cache('all_spots', $this->cache)
+            ->sample($limit);
     }
 
     /**

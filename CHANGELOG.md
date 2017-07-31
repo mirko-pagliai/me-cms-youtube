@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.10 branch
 ### 2.10.5
+* added "activeSpot" find method;
 * added initial schema of the plugin database. Removed `UpdateShell` class;
 * the MIT license has been applied;
 * significantly improved all tests.
