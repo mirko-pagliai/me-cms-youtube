@@ -63,14 +63,14 @@ class VideosTable extends AppTable
 
     /**
      * Internal method to get information about a video
-     * @param string $id Video ID
+     * @param string $videoId Video ID
      * @return mixed Object or `false`
      * @uses $Youtube
      * @uses MeCmsYoutube\Utility\Youtube::getInfo()
      */
-    protected function getInfo($id)
+    protected function getInfo($videoId)
     {
-        return $this->Youtube->getInfo($id);
+        return $this->Youtube->getInfo($videoId);
     }
 
     /**
