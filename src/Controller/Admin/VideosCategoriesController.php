@@ -13,7 +13,9 @@
 namespace MeCmsYoutube\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\ORM\ResultSet;
 use MeCmsYoutube\Controller\AppController;
+use MeCmsYoutube\Model\Entity\VideosCategory;
 
 /**
  * VideosCategories controller
@@ -68,11 +70,11 @@ class VideosCategoriesController extends AppController
         $categories = $this->VideosCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
             ->order([sprintf('%s.lft', $this->VideosCategories->alias()) => 'ASC'])
-            ->formatResults(function ($categories) {
+            ->formatResults(function (ResultSet $categories) {
                 //Gets categories as tree list
                 $treeList = $this->VideosCategories->getTreeList()->toArray();
 
-                return $categories->map(function ($category) use ($treeList) {
+                return $categories->map(function (VideosCategory $category) use ($treeList) {
                     $category->title = $treeList[$category->id];
 
                     return $category;

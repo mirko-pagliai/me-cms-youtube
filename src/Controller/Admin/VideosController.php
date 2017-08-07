@@ -13,7 +13,9 @@
 namespace MeCmsYoutube\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\ORM\ResultSet;
 use MeCmsYoutube\Controller\AppController;
+use MeCmsYoutube\Model\Entity\Video;
 use MeCmsYoutube\Utility\Youtube;
 
 /**
@@ -190,11 +192,11 @@ class VideosController extends AppController
     public function edit($id = null)
     {
         $video = $this->Videos->findById($id)
-            ->formatResults(function ($results) {
-                return $results->map(function ($row) {
-                    $row->created = $row->created->i18nFormat(FORMAT_FOR_MYSQL);
+            ->formatResults(function (ResultSet $results) {
+                return $results->map(function (Video $video) {
+                    $video->created = $video->created->i18nFormat(FORMAT_FOR_MYSQL);
 
-                    return $row;
+                    return $video;
                 });
             })
             ->firstOrFail();
