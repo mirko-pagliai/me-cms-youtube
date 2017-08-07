@@ -143,13 +143,15 @@ class VideosCategoriesController extends AppController
         $category = $this->VideosCategories->get($id);
 
         //Before deleting, it checks if the category has some videos
-        if (!$category->video_count) {
-            $this->VideosCategories->deleteOrFail($category);
-
-            $this->Flash->success(I18N_OPERATION_OK);
-        } else {
+        if ($category->video_count) {
             $this->Flash->alert(I18N_BEFORE_DELETE);
+
+            return $this->redirect(['action' => 'index']);
         }
+
+        $this->VideosCategories->deleteOrFail($category);
+
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }
