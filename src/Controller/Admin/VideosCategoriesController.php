@@ -13,7 +13,9 @@
 namespace MeCmsYoutube\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\ORM\ResultSet;
 use MeCmsYoutube\Controller\AppController;
+use MeCmsYoutube\Model\Entity\VideosCategory;
 
 /**
  * VideosCategories controller
@@ -68,11 +70,11 @@ class VideosCategoriesController extends AppController
         $categories = $this->VideosCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
             ->order([sprintf('%s.lft', $this->VideosCategories->alias()) => 'ASC'])
-            ->formatResults(function ($categories) {
+            ->formatResults(function (ResultSet $categories) {
                 //Gets categories as tree list
                 $treeList = $this->VideosCategories->getTreeList()->toArray();
 
-                return $categories->map(function ($category) use ($treeList) {
+                return $categories->map(function (VideosCategory $category) use ($treeList) {
                     $category->title = $treeList[$category->id];
 
                     return $category;
@@ -94,12 +96,12 @@ class VideosCategoriesController extends AppController
             $category = $this->VideosCategories->patchEntity($category, $this->request->getData());
 
             if ($this->VideosCategories->save($category)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('category'));
@@ -118,12 +120,12 @@ class VideosCategoriesController extends AppController
             $category = $this->VideosCategories->patchEntity($category, $this->request->getData());
 
             if ($this->VideosCategories->save($category)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('category'));
@@ -141,13 +143,15 @@ class VideosCategoriesController extends AppController
         $category = $this->VideosCategories->get($id);
 
         //Before deleting, it checks if the category has some videos
-        if (!$category->video_count) {
-            $this->VideosCategories->deleteOrFail($category);
+        if ($category->video_count) {
+            $this->Flash->alert(I18N_BEFORE_DELETE);
 
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-        } else {
-            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
+            return $this->redirect(['action' => 'index']);
         }
+
+        $this->VideosCategories->deleteOrFail($category);
+
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }

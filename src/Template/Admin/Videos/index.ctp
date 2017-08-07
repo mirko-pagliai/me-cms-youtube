@@ -14,7 +14,7 @@ $this->extend('MeCms./Admin/Common/index');
 $this->assign('title', $title = __d('me_cms_youtube', 'Videos'));
 
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Add'),
+    I18N_ADD,
     ['action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
@@ -32,24 +32,24 @@ $this->Library->datepicker(
 
 <?= $this->Form->createInline(false, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
-        <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
+        <?= $this->Html->legend(I18N_FILTER, ['icon' => 'eye']) ?>
         <?php
             echo $this->Form->control('id', [
                 'default' => $this->request->getQuery('id'),
-                'placeholder' => __d('me_cms', 'ID'),
+                'placeholder' => I18N_ID,
                 'size' => 2,
             ]);
             echo $this->Form->control('title', [
                 'default' => $this->request->getQuery('title'),
-                'placeholder' => __d('me_cms', 'title'),
+                'placeholder' => I18N_TITLE,
                 'size' => 16,
             ]);
             echo $this->Form->control('active', [
                 'default' => $this->request->getQuery('active'),
-                'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
+                'empty' => I18N_ALL_STATUS,
                 'options' => [
-                    'yes' => __d('me_cms', 'Only published'),
-                    'no' => __d('me_cms', 'Only drafts'),
+                    'yes' => I18N_ONLY_PUBLISHED,
+                    'no' => I18N_ONLY_NOT_PUBLISHED,
                 ],
             ]);
             echo $this->Form->control('user', [
@@ -84,13 +84,13 @@ $this->Library->datepicker(
 <table class="table table-hover">
     <thead>
         <tr>
-            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
-            <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
-            <th class="text-center"><?= $this->Paginator->sort('Categories.title', __d('me_cms', 'Category')) ?></th>
-            <th class="text-center"><?= $this->Paginator->sort('Users.first_name', __d('me_cms', 'Author')) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
+            <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('Categories.title', I18N_CATEGORY) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('Users.first_name', I18N_AUTHOR) ?></th>
             <th class="text-center hidden-xs"><?= $this->Paginator->sort('seconds', __d('me_cms_youtube', 'Duration')) ?></th>
-            <th class="text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
-            <th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('priority', I18N_PRIORITY) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
         </tr>
     </thead>
     <tbody>
@@ -116,7 +116,7 @@ $this->Library->datepicker(
                     //If the video is scheduled
                     if ($video->created->isFuture()) {
                         echo $this->Html->span(
-                            __d('me_cms', 'Scheduled'),
+                            I18N_SCHEDULED,
                             ['class' => 'record-label record-label-warning']
                         );
                     }
@@ -124,7 +124,7 @@ $this->Library->datepicker(
                     //If the video is not active (it's a draft)
                     if (!$video->active) {
                         echo $this->Html->span(
-                            __d('me_cms', 'Draft'),
+                            I18N_DRAFT,
                             ['class' => 'record-label record-label-warning']
                         );
                     }
@@ -137,7 +137,7 @@ $this->Library->datepicker(
                         $this->Auth->hasId($video->user->id)
                     ) {
                         $actions[] = $this->Html->link(
-                            __d('me_cms', 'Edit'),
+                            I18N_EDIT,
                             ['action' => 'edit', $video->id],
                             ['icon' => 'pencil']
                         );
@@ -146,12 +146,12 @@ $this->Library->datepicker(
                     //Only admins and managers can delete videos
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
                         $actions[] = $this->Form->postLink(
-                            __d('me_cms', 'Delete'),
+                            I18N_DELETE,
                             ['action' => 'delete', $video->id],
                             [
                                 'class' => 'text-danger',
                                 'icon' => 'trash-o',
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                                'confirm' => I18N_SURE_TO_DELETE,
                             ]
                         );
                     }
@@ -159,13 +159,13 @@ $this->Library->datepicker(
                     //If the video is not a spot, is active and is not scheduled
                     if (!$video->is_spot && $video->active && !$video->created->isFuture()) {
                         $actions[] = $this->Html->link(
-                            __d('me_cms', 'Open'),
+                            I18N_OPEN,
                             ['_name' => 'video', $video->id],
                             ['icon' => 'external-link', 'target' => '_blank']
                         );
                     } else {
                         $actions[] = $this->Html->link(
-                            __d('me_cms', 'Preview'),
+                            I18N_PREVIEW,
                             ['_name' => 'videosPreview', $video->id],
                             ['icon' => 'external-link', 'target' => '_blank']
                         );
@@ -178,14 +178,14 @@ $this->Library->datepicker(
                     <?= $this->Html->link(
                         $video->category->title,
                         ['?' => ['category' => $video->category->id]],
-                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                        ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
                 <td class="text-center">
                     <?= $this->Html->link(
                         $video->user->full_name,
                         ['?' => ['user' => $video->user->id]],
-                        ['title' => __d('me_cms', 'View items that belong to this user')]
+                        ['title' => I18N_BELONG_USER]
                     ) ?>
                 </td>
                 <td class="min-width text-center hidden-xs">

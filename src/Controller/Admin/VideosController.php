@@ -13,7 +13,9 @@
 namespace MeCmsYoutube\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\ORM\ResultSet;
 use MeCmsYoutube\Controller\AppController;
+use MeCmsYoutube\Model\Entity\Video;
 use MeCmsYoutube\Utility\Youtube;
 
 /**
@@ -161,12 +163,12 @@ class VideosController extends AppController
             $video = $this->Videos->patchEntity($video, $this->request->getData());
 
             if ($this->Videos->save($video)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
 
             //Gets and sets (as request data) again information about the video,
             // if these are no longer present in the request data
@@ -190,11 +192,11 @@ class VideosController extends AppController
     public function edit($id = null)
     {
         $video = $this->Videos->findById($id)
-            ->formatResults(function ($results) {
-                return $results->map(function ($row) {
-                    $row->created = $row->created->i18nFormat(FORMAT_FOR_MYSQL);
+            ->formatResults(function (ResultSet $results) {
+                return $results->map(function (Video $video) {
+                    $video->created = $video->created->i18nFormat(FORMAT_FOR_MYSQL);
 
-                    return $row;
+                    return $video;
                 });
             })
             ->firstOrFail();
@@ -208,12 +210,12 @@ class VideosController extends AppController
             $video = $this->Videos->patchEntity($video, $this->request->getData());
 
             if ($this->Videos->save($video)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('video'));
@@ -229,7 +231,7 @@ class VideosController extends AppController
 
         $this->Videos->deleteOrFail($this->Videos->get($id));
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }

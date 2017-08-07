@@ -118,7 +118,7 @@ class VideoValidatorTest extends ValidationTestCase
     {
         $this->example['category_id'] = 'string';
         $this->assertEquals([
-            'category_id' => ['naturalNumber' => 'You have to select a valid option'],
+            'category_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION],
         ], $this->Videos->newEntity($this->example)->getErrors());
     }
 
@@ -130,7 +130,7 @@ class VideoValidatorTest extends ValidationTestCase
     {
         $this->example['is_spot'] = 'string';
         $this->assertEquals([
-            'is_spot' => ['boolean' => 'You have to select a valid option'],
+            'is_spot' => ['boolean' => I18N_SELECT_VALID_OPTION],
         ], $this->Videos->newEntity($this->example)->getErrors());
 
         foreach ([true, false] as $value) {
@@ -148,7 +148,7 @@ class VideoValidatorTest extends ValidationTestCase
         foreach ([0, 'string'] as $value) {
             $this->example['seconds'] = $value;
             $this->assertEquals([
-                'seconds' => ['naturalNumber' => 'You have to enter a valid value'],
+                'seconds' => ['naturalNumber' => I18N_ENTER_VALID_VALUE],
             ], $this->Videos->newEntity($this->example)->getErrors());
         }
 
@@ -167,7 +167,7 @@ class VideoValidatorTest extends ValidationTestCase
         foreach (['00', '1234', '12:3456', 'string'] as $value) {
             $this->example['duration'] = $value;
             $this->assertEquals([
-                'duration' => ['validDuration' => 'You have to enter a valid value'],
+                'duration' => ['validDuration' => I18N_ENTER_VALID_VALUE],
             ], $this->Videos->newEntity($this->example)->getErrors());
         }
 

@@ -140,8 +140,8 @@ class VideosTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['user_id'], 'Users', __d('me_cms', 'You have to select a valid option')));
-        $rules->add($rules->existsIn(['category_id'], 'Categories', __d('me_cms', 'You have to select a valid option')));
+        $rules->add($rules->existsIn(['user_id'], 'Users', I18N_SELECT_VALID_OPTION));
+        $rules->add($rules->existsIn(['category_id'], 'Categories', I18N_SELECT_VALID_OPTION));
 
         return $rules;
     }

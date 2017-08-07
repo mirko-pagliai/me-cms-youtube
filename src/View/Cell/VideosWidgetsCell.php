@@ -16,7 +16,9 @@ use Cake\Event\EventManager;
 use Cake\I18n\FrozenDate;
 use Cake\Network\Request;
 use Cake\Network\Response;
+use Cake\ORM\ResultSet;
 use Cake\View\Cell;
+use MeCmsYoutube\Model\Entity\Video;
 
 /**
  * VideosWidgets cell
@@ -58,7 +60,7 @@ class VideosWidgetsCell extends Cell
         $categories = $this->Videos->Categories->find('active')
             ->select(['title', 'slug', 'video_count'])
             ->order([sprintf('%s.title', $this->Videos->Categories->getAlias()) => 'ASC'])
-            ->formatResults(function ($results) {
+            ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })
             ->cache('widget_categories', $this->Videos->cache)
@@ -109,12 +111,12 @@ class VideosWidgetsCell extends Cell
                 'video_count' => $query->func()->count($time),
             ])
             ->distinct(['month'])
-            ->formatResults(function ($results) {
-                return $results->indexBy('month')->map(function ($row) {
-                    list($year, $month) = explode('/', $row->month);
-                    $row->month = (new FrozenDate())->day(1)->month($month)->year($year);
+            ->formatResults(function (ResultSet $results) {
+                return $results->indexBy('month')->map(function (Video $video) {
+                    list($year, $month) = explode('/', $video->month);
+                    $video->month = (new FrozenDate())->day(1)->month($month)->year($year);
 
-                    return $row;
+                    return $video;
                 });
             })
             ->order(['month' => 'DESC'])

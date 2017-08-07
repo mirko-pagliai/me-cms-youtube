@@ -14,6 +14,7 @@
 namespace MeCmsYoutube\Utility;
 
 use Cake\Cache\Cache;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use MeCms\Utility\SitemapBuilder;
 
@@ -44,7 +45,7 @@ class Sitemap extends SitemapBuilder
 
         $categories = $table->find('active')
             ->select(['id', 'lft', 'slug'])
-            ->contain([$table->Videos->getAlias() => function ($q) use ($table) {
+            ->contain([$table->Videos->getAlias() => function (Query $q) use ($table) {
                 return $q->find('active')
                     ->select(['id', 'category_id', 'modified'])
                     ->order([sprintf('%s.modified', $table->Videos->getAlias()) => 'DESC']);

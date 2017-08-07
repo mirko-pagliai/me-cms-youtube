@@ -22,31 +22,31 @@ $this->Library->datetimepicker();
     if ($this->Auth->isGroup(['admin', 'manager'])) {
         echo $this->Form->control('user_id', [
             'empty' => false,
-            'label' => __d('me_cms', 'Author'),
+            'label' => I18N_AUTHOR,
         ]);
     }
 
     echo $this->Form->control('category_id', [
         'empty' => false,
-        'label' => __d('me_cms', 'Category'),
+        'label' => I18N_CATEGORY,
     ]);
     echo $this->Form->datetimepicker('created', [
-        'label' => __d('me_cms', 'Date'),
+        'label' => I18N_DATE,
         'help' => [
-            __d('me_cms', 'If blank, the current date and time will be used'),
-            __d('me_cms', 'You can delay the publication by entering a future date'),
+            I18N_USE_CURRENT_DATETIME,
+            I18N_DELAY_PUBLICATION,
         ],
     ]);
     echo $this->Form->control('priority', [
-        'label' => __d('me_cms', 'Priority'),
+        'label' => I18N_PRIORITY,
     ]);
     echo $this->Form->control('is_spot', [
         'label' => sprintf('%s?', __d('me_cms_youtube', 'Is a spot')),
         'help' => __d('me_cms_youtube', 'Enable this option if this video is a spot'),
     ]);
     echo $this->Form->control('active', [
-        'label' => sprintf('%s?', __d('me_cms', 'Published')),
-        'help' => __d('me_cms', 'Disable this option to save as a draft'),
+        'label' => I18N_PUBLISHED,
+        'help' => I18N_HELP_DRAFT,
     ]);
     ?>
 </div>
@@ -88,13 +88,13 @@ $this->Library->datetimepicker();
             'readonly' => true,
         ]);
         echo $this->Form->control('title', [
-            'label' => __d('me_cms', 'Title'),
+            'label' => I18N_TITLE,
         ]);
         echo $this->Form->control('subtitle', [
-            'label' => __d('me_cms', 'Subtitle'),
+            'label' => I18N_SUBTITLE,
         ]);
         echo $this->Form->control('text', [
-            'label' => __d('me_cms', 'Text'),
+            'label' => I18N_TEXT,
             'rows' => 8,
         ]);
     ?>

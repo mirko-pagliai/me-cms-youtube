@@ -14,7 +14,7 @@ $this->extend('MeCms./Admin/Common/index');
 $this->assign('title', $title = __d('me_cms_youtube', 'Videos categories'));
 
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Add'),
+    I18N_ADD,
     ['action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
@@ -28,8 +28,8 @@ $this->append('actions', $this->Html->button(
 <table class="table table-hover">
     <thead>
         <tr>
-            <th class="text-center"><?= __d('me_cms', 'ID') ?></th>
-            <th><?= __d('me_cms', 'Title') ?></th>
+            <th class="text-center"><?= I18N_ID ?></th>
+            <th><?= I18N_TITLE ?></th>
             <th class="text-center"><?= __d('me_cms', 'Parent') ?></th>
             <th class="min-width text-center"><?= __d('me_cms_youtube', 'Videos') ?></th>
         </tr>
@@ -48,7 +48,7 @@ $this->append('actions', $this->Html->button(
                     <?php
                         $actions = [
                             $this->Html->link(
-                                __d('me_cms', 'Edit'),
+                                I18N_EDIT,
                                 ['action' => 'edit', $category->id],
                                 ['icon' => 'pencil']
                             ),
@@ -57,19 +57,19 @@ $this->append('actions', $this->Html->button(
                         //Only admins can delete videos categories
                         if ($this->Auth->isGroup('admin')) {
                             $actions[] = $this->Form->postLink(
-                                __d('me_cms', 'Delete'),
+                                I18N_DELETE,
                                 ['action' => 'delete', $category->id],
                                 [
                                     'class' => 'text-danger',
                                     'icon' => 'trash-o',
-                                    'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                                    'confirm' => I18N_SURE_TO_DELETE,
                                 ]
                             );
                         }
 
                         if ($category->video_count) {
                             $actions[] = $this->Html->link(
-                                __d('me_cms', 'Open'),
+                                I18N_OPEN,
                                 ['_name' => 'videosCategory', $category->slug],
                                 ['icon' => 'external-link', 'target' => '_blank']
                             );
@@ -91,7 +91,7 @@ $this->append('actions', $this->Html->button(
                         echo $this->Html->link(
                             $category->video_count,
                             ['controller' => 'Videos', 'action' => 'index', '?' => ['category' => $category->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
+                            ['title' => I18N_BELONG_ELEMENT]
                         );
                     } else {
                         echo $category->video_count;
