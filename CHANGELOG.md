@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.10 branch
+### 2.10.6
+* updated for MeCms 2.20.1.
+
 ### 2.10.5
 * added "activeSpot" find method;
 * added initial schema of the plugin database. Removed `UpdateShell` class;
