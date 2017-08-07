@@ -161,12 +161,12 @@ class VideosController extends AppController
             $video = $this->Videos->patchEntity($video, $this->request->getData());
 
             if ($this->Videos->save($video)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
 
             //Gets and sets (as request data) again information about the video,
             // if these are no longer present in the request data
@@ -208,12 +208,12 @@ class VideosController extends AppController
             $video = $this->Videos->patchEntity($video, $this->request->getData());
 
             if ($this->Videos->save($video)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('video'));
@@ -229,7 +229,7 @@ class VideosController extends AppController
 
         $this->Videos->deleteOrFail($this->Videos->get($id));
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }

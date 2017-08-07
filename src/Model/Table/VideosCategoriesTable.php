@@ -36,7 +36,7 @@ class VideosCategoriesTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['parent_id'], 'Parents', __d('me_cms', 'You have to select a valid option')));
+        $rules->add($rules->existsIn(['parent_id'], 'Parents', I18N_SELECT_VALID_OPTION));
 
         return $rules;
     }
@@ -49,7 +49,7 @@ class VideosCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->matching($this->Videos->getAlias(), function ($q) {
+        $query->matching($this->Videos->getAlias(), function (Query $q) {
             return $q->find('active');
         })->distinct();
 

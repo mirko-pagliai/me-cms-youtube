@@ -145,8 +145,8 @@ class VideosTableTest extends TestCase
         ]);
         $this->assertFalse($this->Videos->save($entity));
         $this->assertEquals([
-            'category_id' => ['_existsIn' => 'You have to select a valid option'],
-            'user_id' => ['_existsIn' => 'You have to select a valid option'],
+            'category_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
+            'user_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
         ], $entity->getErrors());
     }
 

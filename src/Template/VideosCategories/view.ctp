@@ -28,7 +28,7 @@ $this->userbar([
         [
             'class' => 'text-danger',
             'icon' => 'trash-o',
-            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+            'confirm' => I18N_SURE_TO_DELETE,
             'target' => '_blank',
         ]
     ),

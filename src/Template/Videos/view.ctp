@@ -20,10 +20,10 @@ if ($video->is_spot) {
     $this->userbar($this->Html->span(__d('me_cms_youtube', 'Spot'), ['class' => 'label label-primary']));
 }
 if (!$video->active) {
-    $this->userbar($this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_DRAFT, ['class' => 'label label-warning']));
 }
 if ($video->created->isFuture()) {
-    $this->userbar($this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_SCHEDULED, ['class' => 'label label-warning']));
 }
 $this->userbar($this->Html->link(
     __d('me_cms_youtube', 'Edit video'),
@@ -35,7 +35,7 @@ $this->userbar($this->Form->postLink(
     ['action' => 'delete', $video->id, 'prefix' => ADMIN_PREFIX],
     [
         'icon' => 'trash-o',
-        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+        'confirm' => I18N_SURE_TO_DELETE,
         'target' => '_blank',
     ]
 ));

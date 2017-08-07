@@ -45,7 +45,7 @@ class VideoValidator extends AppValidator
         //Category
         $this->add('category_id', [
             'naturalNumber' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
+                'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('category_id', 'create');
@@ -59,7 +59,7 @@ class VideoValidator extends AppValidator
         //"Is spot"
         $this->add('is_spot', [
             'boolean' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
+                'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'boolean',
             ],
         ]);
@@ -67,7 +67,7 @@ class VideoValidator extends AppValidator
         //Seconds
         $this->add('seconds', [
             'naturalNumber' => [
-                'message' => __d('me_cms', 'You have to enter a valid value'),
+                'message' => I18N_ENTER_VALID_VALUE,
                 'rule' => 'naturalNumber',
             ],
         ])
@@ -76,7 +76,7 @@ class VideoValidator extends AppValidator
         //Duration
         $this->add('duration', [
             'validDuration' => [
-                'message' => __d('me_cms', 'You have to enter a valid value'),
+                'message' => I18N_ENTER_VALID_VALUE,
                 'rule' => function ($value) {
                     return (bool)preg_match('/^(\d{2}:){1,2}\d{2}$/', $value);
                 },

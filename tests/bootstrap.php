@@ -26,6 +26,8 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Routing\DispatcherFactory;
 
+ini_set('intl.default_locale', 'en_US');
+
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 if (!defined('DS')) {
@@ -163,5 +165,3 @@ Plugin::load('MeCmsYoutube', [
 
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
-
-ini_set('intl.default_locale', 'en_US');

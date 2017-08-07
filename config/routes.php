@@ -10,19 +10,20 @@
  * @link        https://github.com/mirko-pagliai/me-cms-youtube
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
 Router::defaultRouteClass('DashedRoute');
 Router::extensions('rss');
 
-Router::scope('/', ['plugin' => ME_CMS_YOUTUBE], function ($routes) {
+Router::scope('/', ['plugin' => ME_CMS_YOUTUBE], function (RouteBuilder $routes) {
     //Requires other routes
     require 'routes' . DS . 'videos.php';
 });
 
-Router::plugin(ME_CMS_YOUTUBE, ['path' => '/me-cms-youtube'], function ($routes) {
+Router::plugin(ME_CMS_YOUTUBE, ['path' => '/me-cms-youtube'], function (RouteBuilder $routes) {
     //Admin routes
-    $routes->prefix(ADMIN_PREFIX, function ($routes) {
+    $routes->prefix(ADMIN_PREFIX, function (RouteBuilder $routes) {
         //All admin routes
         $routes->fallbacks('DashedRoute');
     });
