@@ -28,10 +28,7 @@ class MenuHelper extends Helper
      * Helpers
      * @var array
      */
-    public $helpers = [
-        'Html' => ['className' => 'MeTools.Html'],
-        'MeCms.Auth',
-    ];
+    public $helpers = [ME_CMS . '.Auth'];
 
     /**
      * Internal function to generate the menu for "videos" actions
@@ -41,35 +38,35 @@ class MenuHelper extends Helper
      */
     public function videos()
     {
-        $menu[] = $this->Html->link(__d('me_cms_youtube', 'List videos'), [
+        $links[] = [__d('me_cms_youtube', 'List videos'), [
             'controller' => 'Videos',
             'action' => 'index',
             'plugin' => ME_CMS_YOUTUBE,
             'prefix' => ADMIN_PREFIX,
-        ]);
-        $menu[] = $this->Html->link(__d('me_cms_youtube', 'Add video'), [
+        ]];
+        $links[] = [__d('me_cms_youtube', 'Add video'), [
             'controller' => 'Videos',
             'action' => 'add',
             'plugin' => ME_CMS_YOUTUBE,
             'prefix' => ADMIN_PREFIX,
-        ]);
+        ]];
 
         //Only admins and managers can access this controller
         if ($this->Auth->isGroup(['admin', 'manager'])) {
-            $menu[] = $this->Html->link(__d('me_cms', 'List categories'), [
+            $links[] = [__d('me_cms', 'List categories'), [
                 'controller' => 'VideosCategories',
                 'action' => 'index',
                 'plugin' => ME_CMS_YOUTUBE,
                 'prefix' => ADMIN_PREFIX,
-            ]);
-            $menu[] = $this->Html->link(__d('me_cms', 'Add category'), [
+            ]];
+            $links[] = [__d('me_cms', 'Add category'), [
                 'controller' => 'VideosCategories',
                 'action' => 'add',
                 'plugin' => ME_CMS_YOUTUBE,
                 'prefix' => ADMIN_PREFIX,
-            ]);
+            ]];
         }
 
-        return [$menu, __d('me_cms_youtube', 'Videos'), ['icon' => 'film']];
+        return [$links, __d('me_cms_youtube', 'Videos'), ['icon' => 'film']];
     }
 }
