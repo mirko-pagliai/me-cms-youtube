@@ -52,7 +52,7 @@
     <div class="content-text">
         <?php if ($this->request->isAction(['view', 'preview'], 'Videos')) : ?>
             <?= $this->Asset->script('MeCmsYoutube.video', ['block' => 'script_bottom']) ?>
-            <div class="embed-responsive embed-responsive-16by9 margin-20 relative">
+            <div class="embed-responsive embed-responsive-16by9 mb4 relative">
                 <?php
                 if (getConfig('video.skip_button')) {
                     echo $this->Html->div(null, __d('me_cms_youtube', 'Skip to the video'), [

@@ -109,7 +109,7 @@ $this->Library->datepicker(
                     if ($video->is_spot) {
                         echo $this->Html->span(
                             __d('me_cms_youtube', 'Spot'),
-                            ['class' => 'record-label record-label-primary']
+                            ['class' => 'record-badge badge badge-primary']
                         );
                     }
 
@@ -117,7 +117,7 @@ $this->Library->datepicker(
                     if ($video->created->isFuture()) {
                         echo $this->Html->span(
                             I18N_SCHEDULED,
-                            ['class' => 'record-label record-label-warning']
+                            ['class' => 'record-badge badge badge-warning']
                         );
                     }
 
@@ -125,7 +125,7 @@ $this->Library->datepicker(
                     if (!$video->active) {
                         echo $this->Html->span(
                             I18N_DRAFT,
-                            ['class' => 'record-label record-label-warning']
+                            ['class' => 'record-badge badge badge-warning']
                         );
                     }
 
@@ -228,10 +228,10 @@ $this->Library->datepicker(
                     ?>
                 </td>
                 <td class="min-width text-center">
-                    <div class="hidden-xs">
+                    <div class="d-none d-lg-block">
                         <?= $video->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>
-                    <div class="visible-xs">
+                    <div class="d-lg-none">
                         <div><?= $video->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
                         <div><?= $video->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>
