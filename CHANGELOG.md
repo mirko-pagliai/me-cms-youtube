@@ -1,4 +1,10 @@
 # 2.x branch
+## 2.11 branch
+### 2.11.0
+* fixed all admin templates for Bootstrap 4;
+* `MenuHelper` class returns menus as arrays, without transforming them into
+    html.
+
 ## 2.10 branch
 ### 2.10.6
 * updated for MeCms 2.20.1.
