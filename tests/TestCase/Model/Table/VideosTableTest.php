@@ -185,7 +185,7 @@ class VideosTableTest extends TestCase
      */
     public function testBelongsToVideosCategories()
     {
-        $entity = $this->Videos->findById(3)->contain(['Categories'])->first();
+        $entity = $this->Videos->findById(3)->contain('Categories')->first();
 
         $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $entity->category);
         $this->assertEquals(4, $entity->category->id);
@@ -197,7 +197,7 @@ class VideosTableTest extends TestCase
      */
     public function testBelongsToUsers()
     {
-        $entity = $this->Videos->findById(2)->contain(['Users'])->first();
+        $entity = $this->Videos->findById(2)->contain('Users')->first();
 
         $this->assertInstanceOf('MeCms\Model\Entity\User', $entity->user);
         $this->assertEquals(4, $entity->user->id);

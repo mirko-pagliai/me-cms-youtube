@@ -162,7 +162,7 @@ class VideosCategoriesTableTest extends TestCase
      */
     public function testHasManyPages()
     {
-        $category = $this->VideosCategories->find()->contain(['Videos'])->first();
+        $category = $this->VideosCategories->find()->contain('Videos')->first();
 
         $this->assertNotEmpty($category->videos);
 
