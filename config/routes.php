@@ -14,7 +14,7 @@ use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
 Router::defaultRouteClass('DashedRoute');
-Router::extensions('rss');
+Router::setExtensions('rss');
 
 Router::scope('/', ['plugin' => ME_CMS_YOUTUBE], function (RouteBuilder $routes) {
     //Requires other routes

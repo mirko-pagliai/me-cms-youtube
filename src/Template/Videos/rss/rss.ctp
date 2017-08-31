@@ -18,7 +18,7 @@ $this->set([
         'title' => __d('me_cms_youtube', 'Latest videos'),
         'link' => $this->Url->build('/', true),
         'description' => __d('me_cms_youtube', 'Latest videos'),
-        'language' => I18n::locale(),
+        'language' => I18n::getLocale(),
     ],
 ]);
 

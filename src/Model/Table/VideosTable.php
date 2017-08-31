@@ -229,13 +229,13 @@ class VideosTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', ['className' => 'MeCmsYoutube.VideosCategories'])
+        $this->belongsTo('Categories', ['className' => ME_CMS_YOUTUBE . '.VideosCategories'])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
-            ->setTarget($this->tableLocator()->get('MeCmsYoutube.VideosCategories'))
+            ->setTarget($this->getTableLocator()->get(ME_CMS_YOUTUBE . '.VideosCategories'))
             ->setAlias('Categories');
 
-        $this->belongsTo('Users', ['className' => 'MeCms.Users'])
+        $this->belongsTo('Users', ['className' => ME_CMS . '.Users'])
             ->setForeignKey('user_id')
             ->setJoinType('INNER');
 

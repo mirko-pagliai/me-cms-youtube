@@ -111,7 +111,7 @@ class VideosCategoriesTableTest extends TestCase
         $this->assertTrue($this->VideosCategories->hasBehavior('Timestamp'));
         $this->assertTrue($this->VideosCategories->hasBehavior('Tree'));
 
-        $this->assertInstanceOf('MeCmsYoutube\Model\Validation\VideosCategoryValidator', $this->VideosCategories->validator());
+        $this->assertInstanceOf('MeCmsYoutube\Model\Validation\VideosCategoryValidator', $this->VideosCategories->getValidator());
     }
 
     /**
@@ -120,12 +120,12 @@ class VideosCategoriesTableTest extends TestCase
      */
     public function testBelongsToParents()
     {
-        $category = $this->VideosCategories->findById(4)->contain(['Parents'])->first();
+        $category = $this->VideosCategories->findById(4)->contain('Parents')->first();
 
         $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
 
-        $category = $this->VideosCategories->findById($category->parent->id)->contain(['Parents'])->first();
+        $category = $this->VideosCategories->findById($category->parent->id)->contain('Parents')->first();
 
         $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $category->parent);
         $this->assertEquals(1, $category->parent->id);
@@ -137,7 +137,7 @@ class VideosCategoriesTableTest extends TestCase
      */
     public function testHasManyChilds()
     {
-        $category = $this->VideosCategories->findById(1)->contain(['Childs'])->first();
+        $category = $this->VideosCategories->findById(1)->contain('Childs')->first();
 
         $this->assertNotEmpty($category->childs);
 
@@ -145,7 +145,7 @@ class VideosCategoriesTableTest extends TestCase
             $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $children);
             $this->assertEquals(1, $children->parent_id);
 
-            $category = $this->VideosCategories->findById($children->id)->contain(['Childs'])->first();
+            $category = $this->VideosCategories->findById($children->id)->contain('Childs')->first();
 
             $this->assertNotEmpty($category->childs);
 
@@ -181,8 +181,8 @@ class VideosCategoriesTableTest extends TestCase
         $query = $this->VideosCategories->find('active');
         $this->assertStringEndsWith('FROM youtube_videos_categories Categories INNER JOIN youtube_videos Videos ON (Videos.active = :c0 AND Videos.created <= :c1 AND Videos.is_spot = :c2 AND Categories.id = (Videos.category_id))', $query->sql());
 
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
-        $this->assertFalse($query->valueBinder()->bindings()[':c2']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c2']['value']);
     }
 }
