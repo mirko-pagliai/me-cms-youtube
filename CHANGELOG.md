@@ -1,8 +1,7 @@
 # 2.x branch
 ## 2.11 branch
 ### 2.11.0
-* updated for CakePHP 3.5 and MeCms 2.21;
-* uses `ConsoleIntegrationTestCase`. Console tests have been simplified.
+* updated for CakePHP 3.5 and MeCms 2.21.
 
 ## 2.10 branch
 ### 2.10.6
