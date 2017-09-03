@@ -1,5 +1,6 @@
 # Youtube plugin for MeCms
 
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 [![Build Status](https://travis-ci.org/mirko-pagliai/me-cms-youtube.svg?branch=master)](https://travis-ci.org/mirko-pagliai/me-cms-youtube)
 [![Coverage Status](https://img.shields.io/codecov/c/github/mirko-pagliai/me-cms-youtube.svg?style=flat-square)](https://codecov.io/github/mirko-pagliai/me-cms-youtube)
 

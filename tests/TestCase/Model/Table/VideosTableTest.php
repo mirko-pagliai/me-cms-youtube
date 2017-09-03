@@ -176,7 +176,7 @@ class VideosTableTest extends TestCase
         $this->assertTrue($this->Videos->hasBehavior('Timestamp'));
         $this->assertTrue($this->Videos->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCmsYoutube\Model\Validation\VideoValidator', $this->Videos->validator());
+        $this->assertInstanceOf('MeCmsYoutube\Model\Validation\VideoValidator', $this->Videos->getValidator());
     }
 
     /**
@@ -185,7 +185,7 @@ class VideosTableTest extends TestCase
      */
     public function testBelongsToVideosCategories()
     {
-        $entity = $this->Videos->findById(3)->contain(['Categories'])->first();
+        $entity = $this->Videos->findById(3)->contain('Categories')->first();
 
         $this->assertInstanceOf('MeCmsYoutube\Model\Entity\VideosCategory', $entity->category);
         $this->assertEquals(4, $entity->category->id);
@@ -197,7 +197,7 @@ class VideosTableTest extends TestCase
      */
     public function testBelongsToUsers()
     {
-        $entity = $this->Videos->findById(2)->contain(['Users'])->first();
+        $entity = $this->Videos->findById(2)->contain('Users')->first();
 
         $this->assertInstanceOf('MeCms\Model\Entity\User', $entity->user);
         $this->assertEquals(4, $entity->user->id);
@@ -234,9 +234,9 @@ class VideosTableTest extends TestCase
         $query = $this->Videos->find('active');
         $this->assertStringEndsWith('FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.created <= :c1 AND Videos.is_spot = :c2)', $query->sql());
 
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
-        $this->assertFalse($query->valueBinder()->bindings()[':c2']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c2']['value']);
     }
 
     /**
@@ -248,9 +248,9 @@ class VideosTableTest extends TestCase
         $query = $this->Videos->find('activeSpot');
         $this->assertStringEndsWith('FROM youtube_videos Videos WHERE (Videos.active = :c0 AND Videos.is_spot = :c1 AND Videos.created <= :c2)', $query->sql());
 
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertTrue($query->valueBinder()->bindings()[':c1']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c2']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c2']['value']);
     }
 
     /**
@@ -288,6 +288,6 @@ class VideosTableTest extends TestCase
         $query = $this->Videos->queryFromFilter($this->Videos->find(), $data);
         $this->assertStringEndsWith('FROM youtube_videos Videos WHERE Videos.is_spot = :c0', $query->sql());
 
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

@@ -161,7 +161,7 @@ class VideosWidgetsCellTest extends TestCase
 
         //Empty on categories index
         $widget = $this->Widget->widget($widget);
-        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'videosCategories']));
+        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'videosCategories']));
         $this->assertEmpty($widget->render());
 
         //Tests cache
@@ -274,7 +274,7 @@ class VideosWidgetsCellTest extends TestCase
 
         //Empty on videos index
         $widget = $this->Widget->widget($widget);
-        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'videos']));
+        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'videos']));
         $this->assertEmpty($widget->render());
 
         //Tests cache
@@ -365,7 +365,7 @@ class VideosWidgetsCellTest extends TestCase
 
         //Empty on videos index
         $widget = $this->Widget->widget($widget);
-        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'videos']));
+        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'videos']));
         $this->assertEmpty($widget->render());
 
         //Tests cache
@@ -430,7 +430,7 @@ class VideosWidgetsCellTest extends TestCase
 
         //Empty on search
         $widget = $this->Widget->widget($widget);
-        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'videosSearch']));
+        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'videosSearch']));
         $this->assertEmpty($widget->render());
     }
 }
