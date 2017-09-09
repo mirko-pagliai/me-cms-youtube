@@ -88,7 +88,7 @@ $this->Library->datepicker(
             <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Categories.title', I18N_CATEGORY) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Users.first_name', I18N_AUTHOR) ?></th>
-            <th class="text-center hidden-xs"><?= $this->Paginator->sort('seconds', __d('me_cms_youtube', 'Duration')) ?></th>
+            <th class="text-center d-none d-md-table-cell"><?= $this->Paginator->sort('seconds', __d('me_cms_youtube', 'Duration')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('priority', I18N_PRIORITY) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
         </tr>
@@ -188,7 +188,7 @@ $this->Library->datepicker(
                         ['title' => I18N_BELONG_USER]
                     ) ?>
                 </td>
-                <td class="text-nowrap text-center hidden-xs">
+                <td class="text-nowrap text-center d-none d-md-table-cell">
                     <?= empty($video->duration) ? '00:00' : $video->duration ?>
                 </td>
                 <td class="text-nowrap text-center">
