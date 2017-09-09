@@ -31,13 +31,13 @@ $this->append('actions', $this->Html->button(
             <th class="text-center"><?= I18N_ID ?></th>
             <th><?= I18N_TITLE ?></th>
             <th class="text-center"><?= __d('me_cms', 'Parent') ?></th>
-            <th class="min-width text-center"><?= __d('me_cms_youtube', 'Videos') ?></th>
+            <th class="text-nowrap text-center"><?= __d('me_cms_youtube', 'Videos') ?></th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($categories as $category) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $category->id ?></code>
                 </td>
                 <td>
@@ -85,7 +85,7 @@ $this->append('actions', $this->Html->button(
                     }
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if ($category->video_count) {
                         echo $this->Html->link(

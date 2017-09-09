@@ -96,7 +96,7 @@ $this->Library->datepicker(
     <tbody>
         <?php foreach ($videos as $video) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $video->id ?></code>
                 </td>
                 <td>
@@ -188,10 +188,10 @@ $this->Library->datepicker(
                         ['title' => I18N_BELONG_USER]
                     ) ?>
                 </td>
-                <td class="min-width text-center hidden-xs">
+                <td class="text-nowrap text-center hidden-xs">
                     <?= empty($video->duration) ? '00:00' : $video->duration ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     switch ($video->priority) {
                         case '1':
@@ -227,7 +227,7 @@ $this->Library->datepicker(
                     }
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
                         <?= $video->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>
