@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.11 branch
 ### 2.11.0
-* fixed all admin templates for Bootstrap 4;
+* fixed all templates for Bootstrap 4;
 * `MenuHelper` class returns menus as arrays, without transforming them into
     html.
 

@@ -8,26 +8,14 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms-youtube
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         MeCms\View\Helper\MenuBuilderHelper
  */
 /* -------------------------------- */
 /*          "Video fake"            */
 /* -------------------------------- */
-/* "Video fake" */
-.video-fake {
-    display: block;
-    position: relative;
-}
-
-/* "Video fake", image */
-.video-fake > img {
-    width: 100%;
-}
-
 /* "Video fake", icon */
 .video-fake > .fa {
     color: #222;
-    font-size: 600%;
+    font-size: 7rem;
     left: 50%;
     opacity: .8;
     position: absolute;
@@ -53,9 +41,9 @@
     color: #000;
     cursor: pointer;
     display: none;
-    font-size: 18px;
+    font-size: 1.25rem;
     left: 50%;
-    padding: 6px 10px;
+    padding: .5rem 1rem;
     position: absolute;
     top: 7%;
     z-index: 9999;

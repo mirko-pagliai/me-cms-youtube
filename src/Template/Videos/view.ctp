@@ -28,12 +28,13 @@ if ($video->created->isFuture()) {
 $this->userbar($this->Html->link(
     __d('me_cms_youtube', 'Edit video'),
     ['action' => 'edit', $video->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'pencil', 'target' => '_blank']
+    ['class' => 'nav-link', 'icon' => 'pencil', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms_youtube', 'Delete video'),
     ['action' => 'delete', $video->id, 'prefix' => ADMIN_PREFIX],
     [
+        'class' => 'nav-link',
         'icon' => 'trash-o',
         'confirm' => I18N_SURE_TO_DELETE,
         'target' => '_blank',

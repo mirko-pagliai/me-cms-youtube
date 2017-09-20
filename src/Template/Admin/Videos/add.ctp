@@ -80,7 +80,7 @@ $this->Library->datetimepicker();
                     <h4><?= __d('me_cms_youtube', 'Video') ?></h4>
                     <?= $this->Html->youtube(
                         $this->request->getData('youtube_id'),
-                        ['class' => 'center-block', 'height' => 315, 'width' => 560]
+                        ['class' => 'mx-auto', 'height' => 315, 'width' => 560]
                     ) ?>
                 </div>
                 <div class="col-sm-6">
@@ -88,7 +88,7 @@ $this->Library->datetimepicker();
                     <?= $this->Thumb->resize(
                         $this->request->getData('preview'),
                         ['height' => 315],
-                        ['class' => 'center-block']
+                        ['class' => 'mx-auto']
                     ) ?>
                 </div>
             </div>
