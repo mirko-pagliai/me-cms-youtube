@@ -229,7 +229,7 @@ $this->Library->datepicker(
                 </td>
                 <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
-                        <?= $video->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                        <?= $video->created->i18nFormat() ?>
                     </div>
                     <div class="d-lg-none">
                         <div><?= $video->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
