@@ -1,4 +1,10 @@
 # 2.x branch
+## 2.12 branch
+### 2.12.0-beta
+* fixed all templates for Bootstrap 4;
+* `MenuHelper` class returns menus as arrays, without transforming them into
+    html.
+
 ## 2.11 branch
 ### 2.11.0
 * updated for CakePHP 3.5 and MeCms 2.21.

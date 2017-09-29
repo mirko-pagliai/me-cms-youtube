@@ -10,26 +10,32 @@
  * @link        https://github.com/mirko-pagliai/me-cms-youtube
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+$this->Asset->css('MeCmsYoutube.video');
+
+if ($this->request->isAction(['view', 'preview'], 'Videos')) {
+    $this->Asset->script('MeCmsYoutube.video', ['block' => 'script_bottom']);
+}
 ?>
-<div class="video-container content-container clearfix">
-    <div class="content-header">
+
+<article class="mb-4">
+    <div class="header mb-3 pl-3">
         <?php if (getConfig('video.category') && $video->category && $video->category->title && $video->category->slug) : ?>
-            <h5 class="content-category">
+            <h5 class="category mb-1">
                 <?= $this->Html->link($video->category->title, ['_name' => 'videosCategory', $video->category->slug]) ?>
             </h5>
         <?php endif; ?>
 
-        <h3 class="content-title">
+        <h2 class="title mb-1">
             <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?>
-        </h3>
+        </h2>
 
         <?php if ($video->subtitle) : ?>
-            <h4 class="content-subtitle">
+            <h4 class="subtitle mb-1">
                 <?= $this->Html->link($video->subtitle, ['_name' => 'video', $video->id]) ?>
             </h4>
         <?php endif; ?>
 
-        <div class="content-info">
+        <div class="info mt-2 text-muted">
             <?php
             if (getConfig('video.author')) {
                 echo $this->Html->div(
@@ -42,17 +48,18 @@
             if (getConfig('video.created')) {
                 echo $this->Html->div(
                     'content-date',
-                    __d('me_cms', 'Posted on {0}', $video->created->i18nFormat(getConfigOrFail('main.datetime.long'))),
+                    __d('me_cms', 'Posted on {0}', $video->created->i18nFormat()),
                     ['icon' => 'clock-o']
                 );
             }
             ?>
         </div>
     </div>
+
     <div class="content-text">
+        <div class="embed-responsive embed-responsive-16by9">
         <?php if ($this->request->isAction(['view', 'preview'], 'Videos')) : ?>
-            <?= $this->Asset->script('MeCmsYoutube.video', ['block' => 'script_bottom']) ?>
-            <div class="embed-responsive embed-responsive-16by9 margin-20 relative">
+            <div class="mb-4 relative">
                 <?php
                 if (getConfig('video.skip_button')) {
                     echo $this->Html->div(null, __d('me_cms_youtube', 'Skip to the video'), [
@@ -70,11 +77,12 @@
                 ?>
             </div>
         <?php else : ?>
-            <a class="video-fake" href="<?= $this->Url->build(['_name' => 'video', $video->id]) ?>">
-                <?= $this->Html->img($video->preview['preview']) ?>
+            <a class="embed-responsive-item video-fake" href="<?= $this->Url->build(['_name' => 'video', $video->id]) ?>">
+                <?= $this->Html->img($video->preview['preview'], ['class' => 'embed-responsive-item']) ?>
                 <?= $this->Html->icon('youtube-play') ?>
             </a>
         <?php endif; ?>
+        </div>
     </div>
 
     <?php
@@ -82,4 +90,4 @@
         echo $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id'));
     }
     ?>
-</div>
+</article>
