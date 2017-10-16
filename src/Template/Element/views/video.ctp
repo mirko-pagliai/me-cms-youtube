@@ -17,8 +17,8 @@ if ($this->request->isAction(['view', 'preview'], 'Videos')) {
 }
 ?>
 
-<article class="mb-4">
-    <div class="header mb-3 pl-3">
+<article class="clearfix mb-4">
+    <header class="mb-3">
         <?php if (getConfig('video.category') && $video->category && $video->category->title && $video->category->slug) : ?>
             <h5 class="category mb-1">
                 <?= $this->Html->link($video->category->title, ['_name' => 'videosCategory', $video->category->slug]) ?>
@@ -35,7 +35,7 @@ if ($this->request->isAction(['view', 'preview'], 'Videos')) {
             </h4>
         <?php endif; ?>
 
-        <div class="info mt-2 text-muted">
+        <div class="info">
             <?php
             if (getConfig('video.author')) {
                 echo $this->Html->div(
@@ -54,9 +54,9 @@ if ($this->request->isAction(['view', 'preview'], 'Videos')) {
             }
             ?>
         </div>
-    </div>
+    </header>
 
-    <div class="content-text">
+    <main>
         <div class="embed-responsive embed-responsive-16by9">
         <?php if ($this->request->isAction(['view', 'preview'], 'Videos')) : ?>
             <div class="mb-4 relative">
@@ -83,7 +83,7 @@ if ($this->request->isAction(['view', 'preview'], 'Videos')) {
             </a>
         <?php endif; ?>
         </div>
-    </div>
+    </main>
 
     <?php
     if (getConfig('video.shareaholic') && $this->request->isAction('view', 'Videos') && !$this->request->isAjax()) {
