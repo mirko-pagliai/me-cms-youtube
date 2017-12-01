@@ -46,7 +46,13 @@ echo $this->Form->end();
                     (<?= $video->created->i18nFormat(getConfigOrFail('main.datetime.short')) ?>)
                 </span>
                 <div class="text-justify">
-                    <?= $this->Text->truncate(strip_tags($video->text), 350, ['html' => true]) ?>
+                    <?php
+                    //Strips tags, extracts
+                    //  an excerpt from `$pattern` and highlights `$pattern`
+                    $text = strip_tags($video->text);
+                    $text = $this->Text->excerpt($text, $pattern, 350);
+                    echo $this->Text->highlight($text, $pattern);
+                    ?>
                 </div>
             </div>
         <?php endforeach; ?>
