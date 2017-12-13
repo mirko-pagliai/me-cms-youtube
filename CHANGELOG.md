@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.12 branch
-### 2.12.1
-* when the search function is used, the searched text is highlighted.
+### 2.12.1-RC1
+* when the search function is used, the searched text is highlighted;
+* updated for MeCms 2.22.4-RC1.
 
 ### 2.12.0-beta
 * fixed all templates for Bootstrap 4;
