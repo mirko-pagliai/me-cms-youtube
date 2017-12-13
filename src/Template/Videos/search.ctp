@@ -23,19 +23,16 @@ echo $this->Form->create(null, [
     'url' => ['_name' => 'videosSearch']
 ]);
 echo $this->Form->control('p', [
+    'button' => $this->Form->submit(__d('me_cms', 'Search'), ['class' => 'btn-primary', 'icon' => 'search']),
     'default' => $this->request->getQuery('p'),
     'label' => false,
     'placeholder' => sprintf('%s...', __d('me_cms', 'Search')),
-]);
-echo $this->Form->submit(__d('me_cms', 'Search'), [
-    'class' => 'btn-primary visible-lg-inline',
-    'icon' => 'search',
 ]);
 echo $this->Form->end();
 ?>
 
 <?php if (!empty($pattern)) : ?>
-    <div class="bg-info margin-20 padding-10">
+    <div class="bg-info text-white mt-3 mb-3 p-2">
         <?= __d('me_cms', 'You have searched for: {0}', $this->Html->em($pattern)) ?>
     </div>
 <?php endif; ?>
@@ -43,16 +40,23 @@ echo $this->Form->end();
 <?php if (!empty($videos)) : ?>
     <div class="as-table">
         <?php foreach ($videos as $video) : ?>
-            <div class="margin-10 padding-10">
+            <div class="mb-3 p-1">
                 <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?>
                 <span class="small text-muted">
                     (<?= $video->created->i18nFormat(getConfigOrFail('main.datetime.short')) ?>)
                 </span>
                 <div class="text-justify">
-                    <?= $this->Text->truncate(strip_tags($video->text), 350, ['exact' => false, 'html' => true]) ?>
+                    <?php
+                    //Strips tags, extracts
+                    //  an excerpt from `$pattern` and highlights `$pattern`
+                    $text = strip_tags($video->text);
+                    $text = $this->Text->excerpt($text, $pattern, 350);
+                    echo $this->Text->highlight($text, $pattern);
+                    ?>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
+
     <?= $this->element('MeTools.paginator') ?>
 <?php endif; ?>

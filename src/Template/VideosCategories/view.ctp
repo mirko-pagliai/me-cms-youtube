@@ -20,13 +20,13 @@ $this->userbar([
     $this->Html->link(
         __d('me_cms', 'Edit category'),
         ['action' => 'edit', 'prefix' => ADMIN_PREFIX, $category->id],
-        ['icon' => 'pencil', 'target' => '_blank']
+        ['class' => 'nav-link', 'icon' => 'pencil', 'target' => '_blank']
     ),
     $this->Form->postLink(
         __d('me_cms', 'Delete category'),
         ['action' => 'delete', 'prefix' => ADMIN_PREFIX, $category->id],
         [
-            'class' => 'text-danger',
+            'class' => 'nav-link text-danger',
             'icon' => 'trash-o',
             'confirm' => I18N_SURE_TO_DELETE,
             'target' => '_blank',

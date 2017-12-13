@@ -88,7 +88,7 @@ $this->Library->datepicker(
             <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Categories.title', I18N_CATEGORY) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Users.first_name', I18N_AUTHOR) ?></th>
-            <th class="text-center hidden-xs"><?= $this->Paginator->sort('seconds', __d('me_cms_youtube', 'Duration')) ?></th>
+            <th class="text-center d-none d-md-table-cell"><?= $this->Paginator->sort('seconds', __d('me_cms_youtube', 'Duration')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('priority', I18N_PRIORITY) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
         </tr>
@@ -96,7 +96,7 @@ $this->Library->datepicker(
     <tbody>
         <?php foreach ($videos as $video) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $video->id ?></code>
                 </td>
                 <td>
@@ -109,7 +109,7 @@ $this->Library->datepicker(
                     if ($video->is_spot) {
                         echo $this->Html->span(
                             __d('me_cms_youtube', 'Spot'),
-                            ['class' => 'record-label record-label-primary']
+                            ['class' => 'record-badge badge badge-primary']
                         );
                     }
 
@@ -117,7 +117,7 @@ $this->Library->datepicker(
                     if ($video->created->isFuture()) {
                         echo $this->Html->span(
                             I18N_SCHEDULED,
-                            ['class' => 'record-label record-label-warning']
+                            ['class' => 'record-badge badge badge-warning']
                         );
                     }
 
@@ -125,7 +125,7 @@ $this->Library->datepicker(
                     if (!$video->active) {
                         echo $this->Html->span(
                             I18N_DRAFT,
-                            ['class' => 'record-label record-label-warning']
+                            ['class' => 'record-badge badge badge-warning']
                         );
                     }
 
@@ -188,10 +188,10 @@ $this->Library->datepicker(
                         ['title' => I18N_BELONG_USER]
                     ) ?>
                 </td>
-                <td class="min-width text-center hidden-xs">
+                <td class="text-nowrap text-center d-none d-md-table-cell">
                     <?= empty($video->duration) ? '00:00' : $video->duration ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     switch ($video->priority) {
                         case '1':
@@ -227,11 +227,11 @@ $this->Library->datepicker(
                     }
                     ?>
                 </td>
-                <td class="min-width text-center">
-                    <div class="hidden-xs">
-                        <?= $video->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                <td class="text-nowrap text-center">
+                    <div class="d-none d-lg-block">
+                        <?= $video->created->i18nFormat() ?>
                     </div>
-                    <div class="visible-xs">
+                    <div class="d-lg-none">
                         <div><?= $video->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
                         <div><?= $video->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>

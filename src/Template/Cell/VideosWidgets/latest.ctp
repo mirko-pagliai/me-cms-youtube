@@ -18,7 +18,10 @@ $this->extend('MeCms./Common/widget');
 $this->assign('title', __dn('me_cms_youtube', 'Latest video', 'Latest {0} videos', $videos->count(), $videos->count()));
 
 foreach ($videos as $video) {
-    echo $this->element('MeCmsYoutube.views/video-preview', array_merge([
-        'truncate' => ['title' => false, 'text' => false],
-    ], compact('video')));
+    $link = ['_name' => 'video', $video->id];
+    $path = $video->preview['preview'];
+    $title = $video->title;
+    $text = $video->text;
+
+    echo $this->Html->div('mb-4', $this->element(ME_CMS . '.views/photo-preview', compact('link', 'path', 'title', 'text')));
 }

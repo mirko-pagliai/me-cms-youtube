@@ -103,7 +103,7 @@ class VideosController extends AppController
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
-        $videos = $this->paginate($this->Videos->queryFromFilter($query, $this->request->getQuery()));
+        $videos = $this->paginate($this->Videos->queryFromFilter($query));
 
         $this->set(compact('videos'));
     }

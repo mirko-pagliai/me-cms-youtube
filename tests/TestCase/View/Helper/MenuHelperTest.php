@@ -25,12 +25,18 @@ namespace MeCmsYoutube\Test\TestCase\Utility;
 use Cake\View\View;
 use MeCmsYoutube\View\Helper\MenuHelper;
 use MeTools\TestSuite\TestCase;
+use MeTools\View\Helper\HtmlHelper;
 
 /**
  * YoutubeTest class
  */
 class MenuHelperTest extends TestCase
 {
+    /**
+     * @var \MeTools\View\Helper\HtmlHelper
+     */
+    protected $Html;
+
     /**
      * @var \MeCmsYoutube\View\Helper\MenuHelper
      */
@@ -46,7 +52,22 @@ class MenuHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->Menu = new MenuHelper(new View);
+        $view = new View;
+
+        $this->Menu = new MenuHelper($view);
+        $this->Html = new HtmlHelper($view);
+    }
+
+    /**
+     * Internal method to build links
+     * @param array $links Links
+     * @return array
+     */
+    protected function buildLinks($links)
+    {
+        return collection($links)->map(function ($link) {
+            return $this->Html->link($link[0], $link[1]);
+        })->toArray();
     }
 
     /**
@@ -55,12 +76,12 @@ class MenuHelperTest extends TestCase
      */
     public function testVideos()
     {
-        list($menu, $title, $options) = $this->Menu->videos();
+        list($links, $title, $options) = $this->Menu->videos();
 
         $this->assertEquals([
             '<a href="/me-cms-youtube/admin/videos" title="List videos">List videos</a>',
             '<a href="/me-cms-youtube/admin/videos/add" title="Add video">Add video</a>',
-        ], $menu);
+        ], $this->buildLinks($links));
         $this->assertEquals('Videos', $title);
         $this->assertEquals(['icon' => 'film'], $options);
 
@@ -73,14 +94,14 @@ class MenuHelperTest extends TestCase
 
         //Menu for manager users
         $this->Menu->Auth->initialize(['group' => ['name' => 'manager']]);
-        list($menu) = $this->Menu->videos();
+        list($links) = $this->Menu->videos();
 
-        $this->assertEquals($expected, $menu);
+        $this->assertEquals($expected, $this->buildLinks($links));
 
         //Menu for admin users
         $this->Menu->Auth->initialize(['group' => ['name' => 'admin']]);
-        list($menu) = $this->Menu->videos();
+        list($links) = $this->Menu->videos();
 
-        $this->assertEquals($expected, $menu);
+        $this->assertEquals($expected, $this->buildLinks($links));
     }
 }

@@ -233,6 +233,7 @@ class VideosControllerTest extends IntegrationTestCase
 
         $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
         $this->assertResponseOkAndNotEmpty();
+        $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
 
         $videosFromView = $this->viewVariable('videos');
         $this->assertNotEmpty($videosFromView->toArray());
@@ -257,6 +258,7 @@ class VideosControllerTest extends IntegrationTestCase
         //GET request again. Now the data is in cache
         $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
         $this->assertResponseOkAndNotEmpty();
+        $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Videos']);
 
         $this->get(array_merge($url, ['?' => ['p' => 'a']]));
