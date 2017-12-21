@@ -118,14 +118,14 @@ class VideosTable extends AppTable
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        if ((empty($entity->seconds) || empty($entity->duration)) && !empty($entity->youtube_id)) {
+        if ((!$entity->has('seconds') || !$entity->has('duration')) && $entity->has('youtube_id')) {
             $info = $this->getInfo($entity->youtube_id);
 
-            if (empty($entity->seconds)) {
+            if (!$entity->has('seconds')) {
                 $entity->seconds = $info->seconds;
             }
 
-            if (empty($entity->duration)) {
+            if (!$entity->has('duration')) {
                 $entity->duration = $info->duration;
             }
         }

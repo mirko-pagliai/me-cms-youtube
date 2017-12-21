@@ -95,6 +95,18 @@ class VideoTest extends TestCase
     }
 
     /**
+     * Test for `_getText()` method
+     * @test
+     */
+    public function testTextGetMutator()
+    {
+        $this->assertNull($this->Video->text);
+
+        $this->Video->text = '<b>A text</b>';
+        $this->assertEquals('A text', $this->Video->text);
+    }
+
+    /**
      * Test for `_getYoutubeUrl()` method
      * @test
      */

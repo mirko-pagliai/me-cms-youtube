@@ -19,7 +19,7 @@ if ($this->request->isAction(['view', 'preview'], 'Videos')) {
 
 <article class="clearfix mb-4">
     <header class="mb-3">
-        <?php if (getConfig('video.category') && $video->category && $video->category->title && $video->category->slug) : ?>
+        <?php if (getConfig('video.category') && $video->category->has(['slug', 'title'])) : ?>
             <h5 class="category mb-1">
                 <?= $this->Html->link($video->category->title, ['_name' => 'videosCategory', $video->category->slug]) ?>
             </h5>
@@ -29,7 +29,7 @@ if ($this->request->isAction(['view', 'preview'], 'Videos')) {
             <?= $this->Html->link($video->title, ['_name' => 'video', $video->id]) ?>
         </h2>
 
-        <?php if ($video->subtitle) : ?>
+        <?php if ($video->has('subtitle')) : ?>
             <h4 class="subtitle mb-1">
                 <?= $this->Html->link($video->subtitle, ['_name' => 'video', $video->id]) ?>
             </h4>
