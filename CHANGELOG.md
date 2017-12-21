@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.12 branch
+### 2.12.2-RC2
+* updated for MeCms 2.22.5-RC2.
+
 ### 2.12.1-RC1
 * when the search function is used, the searched text is highlighted;
 * updated for MeCms 2.22.4-RC1.
