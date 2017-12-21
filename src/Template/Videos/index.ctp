@@ -10,12 +10,12 @@
  * @link        https://github.com/mirko-pagliai/me-cms-youtube
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('MeCms./Common/index');
+$this->extend(ME_CMS . './Common/index');
 
 if (!empty($videos)) {
     foreach ($videos as $video) {
         echo $this->element('views/video', compact('video'));
     }
 
-    echo $this->element('MeTools.paginator');
+    echo $this->element(ME_TOOLS . '.paginator');
 }

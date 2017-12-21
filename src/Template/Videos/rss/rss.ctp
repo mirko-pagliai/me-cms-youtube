@@ -34,7 +34,7 @@ foreach ($videos as $video) {
     ]);
 
     //Adds the preview image
-    if ($video->preview) {
+    if ($video->has('preview')) {
         $text = $this->Thumb->resize($video->preview['preview'], ['width' => 400]) . '<br />' . PHP_EOL . $text;
     }
 

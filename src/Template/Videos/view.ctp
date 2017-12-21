@@ -57,16 +57,19 @@ $this->Breadcrumbs->add($video->title, ['_name' => 'video', $video->slug]);
  */
 if ($this->request->isAction('view', 'Videos')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-    $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
 
-    if ($video->preview) {
+    if ($video->has('modified')) {
+        $this->Html->meta(['content' => $video->modified->toUnixString(), 'property' => 'og:updated_time']);
+    }
+
+    if ($video->has('preview')) {
         $this->Html->meta(['href' => $video->preview['preview'], 'rel' => 'image_src']);
         $this->Html->meta(['content' => $video->preview['preview'], 'property' => 'og:image']);
         $this->Html->meta(['content' => $video->preview['width'], 'property' => 'og:image:width']);
         $this->Html->meta(['content' => $video->preview['height'], 'property' => 'og:image:height']);
     }
 
-    if ($video->text) {
+    if ($video->has('text')) {
         $this->Html->meta([
             'content' => $this->Text->truncate($video->text, 100, ['html' => true]),
             'property' => 'og:description',

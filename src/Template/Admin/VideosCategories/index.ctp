@@ -80,7 +80,7 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td class="text-center">
                     <?php
-                    if (!empty($category->parent->title)) {
+                    if ($category->has('parent') && $category->parent->has('title')) {
                         echo $category->parent->title;
                     }
                     ?>
