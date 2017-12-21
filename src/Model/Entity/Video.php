@@ -72,6 +72,19 @@ class Video extends Entity
     }
 
     /**
+     * Gets the text
+     * @return string|null
+     */
+    protected function _getText()
+    {
+        if (empty($this->_properties['text'])) {
+            return null;
+        }
+
+        return strip_tags($this->_properties['text']);
+    }
+
+    /**
      * Gets the Youtube url (virtual field)
      * @return string|null
      * @uses MeCmsYoutube\Utility\Youtube::getUrl()
