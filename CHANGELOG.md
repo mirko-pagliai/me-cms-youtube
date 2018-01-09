@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.12 branch
+### 2.12.3-RC3
+* updated for MeCms 2.22.6-RC3.
+
 ### 2.12.2-RC2
 * `Video` entity has the `_getText()` mutator;
 * updated for MeCms 2.22.5-RC2.
