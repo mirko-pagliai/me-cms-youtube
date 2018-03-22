@@ -1,4 +1,9 @@
 # 2.x branch
+## 2.13 branch
+### 2.13.0
+* `MeCmsYoutube\Model\Entity\Video::_getPreview()` method returns an `Entity`
+    with `url`, `width` and `height` properties.
+
 ## 2.12 branch
 ### 2.12.3-RC3
 * updated for MeCms 2.22.6-RC3.

@@ -63,10 +63,10 @@ if ($this->request->isAction('view', 'Videos')) {
     }
 
     if ($video->has('preview')) {
-        $this->Html->meta(['href' => $video->preview['preview'], 'rel' => 'image_src']);
-        $this->Html->meta(['content' => $video->preview['preview'], 'property' => 'og:image']);
-        $this->Html->meta(['content' => $video->preview['width'], 'property' => 'og:image:width']);
-        $this->Html->meta(['content' => $video->preview['height'], 'property' => 'og:image:height']);
+        $this->Html->meta(['href' => $video->preview->url, 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $video->preview->url, 'property' => 'og:image']);
+        $this->Html->meta(['content' => $video->preview->width, 'property' => 'og:image:width']);
+        $this->Html->meta(['content' => $video->preview->height, 'property' => 'og:image:height']);
     }
 
     if ($video->has('text')) {
