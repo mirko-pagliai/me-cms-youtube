@@ -78,7 +78,7 @@ if ($this->request->isAction(['view', 'preview'], 'Videos')) {
             </div>
         <?php else : ?>
             <a class="embed-responsive-item video-fake" href="<?= $this->Url->build(['_name' => 'video', $video->id]) ?>">
-                <?= $this->Html->img($video->preview['preview'], ['class' => 'embed-responsive-item']) ?>
+                <?= $this->Html->img($video->preview->url, ['class' => 'embed-responsive-item']) ?>
                 <?= $this->Html->icon('youtube-play') ?>
             </a>
         <?php endif; ?>

@@ -19,7 +19,7 @@ $this->assign('title', __dn('me_cms_youtube', 'Latest video', 'Latest {0} videos
 
 foreach ($videos as $video) {
     $link = ['_name' => 'video', $video->id];
-    $path = $video->preview['preview'];
+    $path = $video->preview->url;
     $title = $video->title;
     $text = $video->text;
 

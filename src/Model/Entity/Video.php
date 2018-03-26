@@ -55,7 +55,8 @@ class Video extends Entity
 
     /**
      * Gets the image preview (virtual field)
-     * @return string|null
+     * @return Entity|null Entity with `preview`, `width` and `height`
+     *  properties
      * @uses MeCmsYoutube\Utility\Youtube::getPreview()
      */
     protected function _getPreview()
@@ -64,11 +65,11 @@ class Video extends Entity
             return null;
         }
 
-        return [
-            'preview' => Youtube::getPreview($this->_properties['youtube_id']),
+        return new Entity([
+            'url' => Youtube::getPreview($this->_properties['youtube_id']),
             'width' => 480,
             'height' => 360,
-        ];
+        ]);
     }
 
     /**
